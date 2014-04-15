@@ -1,7 +1,8 @@
 Team-Player
 ===========
 
-	Team PLayer is a web application where users can create groups/circles of people to share bills and tasks with. Each user can view:
+	Team PLayer is a web application where users can create groups/circles of people to share bills and tasks with. 
+	Each user can view:
 	- their own tasks for a calendar month, as well as previous and future calendar months
 	- all group member’s tasks by month
 	- overview of bills pertaining to group
