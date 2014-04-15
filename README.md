@@ -20,4 +20,4 @@ Team-Player
   - Micaela Tolliver(mictol42)
   - Panji Wisesa(panjiw)
 
-See <a href="/wiki">project wiki</a> for links to deliverables, bug tracker, and mailing list archive. 
+See <a href="https://github.com/panjiw/Team-Player/wiki">project wiki</a> for links to deliverables, bug tracker, and mailing list archive. 
