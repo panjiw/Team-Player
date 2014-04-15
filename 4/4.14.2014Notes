@@ -1,0 +1,93 @@
+4/14/2014
+
+customer meeting:
+	product group to split tasks/bills
+		communication-> specific duties
+	how is it different from post it notes
+		shared calendar
+	original proposal: same concepts appl  to other things
+	we changed our customers
+		rescoped to include everyone working togethter in team
+		shared calendar tookk list for a team
+	shared calendar / share doc
+	bills -> split core features
+	-> able to fitler
+	-> view multplie group
+	-> rotating tasks (***)
+		cycle
+	-> adding a person to a group
+	new group easier
+		member of multiple groups
+		killer feature -> ????
+	
+	a lot of sub projcets, a lot of different modules
+	a lot of different modules
+	better time to split up work
+	
+	minimal viable project: some features that make it a useful app
+		once you have a viable produt you keep adding features
+		
+	picking a minimal set of features
+		prioritizing the rest of them
+		add them after that
+		
+	think of this as a project for on sake not for his
+		write what we need to get back to this four months
+		after that plain
+		
+	ruby on rails
+		built on top of ruby
+		
+post-customer meeting discussion: 	
+	figure out what we want to do / accomplish what e did / accomplished last week
+	
+	programming
+		three three teams are good
+		how to split each individual task
+		
+		main modules
+		
+	minimum requirements decided on:
+		login system
+		calendar
+		tasks
+		groups
+		
+	UI:
+		specs due monday
+		database design is due friday
+	
+	backend
+		login 
+		data management
+		queries
+	
+	mondays-
+		checking in and planning for the following week
+		inidividual turn-ins on monday
+		FOR NOW: MONDAY TEAM REPORT
+	tuesday- actual meeting to do stuff: 3 this week
+		start working together in groups on waht planned on monday
+		groups meet seperatly 
+		depends on what there is for that week
+		plan every week
+		group decisions or break off into whatever 
+		
+	tuesday: UI
+		later in week: start architecture 
+		
+	backend tasks: ruby on rails tutorials
+	front end: 	finish up what the UI should be
+		begin making a prototype
+		
+	GITHUB	
+		week - report for individuals
+			one per week
+		team report: add what the just wrote down to the team report page
+			also have to turn individually themselves on catayles
+			
+	one paragraph last weeks goals
+	this week done
+	next week's goals
+	
+	finish up the requirements
