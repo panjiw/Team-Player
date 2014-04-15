@@ -2,7 +2,6 @@ Team-Player
 ===========
 
 	TeamPlayer is a web application for group task management and bill splitting. 
-	Each user can view:
 
   A project for UW CSE 403, developed by:
   - Karthik Palaniappan(karth295)
