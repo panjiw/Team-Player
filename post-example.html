@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $.post("http://localhost:3000/users",
+    {
+      "user[name]":"Stallion2 11",
+      "user[email]":"TierDelta2@gmail.com",
+      "user[password]":"123456",
+      "user[password_confirmation]":"123456",
+      "commit":"Create+my+account",
+    },
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status);
+    });
+  });
+});
+</script>
+</head>
+<body>
+
+<button>Send an HTTP POST request to a page and get the result back</button>
+
+</body>
+</html>
+
