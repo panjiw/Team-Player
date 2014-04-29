@@ -3,9 +3,11 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
-group :development do
+group :development, :test do
 # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+# RSpec testing framework
+  gem 'rspec-rails'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -44,4 +46,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+# Testing gems, from railstutorial.org
+group :test do
+  gem 'selenium-webdriver'
+  gem 'capybara'
 end
