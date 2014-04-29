@@ -18,6 +18,14 @@
 #Stupid Mac file...
 .DS_Store
 
+# Ignore other unneeded files.
+database.yml
+doc/
+*.swp
+*~
+.project
+.idea
+.secret
 
 # From Ruby gitignore
 #*.gem
@@ -29,7 +37,6 @@
 #/spec/reports/
 #/test/tmp/
 #/test/version_tmp/
-#/tmp/
 
 ## Specific to RubyMotion:
 #.dat*
@@ -37,14 +44,12 @@
 #build/
 
 ## Documentation cache and generated files:
-#/.yardoc/
-#/_yardoc/
-#/doc/
-#/rdoc/
+/.yardoc/
+/_yardoc/
+/rdoc/
 
 ## Environment normalisation:
-#/.bundle/
-#/lib/bundler/man/
+/lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
@@ -57,26 +62,23 @@
 
 
 # From Rails gitignore
-#*.rbc
-#capybara-*.html
-#.rspec
-#/log
-#/tmp
-#/db/*.sqlite3
-#/public/system
-#/coverage/
-#/spec/tmp
-#**.orig
-#rerun.txt
-#pickle-email-*.html
+*.rbc
+capybara-*.html
+.rspec
+/log
+/public/system
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
 
 #Comment out these rules if you are OK with secrets being uploaded to the repo
-#config/initializers/secret_token.rb
-#config/secrets.yml
+config/initializers/secret_token.rb
+config/secrets.yml
 
 ## Environment normalisation:
-#/.bundle
-#/vendor/bundle
+/vendor/bundle
 
 # these should all be checked in to normalise the environment:
 ## Gemfile.lock, .ruby-version, .ruby-gemset
