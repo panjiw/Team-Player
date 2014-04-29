@@ -60,3 +60,6 @@ gem 'sprockets'
 
 # Password gem
 gem 'bcrypt-ruby'
+
+# Angularjs gem
+gem 'angularjs-rails-resource', '~> 1.1.1'
