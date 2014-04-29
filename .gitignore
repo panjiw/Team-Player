@@ -27,21 +27,22 @@ doc/
 .idea
 .secret
 
+
 # From Ruby gitignore
-#*.gem
-#*.rbc
-#/.config
-#/coverage/
-#/InstalledFiles
-#/pkg/
-#/spec/reports/
-#/test/tmp/
-#/test/version_tmp/
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/test/tmp/
+/test/version_tmp/
 
 ## Specific to RubyMotion:
-#.dat*
-#.repl_history
-#build/
+.dat*
+.repl_history
+build/
 
 ## Documentation cache and generated files:
 /.yardoc/
