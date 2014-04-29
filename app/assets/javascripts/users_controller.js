@@ -14,9 +14,10 @@ function UsersController($scope) {
     //TODO
     $.ajax({
       type: "POST",
-      url: "http://localhost:3000/createuser",
+      url: "http://localhost:3000/login",
       dataType: "JSON",
       success: function(data) {
+        $scope.login_uname = $scope.login_psswd = "";
         console.log(data);
         //TODO
       }
@@ -44,6 +45,7 @@ function UsersController($scope) {
       url: "http://localhost:3000/createuser",
       dataType: "JSON",
       success: function(data) {
+        $scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_psswd_one = $scope.create_psswd_two = "";
         console.log(data);
         //TODO
       }
