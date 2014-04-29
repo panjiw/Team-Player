@@ -53,3 +53,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
 end
+
+# Design gems
+gem 'bootstrap-sass'
+gem 'sprockets'
