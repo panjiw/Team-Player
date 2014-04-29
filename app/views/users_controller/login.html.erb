@@ -2,8 +2,6 @@
 <html>
     <head>
         <title>Team Player Login</title>
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="bootstrap/css/login.css" rel="stylesheet">
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -53,7 +51,7 @@
                   <input ng-model="create_uname" type="text" class="form-control input-md" placeholder="Username">
                   <input ng-model="create_psswd_one" type="password" class="form-control input-md" placeholder="Password">
                   <input ng-model="create_psswd_two" type="password" class="form-control input-md" placeholder="Confirm Password">
-                  <button class="btn btn-success">Register</button>
+                  <button ng-click="create_account($event)" class="btn btn-success">Register</button>
                 </form>
               </div>
             </div>

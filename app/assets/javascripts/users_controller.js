@@ -6,7 +6,7 @@ function UsersController($scope) {
     }
 
     var data = {
-      uname: $scope.login_uname,
+      name: $scope.login_uname,
       password: $scope.login_psswd
     }
     console.log(data);
@@ -24,6 +24,29 @@ function UsersController($scope) {
   }
 
   $scope.create_account = function(e) {
-    if(!$scope.create_
+    if((!$scope.create_fname || !$scope.create_lname || 
+        !$scope.create_uname || !$scope.create_psswd_one || 
+        !$scope.create_psswd_two) || ($scope.create_psswd_one != $scope.create_psswd_two)) {
+      //TODO
+      return;
+    }
+
+    var data = {
+      name: $scope.create_uname,
+      fname: $scope.create_fname,
+      lname: $scope.create_lname,
+      password: $scope.create_psswd;
+    }
+
+    //TODO
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:3000/createuser",
+      dataType: "JSON",
+      success: function(data) {
+        console.log(data);
+        //TODO
+      }
+    });
   }
 }
