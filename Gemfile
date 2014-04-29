@@ -57,3 +57,6 @@ end
 # Design gems
 gem 'bootstrap-sass'
 gem 'sprockets'
+
+# Password gem
+gem 'bcrypt-ruby'
