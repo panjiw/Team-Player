@@ -6,6 +6,14 @@
         <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
         <link href="stylesheets/home.css" rel="stylesheet">
         <script src="home.js" type="text/javascript"></script>
+
+    <script src="jquery.js"></script> 
+    <script> 
+    $(function(){
+      $("#taskssection").load("tasks.html"); 
+    });
+    </script> 
+
     </head>
     <body ng-app="homeModule" ng-controller="homeController">
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,12 +43,12 @@
         </div>
         <div id="content" ng-switch on="activeTab">
         <div ng-switch-when="home">
-          <h1>Home Page.</h1>
+          <h1>Home Page</h1>
           <a href="#"> random stuff</a>
         </div>
 
         <div ng-switch-when="tasks">
-          <p>TasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasks</p>
+          <div id="taskssection"></div>
         </div>
 
         <div ng-switch-when="bills">
