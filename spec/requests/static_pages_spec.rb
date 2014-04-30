@@ -2,16 +2,14 @@ require 'spec_helper'
 
 describe "StaticPages" do
   subject { page }
-  describe "about page" do
-    before { visit about_path }
+  describe "home page" do
+    before { visit home_path }
 
-    it { should have_content('About') }
-    it { should have_title('About Us') }
+    it { should have_content('home') }
   end
-  describe "signin page" do
-    before { visit signin_path }
+  describe "index page" do
+    before { visit index_path }
 
-    it { should have_content('Sign in') }
-    it { should have_title('Sign in') }
+    it { should have_content('index') }
   end
 end
