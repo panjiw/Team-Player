@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
         <title>Team Player Home</title>
         <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
         <link href="stylesheets/home.css" rel="stylesheet">
+        <style>
+        #content{
+          margin-top:100px;
+          padding: 10px;
+        }
+
+        div.tabs.home button.home,
+        div.tabs.tasks button.tasks,
+        div.tabs.bills button.bills,
+        div.tabs.groups button.groups{
+          background: white;
+          color:black;
+        }
+
+
+        </style>
     </head>
-    <body>
+    <body ng-app="homeModule" ng-controller="homeController">
         <div class="navbar navbar-inverse navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
@@ -23,13 +40,46 @@
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div><!--/.nav-collapse -->
-            <div class="tabs">
-              <button class="btn tab">Home</button>
-              <button class="btn tab">Tasks</button>
-              <button class="btn tab">Bills</button>
-              <button class="btn tab">Teams</button>
+            <div class="tabs {{activeTab}}">
+              <button class="btn tab home" ng-click="activeTab='home'">Home</button>
+              <button class="btn tab tasks" ng-click="activeTab='tasks'">Tasks</button>
+              <button class="btn tab bills" ng-click="activeTab='bills'">Bills</button>
+              <button class="btn tab groups" ng-click="activeTab='groups'">Groups</button>
             </div>
           </div>
         </div>
+        <div id="content" ng-switch on="activeTab">
+        <div ng-switch-when="home">
+          <h1>Home Page.</h1>
+          <a href="#"> random stuff</a>
+        </div>
+
+        <div ng-switch-when="tasks">
+          <p>TasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasks</p>
+        </div>
+
+        <div ng-switch-when="bills">
+          <p>bills</p>
+          <p>bills</p>
+          <p>bills</p>
+          <p>bills</p>
+          <p>bills</p>
+        </div>
+
+        <div ng-switch-when="groups">
+          <ul><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li>
+          </ul>
+        </div>
+
+      </div><!--content-->
+
+    <script>
+    var app = angular.module("homeModule", []);
+    function homeController($scope) {
+      $scope.activeTab = "home";
+    }
+    
+
+  </script>
     </body>
 </html>
