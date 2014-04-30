@@ -28,10 +28,10 @@
   text-align: center;
 }
 
-div.tabs.home button.home,
-div.tabs.tasks button.tasks,
-div.tabs.bills button.bills,
-div.tabs.groups button.groups{
+div.tabs.selected_home button.selected_home,
+div.tabs.selected_tasks button.selected_tasks,
+div.tabs.selected_bills button.selected_bills,
+div.tabs.selected_groups button.selected_groups{
   background: white;
   color:black;
 }

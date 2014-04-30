@@ -33,29 +33,29 @@
               </ul>
             </div><!--/.nav-collapse -->
             <div class="tabs {{activeTab}}">
-              <button class="btn tab home" ng-click="activeTab='home'">Home</button>
-              <button class="btn tab tasks" ng-click="activeTab='tasks'">Tasks</button>
-              <button class="btn tab bills" ng-click="activeTab='bills'">Bills</button>
-              <button class="btn tab groups" ng-click="activeTab='groups'">Groups</button>
+              <button class="btn tab selected_home" ng-click="activeTab='selected_home'">Home</button>
+              <button class="btn tab selected_tasks" ng-click="activeTab='selected_tasks'">Tasks</button>
+              <button class="btn tab selected_bills" ng-click="activeTab='selected_bills'">Bills</button>
+              <button class="btn tab selected_groups" ng-click="activeTab='selected_groups'">Groups</button>
             </div>
           </div>
         </div>
         <div id="content" ng-switch on="activeTab">
-        <div ng-switch-when="home">
+        <div ng-switch-when="selected_home">
           <h1>Home Page</h1>
           <a href="#"> random stuff</a>
         </div>
 
-        <div ng-switch-when="tasks">
+        <div ng-switch-when="selected_tasks">
           <div ng-include src="'include/tasks.html'"></div>
 
         </div>
 
-        <div ng-switch-when="bills">
+        <div ng-switch-when="selected_bills">
           <div ng-include src="'include/bills.html'"></div>
         </div>
 
-        <div ng-switch-when="groups">
+        <div ng-switch-when="selected_groups">
           <div ng-include src="'include/groups.html'"></div>
         </div>
 
