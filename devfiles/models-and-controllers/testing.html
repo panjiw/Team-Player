@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="main.js"></script>
+	<script src="usermodel.js"></script>
+	<script src="eventmodel.js"></script>
+	<script src="taskmodel.js"></script>
+	<script src="usercontroller.js"></script>
+</head>
+
+<body ng-app="myapp">
+<div ng-controller="UserController">
+	<h1>{{message}}</h1>
+	<input type="text" ng-model="newEl" placeholder="Add Element"><br />
+	<input type="submit" ng-click="add($event)" />
+	<ul>
+		<li ng-repeat="el in list">{{el}}</li>
+	</ul>
+</div>
+</body>
+</html>
