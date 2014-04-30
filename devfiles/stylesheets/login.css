@@ -38,4 +38,15 @@ input {
   clear: left;
   float: left;
   padding-left: 0px;
+  margin-bottom: 14px;
+}
+
+.options ul {
+  list-style-type: none;
+}
+
+.options li {
+  margin-right: 10px;
+  width: 50px;
+  text-align: center;
 }

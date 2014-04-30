@@ -27,3 +27,16 @@
   width: 50px;
   text-align: center;
 }
+
+div.tabs.selected_home button.selected_home,
+div.tabs.selected_tasks button.selected_tasks,
+div.tabs.selected_bills button.selected_bills,
+div.tabs.selected_groups button.selected_groups{
+  background: white;
+  color:black;
+}
+
+#content{
+  margin-top:100px;
+  padding: 10px;
+}

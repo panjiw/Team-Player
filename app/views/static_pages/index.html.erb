@@ -1,0 +1,32 @@
+<div class = "login-panel">
+  <div class="col-md-6 login-left">
+    <h1>Why you need Team Player</h1>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </div>
+  <div class="col-md-4 login-right">
+    <div class="row login-sign-up">
+      <h2>Log In</h2>
+      <form>
+        <input ng-model="login_uname" type="text" class="form-control input-md" placeholder="Username">
+        <input ng-model="login_psswd" type="password" class="form-control input-md" placeholder="Password">
+        <button ng-click="login($event)" class="btn btn-success">Log In</button>
+      </form>
+    </div>
+    <div class="row">
+      <h2>Register</h2>
+      <form>
+        <input ng-model="create_fname" type="text" class="form-control input-md" placeholder="First Name">
+        <input ng-model="create_lname" type="text" class="form-control input-md" placeholder="Last Name">
+        <input ng-model="create_uname" type="text" class="form-control input-md" placeholder="Username">
+        <input ng-model="create_psswd_one" type="password" class="form-control input-md" placeholder="Password">
+        <input ng-model="create_psswd_two" type="password" class="form-control input-md" placeholder="Confirm Password">
+        <button ng-click="create_account($event)" class="btn btn-success">Register</button>
+      </form>
+    </div>
+  </div>
+</div>

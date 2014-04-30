@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
         <title>Team Player Home</title>
         <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
         <link href="stylesheets/home.css" rel="stylesheet">
+        <link href="stylesheets/tasks.css" rel="stylesheet">
+        <link href="stylesheets/bills.css" rel="stylesheet">
+        <link href="stylesheets/groups.css" rel="stylesheet">
+        <script src="home.js" type="text/javascript"></script>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    
+
     </head>
-    <body>
+    <body ng-app="homeModule" ng-controller="homeController">
         <div class="navbar navbar-inverse navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
@@ -23,13 +32,33 @@
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div><!--/.nav-collapse -->
-            <div class="tabs">
-              <button class="btn tab">Home</button>
-              <button class="btn tab">Tasks</button>
-              <button class="btn tab">Bills</button>
-              <button class="btn tab">Teams</button>
+            <div class="tabs {{activeTab}}">
+              <button class="btn tab selected_home" ng-click="activeTab='selected_home'">Home</button>
+              <button class="btn tab selected_tasks" ng-click="activeTab='selected_tasks'">Tasks</button>
+              <button class="btn tab selected_bills" ng-click="activeTab='selected_bills'">Bills</button>
+              <button class="btn tab selected_groups" ng-click="activeTab='selected_groups'">Groups</button>
             </div>
           </div>
         </div>
+        <div id="content" ng-switch on="activeTab">
+        <div ng-switch-when="selected_home">
+          <h1>Home Page</h1>
+          <a href="#"> random stuff</a>
+        </div>
+
+        <div ng-switch-when="selected_tasks">
+          <div ng-include src="'include/tasks.html'"></div>
+
+        </div>
+
+        <div ng-switch-when="selected_bills">
+          <div ng-include src="'include/bills.html'"></div>
+        </div>
+
+        <div ng-switch-when="selected_groups">
+          <div ng-include src="'include/groups.html'"></div>
+        </div>
+
+      </div><!--content-->
     </body>
 </html>
