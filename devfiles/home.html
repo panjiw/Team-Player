@@ -5,22 +5,7 @@
         <title>Team Player Home</title>
         <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
         <link href="stylesheets/home.css" rel="stylesheet">
-        <style>
-        #content{
-          margin-top:100px;
-          padding: 10px;
-        }
-
-        div.tabs.home button.home,
-        div.tabs.tasks button.tasks,
-        div.tabs.bills button.bills,
-        div.tabs.groups button.groups{
-          background: white;
-          color:black;
-        }
-
-
-        </style>
+        <script src="home.js" type="text/javascript"></script>
     </head>
     <body ng-app="homeModule" ng-controller="homeController">
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -116,14 +101,5 @@
         </div>
 
       </div><!--content-->
-
-    <script>
-    var app = angular.module("homeModule", []);
-    function homeController($scope) {
-      $scope.activeTab = "home";
-    }
-    
-
-  </script>
     </body>
 </html>

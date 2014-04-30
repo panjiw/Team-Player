@@ -27,3 +27,16 @@
   width: 50px;
   text-align: center;
 }
+
+div.tabs.home button.home,
+div.tabs.tasks button.tasks,
+div.tabs.bills button.bills,
+div.tabs.groups button.groups{
+  background: white;
+  color:black;
+}
+
+#content{
+  margin-top:100px;
+  padding: 10px;
+}
