@@ -1,0 +1,29 @@
+.tabs {
+  float: right;
+}
+
+.tab {
+  margin-right: 10px;
+  width: 100px;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  border: 2px solid gray;
+  border-bottom: transparent;
+}
+
+.options {
+  clear: left;
+  float: left;
+  padding-left: 0px;
+}
+
+.options ul {
+  list-style-type: none;
+}
+
+.options li {
+  margin-right: 10px;
+  width: 50px;
+  text-align: center;
+}
