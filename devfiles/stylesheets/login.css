@@ -1,5 +1,5 @@
 .login-panel {
-  margin-top: 100px;
+  margin-top: 150px;
   margin-left: auto;
   margin-right: auto;
   height: 510px;
@@ -32,4 +32,10 @@
 
 input {
   margin-bottom: 5px;
+}
+
+.options {
+  clear: left;
+  float: left;
+  padding-left: 0px;
 }
