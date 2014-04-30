@@ -44,25 +44,16 @@
         </div>
 
         <div ng-switch-when="tasks">
-          <div id="taskssection"></div>
-          <script> 
-          $("#taskssection").load( "tasks.html", function() {});
-          </script> 
+          <div ng-include src="'tasks.html'"></div>
 
         </div>
 
         <div ng-switch-when="bills">
-          <div id="billssection"></div>
-          <script> 
-          $("#billssection").load( "bills.html", function() {});
-          </script> 
+          <div ng-include src="'bills.html'"></div>
         </div>
 
         <div ng-switch-when="groups">
-          <div id="groupssection"></div>
-          <script> 
-          $("#groupssection").load( "groups.html", function() {});
-          </script> 
+          <div ng-include src="'groups.html'"></div>
         </div>
 
       </div><!--content-->
