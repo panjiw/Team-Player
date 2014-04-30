@@ -52,15 +52,17 @@
         </div>
 
         <div ng-switch-when="bills">
-
-            
-          
-          
+          <div id="billssection"></div>
+          <script> 
+          $("#billssection").load( "bills.html", function() {});
+          </script> 
         </div>
 
         <div ng-switch-when="groups">
-          <ul><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li>
-          </ul>
+          <div id="groupssection"></div>
+          <script> 
+          $("#groupssection").load( "groups.html", function() {});
+          </script> 
         </div>
 
       </div><!--content-->
