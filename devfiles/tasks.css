@@ -1,0 +1,27 @@
+.tasks{
+  padding-left: 100px;
+  margin-left:100px;
+}
+
+
+.tasks-header {
+  padding-left: 200px;
+  margin-left:100px;
+}
+
+.tasks-left {
+    padding-top: 600px;
+    padding-left: 500px;
+}
+
+.tasks-body{
+    padding:50px;
+}
+
+.button-row {
+  padding-top:500px;
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
