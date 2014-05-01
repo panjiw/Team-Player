@@ -1,4 +1,5 @@
 var User = {
+  id: 0;
 	uname: "",
 	fname: "",
 	lname: ""
@@ -6,7 +7,7 @@ var User = {
 
 angular.module("myapp").factory('UserModel', function() {
   var UserModel = {}
-  var me = new User();
+  UserModel.me = new User();
   
 
   UserModel.login = function(uname, psswd) {
@@ -18,9 +19,9 @@ angular.module("myapp").factory('UserModel', function() {
 
   	//TODO ajax
   	//Dummy User:
-  	me.uname = "go_dawgs";
-  	me.fname = "Team";
-  	me.lname = "Player"
+  	UserModel.me.uname = "go_dawgs";
+  	UserModel.me.fname = "Team";
+  	UserModel.me.lname = "Player"
   }
 
   UserModel.createAccount = function(fname, lname, uname, psswd_one, psswd_two) {

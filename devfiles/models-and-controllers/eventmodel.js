@@ -10,23 +10,23 @@ var Event = function() {
 	this.repost = [false, false, false, false, false, false, false];
 }
 
-angular.module("myapp").factory('EventModel', function() {
-  var EventModel = {};
-  EventModel.events = [];
-	EventModel.createEvent = function() {
-		//TODO
-	};
+// angular.module("myapp").factory('EventModel', function() {
+//   var EventModel = {};
+//   EventModel.events = [];
+// 	EventModel.createEvent = function() {
+// 		//TODO
+// 	};
 	
-	EventModel.editEvent = function(id) {
-		//TODO
-	}
+// 	EventModel.editEvent = function(id) {
+// 		//TODO
+// 	}
 
-	EventModel.getEvents = function() {
-		var eventsCopy = [];
-		for(event in events) {
+// 	EventModel.getEvents = function() {
+// 		var eventsCopy = [];
+// 		for(event in events) {
 			
-		}
-	}
+// 		}
+// 	}
 
-  return EventModel;
-});
+//   return EventModel;
+// });
