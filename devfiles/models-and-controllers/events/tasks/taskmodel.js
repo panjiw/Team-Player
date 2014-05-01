@@ -1,3 +1,5 @@
+// **NOTE: specs such as return values are not set in stone.
+
 var Task = new Event();
 Task.done = false;
 Task.members = [];
@@ -8,7 +10,7 @@ angular.module("myapp").factory('TaskModel', function() {
 
   //Create and return a task with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  TaskModel.createTask = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) {
+  TaskModel.createTask = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) { // creator ID
     //TODO
   };
 
