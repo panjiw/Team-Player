@@ -1,8 +1,8 @@
-var User = {
-  id: 0;
-	uname: "",
-	fname: "",
-	lname: ""
+var User = function() {
+  this.id = 0,
+	this.uname = "",
+	this.fname = "",
+	this.lname = ""
 };
 
 angular.module("myapp").factory('UserModel', function() {
@@ -19,9 +19,10 @@ angular.module("myapp").factory('UserModel', function() {
 
   	//TODO ajax
   	//Dummy User:
+    UserModel.me.id = 0;
   	UserModel.me.uname = "go_dawgs";
   	UserModel.me.fname = "Team";
-  	UserModel.me.lname = "Player"
+  	UserModel.me.lname = "Player";
   }
 
   UserModel.createAccount = function(fname, lname, uname, psswd_one, psswd_two) {
