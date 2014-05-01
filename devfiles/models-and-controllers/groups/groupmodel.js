@@ -57,13 +57,13 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 		selfGroup.members = [0];
 
 		var fakeGroup = new Group();
-    fakeGroup.isSelfGroup = true;
+    fakeGroup.isSelfGroup = false;
 		fakeGroup.id = 0;
 		fakeGroup.title = "fake";
 		fakeGroup.description = "fake group!";
 		fakeGroup.creator = 0;
 		fakeGroup.dateCreated = new Date();
-		fakeGroup.members = [0];
+		fakeGroup.members = [0,1];
 
     return [selfGroup, fakeGroup];
   }
