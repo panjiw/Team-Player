@@ -3,7 +3,7 @@ myApp.controller("GroupController", ["$scope", "GroupModel", function($scope, Gr
 	$scope.groups = GroupModel.getGroups();
 
 	$scope.print = function () {
-		
+		console.log(GroupModel.getUserInvolved(0).uname);
 	}
 
 	$scope.createGroup = function(e) {

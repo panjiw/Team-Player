@@ -40,6 +40,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   // Return a user object identified by ID
   GroupModel.getUserInvolved = function(userID) {
+  	//UserModel.users[userID].uname += "(touched)";
   	return UserModel.users[userID];
   }
 
