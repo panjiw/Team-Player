@@ -1,27 +1,27 @@
-.tasks{
-  padding-left: 100px;
-  margin-left:0px;
-}
-
 
 .tasks-header {
-  padding-left: 200px;
-  margin-left:50px;
+
 }
 
-.tasks-left {
-    padding-top: 600px;
-    padding-left: 100px;
+.tasks-addbutton{
+  padding-left: 700px;
+  padding-bottom: 10px;
+}
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right:5px;
+
+  color: inherit;
 }
 
 .tasks-body{
-    padding:50px;
+    padding:5px;
+    margin-left: 5px;
 }
 
-.button-row {
-  padding-top:500px;
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+
+.scroll-section {
+  position: center;
 }
