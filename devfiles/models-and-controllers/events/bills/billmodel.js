@@ -2,7 +2,7 @@
 
 var Bill = new Event();
 Bill.membersAmountMap = {};
-Bill.membersPaidMap{};
+Bill.membersPaidMap = {};
 Bill.total = 0;
 
 
@@ -39,9 +39,9 @@ angular.module("myapp").factory('BillModel', function() {
     dummyBill.dateDue = new Date();
     dummyBill.cycle = false;
     dummyBill.repost = [false, false, false, false, false, false, false];
-    dummyBill.membersAmountMap = {};
-		dummyBill.membersPaidMap{};
-		dummyBill.total = 0;
+    dummyBill.membersAmountMap = {1: 15};
+		dummyBill.membersPaidMap = {1: 0};
+		dummyBill.total = 15;
 
 		var fakeBill = new Bill();
 		fakeBill.id = 0;
@@ -53,9 +53,9 @@ angular.module("myapp").factory('BillModel', function() {
     fakeBill.dateDue = new Date();
     fakeBill.cycle = false;
     fakeBill.repost = [false, false, false, false, false, false, false];
-    fakeBill.membersAmountMap = {};
-		fakeBill.membersPaidMap{};
-		fakeBill.total = 0;
+    fakeBill.membersAmountMap = {1: 17};
+		fakeBill.membersPaidMap = {1: 17};
+		fakeBill.total = 17;
     
 
     return [dummyBill, fakeBill];

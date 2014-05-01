@@ -2,6 +2,10 @@ var myApp = angular.module('myapp')
 myApp.controller("GroupController", ["$scope", "GroupModel", function($scope, GroupModel) {
 	$scope.groups = GroupModel.getGroups();
 
+	$scope.print = function () {
+		
+	}
+
 	$scope.createGroup = function(e) {
 		//TODO
 	};

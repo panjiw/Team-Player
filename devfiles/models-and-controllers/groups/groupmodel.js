@@ -14,6 +14,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   var GroupModel = {};
   GroupModel.groups = {};   //ID to groups
 
+
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise...
   GroupModel.createGroup = function(title, description, dateCreated, members) { // creator ID
@@ -39,7 +40,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   // Return a user object identified by ID
   GroupModel.getUserInvolved = function(userID) {
-  	
+  	return UserModel.users[userID];
   }
 
   //Return all groups for this user as a list of Group objects
