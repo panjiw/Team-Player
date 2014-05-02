@@ -1,5 +1,6 @@
 .logout {
   float: right;
+  
 }
 
 .tabs {
@@ -20,6 +21,7 @@
   clear: left;
   float: left;
   padding-left: 0px;
+  margin-bottom: 0px;
 }
 
 .options ul {
