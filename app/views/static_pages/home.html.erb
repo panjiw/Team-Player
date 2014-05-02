@@ -114,16 +114,16 @@
         <button type="button" class="btn btn-default">Add Bill</button>
     </div>
 
-    <div class="bill-body>">
-        <div class="you-owe-tab">
+    <div class="bill-body>" ng-switch on="activeBillTab">
+        <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
             <h4>You Owe</h1>
         </div>
-        <div class="owe-you-tab">
+        <div class="owe-you-tab" ng-click="activeBillTab='bill_selected_owe_you'">
             <h4>Owe You</h1>
         </div>
         <div class="bill-summary">
             <h2>Bill Summary</h1>
-            <div class="you-owe">
+            <div class="you-owe" ng-switch-when="bill_selected_you_owe">
                 <h3>Bills you owe</h3>
                 <div class="bill-scroll">
                     <div class="bill">
@@ -159,8 +159,20 @@
                 </div>
                 
             </div>
-            <div class="owe-you">
-                
+            <div class="owe-you" ng-switch-when="bill_selected_owe_you">
+                <h3>Bill owe you</h3>
+                <div class="bill-scroll">
+                    <div class="bill">
+                        <h4 class="bill-member">Member 5</h4>
+                        <h4 class="bill-amount">$500</h4>
+                        <button type="button" class="view-bill btn btn-default">View Bill</button>
+                    </div>
+                    <div class="bill">
+                        <h4 class="bill-member">Member 5</h4>
+                        <h4 class="bill-amount">$500</h4>
+                        <button type="button" class="view-bill btn btn-default">View Bill</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
