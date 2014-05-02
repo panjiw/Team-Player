@@ -7,7 +7,7 @@ var User = function() {
 
 angular.module("myapp").factory('UserModel', function() {
   var UserModel = {}
-  UserModel.me = new User();
+  UserModel.me = 0;
   UserModel.users = {}; // ID to users
   // dummy users
   UserModel.users[0] = UserModel.me;
@@ -22,23 +22,22 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.users[1].fname = "friend";
   UserModel.users[1].lname = "Zone";
 
+  function updateUser(data, status) {
+    //TODO error codes, and updating
+    alert("Data: " + data + "\nStatus: " + status);
+  }
+
 
   UserModel.login = function(uname, psswd) {
-  	//TODO ajax
   	if(!(uname && psswd)) {
-  		//TODO error code
   		return "MISSING_PARAM";
   	}
 
-  	//TODO ajax
     $.post("http://localhost:3000/sign_in",
     {
-      "user[username]": uname
-      "user[password]": psswd,
-    },
-    function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
-    });
+      "user[username]": uname,
+      "user[password]": psswd
+    }, updateUser);
 
   	//Dummy User:
     UserModel.me.id = 0;
@@ -61,12 +60,8 @@ angular.module("myapp").factory('UserModel', function() {
       "user[username]": uname,
       "user[email]": email,
       "user[password]": psswd_one,
-      "user[password_confirmation]": psswd_two,
-      //"commit": "Create+my+account"
-    },
-    function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
-    });
+      "user[password_confirmation]": psswd_two
+    }, updateUser);
   }
 
   return UserModel;
