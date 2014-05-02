@@ -10,33 +10,59 @@
             <button type="button" class="btn btn-default">Add Bill</button>
         </div>
         <div class="home-tasks">
-            <h3>To Do's and Upcoming Events</h3>
+            <h3>To Do's</h3>
             <div class="home-todos">
-                <div class="panel-warning" >
+                <div class="panel-danger" >
                   <div class="panel-heading">
                     <div class="task-panel">
                         <h4 class="panel-descr">Clean Your Room</h4>
                     </div>
                   </div>
                 </div>
-                <div class="panel-warning" >
+                <div class="panel-danger" >
                   <div class="panel-heading">
                     <div class="task-panel">
                         <h4 class="panel-descr">Pay Rent</h4>
                     </div>
                   </div>
                 </div>
-                <div class="panel-warning" >
+                <div class="panel-danger" >
                   <div class="panel-heading">
                     <div class="task-panel">
                         <h4 class="panel-descr">Take Out Trash</h4>
                     </div>
                   </div>
                 </div>
+                <div class="panel-danger" >
+                  <div class="panel-heading">
+                    <div class="task-panel">
+                        <h4 class="panel-descr">Buy Toilet Paper</h4>
+                    </div>
+                  </div>
+                </div>
             </div>
-        </div>
+        </div>    
+
+
+
+
+        <section id="directives-calendar" ng-controller="CalendarCtrl">
+            <div class="page-header">
+                <h1>My Calendar</h1>
+            </div>
+            <div class="span8">
+                <tabset>
+                    <tab-heading>
+                         <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+                    </tab>
+                           
+                </tabset>
+            </div>
+        </section>
+
     </div>
-  </div>
+</div>
+
 
 
   <div ng-controller="tasksViewController" ng-switch-when="selected_tasks">
@@ -135,33 +161,21 @@
                 <h3>Bills you owe</h3>
                 <div class="bill-scroll">
                     <div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 1</h4>
+                        <h4 class="bill-amount">$100</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div>
                     <div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 2</h4>
+                        <h4 class="bill-amount">$200</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div><div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 3</h4>
+                        <h4 class="bill-amount">$300</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div><div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 4</h4>
+                        <h4 class="bill-amount">$400</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div>
                 </div>
@@ -206,18 +220,6 @@
             <div class="groups">
                 <h3>Groups</h3>
                 <div class="group-scroll">
-                    <h4>Group 1</h4>
-                    <h4>Group 2</h4>
-                    <h4>Group 3</h4>
-                    <h4>Group 4</h4>
-                    <h4>Group 1</h4>
-                    <h4>Group 2</h4>
-                    <h4>Group 3</h4>
-                    <h4>Group 4</h4>
-                    <h4>Group 1</h4>
-                    <h4>Group 2</h4>
-                    <h4>Group 3</h4>
-                    <h4>Group 4</h4>
                     <h4>Group 1</h4>
                     <h4>Group 2</h4>
                     <h4>Group 3</h4>

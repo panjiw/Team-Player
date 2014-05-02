@@ -20,4 +20,9 @@
 //= require groups/groupmodel
 //= require events/tasks/taskmodel
 //= require events/bills/billmodel
-//= require_tree .
+//= require FullCalendar/jquery-ui
+//= require FullCalendar/fullcalendar
+//= require FullCalendar/gcal
+//= require FullCalendar/calendar
+//= require FullCalendar/calendarDemo
+//= require_tree

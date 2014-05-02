@@ -81,7 +81,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
-      callback(textStatus);
+      callback(xhr.responseText);
     })
   }
 
@@ -116,7 +116,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
-      callback(textStatus);
+      callback(xhr.responseText);
     })
   }
 

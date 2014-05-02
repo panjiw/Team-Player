@@ -6,13 +6,13 @@
 
 .groups {
   float: left;
-  height: 450px;
+  height: 400px;
   width: 300px;
 }
 
 .group-display {
   float: right;
-  height: 500px;
+  height: 400px;
   width: 500px;
 }
 
@@ -28,11 +28,12 @@ h3 {
   float: left;
   clear: left;
   margin-left: 100px;
+  margin-top: 10px;
 }
 
 .group-scroll {
   width: 250px;
-  height: 350px;
+  height: 300px;
   line-height: 3em;
   overflow-y: auto;
   margin-left: auto;
@@ -42,7 +43,7 @@ h3 {
 .group-members {
   float: left;
   border-right: 2px solid black;
-  height: 448px;
+  height: 300px;
   width: 200px;
   padding: 20px;
 }
