@@ -6,7 +6,7 @@
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
   </head>
-  <body ng-app="myapp">
+  <body ng-app="myapp" ng-controller="mainViewController">
     <div>
       <%= yield %>
     </div>
