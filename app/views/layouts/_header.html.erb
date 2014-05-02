@@ -9,7 +9,7 @@
       <a class="navbar-brand" href="#">Team Player</a>
     </div>
     <% if signed_in? %>
-        <a class="logout" href="/">Logout</a>
+        <a class="logout" href="/" ng-click="logout($event)">Logout</a>
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
