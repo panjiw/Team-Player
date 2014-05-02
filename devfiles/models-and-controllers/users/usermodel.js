@@ -42,7 +42,7 @@ angular.module("myapp").factory('UserModel', function() {
   	if(!(fname && lname && uname && email && pswd_one && pswd_two)) {
       return "MISSING_PARAM";
     }
-    $.post("http://localhost:3000/createuser",
+    $.post("http://localhost:3000/create_user",
     {
       "user[firstname]": fname,
       "user[lastname]": lname,
