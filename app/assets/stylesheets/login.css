@@ -1,5 +1,8 @@
+body {
+  padding-top: 100px;
+}
+
 .login-error {
-  margin-top: 100px;
   width: 500px;
   margin-left: auto;
   margin-right: auto;
