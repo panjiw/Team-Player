@@ -8,7 +8,7 @@ Bill.total = 0;
 
 angular.module("myapp").factory('BillModel', function() {
   var BillModel = {};
-  BillModel.bills = {};   //ID to bills
+  BillModel.bills = {};   //ID to bills.css
 
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
@@ -26,7 +26,7 @@ angular.module("myapp").factory('BillModel', function() {
 
   }
 
-  //Return all bills for this user as a list of Bill objects
+  //Return all bills.css for this user as a list of Bill objects
   BillModel.getBills = function() {
   	
     var dummyBill = new Bill();
@@ -47,7 +47,7 @@ angular.module("myapp").factory('BillModel', function() {
 		fakeBill.id = 0;
     fakeBill.groupID = 0;
     fakeBill.title = "fake Bill";
-    fakeBill.description = "pay these fake bills!"
+    fakeBill.description = "pay these fake bills.css!"
     fakeBill.creator = 0;
     fakeBill.dateCreated = new Date();
     fakeBill.dateDue = new Date();
