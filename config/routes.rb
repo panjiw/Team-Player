@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   match '/home',        to: 'static_pages#home',   via: 'get'
   match '/create_user', to: 'users#create',        via: 'post'
   match '/sign_in',     to: 'sessions#create',     via: 'post'
+  match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

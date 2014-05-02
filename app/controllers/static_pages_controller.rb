@@ -8,6 +8,5 @@ class StaticPagesController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     end
-    #render plain: "OK"
   end
 end

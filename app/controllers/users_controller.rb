@@ -2,10 +2,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      view_context.sign_in @user
-      #render plain: "OK"
-      #redirect_to '/home'
-      # Send message
+      token = view_context.sign_in @user
+      render plain: token
     else
       render plain: @user.errors.full_messages
     end
