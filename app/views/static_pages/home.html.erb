@@ -1,24 +1,20 @@
 <div id="content" ng-switch on="activeTab">
-  <div ng-switch-when="home">
-    <h1>Home Page.</h1>
+  <div ng-controller="homeViewController" ng-switch-when="selected_home">
+    <h1>Home Page</h1>
     <a href="#"> random stuff</a>
   </div>
 
-  <div ng-switch-when="tasks">
-    <p>TasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasksTasks</p>
+  <div ng-controller="tasksViewController" ng-switch-when="selected_tasks">
+    <div ng-include src="'include/tasks.html'"></div>
+
   </div>
 
-  <div ng-switch-when="bills">
-    <p>bills</p>
-    <p>bills</p>
-    <p>bills</p>
-    <p>bills</p>
-    <p>bills</p>
+  <div ng-controller="billsViewController" ng-switch-when="selected_bills">
+    <div ng-include src="'include/bills.html'"></div>
   </div>
 
-  <div ng-switch-when="groups">
-    <ul><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li><li>list</li>
-    </ul>
+  <div ng-controller="groupsViewController" ng-switch-when="selected_groups">
+    <div ng-include src="'include/groups.html'"></div>
   </div>
 
 </div>
