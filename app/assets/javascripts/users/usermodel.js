@@ -45,7 +45,10 @@ angular.module("myapp").factory('UserModel', function() {
   // On success, set the 'me' variable to negative so that it is not a valid user.
   // On failure, an error text message is used to call back
   UserModel.logout = function(callback) {
-    $.delete("http://localhost:3000/sign_out",{})
+    $.ajax({
+      url: '/sign_out',
+      type: 'DELETE',
+    })
     .success(function(data, status) {
       // reset 'me' to negative
       UserModel.me = -1;
