@@ -4,16 +4,28 @@
 }
 
 .tasks-addbutton{
-  padding-left: 700px;
+  padding-left: 500px;
   padding-bottom: 10px;
 }
 
-.panel-title {
+.task-panel {
   margin-top: 0;
   margin-bottom: 0;
   margin-right:5px;
-
+  overflow: hidden;
   color: inherit;
+}
+
+.panel-descr {
+  float:left;
+  margin: 0px;
+  padding: 0px;
+}
+
+.panel-date {
+  float: right;
+  margin: 0px;
+  padding: 0px;
 }
 
 .tasks-body{
