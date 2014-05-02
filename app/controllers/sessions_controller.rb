@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       token = sign_in user
       render :json => {:token => token}, :status => 200
     else
-      render :json => {:errors => user.errors.full_messages}, :status => 400
+      render :json => {:errors => "Wrong user name or password"}, :status => 400
     end
   end
 
@@ -22,6 +22,6 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to '/'
+    render :json => {}, :status => 200
   end
 end
