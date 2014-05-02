@@ -27,10 +27,19 @@ angular.module("myapp").factory('UserModel', function() {
   	//TODO ajax
   	if(!(uname && psswd)) {
   		//TODO error code
-  		return "ERROR_CODE";
+  		return "MISSING_PARAM";
   	}
 
   	//TODO ajax
+    $.post("http://localhost:3000/signin",
+    {
+      "user[username]": uname
+      "user[password]": psswd,
+    },
+    function(data, status){
+      alert("Data: " + data + "\nStatus: " + status);
+    });
+
   	//Dummy User:
     UserModel.me.id = 0;
   	UserModel.me.uname = "go_dawgs";
@@ -53,7 +62,7 @@ angular.module("myapp").factory('UserModel', function() {
       "user[email]": email,
       "user[password]": psswd_one,
       "user[password_confirmation]": psswd_two,
-      "commit": "Create+my+account"
+      //"commit": "Create+my+account"
     },
     function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
