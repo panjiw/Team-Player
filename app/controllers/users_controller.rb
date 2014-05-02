@@ -3,9 +3,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       token = view_context.sign_in @user
-      render plain: token
+      render :json => {:token => token}, :status => 200
     else
-      render plain: @user.errors.full_messages
+      render :json => {:errors => @user.errors.full_messages}, :status => 400
     end
   end
 
