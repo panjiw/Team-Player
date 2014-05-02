@@ -8,6 +8,9 @@
       </button>
       <a class="navbar-brand" href="#">Team Player</a>
     </div>
+    <% if signed_in? %>
+        <a class="logout" href="/">Logout</a>
+    <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
         <li><a href="#">Home</a></li>
