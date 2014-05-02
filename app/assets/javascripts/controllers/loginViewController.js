@@ -1,26 +1,43 @@
+/**
+  TeamPlayer -- 2014
+
+  This file is the controller for the login page.
+
+  It provides the logic for logging in, or creating a user.
+  On success, the user is redirected to the home screen. 
+  On failure, the user is redirected to the 
+*/
 
 angular.module('myapp').controller("loginViewController", ["$scope", "UserModel", function($scope, UserModel) {
+	//Try to login the user with the parameters provided in the form,
+	//or display an error message indicating why it failed
 	$scope.login = function(e) {
-		var response = UserModel.login($scope.login_uname, $scope.login_psswd);
-
-		if(response) {
-			//TODO error codes
-		} else {
-			$scope.me = UserModel.me;
-		}
+		UserModel.login($scope.login_uname, $scope.login_psswd, function(error) {
+			if(error) {
+				//TODO deal with errors
+				alert(error);
+			} else {
+				$scope.me = UserModel.get(UserModel.me);
+				$scope.login_uname = $scope.login_psswd = "";
+			}
+		});
 	}
 
+	//Try to create a new user account with the parameters provided in the form,
+	//or display an error message indicating why it failed
 	$scope.createAccount = function(e) {
 
 		console.log("controller");
 		var response = UserModel.createAccount($scope.create_fname, $scope.create_lname, 
 												$scope.create_uname, $scope.create_email, $scope.create_psswd_one,
-												$scope.create_psswd_two);
+												$scope.create_psswd_two, function(error) {
 
-		if(response) {
-			//TODO error codes
-		} else {	//Success!
-			$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
-		}
+			if(error) {
+				//TODO deal with errors
+				alert(error);
+			} else {
+				$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
+			}
+		});
 	}
 }]);

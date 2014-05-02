@@ -1,8 +1,14 @@
-// **NOTE: specs such as return values are not set in stone.
+/*
+  TeamPlayer -- 2014
 
-var Group = function() {
-	this.isSelfGroup = false;
+  This file holds the model for all tasks the user is part of.
+
+  It's main functionality is to get, create, and edit tasks.
+*/
+
+var Group = function(id, isSelfGroup, title, description, creator, dateCreated, members) {
 	this.id = 0;
+  this.isSelfGroup = false;
 	this.title = "";
 	this.description = "";
 	this.creator = 0;
@@ -21,7 +27,9 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     //TODO
   };
 
-  //Update a group with all of the fields. If a field is null, it is not updated
+  //Update any or all of these fields for the group with the groupID (which is required).
+  //If a field is null, that field is not updated. If the groupID is not found,
+  //indicates failure...
   GroupModel.editGroup = function(groupID, title, description, members) {
     //TODO
   };
@@ -29,46 +37,25 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   // Add a user into a group. If the user is already in the group, does nothing and return true. 
   // If adding fails (e.g. user does not exist), return false.
   GroupModel.addToGroup = function(groupID, userID) {
-
+    //TODO
   }
 
   // Remove a user from a group. If the user is not in the group, does nothing and return true. 
   // If removing fails (e.g. user does not exist), return false.
   GroupModel.removeFromGroup = function(id, userID) {
-  	
-  }
-
-  // Return a user object identified by ID
-  GroupModel.getUserInvolved = function(userID) {
-  	//UserModel.users[userID].uname += "(touched)";
-  	return UserModel.users[userID];
+  	//TODO
   }
 
   //Return all groups for this user as a list of Group objects
   GroupModel.getGroups = function() {
+    //TODO ajax
 
-    var selfGroup = new Group();
-    selfGroup.isSelfGroup = true;
-		selfGroup.id = 0;
-		selfGroup.title = "SELF";
-		selfGroup.description = "SELF_GROUP";
-		selfGroup.creator = 0;
-		selfGroup.dateCreated = new Date();
-		selfGroup.members = [0];
-
-		var fakeGroup = new Group();
-    fakeGroup.isSelfGroup = false;
-		fakeGroup.id = 0;
-		fakeGroup.title = "fake";
-		fakeGroup.description = "fake group!";
-		fakeGroup.creator = 0;
-		fakeGroup.dateCreated = new Date();
-		fakeGroup.members = [0,1];
+    //Dummy objects for now
+    var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
+		var fakeGroup = new Group(0, false, "fake", "fake group!", 0, new Date(), [0, 1]);
 
     return [selfGroup, fakeGroup];
   }
-
-
 
   return GroupModel;
 }]);

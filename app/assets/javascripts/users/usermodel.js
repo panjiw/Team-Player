@@ -1,34 +1,51 @@
-var User = function() {
-  this.id = 0,
-	this.uname = "",
-	this.fname = "",
-	this.lname = ""
+
+/**
+  TeamPlayer -- 2014
+
+  This file holds the client side model that houses information
+  about all users the client is in a group with.
+
+  It also provides the login and create account interface to the backend.
+*/
+
+//This is a User object. It holds all the information
+//a client needs to know about a user
+//  --id (unique identifier for this user)
+//  --user name
+//  --first name
+//  --last name
+var User = function(id, uname, fname, lname) {
+  this.id = id,
+	this.uname = uname,
+	this.fname = fname,
+	this.lname = lname
 };
 
+//This is the UserModel for the application. It houses
+//the information about all users this user is in a group with,
+//including the data for the current user.
 angular.module("myapp").factory('UserModel', function() {
   var UserModel = {}
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
+
   // dummy users
-  UserModel.users[0] = UserModel.me;
-  UserModel.users[0].id = 0;
-  UserModel.users[0].uname = "go_dawgs";
-  UserModel.users[0].fname = "Team";
-  UserModel.users[0].lname = "Player";
+  UserModel.users[0] = new User(0, "go_dawgs", "Team", "Player");
+  UserModel.users[1] = new User(1, "fd_01", "friend", "zone");
 
-  UserModel.users[1] = new User();
-  UserModel.users[1].id = 1;
-  UserModel.users[1].uname = "fd_01";
-  UserModel.users[1].fname = "friend";
-  UserModel.users[1].lname = "Zone";
-
-  function updateUser(data, status) {
-    //TODO error codes, and updating
-    alert("Data: " + data + "\nStatus: " + status);
+  //Update the current user info to the information contained
+  //in data
+  function updateUser(data, status) {{
+    UserModel.me = data.id;
+    UserModel.users[UserModel.me] = new User(UserModel.me, data.username, 
+                                              data.firstname, data.lastname);
   }
 
 
-  UserModel.login = function(uname, psswd) {
+  //Try to log the current user in with the given username and password.
+  //On success, no arguments are provided to callback, but on failure,
+  //a text message describing the failure is the only parameter
+  UserModel.login = function(uname, psswd, callback) {
   	if(!(uname && psswd)) {
   		return "MISSING_PARAM";
   	}
@@ -37,16 +54,26 @@ angular.module("myapp").factory('UserModel', function() {
     {
       "user[username]": uname,
       "user[password]": psswd
-    }, updateUser);
-
-  	//Dummy User:
-    UserModel.me.id = 0;
-  	UserModel.me.uname = "go_dawgs";
-  	UserModel.me.fname = "Team";
-  	UserModel.me.lname = "Player";
+    })
+    .success(function(data, status) {
+      updateUser(data, status);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(textStatus);
+    })
   }
 
-  UserModel.createAccount = function(fname, lname, uname, email, psswd_one, psswd_two) {
+  //Try to create a new user account with the given parameters. 
+  //On success, the user is logged in, and the callback function 
+  //is called with no parameters. On failed, it will be called
+  //with a string text message describing the failure. Failures can happen if:
+  //  --missing any parameters
+  //  --user name is taken
+  //  --email is already used
+  //  --passwords don't match
+  UserModel.createAccount = function(fname, lname, uname, email,
+                                      psswd_one, psswd_two, callback) {
   	console.log("model!");
     if(!(fname && lname && uname && email && psswd_one && psswd_two)) {
       return "MISSING_PARAM";
@@ -61,7 +88,20 @@ angular.module("myapp").factory('UserModel', function() {
       "user[email]": email,
       "user[password]": psswd_one,
       "user[password_confirmation]": psswd_two
-    }, updateUser);
+    })
+    .success(function(data, status) {
+      updateUser(data, status);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(textStatus);
+    })
+  }
+
+  //Get the information for the user with the given id,
+  //or "undefined" if there is none
+  UserModel.get = function(id) {
+    return UserModel[id];
   }
 
   return UserModel;
