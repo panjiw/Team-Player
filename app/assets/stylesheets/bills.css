@@ -36,6 +36,12 @@
   border-radius: 5px;
 }
 
+.owe-you-tab:hover,
+.you-owe-tab:hover {
+  color: green;
+  cursor: pointer;
+}
+
 .owe-you,
 .you-owe {
   padding: 20px
