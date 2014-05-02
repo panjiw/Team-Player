@@ -36,6 +36,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 				alert(error);
 			} else {
 				$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
+				//window.location = "/home";
 			}
 		});
 	}
