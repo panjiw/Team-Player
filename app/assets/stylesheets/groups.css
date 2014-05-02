@@ -1,0 +1,54 @@
+.groups,
+.group-display {
+  border: 2px solid gray;
+  text-align: center;
+}
+
+.groups {
+  float: left;
+  height: 450px;
+  width: 300px;
+}
+
+.group-display {
+  float: right;
+  height: 500px;
+  width: 500px;
+}
+
+h3 {
+  border-bottom: 3px solid black;
+}
+
+.group-display h3 {
+  margin-bottom: 0px;
+}
+
+.group-add {
+  float: left;
+  clear: left;
+  margin-left: 100px;
+}
+
+.group-scroll {
+  width: 250px;
+  height: 350px;
+  line-height: 3em;
+  overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.group-members {
+  float: left;
+  border-right: 2px solid black;
+  height: 448px;
+  width: 200px;
+  padding: 20px;
+}
+
+.group-description {
+  float:right;
+  width: 295px;
+  padding: 20px;
+}
