@@ -25,16 +25,23 @@ angular.module("myapp").factory('UserModel', function() {
   	UserModel.me.lname = "Player";
   }
 
-  UserModel.createAccount = function(fname, lname, uname, psswd_one, psswd_two) {
-  	if(!(fname && lname && uname && pswd_one && pswd_two)) {
-      
-      //TODO error code
-      return "ERROR_CODE";
-    } else if(pswd_one != pswd_two) {
-    	return "PASSWORD_FAIL";
+  UserModel.createAccount = function(fname, lname, uname, email, psswd_one, psswd_two) {
+  	if(!(fname && lname && uname && email && pswd_one && pswd_two)) {
+      return "MISSING_PARAM";
     }
-
-    //TODO ajax
+    $.post("http://localhost:3000/createuser",
+    {
+      "user[firstname]": fname,
+      "user[lastname]": lname,
+      "user[username]": uname,
+      "user[email]": email,
+      "user[password]": psswd_one,
+      "user[password_confirmation]": psswd_two,
+      "commit": "Create+my+account"
+    },
+    function(data, status){
+      alert("Data: " + data + "\nStatus: " + status);
+    });
   }
 
   return UserModel;
