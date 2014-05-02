@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require angular
+//= require main
+//= require users/usermodel
+//= require events/eventmodel
+//= require groups/groupmodel
+//= require events/tasks/taskmodel
+//= require events/bills/billmodel
 //= require_tree .

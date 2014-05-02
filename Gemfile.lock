@@ -27,7 +27,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    angularjs-rails-resource (1.1.1)
+    angularjs-rails (1.2.16)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bcrypt (3.1.7-x86-mingw32)
@@ -56,6 +56,11 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     ffi (1.9.3)
     ffi (1.9.3-x86-mingw32)
     hike (1.2.3)
@@ -168,11 +173,12 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  angularjs-rails-resource (~> 1.1.1)
+  angularjs-rails
   bcrypt-ruby
   bootstrap-sass
   capybara
   coffee-rails (~> 4.0.0)
+  factory_girl_rails
   jbuilder (~> 2.0)
   jquery-rails
   pg

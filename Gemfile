@@ -52,6 +52,7 @@ end
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'factory_girl_rails'
 end
 
 # Design gems
@@ -62,4 +63,4 @@ gem 'sprockets'
 gem 'bcrypt-ruby'
 
 # Angularjs gem
-gem 'angularjs-rails-resource', '~> 1.1.1'
+gem 'angularjs-rails'

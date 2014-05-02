@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :users
 
   match '/',       to: 'static_pages#index',  via: 'get'
   match '/index',       to: 'static_pages#index',  via: 'get'
   match '/home',   to: 'static_pages#home',   via: 'get'
+  match '/create_user', to: 'users#create', via: 'post'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
