@@ -35,7 +35,7 @@ angular.module("myapp").factory('UserModel', function() {
 
   //Update the current user info to the information contained
   //in data
-  function updateUser(data, status) {{
+  function updateUser(data, status) {
     UserModel.me = data.id;
     UserModel.users[UserModel.me] = new User(UserModel.me, data.username, 
                                               data.firstname, data.lastname);
@@ -57,6 +57,7 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
+      console.log("Logged in as user: " + data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
@@ -74,7 +75,6 @@ angular.module("myapp").factory('UserModel', function() {
   //  --passwords don't match
   UserModel.createAccount = function(fname, lname, uname, email,
                                       psswd_one, psswd_two, callback) {
-  	console.log("model!");
     if(!(fname && lname && uname && email && psswd_one && psswd_two)) {
       return "MISSING_PARAM";
     }
@@ -91,6 +91,7 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
+      console.log("New User: " + data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
