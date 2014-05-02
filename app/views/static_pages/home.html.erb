@@ -1,14 +1,17 @@
-<!-- COMMENT HERE!!! -->
+<!-- Displays pages for after successful login: 
+    Home, Tasks, Bills, Groups -->
 
+    <!-- ********************** Home part begin *************** -->
+    <!-- ********************** Home part begin *************** -->
 <div id="content" ng-switch on="activeTab">
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
-<!--     <h1>Home Page</h1>  
-    <a href="#"> random stuff</a> -->
     <div class="container">
+        <!-- ********************** add task/bill buttons *************** -->
         <div class="home-buttons">
             <button type="button" class="btn btn-default">Add Task</button>
             <button type="button" class="btn btn-default">Add Bill</button>
         </div>
+        <!-- ********************** display todo list *************** -->
         <div class="home-tasks">
             <h3>To Do's</h3>
             <div class="home-todos">
@@ -42,10 +45,7 @@
                 </div>
             </div>
         </div>    
-
-
-
-
+        <!-- ********************** display calendar *************** -->
         <section id="directives-calendar" ng-controller="CalendarCtrl">
             <div class="page-header">
                 <h1>My Calendar</h1>
@@ -54,8 +54,7 @@
                 <tabset>
                     <tab-heading>
                          <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
-                    </tab>
-                           
+                    </tab>      
                 </tabset>
             </div>
         </section>
@@ -71,22 +70,22 @@
     <!-- ********************** Task part begin *************** -->
     <!-- ********************** Task part begin *************** -->
 
-        <!--  Displays list of user's tasks -->
+    <!--  display list of user's tasks -->
     <div class="container">
       <div class="header-row">
           <div class= "tasks-header">
             <h1>My Tasks</h1>
           </div>
+          <!-- ********************** add task button *************** -->
           <div class="tasks-addbutton">
             <button type="button" class="btn btn-default">Add Task</button>
           </div>
       </div>
 
-      <!--   ***********Scrollbox With Task Content Begin ***********  -->
+      <!--   ***********scrollbox with task content begin ***********  -->
       <div class="tasks-scroll">
           <div style="width:600px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
-
             <div class="panel panel-warning" >
               <div class="panel-heading">
                 <div class="task-panel">
@@ -95,7 +94,6 @@
                 </div>
               </div>
             </div>
-
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="task-panel">
@@ -104,7 +102,6 @@
                 </div>
               </div>
             </div>
-
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="task-panel">
@@ -113,7 +110,6 @@
                 </div>
               </div>
             </div>
-
             <div class="panel panel-warning" >
               <div class="panel-heading">
                 <div class="task-panel">
@@ -125,29 +121,29 @@
           </div>
         </div>
       </div>
-      <!--   ***********Scrollbox With Task Content End ***********  -->
-     
+      <!--   ***********scrollbox with task content end ***********  -->
+    </div>
     <!-- ********************** Task part end *************** -->
     <!-- ********************** Task part end *************** -->
-  </div>
+
 
   <div ng-controller="billsViewController" ng-switch-when="selected_bills">
     <!-- <div ng-include src="'bills.html'"></div> -->
 
     <!-- ********************** Bill part begin *************** -->
     <!-- ********************** Bill part begin *************** -->
-    <!--  Displays list of user's bills -->
+    <!--  displays list of user's bills -->
 <div class="container">
     <div class="header-row">
         <div class= "bills-header">
             <h1>My Bills</h1>
         </div>
     </div>
-
+    <!-- ********************** add bill button *************** -->
     <div class="bills-addbutton">
         <button type="button" class="btn btn-default">Add Bill</button>
     </div>
-
+    <!-- ********************** bill tabs *************** -->
     <div class="bill-body>" ng-switch on="activeBillTab">
         <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
             <h4>You Owe</h4>
@@ -155,6 +151,7 @@
         <div class="owe-you-tab" ng-click="activeBillTab='bill_selected_owe_you'">
             <h4>Owe You</h4>
         </div>
+        <!-- ********************** display list of bills you owe *************** -->
         <div class="bill-summary">
             <h2>Bill Summary</h2>
             <div class="you-owe" ng-switch-when="bill_selected_you_owe">
@@ -179,19 +176,19 @@
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div>
                 </div>
-                
             </div>
+            <!-- ************* display list of bills you owed to you ************ -->
             <div class="owe-you" ng-switch-when="bill_selected_owe_you">
                 <h3>Bills owed to you</h3>
                 <div class="bill-scroll">
                     <div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 7</h4>
+                        <h4 class="bill-amount">$700</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div>
                     <div class="bill">
-                        <h4 class="bill-member">Member 5</h4>
-                        <h4 class="bill-amount">$500</h4>
+                        <h4 class="bill-member">Member 8</h4>
+                        <h4 class="bill-amount">$80</h4>
                         <button type="button" class="view-bill btn btn-default">View Bill</button>
                     </div>
                 </div>
@@ -210,12 +207,11 @@
 
     <div class="container">
         <div class="header-row">
-            <div class= "bills-header">
+            <div class= "groups-header">
                 <h1>My Groups</h1>
             </div>
         </div>
-
-
+        <!-- ************* display list of groups ************ -->
         <div class="group-body>">
             <div class="groups">
                 <h3>Groups</h3>
@@ -226,6 +222,7 @@
                     <h4>Group 4</h4>
                 </div>
             </div>
+            <!-- ************* display selected group info ************ -->
             <div class="group-display">
                 <h3>Group 1</h3>
                 <div class="group-members">
@@ -234,17 +231,15 @@
                     <h4>Member 3</h4>
                 </div>
                 <div class="group-description">
-                    <h4>Description Description Description Description Description Description
-                    Description Description Description Description Description Description
-                 Description Description Description Description Description</h4>
+                    <h4>Description Description Description Description Description Description Description Description Description Description Description Description
+                    Description Description Description Description Description</h4>
                 </div>
             </div>
+            <!-- ************* add group button ************ -->
             <button type="button" class="btn btn-default group-add">Add Group</button>
         </div>
     </div>
-
+ </div>
     <!-- ********************** Group part end *************** -->
     <!-- ********************** Group part end *************** -->
-  </div>
-
 </div>
