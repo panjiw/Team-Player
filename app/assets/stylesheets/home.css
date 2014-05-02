@@ -1,3 +1,11 @@
+.logout {
+  float: right;
+  margin-top: 10px;
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .tabs {
   float: right;
 }
@@ -16,6 +24,7 @@
   clear: left;
   float: left;
   padding-left: 0px;
+  margin-bottom: 0px;
 }
 
 .options ul {
@@ -26,6 +35,10 @@
   margin-right: 10px;
   width: 50px;
   text-align: center;
+}
+
+.options li a {
+  height: 1px;
 }
 
 div.tabs.selected_home button.selected_home,

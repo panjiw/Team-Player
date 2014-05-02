@@ -41,6 +41,22 @@ angular.module("myapp").factory('UserModel', function() {
                                               data.firstname, data.lastname);
   }
 
+  // Log the current user out.
+  // On success, set the 'me' variable to negative so that it is not a valid user.
+  // On failure, an error text message is used to call back
+  UserModel.logout = function(callback) {
+    $.delete("http://localhost:3000/sign_out",{})
+    .success(function(data, status) {
+      // reset 'me' to negative
+      UserModel.me = -1;
+      console.log("Logged out.");
+      callback();
+      window.location = "./";
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(textStatus);
+    })
+  }
 
   //Try to log the current user in with the given username and password.
   //On success, no arguments are provided to callback, but on failure,
@@ -94,6 +110,7 @@ angular.module("myapp").factory('UserModel', function() {
       updateUser(data, status);
       console.log("New User: " + data);
       callback();
+      window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
       callback(textStatus);
