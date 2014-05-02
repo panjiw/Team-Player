@@ -59,6 +59,7 @@ angular.module("myapp").factory('UserModel', function() {
       updateUser(data, status);
       console.log("Logged in as user: " + data);
       callback();
+      window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
       callback(textStatus);
