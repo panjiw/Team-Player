@@ -39,9 +39,12 @@ angular.module("myapp").factory('UserModel', function() {
   }
 
   UserModel.createAccount = function(fname, lname, uname, email, psswd_one, psswd_two) {
-  	if(!(fname && lname && uname && email && pswd_one && pswd_two)) {
+  	console.log("model!");
+    if(!(fname && lname && uname && email && psswd_one && psswd_two)) {
       return "MISSING_PARAM";
     }
+
+
     $.post("http://localhost:3000/create_user",
     {
       "user[firstname]": fname,
