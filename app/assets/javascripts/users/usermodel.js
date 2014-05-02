@@ -31,7 +31,7 @@ angular.module("myapp").factory('UserModel', function() {
   	}
 
   	//TODO ajax
-    $.post("http://localhost:3000/signin",
+    $.post("http://localhost:3000/sign_in",
     {
       "user[username]": uname
       "user[password]": psswd,
