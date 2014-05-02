@@ -1,42 +1,40 @@
 <!-- COMMENT HERE!!! -->
 
-<head>
-    <link rel="icon" href="favicon.ico" />
-    <link rel="stylesheet" href="/Calendar/bootstrap.css" />
-    <link rel="stylesheet" href="/Calendar/fullcalendar.css">
-    <link rel="stylesheet" href="/Calendar/calendarDemo.css" />
-
-    <script src="/Calendar/jquery.js"></script>
-    <script src="/Calendar/jquery-ui.js"></script>
-    <script src="/Calendar/angular.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
-    <script src="/Calendar/fullcalendar.js"></script>
-    <script src="/Calendar/gcal.js"></script>
-    <script src="/Calendar/calendar.js"></script>
-    <script src="/Calendar/calendarDemo.js"></script>
-</head>
-
-
 <div id="content" ng-switch on="activeTab">
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
 <!--     <h1>Home Page</h1>  
     <a href="#"> random stuff</a> -->
     <div class="container">
-        <section id="directives-calendar" ng-controller="CalendarCtrl">
-            <div class="page-header">
-                <h1>My Calendar</h1>
+        <div class="home-buttons">
+            <button type="button" class="btn btn-default">Add Task</button>
+            <button type="button" class="btn btn-default">Add Bill</button>
+        </div>
+        <div class="home-tasks">
+            <h3>To Do's and Upcoming Events</h3>
+            <div class="home-todos">
+                <div class="panel-warning" >
+                  <div class="panel-heading">
+                    <div class="task-panel">
+                        <h4 class="panel-descr">Clean Your Room</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-warning" >
+                  <div class="panel-heading">
+                    <div class="task-panel">
+                        <h4 class="panel-descr">Pay Rent</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-warning" >
+                  <div class="panel-heading">
+                    <div class="task-panel">
+                        <h4 class="panel-descr">Take Out Trash</h4>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <div class="span8">
-                <tabset>
-                <tab-heading>
-                    <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
-                        <h4>{{alertMessage}}</h4>
-                     </div>
-                    <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
-                </tab>        
-                </tabset>
-            </div>
-        </section>
+        </div>
     </div>
   </div>
 

@@ -53,3 +53,27 @@ div.tabs.selected_groups button.selected_groups{
   margin-top:100px;
   padding: 10px;
 }
+
+.home-buttons button {
+  float: left;
+  clear: left;
+  margin-bottom: 5px;
+  margin-left: 60px;
+  width: 100px;
+}
+
+.home-tasks {
+  border: 2px solid gray;
+  float: left;
+  clear: left;
+  width: 220px;
+  height: 400px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.home-tasks ul {
+  text-align: left;
+  list-style-type: none;
+}
