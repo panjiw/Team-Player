@@ -1,3 +1,5 @@
+// **NOTE: specs such as return values are not set in stone.
+
 var Task = new Event();
 Task.done = false;
 Task.members = [];
@@ -8,17 +10,17 @@ angular.module("myapp").factory('TaskModel', function() {
 
   //Create and return a task with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  TaskModel.createTask = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) {
+  TaskModel.createTask = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) { // creator ID
     //TODO
   };
 
   //Update a task with all of the fields. If a field is null, it is not updated
-  TaskModel.editTask = function(id, groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) {
+  TaskModel.editTask = function(taskID, title, description, dateDue, cycle, repostArray, members) {
     //TODO
   };
 
   //Set the given task as finished, and update to the database
-  TaskModel.setFinished = function(id) {
+  TaskModel.setFinished = function(taskID) {
     //TODO
   }
 
