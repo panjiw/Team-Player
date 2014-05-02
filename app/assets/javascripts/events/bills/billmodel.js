@@ -1,10 +1,23 @@
-// **NOTE: specs such as return values are not set in stone.
+/*
+  TeamPlayer -- 2014
 
-var Bill = new Event();
-Bill.membersAmountMap = {};
-Bill.membersPaidMap = {};
-Bill.total = 0;
+  This file holds the model for all bills the user is part of.
 
+  It's main functionality is to get, create, pay, and edit bills.
+*/
+
+//Define a bil object as an event with additional fields:
+//  --membersAmountMap: the members associated with the bill, and how much each owes
+//  --membersPaidMap: which membesr have paid their amounts.
+//  --total: is not explicitly a field, but it is a derived field.
+var Bill = function(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray, membersAmountMap) {
+  this.event = new Event(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray);
+  this.membersAmountMap = membersAmountMap;
+  this.membersPaidMap = {};
+  for(userID in membersAmountMap) {
+    this.membersPaidMap[userID] = false;
+  }
+};
 
 angular.module("myapp").factory('BillModel', function() {
   var BillModel = {};
@@ -28,35 +41,12 @@ angular.module("myapp").factory('BillModel', function() {
 
   //Return all bills.css for this user as a list of Bill objects
   BillModel.getBills = function() {
-  	
-    var dummyBill = new Bill();
-    dummyBill.id = 0;
-    dummyBill.groupID = 0;
-    dummyBill.title = "Dummy Bill";
-    dummyBill.description = "pay these dum bill stubs!"
-    dummyBill.creator = 0;
-    dummyBill.dateCreated = new Date();
-    dummyBill.dateDue = new Date();
-    dummyBill.cycle = false;
-    dummyBill.repost = [false, false, false, false, false, false, false];
-    dummyBill.membersAmountMap = {1: 15};
-		dummyBill.membersPaidMap = {1: 0};
-		dummyBill.total = 15;
+    //TODO ajax
 
-		var fakeBill = new Bill();
-		fakeBill.id = 0;
-    fakeBill.groupID = 0;
-    fakeBill.title = "fake Bill";
-    fakeBill.description = "pay these fake bills.css!"
-    fakeBill.creator = 0;
-    fakeBill.dateCreated = new Date();
-    fakeBill.dateDue = new Date();
-    fakeBill.cycle = false;
-    fakeBill.repost = [false, false, false, false, false, false, false];
-    fakeBill.membersAmountMap = {1: 17};
-		fakeBill.membersPaidMap = {1: 17};
-		fakeBill.total = 17;
-    
+    //Dummy objects for now
+    var sevenFalse = [false, false, false, false, false, false, false];
+    var dummyBill = new Bill(0, 0, 0, "Dummy Bill", "Pay me!", new Date(), new Date(), false, sevenFalse, {1: 17});
+    var fakeBill = new Bill(0, 0, 0, "Fake Bill", "Pay me some more!", new Date(), new Date("5/23/2014"), false, sevenFalse, {1: 15});    
 
     return [dummyBill, fakeBill];
   }
