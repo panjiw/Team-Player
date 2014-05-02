@@ -10,9 +10,10 @@ var Group = function() {
 	this.members = [];
 }
 
-angular.module("myapp").factory('GroupModel', function() {
+angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
   var GroupModel = {};
   GroupModel.groups = {};   //ID to groups
+
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise...
@@ -21,13 +22,13 @@ angular.module("myapp").factory('GroupModel', function() {
   };
 
   //Update a group with all of the fields. If a field is null, it is not updated
-  GroupModel.editGroup = function(id, title, description, dateCreated, members) {
+  GroupModel.editGroup = function(groupID, title, description, members) {
     //TODO
   };
 
   // Add a user into a group. If the user is already in the group, does nothing and return true. 
   // If adding fails (e.g. user does not exist), return false.
-  GroupModel.addToGroup = function(id, userID) {
+  GroupModel.addToGroup = function(groupID, userID) {
 
   }
 
@@ -37,9 +38,15 @@ angular.module("myapp").factory('GroupModel', function() {
   	
   }
 
+  // Return a user object identified by ID
+  GroupModel.getUserInvolved = function(userID) {
+  	//UserModel.users[userID].uname += "(touched)";
+  	return UserModel.users[userID];
+  }
+
   //Return all groups for this user as a list of Group objects
   GroupModel.getGroups = function() {
-  	
+
     var selfGroup = new Group();
     selfGroup.isSelfGroup = true;
 		selfGroup.id = 0;
@@ -50,16 +57,18 @@ angular.module("myapp").factory('GroupModel', function() {
 		selfGroup.members = [0];
 
 		var fakeGroup = new Group();
-    fakeGroup.isSelfGroup = true;
+    fakeGroup.isSelfGroup = false;
 		fakeGroup.id = 0;
 		fakeGroup.title = "fake";
 		fakeGroup.description = "fake group!";
 		fakeGroup.creator = 0;
 		fakeGroup.dateCreated = new Date();
-		fakeGroup.members = [0];
+		fakeGroup.members = [0,1];
 
     return [selfGroup, fakeGroup];
   }
 
+
+
   return GroupModel;
-});
+}]);
