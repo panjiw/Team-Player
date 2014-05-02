@@ -64,3 +64,6 @@ gem 'bcrypt-ruby'
 
 # Angularjs gem
 gem 'angularjs-rails'
+
+# Jasmine gem
+gem 'jasmine', :group => [:development, :test]
