@@ -14,5 +14,13 @@ angular.module('myapp').controller("mainViewController", ["$scope", "UserModel",
 		});
 	}
 
+	$scope.jumpTo = function(page) {
+		if (page == "home") {
+			window.location = "./";
+		} else if (page == "help") {
+			window.location = "./help";
+		}
+	}
+
 
 }]);
