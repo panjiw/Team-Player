@@ -25,5 +25,7 @@
 //= require FullCalendar/gcal
 //= require FullCalendar/calendar
 //= require FullCalendar/calendarDemo
-//= require_tree
+//= require toastr/toastr.min
+//= require toastr/options
+//= require_tree .
 //
