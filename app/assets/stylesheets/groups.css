@@ -17,7 +17,7 @@
 }
 
 .groups h3,
-.groups-display {
+.group-display h3 {
   border-bottom: 3px solid black;
 }
 
