@@ -19,7 +19,6 @@
 .DS_Store
 
 # Ignore other unneeded files.
-database.yml
 doc/
 *.swp
 *~
