@@ -13,4 +13,7 @@ class StaticPagesController < ApplicationController
       redirect_to '/'
     end
   end
+
+  def help
+  end
 end
