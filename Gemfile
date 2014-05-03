@@ -46,7 +46,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  gem 'heroku_secrets'
+  gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 end
 
 # Testing gems, from railstutorial.org
