@@ -7,58 +7,52 @@
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
     <div class="container">
         <!-- ********************** add task/bill buttons *************** -->
-        <div class="home-buttons">
-            <button type="button" class="btn btn-default">Add Task</button>
-            <button type="button" class="btn btn-default">Add Bill</button>
-        </div>
+        <div class="col-md-3">
+            <div class="home-buttons">
+                <button type="button" class="btn btn-default">Add Task</button>
+                <button type="button" class="btn btn-default">Add Bill</button>
+            </div>
         <!-- ********************** display todo list *************** -->
-        <div class="home-tasks">
-            <h3>To Do's</h3>
-            <div class="home-todos">
-                <div class="panel-danger" >
-                  <div class="panel-heading">
-                    <div class="task-panel">
-                        <h4 class="panel-descr">Clean Your Room</h4>
+            <div class="home-tasks">
+                <h3>To Do's</h3>
+                <div class="home-todos">
+                    <div class="panel-danger" >
+                      <div class="panel-heading">
+                        <div class="task-panel">
+                            <h4 class="panel-descr">Clean Your Room</h4>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="panel-danger" >
-                  <div class="panel-heading">
-                    <div class="task-panel">
-                        <h4 class="panel-descr">Pay Rent</h4>
+                    <div class="panel-danger" >
+                      <div class="panel-heading">
+                        <div class="task-panel">
+                            <h4 class="panel-descr">Pay Rent</h4>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="panel-danger" >
-                  <div class="panel-heading">
-                    <div class="task-panel">
-                        <h4 class="panel-descr">Take Out Trash</h4>
+                    <div class="panel-danger" >
+                      <div class="panel-heading">
+                        <div class="task-panel">
+                            <h4 class="panel-descr">Take Out Trash</h4>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="panel-danger" >
-                  <div class="panel-heading">
-                    <div class="task-panel">
-                        <h4 class="panel-descr">Buy Toilet Paper</h4>
+                    <div class="panel-danger" >
+                      <div class="panel-heading">
+                        <div class="task-panel">
+                            <h4 class="panel-descr">Buy Toilet Paper</h4>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                 </div>
             </div>
-        </div>    
+        </div>
         <!-- ********************** display calendar *************** -->
-        <section id="directives-calendar" ng-controller="CalendarCtrl">
-            <div class="page-header">
-                <h1>My Calendar</h1>
+        <div class="col-md-9">
+            <div class="home-calendar">
+                <div ui-calendar ng-model="eventSources"></div>
             </div>
-            <div class="span8">
-                <tabset>
-                    <tab-heading>
-                    <div ui-calendar ng-model="eventSources"></div>
-<!--                          <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div> -->
-                    </tab>      
-                </tabset>
-            </div>
-        </section>
+        </div>
 
     </div>
 </div>
