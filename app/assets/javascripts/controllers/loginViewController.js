@@ -14,7 +14,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 	$scope.logout = function(e) {
 		UserModel.logout(function(error) {
 			if(error) {
-        toastr.success("Logout error: ", error);
+        toastr.error(error, "Logout failed: ");
         //document.getElementById("login-error").style.visibility = "visible";
 				//document.getElementById("login-error").innerHTML = error;
 			} else {
@@ -28,7 +28,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 	$scope.login = function(e) {
 		UserModel.login($scope.login_uname, $scope.login_psswd, function(error) {
 			if(error) {
-        toastr.success("Login error: ", error);
+        toastr.error(error, "Login failed: ");
         //document.getElementById("login-error").style.visibility = "visible";
 				//document.getElementById("login-error").innerHTML = error;
 			} else {
@@ -47,7 +47,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 												$scope.create_psswd_two, function(error) {
 
 			if(error) {
-        toastr.success("Login error: ", error);
+        toastr.error(error, "Account creation failed: ");
         //document.getElementById("login-error").style.visibility = "visible";
 				//document.getElementById("login-error").innerHTML = error;
 			} else {
