@@ -1,1 +1,1 @@
-var myApp = angular.module('myapp', []);
+var myApp = angular.module('myapp', ['ui.calendar']);

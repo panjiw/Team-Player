@@ -77,3 +77,10 @@ div.tabs.selected_groups button.selected_groups{
   text-align: left;
   list-style-type: none;
 }
+
+.home-calendar {
+  margin-left: 100px;
+  margin-top: 30px;
+  width: 600px;
+  height: 500px;
+}
