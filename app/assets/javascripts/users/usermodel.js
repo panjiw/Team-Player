@@ -70,7 +70,7 @@ angular.module("myapp").factory('UserModel', function() {
   		return "MISSING_PARAM";
   	}
 
-    $.post("http://localhost:3000/sign_in",
+    $.post("/sign_in",
     {
       "user[username]": uname,
       "user[password]": psswd
@@ -102,7 +102,7 @@ angular.module("myapp").factory('UserModel', function() {
     }
 
 
-    $.post("http://localhost:3000/create_user",
+    $.post("/create_user",
     {
       "user[firstname]": fname,
       "user[lastname]": lname,

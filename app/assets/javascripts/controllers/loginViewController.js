@@ -14,10 +14,13 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 	$scope.logout = function(e) {
 		UserModel.logout(function(error) {
 			if(error) {
-				//TODO deal with errors
-                document.getElementById("login-error").style.visibility = "visible";
-				document.getElementById("login-error").innerHTML = error;
+        $scope.$watch(function() {
+          $scope.error = error;
+        });
+        //document.getElementById("login-error").style.visibility = "visible";
+				//document.getElementById("login-error").innerHTML = error;
 			} else {
+        //TODO
 			}
 		});
 	}
@@ -27,9 +30,11 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 	$scope.login = function(e) {
 		UserModel.login($scope.login_uname, $scope.login_psswd, function(error) {
 			if(error) {
-				//TODO deal with errors
-                document.getElementById("login-error").style.visibility = "visible";
-				document.getElementById("login-error").innerHTML = error;
+        $scope.$watch(function() {
+          $scope.error = error;
+        });
+        //document.getElementById("login-error").style.visibility = "visible";
+				//document.getElementById("login-error").innerHTML = error;
 			} else {
 				$scope.me = UserModel.get(UserModel.me);
 				$scope.login_uname = $scope.login_psswd = "";
@@ -46,9 +51,11 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 												$scope.create_psswd_two, function(error) {
 
 			if(error) {
-				//TODO deal with errors
-                document.getElementById("login-error").style.visibility = "visible";
-				document.getElementById("login-error").innerHTML = error;
+        $scope.$watch(function() {
+          $scope.error = error;
+        });
+        //document.getElementById("login-error").style.visibility = "visible";
+				//document.getElementById("login-error").innerHTML = error;
 			} else {
 				$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
 				//window.location = "/home";
