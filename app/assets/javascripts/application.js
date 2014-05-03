@@ -26,3 +26,4 @@
 //= require FullCalendar/calendar
 //= require FullCalendar/calendarDemo
 //= require_tree
+//
