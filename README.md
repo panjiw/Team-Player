@@ -15,11 +15,13 @@ Team-Player
 See <a href="https://github.com/panjiw/Team-Player/wiki">project wiki</a> for links to deliverables, bug tracker, and mailing list archive. 
 
 Zero Feature Release: 
-Product: https://team-player.herokuapp.com/
-Developer Page: https://github.com/panjiw/Team-Player/wiki
-Developer Documentation: https://docs.google.com/a/uw.edu/document/d/1SKEDKel_2_kpfQq91sM63R6gbVeIXn-JSc2hE1YmsD8
-User Documentation: https://docs.google.com/a/uw.edu/document/d/1giS7XVnym-3Iijb32KPmmu1oExoM7tZoG_WIuKgUvMk
-Bug Tracking/ Issues : https://github.com/panjiw/Team-Player/issues
+<a href="https://team-player.herokuapp.com/">Product</a>
+<a href="https://github.com/panjiw/Team-Player/wiki">Developer Page</a>
+<a href="https://docs.google.com/a/uw.edu/document/d/1SKEDKel_2_kpfQq91sM63R6gbVeIXn-JSc2hE1YmsD8">Developer Documentation</a>
+<a href="https://docs.google.com/a/uw.edu/document/d/1giS7XVnym-3Iijb32KPmmu1oExoM7tZoG_WIuKgUvMk">User Documentation</a>
+<a href="https://github.com/panjiw/Team-Player/issues">Bug Tracking/Issues</a>
+
+
 - Layouts Drafts
 - User creation + validation
 - User Sign-in, Sessions, Sign-out
