@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+# Tests for the user model (Rep Inv tests)
 describe User do
 
   before { @user = User.new(username: "teamplayer", firstname: "Team", lastname: "Player", email: "team@player.com",
@@ -15,22 +15,68 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
-
   it { should be_valid }
   it { should respond_to(:authenticate) }
 
+  # User name
   describe "when username is not present" do
     before { @user.username = " " }
     it { should_not be_valid }
   end
 
+  describe "when username is not alphanum" do
+    before { @user.username = "team@player" }
+    it { should_not be_valid }
+  end
+
+  describe "when username is more than 255" do
+    before { @user.username = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+    it { should_not be_valid }
+  end
+
+  describe "when username is not unique" do
+    before do
+      @user.save
+      @user = User.new(username: "teamplayer", firstname: "Second", lastname: "Player", email: "test@player.com",
+                       password: "player", password_confirmation: "player")
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when username is not unique in lower case" do
+    before do
+      @user.save
+      @user = User.new(username: "TeamPlayer", firstname: "Second", lastname: "Player", email: "test@player.com",
+                       password: "player", password_confirmation: "player")
+    end
+    it { should_not be_valid }
+  end
+
+  # First name
   describe "when firstname is not present" do
     before { @user.firstname = " " }
     it { should_not be_valid }
   end
 
+  describe "when firstname is more than 255" do
+    before { @user.firstname = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+    it { should_not be_valid }
+  end
+
+  # Last name
   describe "when lastname is not present" do
     before { @user.lastname = " " }
+    it { should_not be_valid }
+  end
+
+  describe "when lastname is more than 255" do
+    before { @user.lastname = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" }
+    it { should_not be_valid }
+  end
+
+  # Email
+  describe "when email is not present" do
+    before { @user.email = " " }
     it { should_not be_valid }
   end
 
@@ -53,8 +99,27 @@ describe User do
         expect(@user).to be_valid
       end
     end
-    end
+  end
 
+  describe "when email is not unique" do
+    before do
+      @user.save
+      @user = User.new(username: "teamplayer", firstname: "Second", lastname: "Player", email: "team@player.com",
+                       password: "player", password_confirmation: "player")
+    end
+    it { should_not be_valid }
+  end
+
+  describe "when username is not unique in lower case" do
+    before do
+      @user.save
+      @user = User.new(username: "teamplayer", firstname: "Second", lastname: "Player", email: "TEAM@player.com",
+                       password: "player", password_confirmation: "player")
+    end
+    it { should_not be_valid }
+  end
+
+  # Password
   describe "when password is not present" do
     before do
       @user = User.new(username: "teamplayer", firstname: "Team", lastname: "Player", email: "team@player.com",
@@ -84,6 +149,7 @@ describe User do
     end
   end
 
+  # Session
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }

@@ -6,16 +6,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">Team Player</a> <!--Add link to home-->
+      <a class="navbar-brand" href="/" ng-click="activeTab='selected_home'">Team Player</a> <!--Add link to home-->
     </div>
     <% if signed_in? %>
         <a class="logout" href="/" ng-click="logout($event)">Logout</a>
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
-        <li><a>Home</a></li> <!--Add link to home-->
+        <li><a href="/" ng-click="activeTab='selected_home'">Home</a></li> <!--Add link to home-->
         <li><a>About</a></li> <!--Add link to about--> 
         <li><a>Contact</a></li> <!--Add link to contact-->
+        <li><a href="help">Help</a></li>
       </ul>
     </div><!--/.nav-collapse -->
     <% if signed_in? %>
