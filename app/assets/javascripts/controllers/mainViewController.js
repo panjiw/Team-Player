@@ -1,4 +1,9 @@
-
+/*
+ *  TeamPlayer -- 2014
+ *
+ *  This file is not implemented yet. It will be
+ *  the controller for the main (home) page
+ */
 angular.module('myapp').controller("mainViewController", ["$scope", "UserModel", function($scope, UserModel) {
 	$scope.activeTab = "selected_home";
 

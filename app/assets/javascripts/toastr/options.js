@@ -1,3 +1,9 @@
+/**
+ *  TeamPlayer -- 2014
+ *
+ *  This file declares the options for our app for
+ *  the toast notifications from the "toastr" library from CodeSeven
+ */
 toastr.options = {
   "closeButton": false,
   "debug": false,
