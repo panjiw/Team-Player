@@ -1,4 +1,7 @@
-<!-- Displays pages for after successful login: 
+<!-- 
+TeamPlayer - 2014
+
+Displays pages for after successful login: 
     Home, Tasks, Bills, Groups -->
 
     <!-- ********************** Home part begin *************** -->
@@ -6,13 +9,11 @@
 <div id="content" ng-switch on="activeTab">
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
     <div class="container">
-        <!-- ********************** add task/bill buttons *************** -->
         <div class="col-md-3">
             <div class="home-buttons">
                 <button type="button" class="btn btn-default">Add Task</button>
                 <button type="button" class="btn btn-default">Add Bill</button>
             </div>
-        <!-- ********************** display todo list *************** -->
             <div class="home-tasks">
                 <h3>To Do's</h3>
                 <div class="home-todos">
@@ -47,7 +48,6 @@
                 </div>
             </div>
         </div>
-        <!-- ********************** display calendar *************** -->
         <div class="col-md-9">
             <div class="home-calendar">
                 <div ui-calendar ng-model="eventSources"></div>
@@ -64,19 +64,15 @@
 
     <!-- ********************** Task part begin *************** -->
     <!-- ********************** Task part begin *************** -->
-
-    <!--  display list of user's tasks -->
     <div class="container">
       <div class="header-row">
           <div class= "tasks-header">
             <h1>My Tasks</h1>
           </div>
-          <!-- ********************** add task button *************** -->
           <div class="tasks-addbutton">
             <button type="button" class="btn btn-default">Add Task</button>
           </div>
       </div>
-
       <!--   ***********scrollbox with task content begin ***********  -->
       <div class="tasks-scroll">
           <div style="width:600px;height:400px;line-height:3em;
@@ -127,18 +123,15 @@
 
     <!-- ********************** Bill part begin *************** -->
     <!-- ********************** Bill part begin *************** -->
-    <!--  displays list of user's bills -->
 <div class="container">
     <div class="header-row">
         <div class= "bills-header">
             <h1>My Bills</h1>
         </div>
     </div>
-    <!-- ********************** add bill button *************** -->
     <div class="bills-addbutton">
         <button type="button" class="btn btn-default">Add Bill</button>
     </div>
-    <!-- ********************** bill tabs *************** -->
     <div class="bill-body>" ng-switch on="activeBillTab">
         <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
             <h4>You Owe</h4>
@@ -146,7 +139,6 @@
         <div class="owe-you-tab" ng-click="activeBillTab='bill_selected_owe_you'">
             <h4>Owe You</h4>
         </div>
-        <!-- ********************** display list of bills you owe *************** -->
         <div class="bill-summary">
             <h2>Bill Summary</h2>
             <div class="you-owe" ng-switch-when="bill_selected_you_owe">
@@ -172,7 +164,6 @@
                     </div>
                 </div>
             </div>
-            <!-- ************* display list of bills you owed to you ************ -->
             <div class="owe-you" ng-switch-when="bill_selected_owe_you">
                 <h3>Bills owed to you</h3>
                 <div class="bill-scroll">
@@ -193,7 +184,7 @@
 </div>
     <!-- ********************** Bill part end *************** -->
     <!-- ********************** Bill part end *************** -->
-  </div>
+</div>
 
   <div ng-controller="groupsViewController" ng-switch-when="selected_groups">
     <!-- <div ng-include src="'groups.html'"></div> -->
@@ -206,7 +197,6 @@
                 <h1>My Groups</h1>
             </div>
         </div>
-        <!-- ************* display list of groups ************ -->
         <div class="group-body>">
             <div class="groups">
                 <h3>Groups</h3>
@@ -217,7 +207,6 @@
                     <h4>Group 4</h4>
                 </div>
             </div>
-            <!-- ************* display selected group info ************ -->
             <div class="group-display">
                 <h3>Group 1</h3>
                 <div class="group-members">
@@ -230,11 +219,121 @@
                     Description Description Description Description Description</h4>
                 </div>
             </div>
-            <!-- ************* add group button ************ -->
             <button type="button" class="btn btn-default group-add">Add Group</button>
         </div>
     </div>
  </div>
     <!-- ********************** Group part end *************** -->
     <!-- ********************** Group part end *************** -->
+</div>
+</div>
+
+<div ng-switch-when="selected_help">
+    <!-- ********************** Help part begin *************** -->
+    <!-- ********************** Help part begin *************** -->
+    <div class="help-container">
+      <div class= "header"><h1>User Manual</h1></div><br><br>
+      <div class= "info"><h4><i>May contain more information than website currently displays. Will be updated as new features are added.</i></h4></div>
+      <br>
+      <div id="container">
+        <ul id="expList">
+          <!-- ********************** Accounts Questions *************** -->
+          <li><u><b>Accounts</b></u>
+            <ul>
+              <li><b>How do I get an account?</b>
+                <ol>
+                  <li> Go to the TeamPlayer website.</li>
+                  <li> Register with your information.</li>
+                  <li> You are automatically created into a group with just yourself!</li>
+                </ol>
+              </li>
+              <li><b>How can I invite my friends?</b></li>
+              <ol>
+                <li> Click on the "Groups" tab.</li>
+                <li> Navigate to an existing group or create a new group.</li>
+                <li> Click "Add Member". If they have an account, you can search them with by name or username. If not, you can invite them by email.</li>
+              </ol>
+            </ul>
+          </li>
+          <br>
+          <!-- ********************** Tasks Questions *************** -->
+          <li><u><b>Tasks</b></u>
+            <ul>
+              <li><b>How do I add a task?</b>
+                <ol>
+                  <li> Click on "Add Task" either from Home or from the Tasks tab.</li>
+                  <li> Input name, description...etc.</li>
+                  <li> Select the group it will be for, as well as the people who will be a part of it</li>
+                  <li> Cycle and/or set a deadline for the task.</li>
+                </ol>
+              </li>
+              <li><b>What is a cycle?</b></li>
+              <ol>
+                <li> Add multiiple people from a group to a task, so that each of them have a turn at a task.</li>
+                <li> During task creation, you can control the order of the cycle.</li>
+              </ol>
+              <li><b>How do I edit a task?</b></li>
+              <ol>
+                <li> Click on the task, a popup should appear</li>
+                <li> Click "Edit".</li>
+              </ol>
+              <li><b>How do I mark a task as done?</b></li>
+              <ol>
+                <li> Click on a task, a popup should appear.</li>
+                <li> Click "Finished".</li>
+              </ol>
+            </ul>
+          </li>
+          <br>
+          <!-- ********************** Bills Questions *************** -->
+          <li><u><b>Bills</b></u>
+            <ul>
+              <li><b>How do I add a bill?</b>
+                <ol>
+                  <li> Click on "Add Bill" either from Home or from the Bills tab.</li>
+                  <li> Input name, description, total, and members who are a part of the bill.</li>
+                  <li> Members names will automatically appear. Click to set their totals.</li>
+                </ol>
+              </li>
+              <li><b>How can I edit a bill?</b></li>
+              <ol>
+                <li> Click on the bill, a popup should appear.</li>
+                <li> Click "Edit".</li>
+              </ol>
+              <li><b>How can I pay a bill?</b></li>
+              <ol>
+                <li> Click on the Bills tab and find the member you want to pay back.</li>
+                <li> Click on the bill, and a popup should appear.</li>
+                <li> Select or deselect bills you want to pay.</li>
+                <li> Click paid, and pay your group member back!</li>
+              </ol>
+            </ul>
+          </li>
+          <br>
+          <!-- ********************** Groups Questions *************** -->
+          <li><u><b>Groups</b></u>
+            <ul>
+              <li><b>How do I add a group?</b>
+                <ol>
+                  <li> Click on the groups tab.</li>
+                  <li> Input name, description, dates, and invite members.</li>
+                </ol>
+              </li>
+              <li><b>Can I delete a group?</b></li>
+              <ol>
+                <li> You may not delete a group buy you may remove yourself from it.</li>
+                <li> If all members of a group leave, the group will be deleted.</li>
+              </ol>
+              <li><b>How do I remove myself from a group?</b></li>
+              <ol>
+                <li> Select the group you would like to leave.</li>
+                <li> Click the "Leave Group" button in the group description.</li>
+              </ol>
+            </ul>
+          </li>
+          <br>
+        </ul>
+      </div>
+    </div>
+</div>
 </div>
