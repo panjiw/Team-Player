@@ -16,6 +16,7 @@
 <!--         <li><a href="/" ng-click="activeTab='selected_home'">Home</a></li> --> <!-- Add link to home--> 
         <li><a>About</a></li> <!--Add link to about--> 
         <li><a>Contact</a></li> <!--Add link to contact-->
+        <li><a href="/help">Help</a></li>
       </ul>
     </div><!--/.nav-collapse -->
     <% if signed_in? %>
@@ -24,7 +25,6 @@
         <button class="btn tab selected_tasks" ng-click="activeTab='selected_tasks'">Tasks</button>
         <button class="btn tab selected_bills" ng-click="activeTab='selected_bills'">Bills</button>
         <button class="btn tab selected_groups" ng-click="activeTab='selected_groups'">Groups</button>
-        <button class="btn tab selected_help" ng-click="activeTab='selected_help'">Help</button>
       </div>
       
     <% end %>
