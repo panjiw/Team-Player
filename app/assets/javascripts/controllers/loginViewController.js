@@ -15,7 +15,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 		UserModel.logout(function(error) {
 			if(error) {
 				//TODO deal with errors
-                document.getElementById("login-error").style.display = "inline";
+                document.getElementById("login-error").style.visibility = "visible";
 				document.getElementById("login-error").innerHTML = error;
 			} else {
 			}
@@ -28,7 +28,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 		UserModel.login($scope.login_uname, $scope.login_psswd, function(error) {
 			if(error) {
 				//TODO deal with errors
-                document.getElementById("login-error").style.display = "inline";
+                document.getElementById("login-error").style.visibility = "visible";
 				document.getElementById("login-error").innerHTML = error;
 			} else {
 				$scope.me = UserModel.get(UserModel.me);
@@ -47,7 +47,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 
 			if(error) {
 				//TODO deal with errors
-                document.getElementById("login-error").style.display = "inline";
+                document.getElementById("login-error").style.visibility = "visible";
 				document.getElementById("login-error").innerHTML = error;
 			} else {
 				$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
