@@ -16,7 +16,8 @@
   width: 500px;
 }
 
-h3 {
+.groups h3,
+.groups-display {
   border-bottom: 3px solid black;
 }
 
