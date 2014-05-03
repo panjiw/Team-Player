@@ -46,6 +46,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'heroku_secrets'
 end
 
 # Testing gems, from railstutorial.org
@@ -66,4 +67,4 @@ gem 'bcrypt-ruby'
 gem 'angularjs-rails'
 
 # Jasmine gem
-gem 'jasmine', :group => [:development, :test]
+gem 'jasmine'
