@@ -5,20 +5,19 @@
 }
 
 .groups {
-  float: left;
-  height: 350px;
+  height: 400px;
   width: 300px;
 }
 
 .group-display {
-  float: right;
+  float:right;
   height: 400px;
-  width: 500px;
+  width: 700px;
 }
 
 .groups h3,
 .group-display h3 {
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid black;
 }
 
 .group-display h3 {
@@ -45,12 +44,13 @@
   float: left;
   border-right: 2px solid black;
   height: 300px;
-  width: 200px;
+  width: 250px;
   padding: 20px;
 }
 
 .group-description {
   float:right;
-  width: 295px;
-  padding: 20px;
+  width: 400px;
+  padding: 30px;
+
 }
