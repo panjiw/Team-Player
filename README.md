@@ -17,7 +17,7 @@ See <a href="https://github.com/panjiw/Team-Player/wiki">project wiki</a> for li
 Zero Feature Release: <br>
 - <a href="https://team-player.herokuapp.com/">Product</a><br>
 - <a href="https://github.com/panjiw/Team-Player/wiki">Developer Page</a><br>
-- a href="https://docs.google.com/a/uw.edu/document/d/1SKEDKel_2_kpfQq91sM63R6gbVeIXn-JSc2hE1YmsD8">Developer Documentation</a><br>
+- <a href="https://docs.google.com/a/uw.edu/document/d/1SKEDKel_2_kpfQq91sM63R6gbVeIXn-JSc2hE1YmsD8">Developer Documentation</a><br>
 - <a href="https://docs.google.com/a/uw.edu/document/d/1giS7XVnym-3Iijb32KPmmu1oExoM7tZoG_WIuKgUvMk">User Documentation</a><br>
 - <a href="https://github.com/panjiw/Team-Player/issues">Bug Tracking/Issues</a><br>
 
