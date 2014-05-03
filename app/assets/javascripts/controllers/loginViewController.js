@@ -11,17 +11,19 @@
 angular.module('myapp').controller("loginViewController", ["$scope", "UserModel", function($scope, UserModel) {
   $scope.message = "Hello, world";
 
+  function displayErrors(title, errorList) {
+    for(var i = 0; i < errorList.length; i++) {
+      toastr.error(errorList[i], title);
+    }
+  }
+
 	// Log out the user, or display why it failed
 	$scope.logout = function(e) {
 		UserModel.logout(function(error) {
 			if(error) {
-        toastr.error(error, "Logout failed: ");
-        //document.getElementById("login-error").style.visibility = "visible";
-				//document.getElementById("login-error").innerHTML = error;
-			} else {
-        //TODO
-			}
-		});
+        displayErrors("Logout failed: ", error);
+      }
+    });
 	}
 
 	//Try to login the user with the parameters provided in the form,
@@ -29,9 +31,7 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 	$scope.login = function(e) {
 		UserModel.login($scope.login_uname, $scope.login_psswd, function(error) {
 			if(error) {
-        toastr.error(error, "Login failed: ");
-        //document.getElementById("login-error").style.visibility = "visible";
-				//document.getElementById("login-error").innerHTML = error;
+        displayErrors("Login failed: ", error);
 			} else {
 				$scope.me = UserModel.get(UserModel.me);
 				$scope.login_uname = $scope.login_psswd = "";
@@ -48,12 +48,10 @@ angular.module('myapp').controller("loginViewController", ["$scope", "UserModel"
 												$scope.create_psswd_two, function(error) {
 
 			if(error) {
-        toastr.error(error, "Account creation failed: ");
-        //document.getElementById("login-error").style.visibility = "visible";
-				//document.getElementById("login-error").innerHTML = error;
+        displayErrors("Account creation failed: ", error);
 			} else {
-				$scope.create_fname = $scope.create_lname = $scope.create_uname = $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
-				//window.location = "/home";
+				$scope.create_fname = $scope.create_lname = $scope.create_uname = "";
+        $scope.create_email = $scope.create_psswd_one = $scope.create_psswd_two = "";
 			}
 		});
 	}

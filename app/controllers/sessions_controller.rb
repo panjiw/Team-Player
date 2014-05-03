@@ -1,4 +1,11 @@
-# Controls sessions
+#
+# TeamPlayer -- 2014
+#
+# This file deals with session variables for the client,
+# as well as the major logging in functionality.
+# For logging in, logging out, and creating an account,
+# it returns a status code indicating success or failure,
+# as well as a list of reasons for failure if necessary
 class SessionsController < ApplicationController
   protect_from_forgery with: :exception
   include SessionsHelper

@@ -1,4 +1,10 @@
-#Controls users
+#
+# TeamPlayer -- 2014
+#
+# This file deals with creating a user and signing him in.
+# It returns a status code indicating success or failure,
+# as well as a list of reasons for failure if necessary
+#
 class UsersController < ApplicationController
   # Create a new user and sign user in
   def create

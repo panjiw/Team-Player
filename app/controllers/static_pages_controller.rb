@@ -1,4 +1,10 @@
-# Controls the 2 pages
+#
+# TeamPlayer -- 2014
+#
+# This file deals with redirecting the user between
+# the home (main page) or login page when the user
+# signs in (redirects to home page) or signs out
+# (redirects back to the login page
 class StaticPagesController < ApplicationController
   # Go to home if signed in
   def index
