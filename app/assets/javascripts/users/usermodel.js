@@ -57,7 +57,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./";
     })
     .fail(function(xhr, textStatus, error) {
-      callback(textStatus);
+      callback(xhr.responseText);
     })
   }
 
