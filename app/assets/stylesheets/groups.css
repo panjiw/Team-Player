@@ -43,7 +43,7 @@
 .group-members {
   float: left;
   border-right: 2px solid black;
-  height: 300px;
+  height: 350px;
   width: 250px;
   padding: 20px;
 }
@@ -52,5 +52,4 @@
   float:right;
   width: 400px;
   padding: 30px;
-
 }
