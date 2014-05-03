@@ -1,27 +1,19 @@
-angular.module('myapp');
+angular.mock.module('myapp');
 
 describe("Login Tests", function() {
-  var $scope, $location, $rootScope, createController;
-  beforeEach(inject(function($injector) {
-      $location = $injector.get('$location');
-      $rootScope = $injector.get('$rootScope');
-      $scope = $rootScope.$new();
+  var $scope;
 
-      var $controller = $injector.get('$controller');
-
-      createController = function() {
-          return $controller('loginViewController', {
-              '$scope': $scope
-          });
-      };
+  beforeEach(angular.mock.inject(function($rootScope, $controller) {
+    $scope = $rootScope.$new();
+    $controller('loginViewController', {"$scope": $scope});
   }));
 
-  it("Dummy test", function() {
+  it("Dummy test", angular.mock.inject(function() {
     expect(true).toBe(true);
-  });
+  }));
 
-  it("check login missing params fails", function() {
-    console.log($scope);
+  it("check login missing params fails", angular.mock.inject(function() {
+    console.log($scope.message);
     expect($scope.message).toBe("Hello, world");
-  });
+  }));
 });

@@ -6,6 +6,12 @@ module.exports = function(config) {
 
     autoWatch: true,
 
+    browsers: ['PhantomJS'],
+
+    plugins: [
+            'karma-phantomjs-launcher'
+        ],
+    
     files: [
       'app/assets/javascripts/angular.js',
       'app/assets/javascripts/angular-mocks.js',

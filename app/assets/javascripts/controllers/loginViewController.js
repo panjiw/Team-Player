@@ -9,6 +9,7 @@
 */
 
 angular.module('myapp').controller("loginViewController", ["$scope", "UserModel", function($scope, UserModel) {
+  $scope.message = "Hello, world";
 
 	// Log out the user, or display why it failed
 	$scope.logout = function(e) {
