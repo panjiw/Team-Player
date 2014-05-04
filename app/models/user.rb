@@ -2,13 +2,29 @@
 class User < ActiveRecord::Base
 
   # group - user, many-many relation
-  has_many :memberships
+  has_many :memberships, :class_name => "Membership", dependent: :destroy
   has_many :groups, :through => :memberships
 
   before_save {
     self.username = username.downcase
     self.email = email.downcase
   }
+
+  # true if user is in group
+  def member?(other_group)
+    !(memberships.find_by(group: other_group).nil?)
+  end
+
+  # given group, user will join group
+  def member!(other_group)
+    memberships.create!(group: other_group)
+  end
+
+  #def unmember!(other_group)
+  #  memberships.find_by(user_id: other_group.id).destroy
+  #end
+
+
   # A user always have a session token
   before_create :create_remember_token
 
