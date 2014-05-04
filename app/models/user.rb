@@ -1,5 +1,10 @@
 # User model, saves uer data to db
 class User < ActiveRecord::Base
+
+  # group - user, many-many relation
+  has_many :memberships
+  has_many :groups, :through => :memberships
+
   before_save {
     self.username = username.downcase
     self.email = email.downcase

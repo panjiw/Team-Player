@@ -17,6 +17,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def show # viewgroup
+    @user = User.find(params[:id])
+    render :json => {:groups => @user.groups}
+  end
+
   private
 
   # Make sure the params sent in is valid (see User Rep Inv)

@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   # All routes are manual because of the heavy use of Angular to view the correct
   # pages to the user
+  # resources :users
   match '/',            to: 'static_pages#index',  via: 'get'
   match '/index',       to: 'static_pages#index',  via: 'get'
   match '/home',        to: 'static_pages#home',   via: 'get'
   match '/create_user', to: 'users#create',        via: 'post'
+  match '/view_group', to: 'users#viewgroup', via: 'post'
+  match '/create_group', to: 'groups#create',        via: 'post'
   match '/sign_in',     to: 'sessions#create',     via: 'post'
   match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
   match '/user',        to: 'sessions#user',       via: 'get'
