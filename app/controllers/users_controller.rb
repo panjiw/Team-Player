@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   def show # viewgroup
     @user = User.find(params[:id])
+    #current_user.groups
     render :json => {:groups => @user.groups}
   end
 
