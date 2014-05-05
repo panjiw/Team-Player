@@ -59,7 +59,7 @@ angular.module("myapp").factory('UserModel', function() {
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
-    })
+    });
   }
 
   //Try to log the current user in with the given username and password.
@@ -84,7 +84,7 @@ angular.module("myapp").factory('UserModel', function() {
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
-    })
+    });
   }
 
   //Try to create a new user account with the given parameters. 
@@ -120,7 +120,7 @@ angular.module("myapp").factory('UserModel', function() {
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
-    })
+    });
   }
 
   //Lookup a users's information (including whether they exist)
