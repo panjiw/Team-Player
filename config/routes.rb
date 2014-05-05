@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # All routes are manual because of the heavy use of Angular to view the correct
   # pages to the user
+  # resources :users
   match '/',            to: 'static_pages#index',  via: 'get'
   match '/index',       to: 'static_pages#index',  via: 'get'
   match '/home',        to: 'static_pages#home',   via: 'get'
@@ -9,6 +10,15 @@ Rails.application.routes.draw do
   match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
   match '/user',        to: 'sessions#user',       via: 'get'
   match '/help',        to: 'static_pages#help',   via: 'get'
+
+  # user
+  match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
+  # groups
+  match '/create_group', to: 'groups#create',      via: 'post'
+  match '/view_group', to: 'users#viewgroup', 	   via: 'post'
+  match '/view_members', to: 'groups#viewmembers', via: 'post'
+  match '/invite_to_group', to: 'groups#invitetogroup', via: 'post'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

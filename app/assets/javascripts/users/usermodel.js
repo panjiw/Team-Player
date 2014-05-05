@@ -25,7 +25,7 @@ var User = function(id, uname, fname, lname) {
 //the information about all users this user is in a group with,
 //including the data for the current user.
 angular.module("myapp").factory('UserModel', function() {
-  var UserModel = {}
+  var UserModel = {};
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
 
@@ -39,7 +39,7 @@ angular.module("myapp").factory('UserModel', function() {
     UserModel.me = data.id;
     UserModel.users[UserModel.me] = new User(UserModel.me, data.username, 
                                               data.firstname, data.lastname);
-  }
+  };
 
   // Log the current user out.
   // On success, set the 'me' variable to negative so that it is not a valid user.
@@ -52,15 +52,14 @@ angular.module("myapp").factory('UserModel', function() {
     .success(function(data, status) {
       // reset 'me' to negative
       UserModel.me = -1;
-      console.log("Logged out.");
       callback();
       window.location = "./";
     })
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
-    })
-  }
+    });
+  };
 
   //Try to log the current user in with the given username and password.
   //On success, no arguments are provided to callback, but on failure,
@@ -77,15 +76,14 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
-      console.log("Logged in as user: " + data);
       callback();
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
-    })
-  }
+    });
+  };
 
   //Try to create a new user account with the given parameters. 
   //On success, the user is logged in, and the callback function 
@@ -113,21 +111,42 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
-      console.log("New User: " + data);
       callback();
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
       callback(res["errors"]);
+    });
+  };
+
+  //Lookup a users's information (including whether they exist)
+  //by email. It calls the callback function with two parameters
+  //  --user: the user object (if there is a user with the given email)
+  //  --error: a descriptive error message if applicable
+  UserModel.getUserByEmail = function(email, callback) {
+    if(!email) {
+      return;
+    }
+
+    //Ask the backend for the user information
+    $.post("/find_user_email",
+    {
+      "find[email]": email
     })
-  }
+    .success(function(data, status) {
+      callback(new User(data.id, data.username, data.firstname, data.lastname));
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(null, "User not found");
+    });
+  };
 
   //Get the information for the user with the given id,
   //or "undefined" if there is none
   UserModel.get = function(id) {
     return UserModel[id];
-  }
+  };
 
   return UserModel;
 });

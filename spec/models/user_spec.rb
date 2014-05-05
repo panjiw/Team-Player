@@ -17,6 +17,16 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should be_valid }
   it { should respond_to(:authenticate) }
+  
+  # do we need these? membership?
+  it { should respond_to(:groups) }
+  it { should respond_to(:memberships) }
+  it { should respond_to(:groups) }
+  it { should respond_to(:member?) }
+  it { should respond_to(:member!) }
+
+
+
 
   # User name
   describe "when username is not present" do
