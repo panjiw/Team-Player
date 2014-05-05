@@ -4,8 +4,22 @@
  *  This file is not implemented yet. It will be
  *  the controller for the groups page
  */
- angular.module('myapp').controller("groupsViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
+ angular.module('myapp').controller("groupsViewController",
+     ["$scope", "UserModel", "TaskModel", function($scope, UserModel, TaskModel) {
 
+  $scope.user = "";
+
+  $scope.check = function(e) {
+    $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {
+      if(error) {
+        toastr.error("User not found :(");
+      } else {
+        $scope.$apply(function() {
+          $scope.user = user;
+        });
+      }
+    });
+  }
 
 	// this function is for backend testing, not for release.
 	$scope.sendForm = function(){
