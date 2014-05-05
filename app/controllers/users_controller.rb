@@ -16,6 +16,23 @@ class UsersController < ApplicationController
       render :json => {:errors => @user.errors.full_messages}, :status => 400
     end
   end
+  
+  # find user by email
+  def finduseremail
+    @user = User.where("email = ?", params[:find][:email])
+    if !@user.nil?
+      render :json => @user.to_json(:except => [:created_at, :updated_at, 
+			:password_digest, :remember_token]), :status => 200
+
+#:json => {:user =>  @user :except=>
+# 			[:created_at, :updated_at, 
+#			:password_digest, :remember_token]
+#		      }
+#, :status => 200
+    else
+      render :nothing => true, :status => 400
+    end
+  end
 
   private
 

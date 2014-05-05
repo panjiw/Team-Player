@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   match '/user',        to: 'sessions#user',       via: 'get'
   match '/help',        to: 'static_pages#help',   via: 'get'
 
+  # user
+  match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
   # groups
   match '/create_group', to: 'groups#create',      via: 'post'
   match '/view_group', to: 'users#viewgroup', 	   via: 'post'
