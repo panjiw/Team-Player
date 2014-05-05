@@ -52,7 +52,6 @@ angular.module("myapp").factory('UserModel', function() {
     .success(function(data, status) {
       // reset 'me' to negative
       UserModel.me = -1;
-      console.log("Logged out.");
       callback();
       window.location = "./";
     })
@@ -77,7 +76,6 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
-      console.log("Logged in as user: " + data);
       callback();
       window.location = "./home";
     })
@@ -113,7 +111,6 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .success(function(data, status) {
       updateUser(data, status);
-      console.log("New User: " + data);
       callback();
       window.location = "./home";
     })
@@ -138,12 +135,10 @@ angular.module("myapp").factory('UserModel', function() {
       "find[email]": email
     })
     .success(function(data, status) {
-      data = data[0];
       callback(new User(data.id, data.username, data.firstname, data.lastname));
     })
     .fail(function(xhr, textStatus, error) {
-      var res = JSON.parse(xhr.responseText);
-      callback({}, res.errors);
+      callback(null, "User not found");
     });
   };
 

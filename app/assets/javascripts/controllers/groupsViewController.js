@@ -16,7 +16,6 @@
       } else {
         $scope.$apply(function() {
           $scope.user = user;
-          console.log("Apply: " + $scope.user.id);
         });
       }
     });
