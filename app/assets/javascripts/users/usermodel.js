@@ -123,6 +123,24 @@ angular.module("myapp").factory('UserModel', function() {
     })
   }
 
+  UserModel.getUserByEmail(email, callback) {
+    if(!email) {
+      return;
+    }
+
+    $.post("/find_user_email",
+    {
+      "find[email]": email
+    })
+    .success(function(data, status) {
+      callback(new User(data.id, data.uname, data.fname, data.lname));
+    })
+    .fail(function(xhr, textStatus, error) {
+      var res = JSON.parse(xhr.responseText);
+      callback({}, xhr.responseText);
+    });
+  }
+
   //Get the information for the user with the given id,
   //or "undefined" if there is none
   UserModel.get = function(id) {
