@@ -21,8 +21,7 @@ class UsersController < ApplicationController
   def finduseremail
     @user = User.where("email = ?", params[:find][:email])
     if !@user.empty?
-      ActiveRecord::Base.include_root_in_json = false
-      render :json => @user.to_json(:except => [:created_at, :updated_at, 
+      render :json => @user.first.to_json(:except => [:created_at, :updated_at, 
 			:password_digest, :remember_token]), :status => 200
 
 #:json => {:user =>  @user :except=>
