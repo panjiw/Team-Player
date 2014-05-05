@@ -127,7 +127,7 @@ angular.module("myapp").factory('UserModel', function() {
   //by email. It calls the callback function with two parameters
   //  --user: the user object (if there is a user with the given email)
   //  --error: a descriptive error message if applicable
-  UserModel.getUserByEmail(email, callback) {
+  UserModel.getUserByEmail = function(email, callback) {
     if(!email) {
       return;
     }
