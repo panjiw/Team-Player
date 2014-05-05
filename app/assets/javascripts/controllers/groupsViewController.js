@@ -31,10 +31,11 @@
 		$.post("/create_group",
 		{
 			"group[name]": "Jackson",
-			"group[description]": "TierOne"
+			"group[description]": "TierOne",
+			"add[members]": ['1','2']
 		});
 		
-
+/*
 		//view all the groups user in
 		$.post("/view_group",
 		{
@@ -59,7 +60,7 @@
 			"invite[gid]" : "3",
 			"invite[email]" : "asdfsdf@uw.edu"
 		});
-
+*/
 	}
 
 }]);
