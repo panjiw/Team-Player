@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504024116) do
+ActiveRecord::Schema.define(version: 20140505043516) do
 
   create_table "groups", force: true do |t|
-    t.string   "title"
+    t.string   "name"
     t.string   "description"
     t.integer  "creator"
     t.datetime "created_at"

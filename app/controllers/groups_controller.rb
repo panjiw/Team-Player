@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
   private
     # params to create group
     def group_params
-      params.require(:group).permit(:title, :description).merge(creator: current_user.id)
+      params.require(:group).permit(:name, :description).merge(creator: current_user.id)
     end
 
 end

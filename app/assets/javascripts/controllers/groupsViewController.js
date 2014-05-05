@@ -31,7 +31,7 @@
 		// current_user will be added to the group as member
 		$.post("/create_group",
 		{
-			"group[title]": "Jackson",
+			"group[name]": "Jackson",
 			"group[description]": "TierOne"
 		});
 		
