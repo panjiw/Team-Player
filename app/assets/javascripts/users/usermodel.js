@@ -138,7 +138,8 @@ angular.module("myapp").factory('UserModel', function() {
       "find[email]": email
     })
     .success(function(data, status) {
-      callback(new User(data.id, data.uname, data.fname, data.lname));
+      data = data[0];
+      callback(new User(data.id, data.username, data.firstname, data.lastname));
     })
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);

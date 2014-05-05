@@ -229,7 +229,7 @@ Displays pages for after successful login:
             
             <input type="text" ng-model="lookupEmail" />
             <button type="button" class="btn btn-default" ng-click="check($event)">Lookup</button>
-            <div style="display: {{user ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
+            <div style="display: {{user.id ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
         </div>
     </div>
  </div>

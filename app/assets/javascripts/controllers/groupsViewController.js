@@ -7,7 +7,7 @@
  angular.module('myapp').controller("groupsViewController",
      ["$scope", "UserModel", "TaskModel", function($scope, UserModel, TaskModel) {
 
-  $scope.user = "";
+  $scope.user = {};
 
   $scope.check = function(e) {
     $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {
@@ -16,6 +16,7 @@
       } else {
         $scope.$apply(function() {
           $scope.user = user;
+          console.log("Apply: " + $scope.user.id);
         });
       }
     });
