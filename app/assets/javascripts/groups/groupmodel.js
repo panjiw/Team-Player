@@ -6,10 +6,10 @@
   It's main functionality is to get, create, and edit tasks.
 */
 
-var Group = function(id, isSelfGroup, title, description, creator, dateCreated, members) {
+var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
 	this.id = 0;
   this.isSelfGroup = false;
-	this.title = "";
+	this.name = "";
 	this.description = "";
 	this.creator = 0;
 	this.dateCreated = null;
@@ -23,14 +23,14 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  GroupModel.createGroup = function(title, description, dateCreated, members) { // creator ID
+  GroupModel.createGroup = function(name, description, dateCreated, members) { // creator ID
     //TODO
   };
 
   //Update any or all of these fields for the group with the groupID (which is required).
   //If a field is null, that field is not updated. If the groupID is not found,
   //indicates failure...
-  GroupModel.editGroup = function(groupID, title, description, members) {
+  GroupModel.editGroup = function(groupID, name, description, members) {
     //TODO
   };
 
