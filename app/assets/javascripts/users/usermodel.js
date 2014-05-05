@@ -123,11 +123,16 @@ angular.module("myapp").factory('UserModel', function() {
     })
   }
 
+  //Lookup a users's information (including whether they exist)
+  //by email. It calls the callback function with two parameters
+  //  --user: the user object (if there is a user with the given email)
+  //  --error: a descriptive error message if applicable
   UserModel.getUserByEmail(email, callback) {
     if(!email) {
       return;
     }
 
+    //Ask the backend for the user information
     $.post("/find_user_email",
     {
       "find[email]": email
@@ -137,7 +142,7 @@ angular.module("myapp").factory('UserModel', function() {
     })
     .fail(function(xhr, textStatus, error) {
       var res = JSON.parse(xhr.responseText);
-      callback({}, xhr.responseText);
+      callback({}, res.errors);
     });
   }
 
