@@ -64,56 +64,9 @@ Displays pages for after successful login:
 
     <!-- ********************** Task part begin *************** -->
     <!-- ********************** Task part begin *************** -->
-    <div class="container">
-      <div class="header-row">
-          <div class= "tasks-header">
-            <h1>My Tasks</h1>
-          </div>
-          <div class="tasks-addbutton">
-            <button type="button" class="btn btn-default">Add Task</button>
-          </div>
-      </div>
-      <!--   ***********scrollbox with task content begin ***********  -->
-      <div class="tasks-scroll">
-          <div style="width:600px;height:400px;line-height:3em;
-                      overflow:auto;padding:20px;">
-            <div class="panel panel-warning" >
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Your Room</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Take Out Trash</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Bathroom</h4>
-                    <h4 class="panel-date">5/3/2014</h4>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-warning" >
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Buy Toilet Paper</h4>
-                    <h4 class="panel-date">5/5/2014</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--   ***********scrollbox with task content end ***********  -->
-    </div>
+    <%= render :partial => 'static_pages/tasks' %>
+  </div>
+    
     <!-- ********************** Task part end *************** -->
     <!-- ********************** Task part end *************** -->
 
@@ -123,65 +76,7 @@ Displays pages for after successful login:
 
     <!-- ********************** Bill part begin *************** -->
     <!-- ********************** Bill part begin *************** -->
-<div class="container">
-    <div class="header-row">
-        <div class= "bills-header">
-            <h1>My Bills</h1>
-        </div>
-    </div>
-    <div class="bills-addbutton">
-        <button type="button" class="btn btn-default">Add Bill</button>
-    </div>
-    <div class="bill-body>" ng-switch on="activeBillTab">
-        <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
-            <h4>You Owe</h4>
-        </div>
-        <div class="owe-you-tab" ng-click="activeBillTab='bill_selected_owe_you'">
-            <h4>Owe You</h4>
-        </div>
-        <div class="bill-summary">
-            <h2>Bill Summary</h2>
-            <div class="you-owe" ng-switch-when="bill_selected_you_owe">
-                <h3>Bills you owe</h3>
-                <div class="bill-scroll">
-                    <div class="bill">
-                        <h4 class="bill-member">Member 1</h4>
-                        <h4 class="bill-amount">$100</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                    <div class="bill">
-                        <h4 class="bill-member">Member 2</h4>
-                        <h4 class="bill-amount">$200</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 3</h4>
-                        <h4 class="bill-amount">$300</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 4</h4>
-                        <h4 class="bill-amount">$400</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                </div>
-            </div>
-            <div class="owe-you" ng-switch-when="bill_selected_owe_you">
-                <h3>Bills owed to you</h3>
-                <div class="bill-scroll">
-                    <div class="bill">
-                        <h4 class="bill-member">Member 7</h4>
-                        <h4 class="bill-amount">$700</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                    <div class="bill">
-                        <h4 class="bill-member">Member 8</h4>
-                        <h4 class="bill-amount">$80</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <%= render :partial => 'static_pages/bills' %>
     <!-- ********************** Bill part end *************** -->
     <!-- ********************** Bill part end *************** -->
 </div>
@@ -190,51 +85,10 @@ Displays pages for after successful login:
     <!-- <div ng-include src="'groups.html'"></div> -->
     <!-- ********************** Group part begin *************** -->
     <!-- ********************** Group part begin *************** -->
-
-    <div class="container">
-        <div class="header-row">
-            <div class= "groups-header">
-                <h1>My Groups</h1>
-            </div>
-        </div>
-        <div class="group-body">
-            <div class="col-md-2">
-                <div class="groups">
-                    <h3>Groups</h3>
-                    <div class="group-scroll">
-                        <div class="list-group">
-                            <a class="list-group-item active"><h4>Group 1</h4></a>
-                            <a class="list-group-item"><h4>Group 2</h4></a>
-                            <a class="list-group-item"><h4>Group 3</h4></a>
-                            <a class="list-group-item"><h4>Group 4</h4></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="group-display">
-                    <h3>Group 1</h3>
-                    <div class="group-members">
-                        <a class="list-group-item"><h5>Member 1</h5></a>
-                        <a class="list-group-item"><h5>Member 2</h5></a>
-                        <a class="list-group-item"><h5>Member 3</h5></a>
-                        <button type="button" class="btn btn-default group-add">Add Member</button>
-                    </div>
-                    <div class="group-description">
-                        <h4>Group description goes here, unless a member is selected. Then, it will transform into respective member information -- to be fixed in the next release.</h4>
-                    </div>
-                </div>
-            </div>
-            <button type="button" ng-click="sendForm()" class="btn btn-default group-add">Add Group</button>
-            
-            <input type="text" ng-model="lookupEmail" />
-            <button type="button" class="btn btn-default" ng-click="check($event)">Lookup</button>
-            <div style="display: {{user.id ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
-        </div>
-    </div>
- </div>
+    <%= render :partial => 'static_pages/groups' %>
+    
     <!-- ********************** Group part end *************** -->
     <!-- ********************** Group part end *************** -->
-</div>
+  </div>
 </div>
 
