@@ -22,9 +22,25 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
 
   //Create and return a group with the given parameters. This updates to the database, or returns
-  //error codes otherwise...
-  GroupModel.createGroup = function(name, description, dateCreated, members) { // creator ID
-    //TODO
+  //error codes otherwise.
+  //Note: The "members" array does not need to contain the creator. The creator
+  //of a group will be placed in the group by default.
+  GroupModel.createGroup = function(name, description, dateCreated, members) {
+    // create a group
+    // current_user will set as creator, no need to send creator
+    // current_user will be added to the group as member
+    $.post("/create_group",
+    {
+      "group[name]": name,
+      "group[description]": description,
+      "group[members]": members
+    })
+    .success(function(data, status) {
+
+    })
+    .fail(function(xhr, textStatus, error) {
+
+    });
   };
 
   //Update any or all of these fields for the group with the groupID (which is required).
@@ -52,7 +68,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
     //Dummy objects for now
     var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
-		var fakeGroup = new Group(0, false, "fake", "fake group!", 0, new Date(), [0, 1]);
+		var fakeGroup = new Group(1, false, "fake", "fake group!", 0, new Date(), [0, 1]);
 
     return [selfGroup, fakeGroup];
   }
