@@ -8,8 +8,17 @@
      ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
 
   $scope.user = {};
-  $scope.groupsList= GroupModel.getGroups();
-  console.log($scope.groupsList[0].name + " <<- name!");
+  // default select group with id 0
+  $scope.group_selected = 0;
+  $scope.groupsList = GroupModel.getGroups();
+
+  // experimental code; when the second line of 
+  // this function gets called, the view will be updated.
+  // the second line is required, since it updates the $scope variable.
+  // $scope.change = function(e) {
+  // 	GroupModel.groups[3] = new Group(2, false, "geo", "geo post description", 0, new Date(), [0]);
+  // 	$scope.groupsList= GroupModel.getGroups();
+  // }
 
 
   $scope.check = function(e) {
