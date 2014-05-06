@@ -7,18 +7,25 @@
 */
 
 var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
-	this.id = 0;
-  this.isSelfGroup = false;
-	this.name = "";
-	this.description = "";
-	this.creator = 0;
-	this.dateCreated = null;
-	this.members = [];
+	this.id = id;
+  this.isSelfGroup = isSelfGroup;
+	this.name = name;
+	this.description = description;
+	this.creator = creator;
+	this.dateCreated = dateCreated;
+	this.members = members;
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
   var GroupModel = {};
   GroupModel.groups = {};   //ID to groups
+
+  //Dummy objects for now
+  var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
+  var fakeGroup = new Group(1, false, "fake", "fake group!", 0, new Date(), [0, 1]);
+
+  GroupModel.groups[0] = selfGroup;
+  GroupModel.groups[1] = fakeGroup;
 
 
   //Create and return a group with the given parameters. This updates to the database, or returns
@@ -66,11 +73,13 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.getGroups = function() {
     //TODO ajax
 
-    //Dummy objects for now
-    var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
-		var fakeGroup = new Group(1, false, "fake", "fake group!", 0, new Date(), [0, 1]);
+    var groupArray = [];
 
-    return [selfGroup, fakeGroup];
+    for(var index in GroupModel.groups) { 
+      groupArray.push(GroupModel.groups[index]);
+    }
+
+    return groupArray;
   }
 
   return GroupModel;
