@@ -5,9 +5,12 @@
  *  the controller for the groups page
  */
  angular.module('myapp').controller("groupsViewController",
-     ["$scope", "UserModel", "TaskModel", function($scope, UserModel, TaskModel) {
+     ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
 
   $scope.user = {};
+  $scope.groupsList= GroupModel.getGroups();
+  console.log($scope.groupsList[0].name + " <<- name!");
+
 
   $scope.check = function(e) {
     $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {

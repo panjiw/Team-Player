@@ -1,0 +1,40 @@
+<div class="container">
+        <div class="header-row">
+            <div class= "groups-header">
+                <h1>My Groups</h1>
+            </div>
+        </div>
+        <div class="group-body">
+            <div class="col-md-2">
+                <div class="groups">
+                    <h3>Groups</h3>
+                    <div class="group-scroll">
+                        <div class="list-group">
+                          <a class="list-group-item active" ng-click="change()"><h4>Group 1</h4></a>
+                          <a class="list-group-item" ng-repeat="grp in groupsList"><h4>{{grp.name}}</h4></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="group-display">
+                    <h3>Group 1</h3>
+                    <div class="group-members">
+                        <a class="list-group-item"><h5>Member 1</h5></a>
+                        <a class="list-group-item"><h5>Member 2</h5></a>
+                        <a class="list-group-item"><h5>Member 3</h5></a>
+                        <button type="button" class="btn btn-default group-add">Add Member</button>
+                    </div>
+                    <div class="group-description">
+                        <h4>Group description goes here, unless a member is selected. Then, it will transform into respective member information -- to be fixed in the next release.</h4>
+                    </div>
+                </div>
+            </div>
+            <button type="button" ng-click="sendForm()" class="btn btn-default group-add">Add Group</button>
+            
+            <input type="text" ng-model="lookupEmail" />
+            <button type="button" class="btn btn-default" ng-click="check($event)">Lookup</button>
+            <div style="display: {{user.id ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
+        </div>
+    </div>
+ </div>
