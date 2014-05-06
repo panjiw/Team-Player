@@ -58,6 +58,7 @@ end
 # Design gems
 gem 'bootstrap-sass'
 gem 'sprockets'
+gem 'twitter-bootstrap-rails'
 
 # Password gem
 gem 'bcrypt-ruby'
