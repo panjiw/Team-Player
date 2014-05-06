@@ -53,3 +53,17 @@
   width: 400px;
   padding: 30px;
 }
+
+.group-description button {
+  position: absolute;
+  right: 18px;
+  bottom: 3px;
+}
+
+.group-add-body {
+  overflow: hidden;
+}
+
+textarea {
+  resize: none;
+}
