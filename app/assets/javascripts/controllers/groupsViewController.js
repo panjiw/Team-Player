@@ -11,6 +11,10 @@
   // default select group with id 0
   $scope.group_selected = 0;
   $scope.groupsList = GroupModel.getGroups();
+  
+  $('#openBtn').click(function(){
+  	$('#myModal').modal({show:true})
+  });
 
   // experimental code; when the second line of 
   // this function gets called, the view will be updated.
