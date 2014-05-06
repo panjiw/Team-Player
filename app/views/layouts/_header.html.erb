@@ -19,8 +19,8 @@ Displays header after successful login  -->
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
 <!--         <li><a href="/" ng-click="activeTab='selected_home'">Home</a></li> --> <!-- Add link to home--> 
-        <li><a>About</a></li> <!--Add link to about--> 
-        <li><a>Contact</a></li> <!--Add link to contact-->
+        <li><a ng-click="activeTab='selected_about'">About</a></li> <!--Add link to about--> 
+        <li><a ng-click="activeTab='selected_contact'">Contact</a></li> <!--Add link to contact-->
         <li><a ng-click="activeTab='selected_help'">Help</a></li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -38,4 +38,10 @@ Displays header after successful login  -->
 
 <div ng-show="activeTab=='selected_help'">
   <%= render "static_pages/help" %>
+</div>
+<div ng-show="activeTab=='selected_contact'">
+  <%= render "static_pages/contact" %>
+</div>
+<div ng-show="activeTab=='selected_about'">
+  <%= render "static_pages/about" %>
 </div>
