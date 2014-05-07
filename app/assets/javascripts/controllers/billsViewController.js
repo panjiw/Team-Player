@@ -8,4 +8,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "TaskModel"
 	$scope.activeBillTab='bill_selected_you_owe';
 
 
+  $('#openBtn').click(function(){
+  	$('#myModal').modal({show:true})
+  });
+
 }]);

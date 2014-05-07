@@ -37,3 +37,11 @@
 .scroll-section {
   position: center;
 }
+
+.tasks-add-body {
+  overflow: hidden;
+}
+
+textarea {
+  resize: none;
+}

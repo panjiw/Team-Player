@@ -6,5 +6,9 @@
  */
 angular.module('myapp').controller("homeViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
 
+  $('#openBtn').click(function(){
+  	$('#myModal').modal({show:true})
+  });
+
 
 }]);

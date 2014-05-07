@@ -6,6 +6,22 @@
  */
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
  
+  $('#openBtn').click(function(){
+  	$('#myModal').modal({show:true})
+  });
 
+
+	$('input[type="checkbox"].large').checkbox({
+	    buttonStyle: 'btn-link',
+		// buttonStyleChecked: 'btn-inverse',
+		checkedClass: 'icon-check',
+		uncheckedClass: 'icon-check-empty',
+		// constructorCallback: null,
+		// defaultState: false,
+		// defaultEnabled: true,
+		 
+		// checked: false,
+		// enabled: true
+	});
 
 }]);
