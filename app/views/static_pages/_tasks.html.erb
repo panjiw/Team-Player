@@ -3,12 +3,13 @@
           <div class= "tasks-header">
             <h1>My Tasks</h1>
           </div>
+
+<!--   *** Add Task Button    ***-->
 <!--           <div class="tasks-addbutton"> -->
             <!-- <button type="button" class="btn btn-default">Add Task</button> -->
-
             <a class="btn btn-default" id="openBtn">Add Task</a>
 
-                <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+                <div id="myModal" class="modal fade task-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -16,7 +17,7 @@
                       <h3>Create Task</h3>
                   </div>
                   <div class="modal-body tasks-add-body">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                         <h5>Name:</h5><input type="text" />
                             <h5>Description:</h5>
                               <textarea cols="30" rows="4"></textarea>
@@ -24,9 +25,37 @@
                             <h5>Members:</h5>
                             <textarea cols="30" rows="4"></textarea>
                         </div>
-                        <div class="col-md-5">
-                            <input type="checkbox" class="large" data-label="Cycle"/>
-                            <input type="checkbox" class="large" data-label="Deadline"/>
+                        <div class="col-md-6">
+                          <!-- <div class="checkbox-row">
+                            <div class="col-md-6">
+                              <input type="checkbox" class="large" data-label="Cycle"/>
+                              <span>Cycles</span>
+                            </div>
+                            <div class="col-md-6">
+                              <input type="checkbox" class="large" data-label="Deadline"/>
+                              <span>Deadline</span>
+                           </div>
+                          </div> -->
+
+
+                          <div class="tabbable">
+                          <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1" data-toggle="tab">Members</a></li>
+                            <li><a href="#tab2" data-toggle="tab">Deadline</a></li>
+                          </ul>
+                          <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                              <div class= "tasks-selectMember">
+                                <input type="checkbox" class="large" data-label="Cycle"/>
+                                <span>Cyclic Task</span>
+                              </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                              <input type="checkbox" class="large" data-label="Deadline"/>
+                              <span>No Deadline</span>
+                            </div>
+                          </div>
+                        </div>
                         </div>
                   </div>
                   <div class="modal-footer">
@@ -37,8 +66,6 @@
                 </div>
                 </div>
 
-
-  <!--         </div> -->
       </div>
       <!--   ***********scrollbox with task content begin ***********  -->
       <div class="tasks-scroll">

@@ -20,12 +20,16 @@
 
 .login-left {
   height: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .login-right {
   width: 400px;
   padding-left: 60px;
   text-align: center;
+  margin-left: 50px;
+  margin-right: 10px;
 }
 
 .login-sign-up {
@@ -33,11 +37,6 @@
   border-bottom: 2px solid black;
 }
 
-.col-md-6,
-.col-md-4 {
-  margin-left: 10px;
-  margin-right: 10px;
-}
 
 input {
   margin-bottom: 5px;
