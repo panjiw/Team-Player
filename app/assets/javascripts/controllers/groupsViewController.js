@@ -44,7 +44,7 @@
   // }
 
   $scope.createGroup = function(e) {
-    groupCreateMembers = [];
+    var groupCreateMembers = [];
     checkByEmail(groupCreateMembers);
 
     // wait until groupCreateMembers has been changed.
@@ -90,7 +90,7 @@
 
         if(error) {
           toastr.error("User with email "+ $scope.searchMemberList[index].email+ " not found :(");
-            groupCreateMembers.push(-1);
+            groupCreateMembers = null;
           return null;
         } else {
             console.log("pusing user id:");
