@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
       merror = ""
       @members = params[:add][:members]
       @members.each do |id|
-        if(User.exists?(id))
+        if(User.exists?(id) && id != current_user.id.to_s)
 	  @group.users << User.find(id)
         else
 	  merror << " " + id << " "
