@@ -126,6 +126,7 @@ angular.module("myapp").factory('UserModel', function() {
   //  --error: a descriptive error message if applicable
   UserModel.getUserByEmail = function(email, callback) {
     if(!email) {
+      callback(null, "email empty");
       return;
     }
 
