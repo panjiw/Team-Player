@@ -39,6 +39,11 @@
   cursor: pointer;
 }
 
+div.bill-body.bill_selected_you_owe div.you-owe-tab,
+div.bill-body.bill_selected_owe_you div.owe-you-tab{
+  background: #66FF99;
+}
+
 .owe-you,
 .you-owe {
   padding: 10px

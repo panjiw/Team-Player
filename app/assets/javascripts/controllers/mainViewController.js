@@ -6,6 +6,7 @@
  */
 angular.module('myapp').controller("mainViewController", ["$scope", "UserModel", function($scope, UserModel) {
 	$scope.activeTab = "selected_home";
+    $scope.activeBillTab = "bill_selected_you_owe";
 
 	// Log out the user, or display why it failed
 	$scope.logout = function(e) {

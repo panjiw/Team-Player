@@ -41,17 +41,8 @@
                   </div>
                 </div>
                 </div>
-
-
-
-
-
-
-
-
-
     </div>
-    <div class="bill-body>" ng-switch on="activeBillTab">
+    <div class="bill-body {{activeBillTab}}" ng-switch on="activeBillTab">
         <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
             <h4>You Owe</h4>
         </div>
