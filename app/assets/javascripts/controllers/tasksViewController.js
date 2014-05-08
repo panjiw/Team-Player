@@ -24,4 +24,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 		// enabled: true
 	});
 
+	$("[data-toggle=popover]").popover();
+
 }]);
