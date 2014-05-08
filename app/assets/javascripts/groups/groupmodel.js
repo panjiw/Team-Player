@@ -27,6 +27,20 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.groups[0] = selfGroup;
   GroupModel.groups[1] = fakeGroup;
 
+  GroupModel.getGroupsFromDB = function(callback) {
+    $.post("/view_group",
+    {
+    }).success(function(data, status){
+      console.log("success!");
+      console.log(data);
+    }
+    ).fail(function(xhr, textStatus, error){
+      console.log("getGroupsfrom db error");
+      console.log(error);
+    }
+    );
+  }
+
   function updateGroups(group, members) {
     GroupModel.groups[group.id] = new Group(group.id, false, group.name, 
       group.description, group.creator, group.created_at, members);

@@ -43,6 +43,16 @@
   // 	$scope.groupsList= GroupModel.getGroups();
   // }
 
+  $scope.getGroupsForUser = function(e){
+    UserModel.getGroupsFromDB(function(error){
+      if(error){
+        //TODO
+      } else {
+
+      }
+    });
+  }
+
   $scope.createGroup = function(e) {
     var groupCreateMembers = [-10];
     checkByEmail(groupCreateMembers);
