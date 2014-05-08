@@ -61,7 +61,7 @@
             <div class="col-md-5">
                 <h5>Members: <button ng-click="addSearchMemInput()">+</button>
                     <button ng-click="deleteSearchMemInput()">-</button></h5>
-                <input ng-repeat="searchMem in searchMemberList" ng-model="searchMem" type="text"/>
+                <input ng-repeat="searchMem in searchMemberList" ng-model="searchMem.email" type="text"/>
             </div>
     	</div>
     	<div class="modal-footer">
