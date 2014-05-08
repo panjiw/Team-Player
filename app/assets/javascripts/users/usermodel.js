@@ -33,6 +33,20 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.users[0] = new User(0, "go_dawgs", "Team", "Player");
   UserModel.users[1] = new User(1, "fd_01", "friend", "zone");
 
+  UserModel.getGroupsFromDB = function(callback) {
+    $.post("/view_group",
+    {
+    }).success(function(data, status){
+      console.log("success!");
+      console.log(data);
+    }
+    ).fail(function(xhr, textStatus, error){
+      console.log("getGroupsfrom db error");
+      console.log(error);
+    }
+    );
+  }
+
   //Update the current user info to the information contained
   //in data
   function updateUser(data, status) {
@@ -126,6 +140,7 @@ angular.module("myapp").factory('UserModel', function() {
   //  --error: a descriptive error message if applicable
   UserModel.getUserByEmail = function(email, callback) {
     if(!email) {
+      callback(null, "email empty");
       return;
     }
 

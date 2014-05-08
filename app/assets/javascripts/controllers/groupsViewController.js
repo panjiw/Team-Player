@@ -43,42 +43,84 @@
   // 	$scope.groupsList= GroupModel.getGroups();
   // }
 
+  $scope.getGroupsForUser = function(e){
+    UserModel.getGroupsFromDB(function(error){
+      if(error){
+        //TODO
+      } else {
+
+      }
+    });
+  }
+
   $scope.createGroup = function(e) {
-    var members = checkByEmail();
+    var groupCreateMembers = [-10];
+    checkByEmail(groupCreateMembers);
 
-    // check email error
-    if(members == null) {
-      return;
-    }
+    // // wait until groupCreateMembers has been changed.
+    // while(groupCreateMembers[0] == -10){
+    //   console.log(groupCreateMembers[0]);
+    // }
 
-  	GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, members, 
-  		function(error){
-  			if (error){
-  				//TODO
-  			} else {
-  				$scope.groupsList= GroupModel.getGroups();
-  			}
-  		});
+    setTimeout(function () {
+        // check email error
+        if(groupCreateMembers[0] == -1) {
+          return;
+        }
+        console.log("passed while loop");
+
+        GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, groupCreateMembers, 
+          function(error){
+            if (error){
+              //TODO
+            } else {
+              console.log("group list:");
+              console.log($scope.groupsList);
+              $scope.groupsList = GroupModel.getGroups();
+              console.log($scope.groupsList);
+            }
+          });
+    }, 500);
+
+    $scope.groupsList = GroupModel.getGroups();
+  }
+
+    $scope.check = function(e) {
+    $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {
+      if(error) {
+        toastr.error("User not found :(");
+      } else {
+        $scope.$apply(function() {
+          $scope.user = user;
+        });
+      }
+    });
   }
 
 
-  function checkByEmail() {
-    groupCreateMembers = [];
+  function checkByEmail(groupCreateMembers) {
 
-    for(var email in $scope.searchMemberList){
-      UserModel.getUserByEmail(email, function(user, error) {
+    for(var index in $scope.searchMemberList){
+      console.log("searching with:");
+      console.log($scope.searchMemberList[index]);
+      console.log($scope.searchMemberList[index].email);
+
+      UserModel.getUserByEmail($scope.searchMemberList[index].email, function(user, error) {
 
         if(error) {
-          toastr.error("User with email "+ email+ " not found :(");
+          toastr.error("User with email "+ $scope.searchMemberList[index].email+ " not found :(");
+            groupCreateMembers.pop();
+            groupCreateMembers.push(-1);
           return null;
         } else {
-          $scope.$apply(function() {
+            console.log("pusing user id:");
+            console.log(user);
+          console.log(user.id);
+          groupCreateMembers.pop();
             groupCreateMembers.push(user.id);
-          });
         }
       });
     }
-    return groupCreateMembers;
   }
 
 	// this function is for backend testing, not for release.

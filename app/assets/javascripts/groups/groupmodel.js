@@ -27,12 +27,30 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.groups[0] = selfGroup;
   GroupModel.groups[1] = fakeGroup;
 
+  GroupModel.getGroupsFromDB = function(callback) {
+    $.post("/view_group",
+    {
+    }).success(function(data, status){
+      console.log("success!");
+      console.log(data);
+    }
+    ).fail(function(xhr, textStatus, error){
+      console.log("getGroupsfrom db error");
+      console.log(error);
+    }
+    );
+  }
+
+  function updateGroups(group, members) {
+    GroupModel.groups[group.id] = new Group(group.id, false, group.name, 
+      group.description, group.creator, group.created_at, members);
+  }
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise.
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
-  GroupModel.createGroup = function(name, description, members) {
+  GroupModel.createGroup = function(name, description, members, callback) {
     // create a group
     // current_user will set as creator, no need to send creator
     // current_user will be added to the group as member
@@ -40,13 +58,16 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     {
       "group[name]": name,
       "group[description]": description,
-      "group[members]": members
+      "add[members]": members
     })
     .success(function(data, status) {
       console.log(data);
+      updateGroups(data.groups,members);
+      callback();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("group create error: "+error);
+      callback(error);
     });
   };
 

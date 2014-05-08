@@ -42,9 +42,10 @@
             <div style="display: {{user.id ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
         </div>
     </div>
+    <button ng-click="sendForm()">KEITH BUTTON </button>
     
     <!-- Popup for adding group -->
-    <a class="btn btn-default" id="openBtn">Open modal</a>
+    <a class="btn btn-default" id="openBtn" ng-click="getGroupsForUser()">update</a>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
