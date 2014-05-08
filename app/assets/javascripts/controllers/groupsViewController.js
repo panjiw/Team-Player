@@ -24,6 +24,18 @@
   // 	$scope.groupsList= GroupModel.getGroups();
   // }
 
+  $scope.createGroup = function(e) {
+  	$scope.groupCreateMembers = [1];  // dummy members
+  	GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.groupCreateMembers, 
+  		function(error){
+  			if (error){
+  				//TODO
+  			} else {
+  				$scope.groupsList= GroupModel.getGroups();
+  			}
+  		});
+  }
+
 
   $scope.check = function(e) {
     $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {

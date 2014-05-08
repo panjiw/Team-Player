@@ -32,7 +32,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   //error codes otherwise.
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
-  GroupModel.createGroup = function(name, description, dateCreated, members) {
+  GroupModel.createGroup = function(name, description, members) {
     // create a group
     // current_user will set as creator, no need to send creator
     // current_user will be added to the group as member
@@ -43,10 +43,10 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "group[members]": members
     })
     .success(function(data, status) {
-
+      console.log(data);
     })
     .fail(function(xhr, textStatus, error) {
-
+      console.log("group create error: "+error);
     });
   };
 
