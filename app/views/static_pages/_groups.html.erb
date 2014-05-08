@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <button type="button" ng-click="sendForm()" class="btn btn-default group-add">Add Group</button>
+            <button type="button" ng-click="showAddGroup()" class="btn btn-default group-add">Add Group</button>
             
             <input type="text" ng-model="lookupEmail" />
             <button type="button" class="btn btn-default" ng-click="check($event)">Lookup</button>
@@ -59,8 +59,9 @@
                 <h5>Description:</h5><input ng-model="groupCreateDescription" type="text" />
             </div>
             <div class="col-md-5">
-                <h5>Members:</h5>
-                <textarea cols="30" rows="4"></textarea>
+                <h5>Members: <button ng-click="addSearchMemInput()">+</button>
+                    <button ng-click="deleteSearchMemInput()">-</button></h5>
+                <input ng-repeat="searchMem in searchMemberList" ng-model="searchMem" type="text"/>
             </div>
     	</div>
     	<div class="modal-footer">

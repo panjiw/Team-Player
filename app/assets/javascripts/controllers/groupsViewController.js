@@ -11,6 +11,19 @@
   // default select group with id 0
   $scope.group_selected = 0;
   $scope.groupsList = GroupModel.getGroups();
+
+  $scope.searchMemberList = {0: ""};
+  var searchMemSize = 1;
+  $scope.addSearchMemInput = function(e){
+    $scope.searchMemberList[searchMemSize++] = "";
+  }
+  $scope.deleteSearchMemInput = function(e){
+    delete $scope.searchMemberList[searchMemSize--];
+  }
+
+  $scope.showAddGroup = function(e){
+    $('#myModal').modal({show:true});
+  }
   
   $('#openBtn').click(function(){
   	$('#myModal').modal({show:true})

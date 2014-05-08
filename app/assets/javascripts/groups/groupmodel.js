@@ -71,15 +71,15 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   //Return all groups for this user as a list of Group objects
   GroupModel.getGroups = function() {
-    //TODO ajax
 
-    var groupArray = [];
+    // var groupArray = [];
 
-    for(var index in GroupModel.groups) { 
-      groupArray.push(GroupModel.groups[index]);
-    }
+    // for(var index in GroupModel.groups) { 
+    //   groupArray.push(GroupModel.groups[index]);
+    // }
 
-    return groupArray;
+    //return groupArray;
+    return GroupModel.groups;
   }
 
   return GroupModel;
