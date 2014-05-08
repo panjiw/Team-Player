@@ -44,26 +44,35 @@
   // }
 
   $scope.createGroup = function(e) {
-    var groupCreateMembers = [];
+    var groupCreateMembers = [-10];
     checkByEmail(groupCreateMembers);
 
-    // wait until groupCreateMembers has been changed.
-    while(groupCreateMembers == []){}
+    // // wait until groupCreateMembers has been changed.
+    // while(groupCreateMembers[0] == -10){
+    //   console.log(groupCreateMembers[0]);
+    // }
 
-    // check email error
-    if(groupCreateMembers == null) {
-      return;
-    }
-    console.log("passed while loop");
+    setTimeout(function () {
+        // check email error
+        if(groupCreateMembers[0] == -1) {
+          return;
+        }
+        console.log("passed while loop");
 
-  	GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, groupCreateMembers, 
-  		function(error){
-  			if (error){
-  				//TODO
-  			} else {
-  				$scope.groupsList= GroupModel.getGroups();
-  			}
-  		});
+        GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, groupCreateMembers, 
+          function(error){
+            if (error){
+              //TODO
+            } else {
+              console.log("group list:");
+              console.log($scope.groupsList);
+              $scope.groupsList = GroupModel.getGroups();
+              console.log($scope.groupsList);
+            }
+          });
+    }, 500);
+
+    $scope.groupsList = GroupModel.getGroups();
   }
 
     $scope.check = function(e) {
@@ -90,12 +99,14 @@
 
         if(error) {
           toastr.error("User with email "+ $scope.searchMemberList[index].email+ " not found :(");
-            groupCreateMembers = null;
+            groupCreateMembers.pop();
+            groupCreateMembers.push(-1);
           return null;
         } else {
             console.log("pusing user id:");
             console.log(user);
           console.log(user.id);
+          groupCreateMembers.pop();
             groupCreateMembers.push(user.id);
         }
       });
