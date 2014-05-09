@@ -13,6 +13,5 @@ angular.module('myapp').controller("homeViewController", ["$scope", "TaskModel",
   $('#addBillBut').click(function(){
   	$('#billModal').modal({show:true})
   });
-
-
+  
 }]);
