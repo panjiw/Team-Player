@@ -21,7 +21,13 @@
                               <textarea cols="30" rows="4"></textarea>
                             <h5>Group:</h5><input type="text" />
                             <h5>Members:</h5>
-                            <textarea cols="30" rows="4"></textarea>
+                            <div id="members">
+                              <div ng-repeat="member in addTask_members">
+                                {{member}}
+                              </div>
+                            </div>
+                            <input type="text" ng-model="newMember" 
+                              ng-keypress="addMember($event)" placeholder="member username" />
                         </div>
                         <div class="col-md-6">
                           <div class="tabbable">
@@ -56,8 +62,6 @@
       <div class="tasks-scroll">
           <div style="width:600px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
-
-          <a href="#" class="btn btn-large btn-danger" data-toggle="popover" title="" data-placement="bottom" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="Popover Title">Click to see my popover.</a>
 
 
             <div class="panel panel-warning" id="#task1">
