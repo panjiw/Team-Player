@@ -1,24 +1,24 @@
 /*
-  TeamPlayer -- 2014
+TeamPlayer -- 2014
 
-  This file holds the model for all tasks the user is part of.
+This file holds the model for all tasks the user is part of.
 
-  It's main functionality is to get, create, and edit tasks.
+It's main functionality is to get, create, and edit tasks.
 */
 
 var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
-	this.id = id;
+this.id = id;
   this.isSelfGroup = isSelfGroup;
-	this.name = name;
-	this.description = description;
-	this.creator = creator;
-	this.dateCreated = dateCreated;
-	this.members = members;
+this.name = name;
+this.description = description;
+this.creator = creator;
+this.dateCreated = dateCreated;
+this.members = members;
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
   var GroupModel = {};
-  GroupModel.groups = {};   //ID to groups
+  GroupModel.groups = {}; //ID to groups
 
   //Dummy objects for now
   var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
@@ -27,30 +27,12 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.groups[0] = selfGroup;
   GroupModel.groups[1] = fakeGroup;
 
-  GroupModel.getGroupsFromDB = function(callback) {
-    $.post("/view_group",
-    {
-    }).success(function(data, status){
-      console.log("success!");
-      console.log(data);
-    }
-    ).fail(function(xhr, textStatus, error){
-      console.log("getGroupsfrom db error");
-      console.log(error);
-    }
-    );
-  }
-
-  function updateGroups(group, members) {
-    GroupModel.groups[group.id] = new Group(group.id, false, group.name, 
-      group.description, group.creator, group.created_at, members);
-  }
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise.
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
-  GroupModel.createGroup = function(name, description, members, callback) {
+  GroupModel.createGroup = function(name, description, members) {
     // create a group
     // current_user will set as creator, no need to send creator
     // current_user will be added to the group as member
@@ -58,16 +40,13 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     {
       "group[name]": name,
       "group[description]": description,
-      "add[members]": members
+      "group[members]": members
     })
     .success(function(data, status) {
       console.log(data);
-      updateGroups(data.groups,members);
-      callback();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("group create error: "+error);
-      callback(error);
     });
   };
 
@@ -78,16 +57,16 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     //TODO
   };
 
-  // Add a user into a group. If the user is already in the group, does nothing and return true. 
+  // Add a user into a group. If the user is already in the group, does nothing and return true.
   // If adding fails (e.g. user does not exist), return false.
   GroupModel.addToGroup = function(groupID, userID) {
     //TODO
   }
 
-  // Remove a user from a group. If the user is not in the group, does nothing and return true. 
+  // Remove a user from a group. If the user is not in the group, does nothing and return true.
   // If removing fails (e.g. user does not exist), return false.
   GroupModel.removeFromGroup = function(id, userID) {
-  	//TODO
+   //TODO
   }
 
   //Return all groups for this user as a list of Group objects
@@ -95,8 +74,8 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
     // var groupArray = [];
 
-    // for(var index in GroupModel.groups) { 
-    //   groupArray.push(GroupModel.groups[index]);
+    // for(var index in GroupModel.groups) {
+    // groupArray.push(GroupModel.groups[index]);
     // }
 
     //return groupArray;
