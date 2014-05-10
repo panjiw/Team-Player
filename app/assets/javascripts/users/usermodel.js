@@ -29,7 +29,7 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
 
-  function updateUser(user) {
+  UserModel.updateUser = function(user) {
     UserModel.users[user.id] = new User(user.id, data.username,
                                         data.firstname, data.lastname);
   }
@@ -38,7 +38,7 @@ angular.module("myapp").factory('UserModel', function() {
   //in data
   function updateMe(data) {
     UserModel.me = data.id;
-    updateUser(data);
+    UserModel.updateUser(data);
   };
 
   // Log the current user out.
@@ -119,18 +119,6 @@ angular.module("myapp").factory('UserModel', function() {
       callback(res["errors"]);
     });
   };
-
-  UserModel.getAllFriends = function() {
-    $.get("/view_users")
-    .success(function(data, status)) {
-      for(user in data) {
-        updateUser(data);
-      }
-    })
-    .fail(function(xhr, textStatus, error) {
-      callback(JSON.parse(xhr.responseText));
-    });
-  }
 
   //Lookup a users's information (including whether they exist)
   //by email. It calls the callback function with two parameters

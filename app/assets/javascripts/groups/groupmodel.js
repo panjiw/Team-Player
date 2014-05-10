@@ -19,7 +19,35 @@ this.members = members;
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
   var GroupModel = {};
   GroupModel.groups = {}; //ID to groups
+  GroupModel.fetchedGroups = false;
 
+  GroupModel.updateGroup = function(group) {
+    GroupModel.groups[group.id] = new Group(group.id, false, group.name, group.description, 
+                                              group.creator, new Date(group.dateCreated), group.members);
+  }
+
+  GroupModel.fetchGroupsFromServer = function(callback) {
+    // We really only need to ask the server for all groups
+    // the first time, so return if we already have.
+    if(GroupModel.fetchedGroups) {
+      return;
+    }
+
+    $.get("/view_groups")
+    .success(function(data, status) {
+      for(group in data) {
+        GroupModel.updateGroup(group);
+        for(member in group.members) {
+          UserModel.updateUser(member);
+        }
+      }
+      callback();
+      GroupModel.fetchedGroups = true;
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  }
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise.
@@ -45,8 +73,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .success(function(data, status) {
       console.log("Success: " + data);
-      GroupModel.groups[data.id] = new Group(data.id, false, data.name, data.description, 
-                                              data.creator, data.dateCreated, data.members);
+      GroupModel.updateGroup(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
