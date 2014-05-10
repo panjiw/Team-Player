@@ -11,6 +11,7 @@
   // default select group with id 0
   $scope.group_selected = 0;
   $scope.groupsList = GroupModel.getGroups();
+  console.log(GroupModel.getGroups());
 
   $scope.newMemberList = [];
 

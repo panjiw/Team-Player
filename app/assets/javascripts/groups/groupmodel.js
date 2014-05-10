@@ -33,7 +33,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       return;
     }
 
-    $.get("/view_groups")
+    $.post("/view_group")
     .success(function(data, status) {
       for(group in data) {
         GroupModel.updateGroup(group);
