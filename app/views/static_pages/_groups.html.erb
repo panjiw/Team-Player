@@ -44,7 +44,6 @@
     </div>
     <button ng-click="sendForm()">KEITH BUTTON </button>
     <!-- Popup for adding group -->
-    <a class="btn btn-default" id="openBtn">Open modal</a>
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -60,14 +59,16 @@
         </div>
         
         <div class="col-md-5">
-            <h5>Members: <button ng-click="addSearchMemInput()">+</button>
-                <button ng-click="deleteSearchMemInput()">-</button></h5>
-            <input ng-repeat="searchMem in searchMemberList" ng-model="searchMem.email" type="text"/>
+            <h5>Members:</h5>
+            <div id="groupMembers">
+              <div ng-repeat="mem in newMemberList">{{mem.fname + " " + mem.lname}}</div>
+            </div>
+            <input ng-model="newMember" ng-keypress="checkByEmail($event)" type="text" placeholder="add member by email" />
         </div>
      </div>
      <div class="modal-footer">
      <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" data-dismiss="modal" ng-click="createGroup()">Save</button>
+            <button class="btn" data-dismiss="modal" ng-click="createGroup($event)">Save</button>
      </div>
      </div>
     </div>

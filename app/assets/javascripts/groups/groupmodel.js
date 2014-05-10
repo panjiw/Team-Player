@@ -33,6 +33,14 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
   GroupModel.createGroup = function(name, description, members) {
+    function extractIds(userList) {
+      var userIds = [];
+      for(user in userList) {
+        userIds.push(user.id);
+      }
+      return userIds;
+    }
+
     // create a group
     // current_user will set as creator, no need to send creator
     // current_user will be added to the group as member
@@ -40,7 +48,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     {
       "group[name]": name,
       "group[description]": description,
-      "group[members]": members
+      "group[members]": extractIds(members)
     })
     .success(function(data, status) {
       console.log(data);
