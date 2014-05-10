@@ -12,19 +12,20 @@
   $scope.group_selected = 0;
   $scope.groupsList = GroupModel.getGroups();
 
-  $scope.searchMemberList = [{email:""}];
+  $scope.searchMemberList = [];
+
   var searchMemSize = 1;
   $scope.addSearchMemInput = function(e){
     $scope.searchMemberList.push({email:""});
     searchMemSize++;
 
   }
+  
   $scope.deleteSearchMemInput = function(e){
     if(searchMemSize > 1){
       $scope.searchMemberList.pop();
       searchMemSize--;
     }
-
   }
 
   $scope.showAddGroup = function(e){
@@ -44,41 +45,27 @@
   // }
 
   $scope.createGroup = function(e) {
-    var members = checkByEmail();
-
-    // check email error
-    if(members == null) {
-      return;
-    }
-
-   GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, members,
-   function(error){
-   if (error){
-   //TODO
-   } else {
-   $scope.groupsList= GroupModel.getGroups();
-   }
-   });
+    GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, members,
+    function(error) {
+      if (error){
+        //TODO
+      } else {
+        $scope.groupsList = GroupModel.getGroups();
+      }
+    });
   }
 
 
-  function checkByEmail() {
-    groupCreateMembers = [];
-
-    for(var email in $scope.searchMemberList){
-      UserModel.getUserByEmail(email, function(user, error) {
-
-        if(error) {
-          toastr.error("User with email "+ email+ " not found :(");
-          return null;
-        } else {
-          $scope.$apply(function() {
-            groupCreateMembers.push(user.id);
-          });
-        }
-      });
-    }
-    return groupCreateMembers;
+  $scope.checkByEmail = function(e) {
+    GroupModel.checkByEmail($scope.newMember, function(user, error) {
+      if(error) {
+        toastr.success(error);
+      } else {
+        $scope.$apply(function() {
+          $scope.newMember.push(user.id);
+        });
+      }
+    });
   }
 
 // this function is for backend testing, not for release.
