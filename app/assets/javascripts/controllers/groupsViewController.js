@@ -33,14 +33,18 @@
       return;
     }
 
+    console.log("Trying to create a group...");
+
     GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.newMemberList,
     function(error) {
       if (error){
-        //TODO
+        toastr.error(error);
       } else {
-        $scope.groupsList = GroupModel.getGroups();
-        $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
-        $scope.newMemberList = [];
+        $scope.$apply(function() {
+          $scope.groupsList = GroupModel.getGroups();
+          $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
+          $scope.newMemberList = [];
+        });
       }
     });
   }

@@ -20,19 +20,12 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   var GroupModel = {};
   GroupModel.groups = {}; //ID to groups
 
-  //Dummy objects for now
-  var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
-  var fakeGroup = new Group(1, false, "fake", "fake group!", 0, new Date(), [0, 1]);
-
-  GroupModel.groups[0] = selfGroup;
-  GroupModel.groups[1] = fakeGroup;
-
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise.
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
-  GroupModel.createGroup = function(name, description, members) {
+  GroupModel.createGroup = function(name, description, members, callback) {
     function extractIds(userList) {
       var userIds = [];
       for(user in userList) {
@@ -51,10 +44,14 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "group[members]": extractIds(members)
     })
     .success(function(data, status) {
-      console.log(data);
+      console.log("Success: " + data);
+      GroupModel.groups[data.id] = new Group(data.id, false, data.name, data.description, 
+                                              data.creator, data.dateCreated, data.members);
+      callback();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("group create error: "+error);
+      callback("Error: " + JSON.parse(xhr.responseText));
     });
   };
 
