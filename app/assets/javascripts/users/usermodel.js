@@ -16,9 +16,9 @@ It also provides the login and create account interface to the backend.
 // --last name
 var User = function(id, uname, fname, lname) {
   this.id = id,
-this.uname = uname,
-this.fname = fname,
-this.lname = lname
+  this.uname = uname,
+  this.fname = fname,
+  this.lname = lname
 };
 
 //This is the UserModel for the application. It houses
@@ -29,16 +29,16 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
 
-  // dummy users
-  UserModel.users[0] = new User(0, "go_dawgs", "Team", "Player");
-  UserModel.users[1] = new User(1, "fd_01", "friend", "zone");
+  function updateUser(user) {
+    UserModel.users[user.id] = new User(user.id, data.username,
+                                        data.firstname, data.lastname);
+  }
 
   //Update the current user info to the information contained
   //in data
-  function updateUser(data, status) {
+  function updateMe(data) {
     UserModel.me = data.id;
-    UserModel.users[UserModel.me] = new User(UserModel.me, data.username,
-                                              data.firstname, data.lastname);
+    updateUser(data);
   };
 
   // Log the current user out.
@@ -75,7 +75,7 @@ angular.module("myapp").factory('UserModel', function() {
       "user[password]": psswd
     })
     .success(function(data, status) {
-      updateUser(data, status);
+      updateMe(data);
       callback();
       window.location = "./home";
     })
@@ -110,7 +110,7 @@ angular.module("myapp").factory('UserModel', function() {
       "user[password_confirmation]": psswd_two
     })
     .success(function(data, status) {
-      updateUser(data, status);
+      updateMe(data);
       callback();
       window.location = "./home";
     })
@@ -119,6 +119,18 @@ angular.module("myapp").factory('UserModel', function() {
       callback(res["errors"]);
     });
   };
+
+  UserModel.getAllFriends = function() {
+    $.get("/view_users")
+    .success(function(data, status)) {
+      for(user in data) {
+        updateUser(data);
+      }
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  }
 
   //Lookup a users's information (including whether they exist)
   //by email. It calls the callback function with two parameters
