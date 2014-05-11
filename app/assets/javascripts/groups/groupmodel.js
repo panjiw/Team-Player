@@ -9,11 +9,11 @@ It's main functionality is to get, create, and edit tasks.
 var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
 this.id = id;
   this.isSelfGroup = isSelfGroup;
-this.name = name;
-this.description = description;
-this.creator = creator;
-this.dateCreated = dateCreated;
-this.members = members;
+  this.name = name;
+  this.description = description;
+  this.creator = creator;
+  this.dateCreated = dateCreated;
+  this.members = members;
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
