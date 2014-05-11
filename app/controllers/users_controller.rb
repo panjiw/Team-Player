@@ -16,7 +16,31 @@ class UsersController < ApplicationController
       render :json => {:errors => @user.errors.full_messages}, :status => 400
     end
   end
-  
+
+  # Edit a signed-in user's information
+  def edit
+    #@user = User.find(params[:id])
+  end
+
+  # displays user information
+  def show
+    #@user = User.find(params[:id])
+  end
+
+  # Updates user information after editting
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      token = view_context.sign_in @user
+      render :json => {:token => token}, :status => 200
+      #flash[:success] = "Profile updated"
+      #redirect_to @user
+    else
+      render :josn => {:errors => @user.errors.full_messages}, :status => 400
+    end
+  end
+
+
   # find user by email
   def finduseremail
     @user = User.where("email = ?", params[:find][:email])
@@ -34,10 +58,18 @@ class UsersController < ApplicationController
     end
   end
 
+
   private
 
   # Make sure the params sent in is valid (see User Rep Inv)
   def user_params
     params.require(:user).permit(:username, :firstname, :lastname, :email, :password, :password_confirmation)
   end
+
+  # Requires sigged-in user
+  def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+  end
+
+
 end

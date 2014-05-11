@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
   match '/user',        to: 'sessions#user',       via: 'get'
   match '/help',        to: 'static_pages#help',   via: 'get'
-
+  #match '/settings',    to: 'static_pages#settings',      via: 'get'
+ 
   # user
   match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
   # groups
