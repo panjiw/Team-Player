@@ -11,7 +11,7 @@
                     <div class="group-scroll">
                       <div class="list-group">
                           <!-- $parent is required because ng-repeat creates a new scope -->
-                          <a class="list-group-item" 
+                          <a class="list-group-item"
                              ng-repeat="grp in groupsList"
                              ng-click="$parent.group_selected=grp.id">
                             <h4>{{grp.name}}</h4>
@@ -42,32 +42,35 @@
             <div style="display: {{user.id ? '' : 'none'}}">{{"Hey, that's: " + user.fname + " " + user.lname}}</div>
         </div>
     </div>
-    
+    <button ng-click="sendForm()">KEITH BUTTON </button>
     <!-- Popup for adding group -->
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
-    	<div class="modal-content">
-    		<div class="modal-header">
-    		<button type="button" class="close" data-dismiss="modal">×</button>
-    			<h3>Add Group</h3>
-    	</div>
-    	<div class="modal-body group-add-body">
-            <div class="col-md-6">
-        		<h5>Name:</h5><input ng-model="groupCreateName" type="text" />
-                <h5>Description:</h5><input ng-model="groupCreateDescription" type="text" />
+     <div class="modal-content">
+     <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal">×</button>
+     <h3>Add Group</h3>
+     </div>
+     <div class="modal-body group-add-body">
+        <div class="col-md-6">
+          <h5>Name:</h5><input ng-model="groupCreateName" type="text" />
+          <h5>Description:</h5><textarea ng-model="groupCreateDescription"></textarea>
+        </div>
+        
+        <div class="col-md-5">
+            <h5>Members:</h5>
+            <div id="groupMembers">
+              <div ng-repeat="mem in newMemberList">{{mem.fname + " " + mem.lname}}</div>
             </div>
-            <div class="col-md-5">
-                <h5>Members: <button ng-click="addSearchMemInput()">+</button>
-                    <button ng-click="deleteSearchMemInput()">-</button></h5>
-                <input ng-repeat="searchMem in searchMemberList" ng-model="searchMem.email" type="text"/>
-            </div>
-    	</div>
-    	<div class="modal-footer">
-    		<button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" data-dismiss="modal" ng-click="createGroup()">Save</button>
-    	</div>
-    	</div>
+            <input ng-model="newMember" ng-keypress="checkByEmail($event)" type="text" placeholder="add member by email" />
+        </div>
+     </div>
+     <div class="modal-footer">
+      <button class="btn" data-dismiss="modal">Cancel</button>
+      <button class="btn" data-dismiss="modal" ng-click="createGroup($event)">Save</button>
+     </div>
+     </div>
     </div>
     </div>
 

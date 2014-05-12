@@ -1,38 +1,67 @@
 /*
-  TeamPlayer -- 2014
+TeamPlayer -- 2014
 
-  This file holds the model for all tasks the user is part of.
+This file holds the model for all tasks the user is part of.
 
-  It's main functionality is to get, create, and edit tasks.
+It's main functionality is to get, create, and edit tasks.
 */
 
 var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
-	this.id = id;
+this.id = id;
   this.isSelfGroup = isSelfGroup;
-	this.name = name;
-	this.description = description;
-	this.creator = creator;
-	this.dateCreated = dateCreated;
-	this.members = members;
+  this.name = name;
+  this.description = description;
+  this.creator = creator;
+  this.dateCreated = dateCreated;
+  this.members = members;
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
   var GroupModel = {};
-  GroupModel.groups = {};   //ID to groups
+  GroupModel.groups = {}; //ID to groups
+  GroupModel.fetchedGroups = false;
 
-  //Dummy objects for now
-  var selfGroup = new Group(0, true, "SELF", "SELF_GROUP", 0, new Date(), [0]);
-  var fakeGroup = new Group(1, false, "fake", "fake group!", 0, new Date(), [0, 1]);
+  GroupModel.updateGroup = function(group) {
+    GroupModel.groups[group.id] = new Group(group.id, false, group.name, group.description, 
+                                              group.creator, new Date(group.dateCreated), group.members);
+  }
 
-  GroupModel.groups[0] = selfGroup;
-  GroupModel.groups[1] = fakeGroup;
+  GroupModel.fetchGroupsFromServer = function(callback) {
+    // We really only need to ask the server for all groups
+    // the first time, so return if we already have.
+    if(GroupModel.fetchedGroups) {
+      return;
+    }
 
+    $.get("/view_groups")
+    .success(function(data, status) {
+      for(var i = 0; i < data.length; i++) {
+        GroupModel.updateGroup(data[i]);
+        for(member in data[i].members) {
+          UserModel.updateUser(member);
+        }
+      }
+      callback();
+      GroupModel.fetchedGroups = true;
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  }
 
   //Create and return a group with the given parameters. This updates to the database, or returns
   //error codes otherwise.
   //Note: The "members" array does not need to contain the creator. The creator
   //of a group will be placed in the group by default.
-  GroupModel.createGroup = function(name, description, members) {
+  GroupModel.createGroup = function(name, description, members, callback) {
+    function extractIds(userList) {
+      var userIds = [];
+      for(user in userList) {
+        userIds.push(user.id);
+      }
+      return userIds;
+    }
+
     // create a group
     // current_user will set as creator, no need to send creator
     // current_user will be added to the group as member
@@ -40,13 +69,16 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     {
       "group[name]": name,
       "group[description]": description,
-      "group[members]": members
+      "group[members]": extractIds(members)
     })
     .success(function(data, status) {
-      console.log(data);
+      console.log("Success: " + data);
+      GroupModel.updateGroup(data);
+      callback();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("group create error: "+error);
+      callback("Error: " + JSON.parse(xhr.responseText));
     });
   };
 
@@ -57,29 +89,38 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     //TODO
   };
 
-  // Add a user into a group. If the user is already in the group, does nothing and return true. 
+  // Add a user into a group. If the user is already in the group, does nothing and return true.
   // If adding fails (e.g. user does not exist), return false.
   GroupModel.addToGroup = function(groupID, userID) {
     //TODO
   }
 
-  // Remove a user from a group. If the user is not in the group, does nothing and return true. 
+  // Remove a user from a group. If the user is not in the group, does nothing and return true.
   // If removing fails (e.g. user does not exist), return false.
   GroupModel.removeFromGroup = function(id, userID) {
-  	//TODO
+   //TODO
   }
 
   //Return all groups for this user as a list of Group objects
   GroupModel.getGroups = function() {
 
-    // var groupArray = [];
+    var groupArray = [];
 
-    // for(var index in GroupModel.groups) { 
-    //   groupArray.push(GroupModel.groups[index]);
-    // }
+    for(var index in GroupModel.groups) {
+      groupArray.push(GroupModel.groups[index]);
+    }
 
-    //return groupArray;
-    return GroupModel.groups;
+    return groupArray;
+  }
+
+  GroupModel.checkByEmail = function(email, callback) {
+    UserModel.getUserByEmail(email, function(user, error) {
+      if(error) {
+        callback(null, "User not found: " + email);
+      } else {
+        callback(user);
+      }
+    });
   }
 
   return GroupModel;

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
   # groups
   match '/create_group', to: 'groups#create',      via: 'post'
-  match '/view_group', to: 'users#viewgroup', 	   via: 'post'
+  match '/view_groups', to: 'users#viewgroup', 	   via: 'get'
   match '/view_members', to: 'groups#viewmembers', via: 'post'
   match '/invite_to_group', to: 'groups#invitetogroup', via: 'post'
 

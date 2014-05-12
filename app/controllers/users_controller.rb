@@ -6,6 +6,8 @@
 # as well as a list of reasons for failure if necessary
 #
 class UsersController < ApplicationController
+  before_action :signed_in_user, only: [:viewgroup]
+
   # Create a new user and sign user in
   def create
     @user = User.new(user_params)
@@ -57,6 +59,15 @@ class UsersController < ApplicationController
       render :nothing => true, :status => 400
     end
   end
+  
+  #viewgroup-> give all groups login user is in, and for each group includes all
+  # the users of that group, excluding private infos
+  def viewgroup
+    groups = current_user.groups
+    render :json => groups.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+			:password_digest, :remember_token]}]), :status => 200
+  end
+
 
 
   private
