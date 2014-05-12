@@ -14,7 +14,9 @@ Displays header after successful login  -->
       <a class="navbar-brand" ng-click="activeTab='selected_home'">Team Player</a> <!--Add link to home-->
     </div>
     <% if signed_in? %>
+        <div class="header-welcome">Welcome!
         <a class="logout" href="/" ng-click="logout($event)">Logout</a>
+    </div>
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
