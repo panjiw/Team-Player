@@ -1,10 +1,6 @@
 
-.tasks-header {
-
-}
-
 .tasks-addbutton{
-  padding-left: 500px;
+  padding-left: 600px;
   padding-bottom: 10px;
 }
 
@@ -28,9 +24,29 @@
   padding: 0px;
 }
 
+.panel-info {
+  height: 50px;
+  padding:5px;
+  overflow: hidden;
+  font-style: italic;
+}
+
+.panel-groupname {
+  float: left;
+  margin-left: 10px;
+  padding: 0px;
+}
+
+.panel-groupmembers {
+  float: right;
+  margin-right: 10px;
+  padding: 0px;
+}
+}
+
 .tasks-body{
-    padding:5px;
-    margin-left: 5px;
+  padding:5px;
+  margin-left: 5px;
 }
 
 .scroll-section {
