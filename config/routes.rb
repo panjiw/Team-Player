@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   match '/view_members', to: 'groups#viewmembers', via: 'post'
   match '/invite_to_group', to: 'groups#invitetogroup', via: 'post'
 
+  match '/create_bill', to: 'bills#new', via: 'post'
+  match '/get_bills', to: 'bills#get_all',   via: 'get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
