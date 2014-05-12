@@ -22,6 +22,9 @@ Displays header after successful login  -->
         <li><a ng-click="activeTab='selected_about'">About</a></li> <!--Add link to about--> 
         <li><a ng-click="activeTab='selected_contact'">Contact</a></li> <!--Add link to contact-->
         <li><a ng-click="activeTab='selected_help'">Help</a></li>
+        <% if signed_in? %>
+          <li><a ng-click="activeTab='selected_settings'">Settings</a></li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
     <% if signed_in? %>

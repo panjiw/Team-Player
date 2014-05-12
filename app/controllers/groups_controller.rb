@@ -3,30 +3,34 @@ class GroupsController < ApplicationController
 
   # create a new group and add current_user to group + creator
   def create
-    @group = current_user.groups.build(group_params)
-    if @group.save
+    group = current_user.groups.build(group_params)
+    if group.save
       # link membership association between new group and creator
-      @group.users << current_user
+      group.users << current_user
 
       # for each members in paramter, add to group
       merror = ""
-      @members = params[:add][:members]
-      @members.each do |id|
-        if(User.exists?(id) && id != current_user.id.to_s)
-	  @group.users << User.find(id)
-        else
-	  merror << " " + id << " "
+      if(params.has_key?(:add) && params.has_key(:members))
+        members = params[:add][:members]
+        members.each do |id|
+          if(User.exists?(id) && id != current_user.id.to_s)
+	    group.users << User.find(id)
+          else
+	    merror << " " + id << " "
+          end
         end
       end
 
       # if one of the user is not found shows who (merror) and status 206 otherwise 200
       if (merror.empty?)
-        render :json => {:groups =>  @group}, :status => 200
+        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+			:password_digest, :remember_token]}]), :status => 200
       else
-        render :json => {:groups =>  @group, :memberError => merror}, :status => 206
+        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+			:password_digest, :remember_token]}], :memberError => merror), :status => 206
       end
     else
-      render :json => {:errors => @group.errors.full_messages}, :status => 400
+      render :json => {:errors => group.errors.full_messages}, :status => 400
     end
   end
 
