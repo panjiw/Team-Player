@@ -23,7 +23,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   GroupModel.updateGroup = function(group) {
     GroupModel.groups[group.id] = new Group(group.id, false, group.name, group.description, 
-                                              group.creator, new Date(group.dateCreated), group.members);
+                                              group.creator, new Date(group.dateCreated), group.users);
   }
 
   GroupModel.fetchGroupsFromServer = function(callback) {

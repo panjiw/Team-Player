@@ -7,7 +7,7 @@
         <div class="group-body">
             <div class="col-md-2">
                 <div class="groups">
-                    <h3>Groups : {{group_selected}}</h3>
+                    <h3>Groups</h3>
                     <div class="group-scroll">
                       <div class="list-group">
                           <!-- $parent is required because ng-repeat creates a new scope -->
@@ -22,12 +22,12 @@
             </div>
             <div class="col-md-10">
                 <div class="group-display">
-                    <h3>{{groupsList[group_selected].name}}, {{member_seleced}}</h3>
+                    <h3>{{groupsList[group_selected].name}}</h3>
                     <div class="group-members">
                         <a class="list-group-item"
                              ng-repeat="mem in currentMemebrs"
                              ng-click="$parent.member_selected=mem.id">
-                            <h4>{{mem.name}}</h4>
+                            <h4>{{mem.firstname}}</h4>
                           </a>
                         <button type="button" class="btn btn-default group-add">Add Member</button>
                     </div>
@@ -36,8 +36,8 @@
                       <button type="button" class="btn btn-default">Leave Group</button>
                     </div>
                     <div class="group-description" ng-hide="member_selected == -1">
-                      <h4>{{currentMemebrs[member_selected].uname}}</h4>
-                      <h4>{{currentMemebrs[member_selected].fname}} {{currentMemebrs[member_selected].lname}}</h4>
+                      <h4>{{currentMemebrs[member_selected].username}}</h4>
+                      <h4>{{currentMemebrs[member_selected].firstname}} {{currentMemebrs[member_selected].lastname}}</h4>
                     </div>
                 </div>
             </div>

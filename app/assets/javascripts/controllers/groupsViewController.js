@@ -17,9 +17,10 @@
 
   $scope.user = {};
   // default select group with id -1
-  $scope.group_selected = -1;
+  //$scope.group_selected = -1;
   $scope.member_selected = -1;
   $scope.groupsList = GroupModel.getGroups();
+  $scope.group_selected = Object.keys($scope.groupsList)[0];
   $scope.currentMemebrs = {};
   console.log(GroupModel.getGroups());
 
@@ -64,8 +65,7 @@
     $scope.group_selected = id;
     $scope.currentMemebrs = $scope.groupsList[id].members;
     $scope.member_selected = -1;
-    console.log("members in this group:");
-    console.log($scope.groupsList[id]);
+    //console.log(UserModel.users);
   }
 
   $scope.checkByEmail = function(e) {
