@@ -91,11 +91,33 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 .btn-you-owe {
   float: right;
   clear: right;
-  height: 25px;
   width: 90px;
 }
 
 .bill-members {
   text-align: center;
   padding-top: 15px;
+}
+
+.bills-selected {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #bce8f1;
+  border-radius: 5px;
+  width: 250px;
+  overflow: hidden;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.bills-selected input {
+  float: left;
+  clear: both;
+  margin: 0px;
+  padding: 0px;
+}
+
+.bills-selected .bill-amount {
+  float: right;
+  margin-left: 0px;
 }
