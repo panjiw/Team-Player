@@ -20,7 +20,11 @@ angular.module("myapp").factory('TaskModel', function() {
   TaskModel.tasks = {};   //ID to task
   TaskModel.fetchedTasks = false;
 
-  GroupModel.fetchGroupsFromServer = function(callback) {
+  TaskModel.updateTask(task) {
+    //TODO
+  }
+
+  TaskModel.fetchTasksFromServer = function(callback) {
     // We really only need to ask the server for all tasks
     // the first time, so return if we already have.
     if(TaskModel.fetchedTasks) {
@@ -73,13 +77,13 @@ angular.module("myapp").factory('TaskModel', function() {
   TaskModel.createTask = function(groupID, name, description, dateCreated, dateDue, cycle, repeatArray, members) {
     $.post("/add_task",
     {
-      "task[gid]": groupID,
-      "task[name]": name,
-      "task[description]": description,
-      "task[members]": members,
-      "task[dateDue]": date,
-      "task[repeatArray]": repeatArray,
-      "task[cycle]": cycle
+      "task[gid]": groupID,               // Group ID
+      "task[name]": name,                 // String
+      "task[description]": description,   // String
+      "task[members]": members,           // Array of uids
+      "task[dateDue]": date.toString(),   // Javascript Date object toString() so that you have date and time info
+      "task[repeatArray]": repeatArray,   // Array like [true, false, false, true, false, false, false]
+      "task[cycle]": cycle                // Boolean: true/false
     })
     .success(function(data, status) {
 
