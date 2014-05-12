@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   has_many :memberships, :class_name => "Membership", dependent: :destroy
   has_many :groups, :through => :memberships
 
+  has_many :task_actors
+  has_many :tasks, :through => :task_actors
+
   before_save {
     self.username = username.downcase
     self.email = email.downcase

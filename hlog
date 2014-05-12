@@ -1,0 +1,409 @@
+2014-05-03T01:48:57.961474+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T01:48:57.961476+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T01:48:57.961478+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T01:48:57.961479+00:00 app[web.1]: 
+2014-05-03T01:48:57.961480+00:00 app[web.1]: 
+2014-05-03T01:48:57.957512+00:00 app[web.1]: Processing by StaticPagesController#index as */*
+2014-05-03T01:51:20.251696+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=a5e4c002-0aa0-4646-9eae-c05bf9d5427a fwd="172.56.32.36" dyno=web.1 connect=1ms service=14ms status=500 bytes=1799
+2014-05-03T01:51:20.241407+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T01:51:20.237301+00:00 app[web.1]: Started GET "/" for 172.56.32.36 at 2014-05-03 01:51:20 +0000
+2014-05-03T01:51:20.243751+00:00 app[web.1]:                                ^
+2014-05-03T01:51:20.243753+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T01:51:20.243746+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T01:51:20.243749+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:51:20.243936+00:00 app[web.1]: Completed 500 Internal Server Error in 2ms
+2014-05-03T01:51:20.245504+00:00 app[web.1]: 
+2014-05-03T01:51:20.245528+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does no
+t exist
+2014-05-03T01:51:20.245530+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:51:20.245532+00:00 app[web.1]:                                ^
+2014-05-03T01:51:20.245533+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T01:51:20.245535+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T01:51:20.245537+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T01:51:20.245538+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T01:51:20.245539+00:00 app[web.1]: 
+2014-05-03T01:51:20.245541+00:00 app[web.1]: 
+2014-05-03T01:51:20.815634+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=0307ade0-c1fb-48a8-ab0c-774701f22099 fwd="172.56.32.36" dyno=web.1 connect=2ms service=6ms status=200 bytes=273
+2014-05-03T01:57:15.326525+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=b6d1e2c1-e689-4b04-ab37-4160f51b3dc0 fwd="69.91.137.238" dyno=web.1 connect=14ms service=93ms status=500 bytes=1799
+2014-05-03T01:57:15.232470+00:00 app[web.1]: Started GET "/" for 69.91.137.238 at 2014-05-03 01:57:15 +0000
+2014-05-03T01:57:15.302621+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T01:57:15.302631+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T01:57:15.302627+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:57:15.304010+00:00 app[web.1]: 
+2014-05-03T01:57:15.302748+00:00 app[web.1]: Completed 500 Internal Server Error in 39ms
+2014-05-03T01:57:15.304013+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T01:57:15.302629+00:00 app[web.1]:                                ^
+2014-05-03T01:57:15.304015+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:57:15.304018+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T01:57:15.304017+00:00 app[web.1]:                                ^
+2014-05-03T01:57:15.304020+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T01:57:15.304021+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T01:57:15.304023+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T01:57:15.304024+00:00 app[web.1]: 
+2014-05-03T01:57:15.304026+00:00 app[web.1]: 
+2014-05-03T01:57:15.263334+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:38:06.552990+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=5ebde6ce-fe30-4a46-80a9-63645b892849 fwd="71.231.106.187" dyno=web.1 connect=1ms service=37ms status=500 bytes=1799
+2014-05-03T02:38:06.516267+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 02:38:06 +0000
+2014-05-03T02:38:06.528776+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:38:06.528780+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:38:06.528782+00:00 app[web.1]:                                ^
+2014-05-03T02:38:06.528784+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:38:06.528886+00:00 app[web.1]: Completed 500 Internal Server Error in 4ms
+2014-05-03T02:38:06.543580+00:00 app[web.1]: 
+2014-05-03T02:38:06.543
+586+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:38:06.543588+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:38:06.543590+00:00 app[web.1]:                                ^
+2014-05-03T02:38:06.543592+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:38:06.543593+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:38:06.543598+00:00 app[web.1]: 
+2014-05-03T02:38:06.543595+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:38:06.543597+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:38:06.543599+00:00 app[web.1]: 
+2014-05-03T02:38:06.524864+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:38:12.562330+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=09163ad8-d755-4f00-89c7-65927cae0321 fwd="71.231.106.187" dyno=web.1 connect=1ms service=10ms status=304 bytes=178
+2014-05-03T02:45:56.760540+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=acd2310c-e88c-4792-85ea-578f76c2d16b fwd="71.231.106.187" dyno=web.1 connect=1ms service=21ms status=301 bytes=228
+2014-05-03T02:45:57.615660+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=21263d13-1ab7-4f37-a890-4bc7b2b0aaee fwd="71.231.106.187" dyno=web.1 connect=1ms service=11ms status=500 bytes=1799
+2014-05-03T02:45:57.605367+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 02:45:57 +0000
+2014-05-03T02:45:57.609831+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:45:57.609834+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:45:57.609838+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:45:57.611125+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:45:57.611120+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:45:57.611115+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:45:57.611121+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:45:57.611112+00:00 app[web.1]: 
+2014-05-03T02:45:57.611123+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:45:57.609927+00:00 app[web.1]: Completed 500 Internal Server Error in 2ms
+2014-05-03T02:45:57.611117+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:45:57.609836+00:00 app[web.1]:                                ^
+2014-05-03T02:45:57.611118+00:00 app[web.1]:                                ^
+2014-05-03T02:45:57.611126+00:00 app[web.1]: 
+2014-05-03T02:45:57.611128+00:00 app[web.1]: 
+2014-05-03T02:45:57.607598+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:45:57.881095+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=6d93d766-e8ae-4840-a66e-34626b967794 fwd="71.231.106.187" dyno=web.1 connect=2ms service=5ms status=200 bytes=273
+2014-05-03T02:47:03.395022+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=ae8948f5-f202-4667-a124-78f5816bfb8a fwd="76.121.220.244" dyno=web.1 connect=1ms service=35ms status=500 bytes=1799
+2014-05-03T02:47:03.375936+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:47:03.369152+00:00 app[web.1]: Started GET "/" for 76.121.220.244 at 2014-05-03 02:47:03 +0000
+2014-05-03T02:47:03.387901+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:47:03.387909+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:47:03.387912+00:00 app[web.1]:                                ^
+2014-05-03T02:47:03.387914+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:47:03.388073+00:00 app[web.1]: Completed 500 Internal Server Error in 7ms
+2014-05-03T02:47:03.389342+00:00 app[web.1]:                                ^
+2014-05-03T02:47:03.389336+00:00 app[web.1]: 
+2014-05-03T02:47:03.389339+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:47:03.389340+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:47:03.389350+00:00 app[web.1]: 
+2014-05-03T02:47:03.389343+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:47:03.389345+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:47:03.389347+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:47:03.389348+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:47:03.389351+00:00 app[web.1]: 
+2014-05-03T02:47:03.659365+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=d51bfe24-f024-410d-a46c-2df317f1358a fwd="76.121.220.244" dyno=web.1 connect=1ms service=9ms status=200 bytes=273
+2014-05-03T01:51:20.245535+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T01:51:20.245537+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T01:51:20.245538+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T01:51:20.245539+00:00 app[web.1]: 
+2014-05-03T01:51:20.245541+00:00 app[web.1]: 
+2014-05-03T01:51:20.815634+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=0307ade0-c1fb-48a8-ab0c-774701f22099 fwd="172.56.32.36" dyno=web.1 connect=2ms service=6ms status=200 bytes=273
+2014-05-03T01:57:15.326525+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=b6d1e2c1-e689-4b04-ab37-4160f51b3dc0 fwd="69.91.137.238" dyno=web.1 connect=14ms service=93ms status=500 bytes=1799
+2014-05-03T01:57:15.232470+00:00 app[web.1]: Started GET "/" for 69.91.137.238 at 2014-05-03 01:57:15 +0000
+2014-05-03T01:57:15.302621+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T01:57:15.302631+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T01:57:15.302627+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:57:15.304010+00:00 app[web.1]: 
+2014-05-03T01:57:15.302748+00:00 app[web.1]: Completed 500 Internal Server Error in 39ms
+2014-05-03T01:57:15.304013+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T01:5
+7:15.302629+00:00 app[web.1]:                                ^
+2014-05-03T01:57:15.304015+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T01:57:15.304018+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T01:57:15.304017+00:00 app[web.1]:                                ^
+2014-05-03T01:57:15.304020+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T01:57:15.304021+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T01:57:15.304023+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T01:57:15.304024+00:00 app[web.1]: 
+2014-05-03T01:57:15.304026+00:00 app[web.1]: 
+2014-05-03T01:57:15.263334+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:38:06.552990+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=5ebde6ce-fe30-4a46-80a9-63645b892849 fwd="71.231.106.187" dyno=web.1 connect=1ms service=37ms status=500 bytes=1799
+2014-05-03T02:38:06.516267+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 02:38:06 +0000
+2014-05-03T02:38:06.528776+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:38:06.528780+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "
+users"."remember_toke...
+2014-05-03T02:38:06.528782+00:00 app[web.1]:                                ^
+2014-05-03T02:38:06.528784+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:38:06.528886+00:00 app[web.1]: Completed 500 Internal Server Error in 4ms
+2014-05-03T02:38:06.543580+00:00 app[web.1]: 
+2014-05-03T02:38:06.543586+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:38:06.543588+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:38:06.543590+00:00 app[web.1]:                                ^
+2014-05-03T02:38:06.543592+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:38:06.543593+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:38:06.543598+00:00 app[web.1]: 
+2014-05-03T02:38:06.543595+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:38:06.543597+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:38:06.543599+00:00 app[web.1]: 
+2014-05-03T02:38:06.524864+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:38:12.562330+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=09163ad8-d755-4f00-89c7-65927cae0321 fwd="71.231.106.187" dyno=web.1 connect=1ms service=10ms status=304 bytes=178
+2014-05-03T02:45:56.760540+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=acd2310c-e88c-4792-85ea-578f76c2d16b fwd="71.231.106.187" dyno=web.1 connect=1ms service=21ms status=301 bytes=228
+2014-05-03T02:45:57.615660+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=21263d13-1ab7-4f37-a890-4bc7b2b0aaee fwd="71.231.106.187" dyno=web.1 connect=1ms service=11ms status=500 bytes=1799
+2014-05-03T02:45:57.605367+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 02:45:57 +0000
+2014-05-03T02:45:57.609831+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:45:57.609834+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:45:57.609838+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:45:57.611125+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:45:57.611120+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:45:57.611115+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:45:57.611121+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:45:57.611112+00:00 app[web.1]: 
+2014-05-03T02:45:57.611123+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:45:57.609927+00:00 app[web.1]: Completed 500 Internal Server Error in 2ms
+2014-05-03T02:45:57.611117+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:45:57.609836+00:00 app[web.1]:                                ^
+2014-05-03T02:45:57.611118+00:00 app[web.1]:                                ^
+2014-05-03T02:45:57.611126+00:00 app[web.1]: 
+2014-05-03T02:45:57.611128+00:00 app[web.1]: 
+2014-05-03T02:45:57.607598+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:45:57.881095+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=6d93d766-e8ae-4840-a66e-34626b967794 fwd="71.231.106.187" dyno=web.1 connect=2ms service=5ms status=200 bytes=273
+2014-05-03T02:47:03.395022+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=ae8948f5-f202-4667-a124-78f5816bfb8a fwd="76.121.220.244" dyno=web.1 connect=1ms service=35ms status=500 bytes=1799
+2014-05-03T02:47:03.375936+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:47:03.369152+00:00 app[web.1]: Started GET "/" for 76.121.220.244 at 2014-05-03 02:47:03 +0000
+2014-05-03T02:47:03.387901+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:47:03.387909+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:47:03.387912+00:00 app[web.1]:                                ^
+2014-05-0
+3T02:47:03.387914+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:47:03.388073+00:00 app[web.1]: Completed 500 Internal Server Error in 7ms
+2014-05-03T02:47:03.389342+00:00 app[web.1]:                                ^
+2014-05-03T02:47:03.389336+00:00 app[web.1]: 
+2014-05-03T02:47:03.389339+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:47:03.389340+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:47:03.389350+00:00 app[web.1]: 
+2014-05-03T02:47:03.389343+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:47:03.389345+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:47:03.389347+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:47:03.389348+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:47:03.389351+00:00 app[web.1]: 
+2014-05-03T02:47:03.659365+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=d51bfe24-f024-410d-a46c-2df317f1358a fwd="76.121.220.244" dyno=web.1 connect=1ms service=9ms status=200 bytes=273
+2014-05-03T02:53:12.699467+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=1d674037-850a-434c-aaec-454bcc18fe48 fwd="71.231.106.187" dyno=web.1 connect=13ms service=22ms status=500 bytes=1799
+2014-05-03T02:53:12.923861+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=4373ff6c-556d-4a81-8949-e1989dd2421c fwd="71.231.106.187" dyno=web.1 connect=2ms service=16ms status=304 bytes=178
+2014-05-03T02:53:12.681996+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:53:12.682004+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T02:53:12.677273+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T02:53:12.681978+00:00 app[web.1]: 
+2014-05-03T02:53:12.681995+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:53:12.682001+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T02:53:12.682003+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T02:53:12.674854+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 02:53:12 +0000
+2014-05-03T02:53:12.680198+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T02:53:12.681998+00:00 app[web.1]:                                ^
+2014-05-03T02:53:12.682000+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T02:53:12.682005+00:00 app[web.1]: 
+2014-05-03T02:53:12.682007+00:00 app[web.1]: 
+2014-05-03T02:53:12.680204+00:00 app[web.1]:                                ^
+2014-05-03T02:53:12.680206+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T02:53:12.680519+00:00 app[web.1]: Completed 500 Internal Server Error in 3ms
+2014-05-03T02:53:12.680202+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T02:59:04.095629+00:00 heroku[run.7600]: State changed from up to complete
+2014-05-03T02:59:04.077832+00:00 heroku[run.7600]: Process exited with status 127
+2014-05-03T02:59:02.545631+00:00 heroku[run.7600]: Awaiting client
+2014-05-03T02:59:02.591227+00:00 heroku[run.7600]: Starting process with command `db:migrate`
+2014-05-03T02:59:13.841072+00:00 heroku[api]: Starting process with command `bundle exec rake db:migrate` by panji.wisesa@gmail.com
+2014-05-03T02:59:18.125950+00:00 heroku[run.6183]: Awaiting client
+2014-05-03T02:59:18.190464+00:00 heroku[run.6183]: Starting process with command `bundle exec rake db:migrate`
+2014-05-03T02:59:18.308342+00:00 heroku[run.6183]: State changed from starting to up
+2014-05-03T02:59:21.412397+00:00 heroku[run.6183]: State changed from up to complete
+2014-05-03T02:59:21.395974+00:00 heroku[run.6183]: Process exited with status 1
+2014-05-03T03:03:56.106230+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=3ff27472-3fa8-4409-bef9-1ed8d233d95e fwd="173.252.101.118" dyno=web.1 connect=1ms service=7ms status=301 bytes=228
+2014-05-03T03:03:56.150939+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:03:56.150945+00:00 app[web.1]:                                ^
+2014-05-03T03:03:56.150947+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T03:03:56.145564+00:00 app[web.1]: Started GET "/" for 173.252.101.118 at 2014-05-03 03:03:56 +0000
+2014-05-03T03:03:56.150943+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:03:56.151068+00:00 app[web.1]: Completed 500 Internal Server Error in 3ms
+2014-05-03T03:03:56.152328+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:03:56.152323+00:00 app[web.1]: 
+2014-05-03T03:03:56.152330+00:00 app[web.1]:                                ^
+2014-05-03T03:03:56.152326+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:03:56.152332+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T03:03:56.152333+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T03:03:56.152335+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T03:03:56.152336+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T03:03:56.152338+00:00 app[web.1]: 
+2014-05-03T03:03:56.152340+00:00 app[web.1]: 
+2014-05-03T03:03:56.148277+00:00 app[web.1]: Processing by StaticPagesController#index as */*
+2014-05-03T03:03:56.751678+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=3a756b58-ef73-4e9c-ab93-18f1577a2dc9 fwd="173.252.101.118" dyno=web.1 connect=1ms service=607ms status=500 bytes=1799
+2014-05-03T03:03:56.766615+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=84e5925b-f12e-4f65-885b-6da1f772365f fwd="76.121.220.244" dyno=web.1 connect=1ms service=80ms status=500 bytes=1799
+2014-05-03T03:03:56.752267+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:03:56.738368+00:00 app[web.1]: Started GET "/" for 76.121.220.244 at 2014-05-03 03:03:56 +0000
+2014-05-03T03:03:56.752269+00:00 app[web.1]:                                ^
+2014-05-03T03:03:56.752271+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T03:03:56.752260+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:03:56.752404+00:00 app[web.1]: Completed 500 Internal Server Error in 11ms
+2014-05-03T03:03:56.757013+00:00 app[web.1]: 
+2014-05-03T03:03:56.757017+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:03:56.757019+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:03:56.757021+00:00 app[web.1]:                                ^
+2014-05-03T03:03:56.757024+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T03:03:56.757022+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T03:03:56.757025+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T03:03:56.757027+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T03:03:56.757029+00:00 app[web.1]: 
+2014-05-03T03:03:56.757031+00:00 app[web.1]: 
+2014-05-03T03:03:56.741485+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T03:09:58+00:00 heroku[slug-compiler]: Slug compilation started
+2014-05-03T03:10:23.418296+00:00 heroku[api]: Deploy 80a1183 by panji.wisesa@gmail.com
+2014-05-03T03:10:23+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-05-03T03:10:23.418484+00:00 heroku[api]: Release v9 created by panji.wisesa@gmail.com
+2014-05-03T03:10:28.189663+00:00 heroku[web.1]: State changed from up to starting
+2014-05-03T03:10:32.850801+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/server.rb:69:in `start'
+2014-05-03T03:10:32.850796+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:160:in `start'
+2014-05-03T03:10:32.850805+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:76:in `tap'
+2014-05-03T03:10:32.850799+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/rack-1.5.2/lib/rack/server.rb:264:in `start'
+2014-05-03T03:10:32.850808+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:40:in `run_command!'
+2014-05-03T03:10:32.850791+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:170:in `select'
+2014-05-03T03:10:32.850795+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:32:in `start'
+2014-05-03T03:10:32.850803+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:81:in `block in server'
+2014-05-03T03:10:32.850783+00:00 app[web.1]: [2014-05-03 03:10:32] FATAL SignalException: SIGTERM
+2014-05-03T03:10:32.850793+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:170:in `block in start'
+2014-05-03T03:10:32.850798+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/rack-1.5.2/lib/rack/handler/webrick.rb:14:in `run'
+2014-05-03T03:10:32.850807+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:76:in `server'
+2014-05-03T03:10:32.850810+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands.rb:17:in `<top (required)>'
+2014-05-03T03:10:32.850813+00:00 app[web.1]: 	bin/rails:4:in `<main>'
+2014-05-03T03:10:32.850820+00:00 app[web.1]: [2014-05-03 03:10:32] INFO  going to shutdown ...
+2014-05-03T03:10:32.850811+00:00 app[web.1]: 	bin/rails:4:in `require'
+2014-05-03T03:10:32.850822+00:00 app[web.1]: [2014-05-03 03:10:32] INFO  WEBrick::HTTPServer#start done.
+2014-05-03T03:10:32.850845+00:00 app[web.1]: Exiting
+2014-05-03T03:10:35.087187+00:00 heroku[web.1]: Process exited with status 143
+2014-05-03T03:10:32.035118+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2014-05-03T03:10:33.209379+00:00 heroku[web.1]: Starting process with command `bin/rails server -p 39107 -e production`
+2014-05-03T03:10:37.929227+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  WEBrick 1.3.1
+2014-05-03T03:10:37.929296+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  ruby 2.0.0 (2014-02-24) [x86_64-linux]
+2014-05-03T03:10:37.929808+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  WEBrick::HTTPServer#start: pid=2 port=39107
+2014-05-03T03:10:38.354988+00:00 heroku[web.1]: State changed from starting to up
+2014-05-03T03:10:41.170042+00:00 app[web.1]: => Booting WEBrick
+2014-05-03T03:10:41.170047+00:00 app[web.1]: => Rails 4.1.0 application starting in production on http://0.0.0.0:39107
+2014-05-03T03:10:41.170049+00:00 app[web.1]: => Run `rails server -h` for more startup options
+2014-05-03T03:10:41.170050+00:00 app[web.1]: => Notice: server is listening on all interfaces (0.0.0.0). Consider using 127.0.0.1 (--binding option)
+2014-05-03T03:10:41.170053+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 03:10:41 +0000
+2014-05-03T03:10:41.170052+00:00 app[web.1]: => Ctrl-C to shutdown server
+2014-05-03T03:10:41.623985+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=9d3ac2e0-2386-4db7-bae9-a003301d1701 fwd="71.231.106.187" dyno=web.1 connect=1ms service=476ms status=500 bytes=1799
+2014-05-03T03:10:41.552551+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T03:10:41.604016+00:00 app[web.1]: 
+2014-05-03T03:10:41.604020+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:10:41.604021+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:10:41.604023+00:00 app[web.1]:                                ^
+2014-05-03T03:10:41.604039+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T03:10:41.604040+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T03:10:41.604042+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T03:10:41.604043+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T03:10:41.604045+00:00 app[web.1]: 
+2014-05-03T03:10:41.604053+00:00 app[web.1]: 
+2014-05-03T03:10:41.601126+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:10:41.601131+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:10:41.601135+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T03:10:41.601445+00:00 app[web.1]: Completed 500 Internal Server Error in 49ms
+2014-05-03T03:10:41.601133+00:00 app[web.1]:                                ^
+2014-05-03T03:10:41.921591+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=887b9c4a-ef4c-425d-999c-2c2004c4c43c fwd="71.231.106.187" dyno=web.1 connect=1ms service=7ms status=200 bytes=273
+2014-05-03T03:10:32.850820+00:00 app[web.1]: [2014-05-03 03:10:32] INFO  going to shutdown ...
+2014-05-03T03:10:32.850811+00:00 app[web.1]: 	bin/rails:4:in `require'
+2014-05-03T03:10:32.850822+00:00 app[web.1]: [2014-05-03 03:10:32] INFO  WEBrick::HTTPServer#start done.
+2014-05-03T03:10:32.850845+00:00 app[web.1]: Exiting
+2014-05-03T03:10:35.087187+00:00 heroku[web.1]: Process exited with status 143
+2014-05-03T03:10:32.035118+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2014-05-03T03:10:33.209379+00:00 heroku[web.1]: Starting process with command `bin/rails server -p 39107 -e production`
+2014-05-03T03:10:37.929227+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  WEBrick 1.3.1
+2014-05-03T03:10:37.929296+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  ruby 2.0.0 (2014-02-24) [x86_64-linux]
+2014-05-03T03:10:37.929808+00:00 app[web.1]: [2014-05-03 03:10:37] INFO  WEBrick::HTTPServer#start: pid=2 port=39107
+2014-05-03T03:10:38.354988+00:00 heroku[web.1]: State changed from starting to up
+2014-05-03T03:10:41.170042+00:00 app[web.1]: => Booting WEBrick
+2014-05-03T03:10:41.170047+00:00 app[web.1]: => Rails 4.1.0 application starting in production on http://0.0.0.0:39107
+2014-05-03T03:10:41.170049+00:00 app[web.1]: => Run `rails server -h` for more startup options
+2014-05-03T03:10:41.170050+00:00 app[web.1]: => Notice: server is listening on all interfaces (0.0.0.0). Consider using 127.0.0.1 (--binding option)
+2014-05-03T03:10:41.170053+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 03:10:41 +0000
+2014-05-03T03:10:41.170052+00:00 app[web.1]: => Ctrl-C to shutdown server
+2014-05-03T03:10:41.623985+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=9d3ac2e0-2386-4db7-bae9-a003301d1701 fwd="71.231.106.187" dyno=web.1 connect=1ms service=476ms status=500 bytes=1799
+2014-05-03T03:10:41.552551+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T03:10:41.604016+00:00 app[web.1]: 
+2014-05-03T03:10:41.604020+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:10:41.604021+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:10:41.604023+00:00 app[web.1]:                                ^
+2014-05-03T03:10:41.604039+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T03:10:41.604040+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T03:10:41.604042+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T03:10:41.604043+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T03:10:41.604045+00:00 app[web.1]: 
+2014-05-03T03:10:41.604053+00:00 app[web.1]: 
+2014-05-03T03:10:41.601126+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:10:41.601131+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:10:41.601135+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T03:10:41.601445+00:00 app[web.1]: Completed 500 Internal Server Error in 49ms
+2014-05-03T03:10:41.601133+00:00 app[web.1]:                                ^
+2014-05-03T03:10:41.921591+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=887b9c4a-ef4c-425d-999c-2c2004c4c43c fwd="71.231.106.187" dyno=web.1 connect=1ms service=7ms status=200 bytes=273
+2014-05-03T03:12:08.715103+00:00 heroku[api]: Starting process with command `bundle exec rake db:migrate` by panji.wisesa@gmail.com
+2014-05-03T03:12:12.589874+00:00 heroku[run.8444]: Awaiting client
+2014-05-03T03:12:12.643774+00:00 heroku[run.8444]: Starting process with command `bundle exec rake db:migrate`
+2014-05-03T03:12:12.639251+00:00 heroku[run.8444]: State changed from starting to up
+2014-05-03T03:12:15.912902+00:00 heroku[run.8444]: State changed from up to complete
+2014-05-03T03:12:15.899973+00:00 heroku[run.8444]: Process exited with status 1
+2014-05-03T03:12:34.859380+00:00 heroku[api]: Starting process with command `bundle exec rake --trace db:migrate` by panji.wisesa@gmail.com
+2014-05-03T03:12:39.339907+00:00 heroku[run.8314]: State changed from starting to up
+2014-05-03T03:12:41.816554+00:00 heroku[run.8314]: State changed from up to complete
+2014-05-03T03:12:39.187197+00:00 heroku[run.8314]: Awaiting client
+2014-05-03T03:12:41.811358+00:00 heroku[run.8314]: Process exited with status 1
+2014-05-03T03:12:39.211622+00:00 heroku[run.8314]: Starting process with command `bundle exec rake --trace db:migrate`
+2014-05-03T03:13:54+00:00 heroku[slug-compiler]: Slug compilation started
+2014-05-03T03:14:55+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-05-03T03:14:54.981557+00:00 heroku[api]: Deploy ee9aea7 by panji.wisesa@gmail.com
+2014-05-03T03:14:54.981638+00:00 heroku[api]: Release v10 created by panji.wisesa@gmail.com
+2014-05-03T03:14:55.341088+00:00 heroku[web.1]: State changed from up to starting
+2014-05-03T03:14:58.925705+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2014-05-03T03:14:59.795227+00:00 app[web.1]: [2014-05-03 03:14:59] FATAL SignalException: SIGTERM
+2014-05-03T03:14:59.795232+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:170:in `select'
+2014-05-03T03:14:59.795234+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:170:in `block in start'
+2014-05-03T03:14:59.795235+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:32:in `start'
+2014-05-03T03:14:59.795236+00:00 app[web.1]: 	/app/vendor/ruby-2.0.0/lib/ruby/2.0.0/webrick/server.rb:160:in `start'
+2014-05-03T03:14:59.795238+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/rack-1.5.2/lib/rack/handler/webrick.rb:14:in `run'
+2014-05-03T03:14:59.795239+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/rack-1.5.2/lib/rack/server.rb:264:in `start'
+2014-05-03T03:14:59.795240+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/server.rb:69:in `start'
+2014-05-03T03:14:59.795243+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:76:in `tap'
+2014-05-03T03:14:59.795242+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:81:in `block in server'
+2014-05-03T03:14:59.795245+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:40:in `run_command!'
+2014-05-03T03:14:59.795244+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands/commands_tasks.rb:76:in `server'
+2014-05-03T03:14:59.795246+00:00 app[web.1]: 	/app/vendor/bundle/ruby/2.0.0/gems/railties-4.1.0/lib/rails/commands.rb:17:in `<top (required)>'
+2014-05-03T03:14:59.795248+00:00 app[web.1]: 	bin/rails:4:in `require'
+2014-05-03T03:14:59.795254+00:00 app[web.1]: [2014-05-03 03:14:59] INFO  going to shutdown ...
+2014-05-03T03:14:59.795257+00:00 app[web.1]: [2014-05-03 03:14:59] INFO  WEBrick::HTTPServer#start done.
+2014-05-03T03:14:59.795313+00:00 app[web.1]: Exiting
+2014-05-03T03:14:59.795249+00:00 app[web.1]: 	bin/rails:4:in `<main>'
+2014-05-03T03:14:59.351651+00:00 heroku[web.1]: Starting process with command `bin/rails server -p 21029 -e production`
+2014-05-03T03:15:01.325146+00:00 heroku[web.1]: Process exited with status 143
+2014-05-03T03:15:07.754858+00:00 app[web.1]: [2014-05-03 03:15:07] INFO  WEBrick 1.3.1
+2014-05-03T03:15:07.763176+00:00 app[web.1]: [2014-05-03 03:15:07] INFO  WEBrick::HTTPServer#start: pid=2 port=21029
+2014-05-03T03:15:07.762578+00:00 app[web.1]: [2014-05-03 03:15:07] INFO  ruby 2.0.0 (2014-02-24) [x86_64-linux]
+2014-05-03T03:15:08.288150+00:00 heroku[web.1]: State changed from starting to up
+2014-05-03T03:15:16.965860+00:00 heroku[router]: at=info method=GET path=/ host=team-player.herokuapp.com request_id=0bfad809-75b6-4dcd-8b6e-6e0048d381c4 fwd="71.231.106.187" dyno=web.1 connect=5ms service=204ms status=500 bytes=1799
+2014-05-03T03:15:16.770909+00:00 app[web.1]: => Booting WEBrick
+2014-05-03T03:15:16.905243+00:00 app[web.1]:                                ^
+2014-05-03T03:15:16.905256+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1):
+2014-05-03T03:15:16.905258+00:00 app[web.1]:   app/helpers/sessions_helper.rb:20:in `current_user'
+2014-05-03T03:15:16.905260+00:00 app[web.1]:   app/helpers/sessions_helper.rb:25:in `signed_in?'
+2014-05-03T03:15:16.905261+00:00 app[web.1]:   app/controllers/static_pages_controller.rb:5:in `index'
+2014-05-03T03:15:16.905263+00:00 app[web.1]: 
+2014-05-03T03:15:16.905264+00:00 app[web.1]: 
+2014-05-03T03:15:16.770919+00:00 app[web.1]: => Ctrl-C to shutdown server
+2014-05-03T03:15:16.770920+00:00 app[web.1]: Started GET "/" for 71.231.106.187 at 2014-05-03 03:15:16 +0000
+2014-05-03T03:15:16.848318+00:00 app[web.1]: Processing by StaticPagesController#index as HTML
+2014-05-03T03:15:16.905236+00:00 app[web.1]: 
+2014-05-03T03:15:16.905239+00:00 app[web.1]: ActiveRecord::StatementInvalid (PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:15:16.770915+00:00 app[web.1]: => Rails 4.1.0 application starting in production on http://0.0.0.0:21029
+2014-05-03T03:15:16.770916+00:00 app[web.1]: => Run `rails server -h` for more startup options
+2014-05-03T03:15:16.770918+00:00 app[web.1]: => Notice: server is listening on all interfaces (0.0.0.0). Consider using 127.0.0.1 (--binding option)
+2014-05-03T03:15:16.905241+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:15:16.903705+00:00 app[web.1]: PG::UndefinedTable: ERROR:  relation "users" does not exist
+2014-05-03T03:15:16.903711+00:00 app[web.1]:                                ^
+2014-05-03T03:15:16.903713+00:00 app[web.1]: : SELECT  "users".* FROM "users"  WHERE "users"."remember_token" = 'da39a3ee5e6b4b0d3255bfef95601890afd80709' LIMIT 1
+2014-05-03T03:15:16.903710+00:00 app[web.1]: LINE 1: SELECT  "users".* FROM "users"  WHERE "users"."remember_toke...
+2014-05-03T03:15:16.903885+00:00 app[web.1]: Completed 500 Internal Server Error in 55ms
+2014-05-03T03:15:17.301558+00:00 heroku[router]: at=info method=GET path=/favicon.ico host=team-player.herokuapp.com request_id=4db31c16-78fb-46c7-b01c-129281477ce5 fwd="71.231.106.187" dyno=web.1 connect=1ms service=3ms status=200 bytes=273

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505043516) do
+ActiveRecord::Schema.define(version: 20140508080640) do
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -31,6 +31,26 @@ ActiveRecord::Schema.define(version: 20140505043516) do
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id"
   add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id"
+
+  create_table "task_actors", id: false, force: true do |t|
+    t.integer  "task_id"
+    t.integer  "user_id"
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "description"
+    t.date     "due_date"
+    t.date     "finished_date"
+    t.boolean  "finished"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "username"
