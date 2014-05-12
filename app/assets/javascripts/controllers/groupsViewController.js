@@ -1,94 +1,99 @@
 /*
- *  TeamPlayer -- 2014
- *
- *  This file is not implemented yet. It will be
- *  the controller for the groups page
- */
+* TeamPlayer -- 2014
+*
+* This file is not implemented yet. It will be
+* the controller for the groups page
+*/
  angular.module('myapp').controller("groupsViewController",
      ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
 
-  $scope.user = {};
-  // default select group with id 0
-  $scope.group_selected = 0;
-  $scope.groupsList = GroupModel.getGroups();
-  
-  $('#openBtn').click(function(){
-  	$('#myModal').modal({show:true})
+  GroupModel.fetchGroupsFromServer(function(error){
+    if(error){
+      //TODO
+    } else {
+      console.log("fetch group success.");
+    }
   });
 
-  // experimental code; when the second line of 
+  $scope.user = {};
+  // default select group with id -1
+  //$scope.group_selected = -1;
+  //$scope.member_selected = -1;
+  $scope.groupsList = GroupModel.getGroups();
+  $scope.group_selected = Object.keys($scope.groupsList)[0];
+  $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
+  $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;
+  $scope.newMemberList = [];
+
+  $scope.showAddGroup = function(e){
+    $('#myModal').modal({show:true});
+  }
+
+  // experimental code; when the second line of
   // this function gets called, the view will be updated.
   // the second line is required, since it updates the $scope variable.
   // $scope.change = function(e) {
-  // 	GroupModel.groups[3] = new Group(2, false, "geo", "geo post description", 0, new Date(), [0]);
-  // 	$scope.groupsList= GroupModel.getGroups();
+  // GroupModel.groups[3] = new Group(2, false, "geo", "geo post description", 0, new Date(), [0]);
+  // $scope.groupsList= GroupModel.getGroups();
   // }
 
   $scope.createGroup = function(e) {
-  	$scope.groupCreateMembers = [1];  // dummy members
-  	GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.groupCreateMembers, 
-  		function(error){
-  			if (error){
-  				//TODO
-  			} else {
-  				$scope.groupsList= GroupModel.getGroups();
-  			}
-  		});
-  }
+    if(!($scope.groupCreateName && $scope.groupCreateDescription)) {
+      e.preventDefault();
+      toastr.error("Empty fields");
+      return;
+    }
 
+    console.log("Trying to create a group...");
 
-  $scope.check = function(e) {
-    $scope.user = UserModel.getUserByEmail($scope.lookupEmail, function(user, error) {
-      if(error) {
-        toastr.error("User not found :(");
+    GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.newMemberList,
+    function(error) {
+      if (error){
+        toastr.error(error);
       } else {
         $scope.$apply(function() {
-          $scope.user = user;
+          $scope.groupsList = GroupModel.getGroups();
+          $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
+          $scope.newMemberList = [];
         });
       }
     });
   }
 
-	// this function is for backend testing, not for release.
-	$scope.sendForm = function(){
-		console.log("keith, send a form!");
+  $scope.selectGroup = function(id) {
+    $scope.group_selected = id;
+    $scope.currentMemebrs = $scope.groupsList[id].members;
+    $scope.member_selected = -1;
+  }
 
-		// create a group
-		// current_user will set as creator, no need to send creator
-		// current_user will be added to the group as member
-		$.post("/create_group",
-		{
-			"group[name]": "Jackson",
-			"group[description]": "TierOne",
-			"add[members]": ['1','2']
-		});
-		
-/*
-		//view all the groups user in
-		$.post("/view_group",
-		{
-		});
+  $scope.checkByEmail = function(e) {
+    if(e.which != 13) {   // didn't press enter
+      return;
+    }
 
+    function indexOfId(array, el) {
+      for(var i = 0; i < array.length; i++) {
+        if(array[i].id == el.id) {
+          return i;
+        }
+      }
+      return -1;
+    }
 
-		// given group ID, display list of users in group
-		// current user MUST be in group
-		$.post("/view_members",
-		{
-			"view[id]": "3"
-		});	
-		
-		
-   		// Invite Member to Group : email and Group ID to add to
-		// current user must be in group
-		// will not allow repeated, can't join group twice
-		// will not break if no email found, no error message atm
-		// return a list of user in this group, no email = original list
-		$.post("/invite_to_group",
-		{
-			"invite[gid]" : "3",
-			"invite[email]" : "asdfsdf@uw.edu"
-		});
-*/
-	}
+    GroupModel.checkByEmail($scope.newMember, function(user, error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        console.log(user);
+        $scope.$apply(function() {
+          if(indexOfId($scope.newMemberList, user) == -1) {
+            $scope.newMemberList.push(user);
+          }
+        });
+      }
+    });
+
+    $scope.newMember = "";
+  }
 
 }]);

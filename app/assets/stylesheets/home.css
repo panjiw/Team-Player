@@ -4,11 +4,14 @@ a {
 }
 
 .logout {
-  float: right;
-  margin-top: 10px;
   border: 2px solid gray;
   border-radius: 5px;
   padding: 5px;
+}
+
+.header-welcome {
+  float: right;
+  color: white;
 }
 
 .tabs {

@@ -5,23 +5,19 @@
  *  It will be the controller for the tasks page when implemented
  */
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
+
+	$scope.addTask_members = [];
  
-  $('#openBtn').click(function(){
+  $scope.openModal = function(e){
   	$('#myModal').modal({show:true})
-  });
+  };
 
+  $scope.addMember = function(e) {
+  	if(e.which != 13) {		// If they didn't press enter, we don't care
+  		return;
+  	}
 
-	$('input[type="checkbox"].large').checkbox({
-	    buttonStyle: 'btn-link',
-		// buttonStyleChecked: 'btn-inverse',
-		checkedClass: 'icon-check',
-		uncheckedClass: 'icon-check-empty',
-		// constructorCallback: null,
-		// defaultState: false,
-		// defaultEnabled: true,
-		 
-		// checked: false,
-		// enabled: true
-	});
-
+  	$scope.addTask_members.push($scope.newMember);
+  	$scope.newMember = "";
+  }
 }]);
