@@ -5,7 +5,7 @@ class Task < ActiveRecord::Base
   # So users.first is the user doing the task
   # Task has access to all member that will do a cycling or repeating task (can't remember why)
   # Every new task created by a task creator just cycles the order
-  has_many :task_actors
+  has_many :task_actors, :dependent => :destroy
   has_many :users, :through => :task_actors
 
   validates :title, presence: true, length: { maximum: 255 }

@@ -2,7 +2,7 @@ class Bill < ActiveRecord::
   belongs_to :group
   belongs_to :user
 
-  has_many :bill_actors
+  has_many :bill_actors, :dependent => :destroy
   has_many :users, :through => :bill_actors
 
   validates :title, presence: true, length: { maximum: 255 }
