@@ -28,6 +28,29 @@ angular.module("myapp").factory('UserModel', function() {
   var UserModel = {};
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
+  UserModel.fetchedUser = false;
+
+
+  UserModel.fetchUserFromServer = function(callback) {
+    // We really only need to ask the server for all groups
+    // the first time, so return if we already have.
+    if(UserModel.fetchedUser) {
+      return;
+    }
+
+    $.get("/user")
+    .success(function(data, status) {
+      for(var i = 0; i < data.length; i++) {
+        UserModel.updateMe(data);
+      }
+      callback();
+      UserModel.fetchedUser = true;
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  }
+
 
   UserModel.updateUser = function(user) {
     UserModel.users[user.id] = new User(user.id, user.username,

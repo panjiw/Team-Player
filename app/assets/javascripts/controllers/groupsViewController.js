@@ -18,12 +18,11 @@
   $scope.user = {};
   // default select group with id -1
   //$scope.group_selected = -1;
-  $scope.member_selected = -1;
+  //$scope.member_selected = -1;
   $scope.groupsList = GroupModel.getGroups();
   $scope.group_selected = Object.keys($scope.groupsList)[0];
-  $scope.currentMemebrs = {};
-  console.log(GroupModel.getGroups());
-
+  $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
+  $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;
   $scope.newMemberList = [];
 
   $scope.showAddGroup = function(e){
@@ -65,7 +64,6 @@
     $scope.group_selected = id;
     $scope.currentMemebrs = $scope.groupsList[id].members;
     $scope.member_selected = -1;
-    //console.log(UserModel.users);
   }
 
   $scope.checkByEmail = function(e) {
@@ -88,10 +86,8 @@
       } else {
         console.log(user);
         $scope.$apply(function() {
-          console.log(user);
           if(indexOfId($scope.newMemberList, user) == -1) {
             $scope.newMemberList.push(user);
-            console.log($scope.newMemberList);
           }
         });
       }

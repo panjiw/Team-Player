@@ -8,6 +8,14 @@ angular.module('myapp').controller("mainViewController", ["$scope", "UserModel",
 	$scope.activeTab = "selected_home";
     $scope.activeBillTab = "bill_selected_you_owe";
 
+  UserModel.fetchUserFromServer(function(error){
+  	if(error){
+  		//TODO
+  	} else {
+  		console.log("fetch user success!");
+  	}
+  });
+
 	// Log out the user, or display why it failed
 	$scope.logout = function(e) {
 		UserModel.logout(function(error) {

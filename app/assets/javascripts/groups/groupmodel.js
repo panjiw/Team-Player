@@ -37,8 +37,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     .success(function(data, status) {
       for(var i = 0; i < data.length; i++) {
         GroupModel.updateGroup(data[i]);
-        console.log("data[i]: ");
-        console.log(data[i]);
         for(member in data[i].members) {
           UserModel.updateUser(member);
         }
