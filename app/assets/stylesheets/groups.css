@@ -1,3 +1,9 @@
+.group-body h3 {
+  margin-top: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .groups,
 .group-display {
   border: 2px solid gray;
