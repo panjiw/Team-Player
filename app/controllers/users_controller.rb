@@ -6,7 +6,7 @@
 # as well as a list of reasons for failure if necessary
 #
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:viewgroup]
+  before_action :signed_in_user, only: [:viewgroup, :update]
 
   # Create a new user and sign user in
   def create
@@ -30,13 +30,12 @@ class UsersController < ApplicationController
   end
 
   # Updates user information after editting
+  # If update is successful, status 200. 
+  # Else, status 400
   def update
-    @user = User.find(params[:id])
+    @user = current_user.user
     if @user.update_attributes(user_params)
-      token = view_context.sign_in @user
       render :json => {:token => token}, :status => 200
-      #flash[:success] = "Profile updated"
-      #redirect_to @user
     else
       render :josn => {:errors => @user.errors.full_messages}, :status => 400
     end
@@ -61,7 +60,7 @@ class UsersController < ApplicationController
   end
   
   #viewgroup-> give all groups login user is in, and for each group includes all
-  # the users of that group, excluding private infos
+  # t he users of that group, excluding private infos
   def viewgroup
     groups = current_user.groups
     render :json => groups.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
