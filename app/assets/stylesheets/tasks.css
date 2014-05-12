@@ -63,5 +63,19 @@ textarea {
 
 .tasks-selectMembers {
   text-align:center;
+}
 
+.tasks-duedate {
+  padding:10px;
+  position:center;
+  text-align:center;
+}
+
+.tasks-calendar {
+  margin:50px;
+  text-align:center;
+  border-color: black;
+  border-width:5px;
+  height:200px;
+  width: 100px;
 }

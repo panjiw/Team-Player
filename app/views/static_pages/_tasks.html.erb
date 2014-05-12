@@ -30,24 +30,13 @@
                               ng-keypress="addMember($event)" placeholder="member username" />
                         </div>
                         <div class="col-md-6">
-                          <div class="tabbable">
-                          <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab1" data-toggle="tab">Members</a></li>
-                            <li><a href="#tab2" data-toggle="tab">Deadline</a></li>
-                          </ul>
-                          <div class="tab-content">
-                            <div class="tab-pane fade in active" id="tab1">
-                              <div class= "tasks-selectMember">
-                                <input type="checkbox" class="large" data-label="Cycle"/>
-                                <span>Cyclic Task</span>
-                              </div>
-                            </div>
-                            <div class="tab-pane fade" id="tab2">
-                              <input type="checkbox" class="large" data-label="Deadline"/>
-                              <span>No Deadline</span>
-                            </div>
+                          <div class="tasks-duedate">
+                            <input type="checkbox" class="large" data-label="Deadline"/>
+                            <span>No Due Date</span>
+                            <div class="tasks-calendar">Calendar here</div>
+                            <input type="checkbox" class="large" data-label="Cycle"/>
+                            <span>Cyclic Task</span><br>
                           </div>
-                        </div>
                       </div>
                   </div>
                   <div class="modal-footer">
