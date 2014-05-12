@@ -1,24 +1,24 @@
 
 /**
-  TeamPlayer -- 2014
+TeamPlayer -- 2014
 
-  This file holds the client side model that houses information
-  about all users the client is in a group with.
+This file holds the client side model that houses information
+about all users the client is in a group with.
 
-  It also provides the login and create account interface to the backend.
+It also provides the login and create account interface to the backend.
 */
 
 //This is a User object. It holds all the information
 //a client needs to know about a user
-//  --id (unique identifier for this user)
-//  --user name
-//  --first name
-//  --last name
+// --id (unique identifier for this user)
+// --user name
+// --first name
+// --last name
 var User = function(id, uname, fname, lname) {
   this.id = id,
-	this.uname = uname,
-	this.fname = fname,
-	this.lname = lname
+  this.uname = uname,
+  this.fname = fname,
+  this.lname = lname
 };
 
 //This is the UserModel for the application. It houses
@@ -29,16 +29,16 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.me = 0;
   UserModel.users = {}; // ID to users
 
-  // dummy users
-  UserModel.users[0] = new User(0, "go_dawgs", "Team", "Player");
-  UserModel.users[1] = new User(1, "fd_01", "friend", "zone");
+  UserModel.updateUser = function(user) {
+    UserModel.users[user.id] = new User(user.id, user.username,
+                                        user.firstname, user.lastname);
+  }
 
   //Update the current user info to the information contained
   //in data
-  function updateUser(data, status) {
+  function updateMe(data) {
     UserModel.me = data.id;
-    UserModel.users[UserModel.me] = new User(UserModel.me, data.username, 
-                                              data.firstname, data.lastname);
+    UserModel.updateUser(data);
   };
 
   // Log the current user out.
@@ -65,9 +65,9 @@ angular.module("myapp").factory('UserModel', function() {
   //On success, no arguments are provided to callback, but on failure,
   //a text message describing the failure is the only parameter
   UserModel.login = function(uname, psswd, callback) {
-  	if(!(uname && psswd)) {
-  		return "MISSING_PARAM";
-  	}
+   if(!(uname && psswd)) {
+   return "MISSING_PARAM";
+   }
 
     $.post("/sign_in",
     {
@@ -75,7 +75,7 @@ angular.module("myapp").factory('UserModel', function() {
       "user[password]": psswd
     })
     .success(function(data, status) {
-      updateUser(data, status);
+      updateMe(data);
       callback();
       window.location = "./home";
     })
@@ -85,14 +85,14 @@ angular.module("myapp").factory('UserModel', function() {
     });
   };
 
-  //Try to create a new user account with the given parameters. 
-  //On success, the user is logged in, and the callback function 
+  //Try to create a new user account with the given parameters.
+  //On success, the user is logged in, and the callback function
   //is called with no parameters. On failed, it will be called
   //with a string text message describing the failure. Failures can happen if:
-  //  --missing any parameters
-  //  --user name is taken
-  //  --email is already used
-  //  --passwords don't match
+  // --missing any parameters
+  // --user name is taken
+  // --email is already used
+  // --passwords don't match
   UserModel.createAccount = function(fname, lname, uname, email,
                                       psswd_one, psswd_two, callback) {
     if(!(fname && lname && uname && email && psswd_one && psswd_two)) {
@@ -110,7 +110,7 @@ angular.module("myapp").factory('UserModel', function() {
       "user[password_confirmation]": psswd_two
     })
     .success(function(data, status) {
-      updateUser(data, status);
+      updateMe(data);
       callback();
       window.location = "./home";
     })
@@ -122,8 +122,8 @@ angular.module("myapp").factory('UserModel', function() {
 
   //Lookup a users's information (including whether they exist)
   //by email. It calls the callback function with two parameters
-  //  --user: the user object (if there is a user with the given email)
-  //  --error: a descriptive error message if applicable
+  // --user: the user object (if there is a user with the given email)
+  // --error: a descriptive error message if applicable
   UserModel.getUserByEmail = function(email, callback) {
     if(!email) {
       return;

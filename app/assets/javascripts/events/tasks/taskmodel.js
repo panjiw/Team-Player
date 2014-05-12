@@ -9,8 +9,8 @@
 //Define a task object as an event with additional fields:
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
-var Task = function(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) {
-  this.event = new Event(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray);
+var Task = function(id, creatorID, groupID, title, description, dateCreated, dateDue, members) {
+  this.event = new Event(id, creatorID, groupID, title, description, dateCreated, dateDue);
   this.members = members;
   this.done = false;
 };
@@ -18,34 +18,100 @@ var Task = function(id, creatorID, groupID, title, description, dateCreated, dat
 angular.module("myapp").factory('TaskModel', function() {
   var TaskModel = {};
   TaskModel.tasks = {};   //ID to task
+  TaskModel.fetchedTasks = false;
 
-  //Create and return a task with the given parameters. This updates to the database, or returns
-  //error codes otherwise...
-  TaskModel.createTask = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, members) {
+  TaskModel.updateTask(task) {
     //TODO
   };
 
+  TaskModel.fetchTasksFromServer = function(callback) {
+    // We really only need to ask the server for all tasks
+    // the first time, so return if we already have.
+    if(TaskModel.fetchedTasks) {
+      return;
+    }
+
+    // Return the date object as a string in the form
+    // mm/dd/yyyy. It pads days and months with 0's
+    // to ensure that they are 2 chars.
+    function mmddyyyy(date) {
+      var year = date.getFullYear();
+
+      //JS months are 0 based.
+      //Also pad it to be MM if it is month 1-9
+      var month = (1 + date.getMonth()).toString();
+      month = month.length > 1 ? month : '0' + month;
+
+      //Pad it to be DD if it is day 1-9 of the month
+      var day = date.getDate().toString();
+      day = day.length > 1 ? day : '0' + day;
+      return month + "/" + day + "/" + year;
+    }
+
+    var startDate = new Date();
+    startDate.setMonth(startDate.getMonth() - 1);
+
+    var endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + 1);
+
+    // Not changing info, so this is a get request
+    $.get("/view_tasks",
+    {
+      "task[startDate]": mmddyyyy(startDate),
+      "task[endDate]": mmddyyyy(endDate)
+    })
+    .success(function(data, status) {
+      for(var i = 0; i < data.length; i++) {
+        TaskModel.updateTask(data[i]);
+      }
+      callback();
+      TaskModel.fetchedTasks = true;
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  }
+
+  //Create and return a task with the given parameters. This updates to the database, or returns
+  //error codes otherwise...
+  TaskModel.createTask = function(groupID, name, description, dateCreated, dateDue, cycle, repeatArray, members) {
+    $.post("/add_task",
+    {
+      "task[gid]": groupID,               // Group ID
+      "task[name]": name,                 // String
+      "task[description]": description,   // String
+      "task[members]": members,           // Array of uids
+      "task[dateDue]": date.toString(),   // Javascript Date object toString() so that you have date and time info
+      "task[repeatArray]": repeatArray,   // Array like [true, false, false, true, false, false, false]
+      "task[cycle]": cycle                // Boolean: true/false
+    })
+    .success(function(data, status) {
+
+    })
+    .fail(function(xhr, textStatus, error) {
+
+    });
+  };
+
   //Update a task with all of the fields. If a field is null, it is not updated
-  TaskModel.editTask = function(taskID, title, description, dateDue, cycle, repostArray, members) {
+  TaskModel.editTask = function(taskID, title, description, dateDue, cycle, repeatArray, members) {
     //TODO
   };
 
   //Set the given task as finished, and update to the database
   TaskModel.setFinished = function(taskID) {
     //TODO
-  }
+  };
 
   //Return all tasks for this user as a list of Task objects
   TaskModel.getTasks = function() {
-    //TODO ajax
+    var taskArray = [];
+    for(task in TaskModel.tasks) {
+      taskArray.push(TaskModel.tasks[task]);
+    }
 
-    //Dummy objects for now
-    var sevenFalse = [false, false, false, false, false, false, false];
-    var dummyTask = new Task(0, 0, 0, "Dummy Task", "Finish these method stubs", new Date(), new Date(), false, sevenFalse, [0]);
-    var fakeTask = new Task(0, 0, 0, "Fake Task", "Finish the writeup", new Date(), new Date("5/23/2014"), false, sevenFalse, [0]);
-
-    return [dummyTask, fakeTask];
-  }
+    return taskArray;
+  };
 
   return TaskModel;
 });

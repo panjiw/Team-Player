@@ -10,12 +10,13 @@ Rails.application.routes.draw do
   match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
   match '/user',        to: 'sessions#user',       via: 'get'
   match '/help',        to: 'static_pages#help',   via: 'get'
-
+  #match '/settings',    to: 'static_pages#settings',      via: 'get'
+ 
   # user
   match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
   # groups
   match '/create_group', to: 'groups#create',      via: 'post'
-  match '/view_group', to: 'users#viewgroup', 	   via: 'post'
+  match '/view_groups', to: 'users#viewgroup', 	   via: 'get'
   match '/view_members', to: 'groups#viewmembers', via: 'post'
   match '/invite_to_group', to: 'groups#invitetogroup', via: 'post'
 
