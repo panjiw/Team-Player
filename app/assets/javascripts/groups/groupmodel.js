@@ -106,7 +106,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   //Return all groups for this user as a list of Group objects
   GroupModel.getGroups = function() {
 
-    // var groupArray = [];
+    //var groupArray = [];
 
     // for(var index in GroupModel.groups) {
     //   groupArray.push(GroupModel.groups[index]);
@@ -116,6 +116,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
     return GroupModel.groups;
   }
+
 
   GroupModel.checkByEmail = function(email, callback) {
     UserModel.getUserByEmail(email, function(user, error) {

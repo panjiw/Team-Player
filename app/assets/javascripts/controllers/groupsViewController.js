@@ -68,7 +68,6 @@
     console.log($scope.groupsList[id]);
   }
 
-
   $scope.checkByEmail = function(e) {
     if(e.which != 13) {   // didn't press enter
       return;

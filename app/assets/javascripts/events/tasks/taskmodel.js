@@ -20,9 +20,9 @@ angular.module("myapp").factory('TaskModel', function() {
   TaskModel.tasks = {};   //ID to task
   TaskModel.fetchedTasks = false;
 
-  TaskModel.updateTask(task) {
+  /* TaskModel.updateTask(task) {
     //TODO
-  };
+  } */
 
   TaskModel.fetchTasksFromServer = function(callback) {
     // We really only need to ask the server for all tasks
