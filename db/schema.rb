@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140508080640) do
+ActiveRecord::Schema.define(version: 20140512032815) do
+
+  create_table "bill_actors", force: true do |t|
+    t.integer  "bill_id"
+    t.integer  "user_id"
+    t.decimal  "due",        precision: 8, scale: 2
+    t.date     "paid_date"
+    t.boolean  "paid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bills", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "description"
+    t.date     "due_date"
+    t.decimal  "total_due",   precision: 8, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "groups", force: true do |t|
     t.string   "name"

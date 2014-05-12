@@ -6,5 +6,9 @@ class Group < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 64}
   validates :creator, presence: true
 
+  # task - group, many-many relation
   has_many :tasks
+
+  # bill - group, many-many relation
+  has_many :bills
 end
