@@ -35,11 +35,9 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
     $.get("/view_groups")
     .success(function(data, status) {
-      console.log("Retriving groups: uccess");
-      console.log("Data");
-      for(group in data) {
-        GroupModel.updateGroup(group);
-        for(member in group.members) {
+      for(var i = 0; i < data.length; i++) {
+        GroupModel.updateGroup(data[i]);
+        for(member in data[i].members) {
           UserModel.updateUser(member);
         }
       }
@@ -47,7 +45,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       GroupModel.fetchedGroups = true;
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("Retriving groups: failure");
       callback(JSON.parse(xhr.responseText));
     });
   }
