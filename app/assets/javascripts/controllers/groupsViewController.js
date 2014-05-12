@@ -7,22 +7,33 @@
  angular.module('myapp').controller("groupsViewController",
      ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
 
+  // default select group with id -1
+  $scope.group_selected = -1;
+  $scope.member_selected = -1
+  $scope.currentMemebrs = {};
+  
   GroupModel.fetchGroupsFromServer(function(error){
     if(error){
       //TODO
     } else {
-      console.log("fetch group success.");
+      $scope.groupsList = GroupModel.getGroups();
+      if(Object.getOwnPropertyNames($scope.groupsList).length === 0){
+        $scope.group_selected = Object.keys($scope.groupsList)[0];
+        if($scope.group_selected != -1) {
+          $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
+          if($scope.member_selected != -1){
+            $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
+          }
+        }
+      }
     }
   });
 
   $scope.user = {};
-  // default select group with id -1
-  //$scope.group_selected = -1;
-  //$scope.member_selected = -1;
-  $scope.groupsList = GroupModel.getGroups();
-  $scope.group_selected = Object.keys($scope.groupsList)[0];
-  $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
-  $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;
+  
+
+  
+
   $scope.newMemberList = [];
 
   $scope.showAddGroup = function(e){
