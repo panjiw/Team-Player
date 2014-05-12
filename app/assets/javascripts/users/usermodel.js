@@ -30,8 +30,8 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.users = {}; // ID to users
 
   UserModel.updateUser = function(user) {
-    UserModel.users[user.id] = new User(user.id, data.username,
-                                        data.firstname, data.lastname);
+    UserModel.users[user.id] = new User(user.id, user.username,
+                                        user.firstname, user.lastname);
   }
 
   //Update the current user info to the information contained
