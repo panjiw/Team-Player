@@ -10,10 +10,10 @@
 //  --membersAmountMap: the members associated with the bill, and how much each owes
 //  --membersPaidMap: which membesr have paid their amounts.
 //  --total: is not explicitly a field, but it is a derived field.
-var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
+var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap) {
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.membersAmountMap = membersAmountMap;
-  this.membersPaidMap = {};
+  this.membersPaidMap = membersPaidMap;
   for(userID in membersAmountMap) {
     this.membersPaidMap[userID] = false;
   }
@@ -23,20 +23,25 @@ angular.module("myapp").factory('BillModel', function() {
   var BillModel = {};
   BillModel.bills = {};   //ID to bills.css
 
+  BillModel.updateBill = function(bill){
+    //BillModel.bills[bill.id] = new Bill(bill.id, bill.groupID, bill.title, bill.description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap)
+  }
+
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  BillModel.createBill = function(groupID, title, description, dateDue, membersAmountMap) { // creator ID
+  BillModel.createBill = function(groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
     $.post("/create_bill",
     {
       "bill[group_id]": groupID,
       "bill[title]": title,
       "bill[description]": description,
       "bill[due_date]": dateDue,
-      "bill[title]": title,
+      "bill[total_due]": toal,
+      "bill[members]": membersAmountMap,
     })
     .success(function(data, status) {
-      console.log("Success: " , data);
-      GroupModel.updateGroup(data);
+      console.log("bill create Success: " , data);
+      // update bill
       callback();
     })
     .fail(function(xhr, textStatus, error) {
