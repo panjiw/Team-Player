@@ -10,11 +10,12 @@ class GroupsController < ApplicationController
 
       # for each members in paramter, add to group
       merror = ""
-      if(params.has_key?(:add) && params.has_key(:members))
+      if(params.has_key?(:add))
         members = params[:add][:members]
         members.each do |id|
           if(User.exists?(id) && id != current_user.id.to_s)
 	    group.users << User.find(id)
+      puts "id " + id + "exists!"
           else
 	    merror << " " + id << " "
           end

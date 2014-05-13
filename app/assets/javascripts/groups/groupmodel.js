@@ -41,10 +41,13 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
           UserModel.updateUser(member);
         }
       }
-      callback();
       GroupModel.fetchedGroups = true;
+      console.log("model success");
+      callback();
     })
     .fail(function(xhr, textStatus, error) {
+      console.log("error:");
+      console.log(error);
       callback(JSON.parse(xhr.responseText));
     });
   }
@@ -56,11 +59,15 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.createGroup = function(name, description, members, callback) {
     function extractIds(userList) {
       var userIds = [];
-      for(user in userList) {
+      userList.forEach(function(user){
         userIds.push(user.id);
-      }
+      });
       return userIds;
     }
+    console.log("mems:");
+    console.log(members);
+    console.log("ids:");
+    console.log(extractIds(members));
 
     // create a group
     // current_user will set as creator, no need to send creator
@@ -69,10 +76,10 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     {
       "group[name]": name,
       "group[description]": description,
-      "group[members]": extractIds(members)
+      "add[members]": extractIds(members)
     })
     .success(function(data, status) {
-      console.log("Success: " + data);
+      console.log("Success: " , data);
       GroupModel.updateGroup(data);
       callback();
     })
