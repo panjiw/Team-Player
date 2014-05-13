@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="bills-addbutton">
-            <a class="btn btn-default" id="openBtn">Add Bill</a>
+            <a class="btn btn-default" id="openBtn" ng-click="openPop($event)">Add Bill</a>
 
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
@@ -93,8 +93,8 @@
 
                     <div class="tabbable">
                           <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab3" data-toggle="tab">You Owe</a></li>
-                            <li><a href="#tab4" data-toggle="tab">Owe You</a></li>
+                            <li class="active"><a href="#tab3" data-toggle="tab" ng-click="openPop($event)">You Owe</a></li>
+                            <li><a href="#tab4" data-toggle="tab" ng-click="openPop($event)">Owe You</a></li>
                           </ul>
                           <div class="tab-content">
                             <div class="tab-pane active" id="tab3">
@@ -103,7 +103,7 @@
                                         <div class="bill">
                                             <h4 class="bill-member">Member 1</h4>
                                             <h4 class="bill-amount">$100</h4>
-                                            <button type="button" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                            <button type="button" ng-click="openPop($event)" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                         <input type="checkbox">
                                         <h4 class="bill-member">Bought Lunch</h4>
                                         <h4 class="bill-amount">$12</h4>
@@ -123,7 +123,7 @@
                                         <div class="bill">
                                             <h4 class="bill-member">Member 2</h4>
                                             <h4 class="bill-amount">$200</h4>
-                                            <button type="button" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                            <button type="button" ng-click="openPop($event)" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                                 <input type="checkbox">
                                         <h4 class="bill-member">Bought Lunch</h4>
                                         <h4 class="bill-amount">$12</h4>
@@ -142,7 +142,7 @@
                                         </div><div class="bill">
                                             <h4 class="bill-member">Member 3</h4>
                                             <h4 class="bill-amount">$300</h4>
-                                            <button type="button" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                            <button type="button" ng-click="openPop($event)" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                                 <input type="checkbox">
                                         <h4 class="bill-member">Bought Lunch</h4>
                                         <h4 class="bill-amount">$12</h4>
@@ -161,7 +161,7 @@
                                         </div><div class="bill">
                                             <h4 class="bill-member">Member 4</h4>
                                             <h4 class="bill-amount">$400</h4>
-                                            <button type="button" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                            <button type="button" ng-click="openPop($event)" class="btn-you-owe btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                                 <input type="checkbox">
                                         <h4 class="bill-member">Bought Lunch</h4>
                                         <h4 class="bill-amount">$12</h4>
@@ -186,7 +186,7 @@
                                     <div class="bill">
                                         <h4 class="bill-member">Member 7</h4>
                                         <h4 class="bill-amount">$700</h4>
-                                        <button type="button" class="view-bill btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                        <button type="button" ng-click="openPop($event)" class="view-bill btn btn-default" data-toggle="popover" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                         <h4 class="bill-member">Bought Lunch</h4>
                                         <h4 class="bill-amount">$12</h4>
                                         </div>
@@ -202,7 +202,7 @@
                                     <div class="bill">
                                         <h4 class="bill-member">Member 8</h4>
                                         <h4 class="bill-amount">$80</h4>
-                                        <button type="button" class="view-bill btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
+                                        <button type="button" ng-click="openPop($event)" class="view-bill btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content='<div class="bills-selected">
                                         <h4 class="bill-member">Bought Milk</h4>
                                         <h4 class="bill-amount">$18</h4>
                                         </div>
