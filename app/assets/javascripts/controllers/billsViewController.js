@@ -23,7 +23,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         //TODO
       }
     });
-  }
+  };
 
   $(function () { $("[data-toggle='popover']").popover({ html : true }); });
   $('.btn').on('click', function (e) {

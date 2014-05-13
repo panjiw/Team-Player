@@ -36,7 +36,7 @@ angular.module("myapp").factory('BillModel', function() {
       "bill[title]": title,
       "bill[description]": description,
       "bill[due_date]": dateDue,
-      "bill[total_due]": toal,
+      "bill[total_due]": total,
       "bill[members]": membersAmountMap,
     })
     .success(function(data, status) {
@@ -48,7 +48,6 @@ angular.module("myapp").factory('BillModel', function() {
       console.log("group create error: "+error);
       callback("Error: " + JSON.parse(xhr.responseText));
     });
-  };
   };
 
   //Update a bill with all of the fields. If a field is null, it is not updated
