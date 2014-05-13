@@ -41,6 +41,8 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
         }
         GroupModel.fetchedGroups = true;
         console.log("model success");
+
+        // Return the groups and note that this is an asynchronous callback
         callback(GroupModel.groups, true, null);
       })
       .fail(function(xhr, textStatus, error) {
@@ -49,6 +51,8 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
         callback(null, null, JSON.parse(xhr.responseText));
       });
     } else {
+      // Otherwise, just return all the groups, 
+      // and note that this is not asynchronous
       callback(GroupModel.groups, false, null);
     }
   }

@@ -13,7 +13,7 @@
   $scope.currentMemebrs = {};
   $scope.groupsList = {};
 
-  function getGroupsFromModel() {
+  function getGroupsFromModel(callback) {
     GroupModel.getGroups(function(groups, asynch, error) {
       if (error){
         console.log("fetch group error:");
@@ -30,25 +30,27 @@
           groupsToApply();
         }
       }
+      if(callback) {
+        callback();
+      }
     });
   }
 
-  getGroupsFromModel();
-
-  if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
-    $scope.group_selected = Object.keys($scope.groupsList)[0];
-    console.log("$scope.groupsList", $scope.groupsList);
-    console.log("$scope.group_selected", $scope.group_selected);
-    if($scope.group_selected != -1) {
-      $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
-      console.log("member selected",$scope.member_selected);
-      if($scope.member_selected != -1){
-        $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
-        $scope.currentMemebrs = buildMemberMap($scope.currentMemebrs);
-        console.log("$scope.currentMemebrs",$scope.currentMemebrs);
+  getGroupsFromModel(function() {
+    $scope.$apply(function(){
+      if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
+        $scope.group_selected = Object.keys($scope.groupsList)[0];
+        console.log("$scope.groupsList", $scope.groupsList);
+        console.log("$scope.group_selected", $scope.group_selected);
+        if($scope.group_selected != -1) {
+          console.log("member selected",$scope.member_selected);
+          $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
+          $scope.currentMemebrs = buildMemberMap($scope.currentMemebrs);
+          console.log("$scope.currentMemebrs",$scope.currentMemebrs);
+        }
       }
-    }
-  }
+    });
+  });
 
   function buildMemberMap(memberArray){
     var map = {};
@@ -132,5 +134,4 @@
 
     $scope.newMember = "";
   }
-
 }]);
