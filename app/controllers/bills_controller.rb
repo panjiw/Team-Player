@@ -1,3 +1,5 @@
+require 'json'
+
 class BillsController < ApplicationController
   def new
     if !view_context.signed_in?
@@ -23,7 +25,7 @@ class BillsController < ApplicationController
 
       params[:bill][:members].each do |m|
         @bill_actor = BillActor.new(bill_id: @bill[:id],
-                                    user_id: @bill[:user_id],
+                                    user_id: m[:user_id],
                                     due: m[:due],
                                     paid: false)
         if !@bill_actor.save
@@ -31,7 +33,7 @@ class BillsController < ApplicationController
           render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
         end
       end
-      render :json => {:bill => "OK"}, :status => 200
+      render :json => @bill.to_json(:include => [:users => {:except => [:created_at, :updated_at, :bill_id]}]), :status => 200
     else
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
     end
