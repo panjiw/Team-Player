@@ -9,7 +9,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "TaskModel"
 
   $(function () { $("[data-toggle='popover']").popover({ html : true }); });
   $('.btn').on('click', function (e) {
-      $('.btn').not(this).popover('hide');
+    $('.btn').on('click', function (e) {
+        $('.btn').not(this).popover('hide');
+    });
   });
   $('a').on('click', function (e) {
       $('.btn').popover('hide');
