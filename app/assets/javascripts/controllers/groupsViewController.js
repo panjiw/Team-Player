@@ -25,14 +25,25 @@
 
   if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
     $scope.group_selected = Object.keys($scope.groupsList)[0];
-    console.log($scope.groupsList);
-    console.log($scope.group_selected);
+    console.log("$scope.groupsList", $scope.groupsList);
+    console.log("$scope.group_selected", $scope.group_selected);
     if($scope.group_selected != -1) {
       $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
+      console.log("member selected",$scope.member_selected);
       if($scope.member_selected != -1){
         $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
+        $scope.currentMemebrs = buildMemberMap($scope.currentMemebrs);
+        console.log("$scope.currentMemebrs",$scope.currentMemebrs);
       }
     }
+  }
+
+  function buildMemberMap(memberArray){
+    var map = {};
+    memberArray.forEach(function(mem){
+        map[mem.id] = mem;
+      });
+    return map;
   }
 
   $scope.user = {};
@@ -76,7 +87,7 @@
 
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
-    $scope.currentMemebrs = $scope.groupsList[id].members;
+    $scope.currentMemebrs = buildMemberMap($scope.groupsList[id].members);
     $scope.member_selected = -1;
   }
 
