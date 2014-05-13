@@ -11,28 +11,31 @@
   $scope.group_selected = -1;
   $scope.member_selected = -1
   $scope.currentMemebrs = {};
-  
+  $scope.groupsList = GroupModel.getGroups();
+
   GroupModel.fetchGroupsFromServer(function(error){
-    if(error){
+    if (error){
       //TODO
+      console.log("fetch group error:");
+      console.log(error);
     } else {
-      $scope.groupsList = GroupModel.getGroups();
-      if(Object.getOwnPropertyNames($scope.groupsList).length === 0){
-        $scope.group_selected = Object.keys($scope.groupsList)[0];
-        if($scope.group_selected != -1) {
-          $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
-          if($scope.member_selected != -1){
-            $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
-          }
-        }
-      }
+
     }
   });
 
-  $scope.user = {};
-  
+  if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
+    $scope.group_selected = Object.keys($scope.groupsList)[0];
+    console.log($scope.groupsList);
+    console.log($scope.group_selected);
+    if($scope.group_selected != -1) {
+      $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
+      if($scope.member_selected != -1){
+        $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
+      }
+    }
+  }
 
-  
+  $scope.user = {};
 
   $scope.newMemberList = [];
 
