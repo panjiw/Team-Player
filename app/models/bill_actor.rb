@@ -10,6 +10,7 @@ class BillActor < ActiveRecord::Base
   validate :user_in_group?
 
   def user_in_group?
+    return unless errors.blank?
     if !bill.group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group of the task")
     end

@@ -14,6 +14,7 @@ class Bill < ActiveRecord::Base
   # checking total, need bill to check bill_actors and vice versa, what to do?
 
   def creator_in_group?
+    return unless errors.blank?
     if !group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group")
     end
