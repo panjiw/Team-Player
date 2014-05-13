@@ -28,7 +28,7 @@ angular.module("myapp").factory('BillModel', function() {
   }
 
   BillModel.getBillFromServer = function(callback){
-    $.post("/get_bills")
+    $.get("/get_bills")
     .success(function(data, status) {
       console.log("bill get Success: " , data);
       // update bill
