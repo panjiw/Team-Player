@@ -9,10 +9,12 @@
 //Define a task object as an event with additional fields:
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
-var Task = function(id, creatorID, groupID, title, description, dateCreated, dateDue, members) {
-  this.event = new Event(id, creatorID, groupID, title, description, dateCreated, dateDue);
+var Task = function(id, groupID, title, description, creatorID, dateCreated, dateDue, members, cycle, repostArray) {
+  this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.members = members;
   this.done = false;
+  this.cycle = cycle;
+  this.repost = repostArray;
 };
 
 angular.module("myapp").factory('TaskModel', function() {

@@ -10,8 +10,8 @@
 //  --membersAmountMap: the members associated with the bill, and how much each owes
 //  --membersPaidMap: which membesr have paid their amounts.
 //  --total: is not explicitly a field, but it is a derived field.
-var Bill = function(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray, membersAmountMap) {
-  this.event = new Event(id, creatorID, groupID, title, description, dateCreated, dateDue, cycle, repostArray);
+var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
+  this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.membersAmountMap = membersAmountMap;
   this.membersPaidMap = {};
   for(userID in membersAmountMap) {
@@ -25,8 +25,25 @@ angular.module("myapp").factory('BillModel', function() {
 
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  BillModel.createBill = function(groupID, title, description, dateCreated, dateDue, cycle, repostArray, membersAmountMap) { // creator ID
-    //TODO
+  BillModel.createBill = function(groupID, title, description, dateDue, membersAmountMap) { // creator ID
+    $.post("/create_bill",
+    {
+      "bill[group_id]": groupID,
+      "bill[title]": title,
+      "bill[description]": description,
+      "bill[due_date]": dateDue,
+      "bill[title]": title,
+    })
+    .success(function(data, status) {
+      console.log("Success: " , data);
+      GroupModel.updateGroup(data);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("group create error: "+error);
+      callback("Error: " + JSON.parse(xhr.responseText));
+    });
+  };
   };
 
   //Update a bill with all of the fields. If a field is null, it is not updated
