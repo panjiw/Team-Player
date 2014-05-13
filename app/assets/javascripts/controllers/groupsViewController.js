@@ -11,17 +11,29 @@
   $scope.group_selected = -1;
   $scope.member_selected = -1
   $scope.currentMemebrs = {};
-  $scope.groupsList = GroupModel.getGroups();
+  $scope.groupsList = {};
 
-  GroupModel.fetchGroupsFromServer(function(error){
-    if (error){
-      //TODO
-      console.log("fetch group error:");
-      console.log(error);
-    } else {
+  function getGroupsFromModel() {
+    GroupModel.getGroups(function(groups, asynch, error) {
+      if (error){
+        console.log("fetch group error:");
+        console.log(error);
+      } else {
+        function groupsToApply() {
+          console.log("Got grous:");
+          console.log(groups);
+          $scope.groupsList = groups;
+        }
+        if(asynch) {
+          $scope.$apply(groupsToApply);
+        } else {
+          groupsToApply();
+        }
+      }
+    });
+  }
 
-    }
-  });
+  getGroupsFromModel();
 
   if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
     $scope.group_selected = Object.keys($scope.groupsList)[0];
@@ -76,8 +88,8 @@
       if (error){
         toastr.error(error);
       } else {
+        getGroupsFromModel();
         $scope.$apply(function() {
-          $scope.groupsList = GroupModel.getGroups();
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [];
         });

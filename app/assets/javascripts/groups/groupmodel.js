@@ -26,30 +26,31 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
                                               group.creator, new Date(group.dateCreated), group.users);
   }
 
-  GroupModel.fetchGroupsFromServer = function(callback) {
+  GroupModel.getGroups = function(callback) {
     // We really only need to ask the server for all groups
-    // the first time, so return if we already have.
-    if(GroupModel.fetchedGroups) {
-      return;
-    }
-
-    $.get("/view_groups")
-    .success(function(data, status) {
-      for(var i = 0; i < data.length; i++) {
-        GroupModel.updateGroup(data[i]);
-        for(member in data[i].members) {
-          UserModel.updateUser(member);
+    // the first time, so get it only if we need to.
+    console.log("Trying to get groups...");
+    if(!GroupModel.fetchedGroups) {
+      $.get("/view_groups")
+      .success(function(data, status) {
+        for(var i = 0; i < data.length; i++) {
+          GroupModel.updateGroup(data[i]);
+          for(member in data[i].members) {
+            UserModel.updateUser(member);
+          }
         }
-      }
-      GroupModel.fetchedGroups = true;
-      console.log("model success");
-      callback();
-    })
-    .fail(function(xhr, textStatus, error) {
-      console.log("error:");
-      console.log(error);
-      callback(JSON.parse(xhr.responseText));
-    });
+        GroupModel.fetchedGroups = true;
+        console.log("model success");
+        callback(GroupModel.groups, true, null);
+      })
+      .fail(function(xhr, textStatus, error) {
+        console.log("error:");
+        console.log(xhr.responseText);
+        callback(null, null, JSON.parse(xhr.responseText));
+      });
+    } else {
+      callback(GroupModel.groups, false, null);
+    }
   }
 
   //Create and return a group with the given parameters. This updates to the database, or returns
@@ -107,21 +108,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.removeFromGroup = function(id, userID) {
    //TODO
   }
-
-  //Return all groups for this user as a list of Group objects
-  GroupModel.getGroups = function() {
-
-    //var groupArray = [];
-
-    // for(var index in GroupModel.groups) {
-    //   groupArray.push(GroupModel.groups[index]);
-    // }
-
-    // return groupArray;
-
-    return GroupModel.groups;
-  }
-
 
   GroupModel.checkByEmail = function(email, callback) {
     UserModel.getUserByEmail(email, function(user, error) {
