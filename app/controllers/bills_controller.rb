@@ -16,7 +16,7 @@ class BillsController < ApplicationController
 
       # check correct division first
       params[:bill][:members].each do |m|
-        total_count = total_count + m[:due]
+        total_count = total_count + m[1].to_f
       end
       if total_count != @bill[:total_due]
         @bill.destroy
@@ -25,8 +25,8 @@ class BillsController < ApplicationController
 
       params[:bill][:members].each do |m|
         @bill_actor = BillActor.new(bill_id: @bill[:id],
-                                    user_id: m[:user_id],
-                                    due: m[:due],
+                                    user_id: m[0],
+                                    due: m[1],
                                     paid: false)
         if !@bill_actor.save
           @bill.destroy

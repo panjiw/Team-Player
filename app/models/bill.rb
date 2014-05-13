@@ -1,4 +1,4 @@
-class Bill < ActiveRecord::
+class Bill < ActiveRecord::Base
   belongs_to :group
   belongs_to :user
 
@@ -8,8 +8,7 @@ class Bill < ActiveRecord::
   validates :title, presence: true, length: { maximum: 255 }
   validates :group, existence: { :allow_nil => false }
   validates :user, existence: { :allow_nil => false }
-  VALID_DUE_REGEX = /^\d+(\.\d{2})?$/
-  validates :total_due, format: { with: VALID_DUE_REGEX }, numericality: { greater_than: 0 }
+  validates :total_due, numericality: { greater_than: 0 }
   validate :creator_in_group?
 
   # checking total, need bill to check bill_actors and vice versa, what to do?
