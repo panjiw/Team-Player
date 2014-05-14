@@ -16,17 +16,18 @@
                   </div>
                   <div class="modal-body tasks-add-body">
                         <div class="col-md-6">
-                        <h5>Name:</h5><input type="text" />
+                        <h5>Name:</h5><input type="text" ng-model="newBillTitle" />
                             <h5>Description:</h5>
-                              <textarea cols="30" rows="4"></textarea>
-                            <h5>Total Cost:</h5><input type="text" />
-                            <h5>Due Date:</h5>
+                              <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
+                            <h5>Total Cost:</h5><input type="text" ng-model="newBillTotal"/>
+                            <h5>Due Date:</h5><input type="date" ng-model="newBillDateDue"
+                            min="2013-01-01" max="2113-01-01"/>
                         </div>
                         <div class="col-md-5">
-                            <h5>Group:</h5><input type="text" />
+                            <h5>Group:</h5><select ng-model="newBillGroup"></select>
                             <br>
                             <div class="bill-members">
-                                <textarea cols="30" rows="7"></textarea>
+                                <textarea cols="30" rows="7" ng-model="newBillMembers"></textarea>
                                 <input type="checkbox" class="large" data-label="Split Evenly"/>
                                 <span>Split Evenly</span>
                             </div>
