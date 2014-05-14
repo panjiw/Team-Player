@@ -49,9 +49,9 @@ class GroupsController < ApplicationController
   # invite user to group, give email to identify user, and gid to identify group
   def invitetogroup
     @group = Group.find(params[:invite][:gid])
-    @user = User.where("email = ?", params[:invite][:email])
+    @user = User.where("email = ?", params[:invite][:email].downcase)
 
-    if current_user.member?(@group) && !@user.nil?
+    if current_user.member?(@group) && !@user.nil? && !@group.self 
        @group.users << @user
        render :json => @group.users, :status => 200
     else
@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
   private
     # params to create group
     def group_params
-      params.require(:group).permit(:name, :description).merge(creator: current_user.id)
+      params.require(:group).permit(:name, :description).merge(creator: current_user.id, self: false)
     end
 
     def members_params
