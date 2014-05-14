@@ -40,7 +40,8 @@
                                ng-click="$parent.member_selected=mem.id">
                               <h4>{{mem.firstname}}</h4>
                             </a>
-                          <button type="button" class="btn btn-default group-add">Add Member</button>
+                          <input type="text" ng-model="addNewMember" ng-keypress="addMember($event)" class="btn btn-default group-add" placeholder="new member email" />
+                          <button type="button" ng-click="addMember($event)" class="btn btn-default group-add">Add Member</button>
                       </div>
                       <div class="group-description" ng-show="member_selected == -1">
                         <h4>{{groupsList[group_selected].description}}</h4>

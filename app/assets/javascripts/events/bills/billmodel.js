@@ -49,7 +49,6 @@ angular.module("myapp").factory('BillModel', function() {
       callback("Error: " + JSON.parse(xhr.responseText));
     });
   };
-  };
 
   //Update a bill with all of the fields. If a field is null, it is not updated
   BillModel.editBill = function(billID, title, description, dateCreated, dateDue, cycle, repostArray, membersAmountMap) {

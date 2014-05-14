@@ -37,7 +37,7 @@
   }
 
   getGroupsFromModel(function() {
-    $scope.$apply(function(){
+    function getGroups(){
       if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
         $scope.group_selected = Object.keys($scope.groupsList)[0];
         console.log("$scope.groupsList", $scope.groupsList);
@@ -49,7 +49,13 @@
           console.log("$scope.currentMemebrs",$scope.currentMemebrs);
         }
       }
-    });
+    }
+
+    if(!$scope.$$phase) {
+      $scope.$apply(getGroups);
+    } else {
+      getGroups();
+    }
   });
 
   function buildMemberMap(memberArray){
@@ -94,6 +100,23 @@
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [];
+        });
+      }
+    });
+  }
+
+  $scope.addMember = function(e) {
+    if(e.type != "click" && e.which != 13) {
+      return;
+    }
+
+    GroupModel.addMember($scope.group_selected, $scope.addNewMember, function(error) {
+      if (error){
+        toastr.error(error);
+      } else {
+        getGroupsFromModel();
+        $scope.$apply(function() {
+          $scope.addNewMember = "";
         });
       }
     });

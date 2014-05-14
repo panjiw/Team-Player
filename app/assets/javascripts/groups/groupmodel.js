@@ -26,6 +26,16 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
                                               group.creator, new Date(group.dateCreated), group.users);
   }
 
+  GroupModel.checkByEmail = function(email, callback) {
+    UserModel.getUserByEmail(email, function(user, error) {
+      if(error) {
+        callback(null, "User not found: " + email);
+      } else {
+        callback(user);
+      }
+    });
+  }
+
   GroupModel.getGroups = function(callback) {
     // We really only need to ask the server for all groups
     // the first time, so get it only if we need to.
@@ -94,6 +104,32 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     });
   };
 
+  //Create and return a group with the given parameters. This updates to the database, or returns
+  //error codes otherwise.
+  //Note: The "members" array does not need to contain the creator. The creator
+  //of a group will be placed in the group by default.
+  GroupModel.addMember = function(group, email, callback) {
+    if(!(email && group)) {
+      return;
+    }
+
+    console.log("Trying to add member " + email + " to group: " + group);
+
+    $.post("/add_to_group",
+    {
+      "invite[gid]" : group,
+      "invite[email]": email
+    })
+    .success(function(data, status) {
+      console.log("Success. New member list" + data);
+      GroupModel.groups[group].members = data;
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("Failed");
+      callback("Error: " + JSON.parse(xhr.responseText));
+    });
+  };
+
   //Update any or all of these fields for the group with the groupID (which is required).
   //If a field is null, that field is not updated. If the groupID is not found,
   //indicates failure...
@@ -111,16 +147,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   // If removing fails (e.g. user does not exist), return false.
   GroupModel.removeFromGroup = function(id, userID) {
    //TODO
-  }
-
-  GroupModel.checkByEmail = function(email, callback) {
-    UserModel.getUserByEmail(email, function(user, error) {
-      if(error) {
-        callback(null, "User not found: " + email);
-      } else {
-        callback(user);
-      }
-    });
   }
 
   return GroupModel;
