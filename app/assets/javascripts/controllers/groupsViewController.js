@@ -5,12 +5,12 @@
 * the controller for the groups page
 */
  angular.module('myapp').controller("groupsViewController",
-     ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
+     ["$scope", "$timeout", "UserModel", "GroupModel", function($scope, $timeout, UserModel, GroupModel) {
 
   // default select group with id -1
   $scope.group_selected = -1;
   $scope.member_selected = -1
-  $scope.currentMemebrs = {};
+  $scope.currentMembers = {};
   $scope.groupsList = {};
 
   function getGroupsFromModel(callback) {
@@ -20,7 +20,7 @@
         console.log(error);
       } else {
         function groupsToApply() {
-          console.log("Got grous:");
+          console.log("Got groups:");
           console.log(groups);
           $scope.groupsList = groups;
         }
@@ -44,14 +44,14 @@
         console.log("$scope.group_selected", $scope.group_selected);
         if($scope.group_selected != -1) {
           console.log("member selected",$scope.member_selected);
-          $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
-          $scope.currentMemebrs = buildMemberMap($scope.currentMemebrs);
-          console.log("$scope.currentMemebrs",$scope.currentMemebrs);
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;    
+          $scope.currentMembers = buildMemberMap($scope.currentMembers);
+          console.log("$scope.currentMembers",$scope.currentMembers);
         }
       }
     }
 
-    if(!$scope.$$phase) {
+    if(!$scope.$$phase && !$scope.$root.$$phase) {
       $scope.$apply(getGroups);
     } else {
       getGroups();
@@ -110,13 +110,18 @@
       return;
     }
 
-    GroupModel.addMember($scope.group_selected, $scope.addNewMember, function(error) {
+    var groupid = $scope.group_selected;
+
+    GroupModel.addMember(groupid, $scope.addNewMember, function(error) {
       if (error){
         toastr.error(error);
       } else {
-        getGroupsFromModel();
-        $scope.$apply(function() {
-          $scope.addNewMember = "";
+        getGroupsFromModel(function() {
+          $scope.$apply(function() {
+            $scope.currentMembers = buildMemberMap($scope.groupsList[groupid].members);
+            $scope.member_selected = -1;
+            $scope.addNewMember = "";
+          });
         });
       }
     });
@@ -124,7 +129,7 @@
 
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
-    $scope.currentMemebrs = buildMemberMap($scope.groupsList[id].members);
+    $scope.currentMembers = buildMemberMap($scope.groupsList[id].members);
     $scope.member_selected = -1;
   }
 
