@@ -25,12 +25,20 @@
                         </div>
                         <div class="col-md-5">
                             <h5>Group</h5>
-                            <select ng-model="newBillGroup" ng-options="grp.Name for (id, grp) in groupsList">
+                            <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
                                 <option value="">-- choose group --</option>
                             </select>
                             <br>
                             <div class="bill-members">
-                                <textarea cols="30" rows="7" ng-model="newBillMembers"></textarea>
+                                <div ng-repeat="mem in currentMembers" style="height:2.2em;">
+                                  <input type="checkbox" ng-model="chked" style="float:left;"/>
+                                  <span style="float:left;">{{mem.username}}</span>
+                                  <input ng-show="chked==true" type="number" 
+                                   min="0.01" step="0.01" max="5000000" style="float:right;"/>
+                                   <div style="clear: both;"></div>
+                                </div>
+                                <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
+                                 ng-options="mem.username for mem in currentMembers"></select> -->
                                 <input type="checkbox" class="large" data-label="Split Evenly"/>
                                 <span>Split Evenly</span>
                             </div>

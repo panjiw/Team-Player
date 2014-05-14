@@ -15,6 +15,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.newBillMembers = "";
 
   $scope.groupsList = {};
+  $scope.currentMembers = {};
 
   GroupModel.getGroups(function(groups, asynch, error) {
     if (error){
@@ -26,6 +27,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.$watch('groupsList', function(newVal, oldVal){
     console.log('changed');
   });
+
+  $scope.$watch('newBillGroup', function(newVal, oldVal){ 
+    console.log('group selected');
+    $scope.currentMembers = $scope.newBillGroup.members;
+  });
+  
   
 
   $scope.getBillFromModel = function(e) {
