@@ -8,9 +8,23 @@ angular.module('myapp').controller("homeViewController",
 	["$scope", "UserModel", "GroupModel", "TaskModel", "BillModel", 
 	function($scope, UserModel, GroupModel, TaskModel, BillModel) {
 
-	GroupModel.fetchGroupsFromServer(function() {
-		//Do nothing
-	});
+  $scope.groupsList = {};
+
+	GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+      console.log("fetch group error:");
+      console.log(error);
+    } else {
+      function groupsToApply() {
+        $scope.groupsList = groups;
+      }
+      if(asynch) {
+        $scope.$apply(groupsToApply);
+      } else {
+        groupsToApply();
+      }
+    }
+  });
 
   $('#addTaskBut').click(function(){
   	$('#taskModal').modal({show:true})
@@ -19,5 +33,4 @@ angular.module('myapp').controller("homeViewController",
   $('#addBillBut').click(function(){
   	$('#billModal').modal({show:true})
   });
-  
 }]);

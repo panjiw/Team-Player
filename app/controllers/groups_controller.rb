@@ -53,7 +53,7 @@ class GroupsController < ApplicationController
 
     if current_user.member?(@group) && !@user.nil?
        @group.users << @user
-       render :json => {:groups =>  @group.users}, :status => 200
+       render :json => @group.users, :status => 200
     else
        #render :json => {:errors => {"message" = "you not in group or no user"}}, 
        render :status => 400
