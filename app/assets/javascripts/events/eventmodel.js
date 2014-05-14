@@ -15,14 +15,12 @@
 //	--dateDue: the Date object for when the event is due
 //	--cycle: a boolean representing whether this event cycles between the members
 //	--repostArray: the days of the week to repeat this event (if any) as an array of booleans
-var Event = function() {
-	this.id = -1;
-	this.group = -1;
-	this.title = "";
-	this.description = "";
-	this.creator = "";
-	this.dateCreated = "";
-	this.dateDue = "";
-	this.cycle = "";
-	this.repost = "";
+var Event = function(eventID, groupID, title, description, creatorID, dateCreated, dateDue) {
+	this.id = eventID;
+	this.group = groupID;
+	this.title = title;
+	this.description = description;
+	this.creator = creatorID;
+	this.dateCreated = dateCreated;
+	this.dateDue = dateDue;
 }
