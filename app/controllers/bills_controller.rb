@@ -40,9 +40,28 @@ class BillsController < ApplicationController
     end
   end
 
-  def get_bills
+  def get_all
     if view_context.signed_in?
-      render :json => {:bill => "OK"}, :status => 200
+      bills = {}
+      count = 0
+      current_user.bills.each do |b|
+        bill = {}
+        bill[:bill_id] = b[:id]
+        bill[:group_id] = b[:group_id]
+        bill[:title] = b[:title]
+        bill[:description] = b[:description]
+        bill[:due_date] = b[:due_date]
+        bill[:total_due] = b[:total_due]
+        bill[:created_at] = b[:created_at]
+        bill[:updated_at] = b[:updated_at]
+        you = b.bill_actors.find_by_user_id(current_user[:id])
+        bill[:due] = you[:due]
+        bill[:paid_date] = you[:paid_date]
+        bill[:paid] = you[:paid]
+        bills[count] = bill
+        count = count + 1
+      end
+      render :json => bills.to_json, :status => 200
     else
       redirect_to '/'
     end

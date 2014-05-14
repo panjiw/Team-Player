@@ -26,12 +26,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   $scope.createBill = function(e) {
     // dummy bill data:
-    var groupID = 57;
-    var title = "bill_title";
-    var description = "bill_description!";
+    var groupID = 2;
+    var title = "bill_title 3";
+    var description = "bill_description! 3";
     var dateDue = new Date();
-    var total = 100;
-    var membersAmountMap = {3:25, 4:75};
+    var total = 30;
+    var membersAmountMap = {1:10, 2:20};
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
       if(error){
