@@ -24,7 +24,10 @@
                             min="2013-01-01" max="2113-01-01"/>
                         </div>
                         <div class="col-md-5">
-                            <h5>Group:</h5><select ng-model="newBillGroup"></select>
+                            <h5>Group</h5>
+                            <select ng-model="newBillGroup" ng-options="grp.Name for (id, grp) in groupsList">
+                                <option value="">-- choose group --</option>
+                            </select>
                             <br>
                             <div class="bill-members">
                                 <textarea cols="30" rows="7" ng-model="newBillMembers"></textarea>

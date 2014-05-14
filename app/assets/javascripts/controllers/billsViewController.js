@@ -14,6 +14,20 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.newBillGroup = "";
   $scope.newBillMembers = "";
 
+  $scope.groupsList = {};
+
+  GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+    } else {
+      $scope.groupsList = groups;
+    }
+  });
+
+  $scope.$watch('groupsList', function(newVal, oldVal){
+    console.log('changed');
+  });
+  
+
   $scope.getBillFromModel = function(e) {
     BillModel.getBillFromServer(
       function(error){
