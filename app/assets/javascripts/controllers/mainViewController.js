@@ -27,5 +27,9 @@ angular.module('myapp').controller("mainViewController", ["$scope", "UserModel",
 			}
 		});
 	}
+  
+  $scope.openPop = function (e) {
+        $('.btn').not(e.target).popover('hide');
+  };
 
 }]);
