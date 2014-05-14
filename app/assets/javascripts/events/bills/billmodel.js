@@ -27,6 +27,19 @@ angular.module("myapp").factory('BillModel', function() {
     //BillModel.bills[bill.id] = new Bill(bill.id, bill.groupID, bill.title, bill.description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap)
   }
 
+  BillModel.getBillFromServer = function(callback){
+    $.get("/get_bills")
+    .success(function(data, status) {
+      console.log("bill get Success: " , data);
+      // update bill
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("group get error: ",error);
+      callback("Error: " + JSON.parse(xhr.responseText));
+    });
+  }
+
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
   BillModel.createBill = function(groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
@@ -36,7 +49,7 @@ angular.module("myapp").factory('BillModel', function() {
       "bill[title]": title,
       "bill[description]": description,
       "bill[due_date]": dateDue,
-      "bill[total_due]": toal,
+      "bill[total_due]": total,
       "bill[members]": membersAmountMap,
     })
     .success(function(data, status) {
@@ -45,10 +58,9 @@ angular.module("myapp").factory('BillModel', function() {
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("group create error: "+error);
+      console.log("group create error: ",error);
       callback("Error: " + JSON.parse(xhr.responseText));
     });
-  };
   };
 
   //Update a bill with all of the fields. If a field is null, it is not updated

@@ -5,38 +5,58 @@
 * the controller for the groups page
 */
  angular.module('myapp').controller("groupsViewController",
-     ["$scope", "UserModel", "GroupModel", function($scope, UserModel, GroupModel) {
+     ["$scope", "$timeout", "UserModel", "GroupModel", function($scope, $timeout, UserModel, GroupModel) {
 
   // default select group with id -1
   $scope.group_selected = -1;
   $scope.member_selected = -1
-  $scope.currentMemebrs = {};
-  $scope.groupsList = GroupModel.getGroups();
+  $scope.currentMembers = {};
+  $scope.groupsList = {};
 
-  GroupModel.fetchGroupsFromServer(function(error){
-    if (error){
-      //TODO
-      console.log("fetch group error:");
-      console.log(error);
-    } else {
+  function getGroupsFromModel(callback) {
+    GroupModel.getGroups(function(groups, asynch, error) {
+      if (error){
+        console.log("fetch group error:");
+        console.log(error);
+      } else {
+        function groupsToApply() {
+          console.log("Got groups:");
+          console.log(groups);
+          $scope.groupsList = groups;
+        }
+        if(asynch) {
+          $scope.$apply(groupsToApply);
+        } else {
+          groupsToApply();
+        }
+      }
+      if(callback) {
+        callback();
+      }
+    });
+  }
 
-    }
-  });
-
-  if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
-    $scope.group_selected = Object.keys($scope.groupsList)[0];
-    console.log("$scope.groupsList", $scope.groupsList);
-    console.log("$scope.group_selected", $scope.group_selected);
-    if($scope.group_selected != -1) {
-      $scope.member_selected = $scope.groupsList[$scope.group_selected].members[0].id;
-      console.log("member selected",$scope.member_selected);
-      if($scope.member_selected != -1){
-        $scope.currentMemebrs = $scope.groupsList[$scope.group_selected].members;    
-        $scope.currentMemebrs = buildMemberMap($scope.currentMemebrs);
-        console.log("$scope.currentMemebrs",$scope.currentMemebrs);
+  getGroupsFromModel(function() {
+    function getGroups(){
+      if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
+        $scope.group_selected = Object.keys($scope.groupsList)[0];
+        console.log("$scope.groupsList", $scope.groupsList);
+        console.log("$scope.group_selected", $scope.group_selected);
+        if($scope.group_selected != -1) {
+          console.log("member selected",$scope.member_selected);
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;    
+          $scope.currentMembers = buildMemberMap($scope.currentMembers);
+          console.log("$scope.currentMembers",$scope.currentMembers);
+        }
       }
     }
-  }
+
+    if(!$scope.$$phase && !$scope.$root.$$phase) {
+      $scope.$apply(getGroups);
+    } else {
+      getGroups();
+    }
+  });
 
   function buildMemberMap(memberArray){
     var map = {};
@@ -76,8 +96,8 @@
       if (error){
         toastr.error(error);
       } else {
+        getGroupsFromModel();
         $scope.$apply(function() {
-          $scope.groupsList = GroupModel.getGroups();
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [];
         });
@@ -85,9 +105,31 @@
     });
   }
 
+  $scope.addMember = function(e) {
+    if(e.type != "click" && e.which != 13) {
+      return;
+    }
+
+    var groupid = $scope.group_selected;
+
+    GroupModel.addMember(groupid, $scope.addNewMember, function(error) {
+      if (error){
+        toastr.error(error);
+      } else {
+        getGroupsFromModel(function() {
+          $scope.$apply(function() {
+            $scope.currentMembers = buildMemberMap($scope.groupsList[groupid].members);
+            $scope.member_selected = -1;
+            $scope.addNewMember = "";
+          });
+        });
+      }
+    });
+  }
+
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
-    $scope.currentMemebrs = buildMemberMap($scope.groupsList[id].members);
+    $scope.currentMembers = buildMemberMap($scope.groupsList[id].members);
     $scope.member_selected = -1;
   }
 
@@ -120,5 +162,4 @@
 
     $scope.newMember = "";
   }
-
 }]);

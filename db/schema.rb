@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140512032815) do
+ActiveRecord::Schema.define(version: 20140514194650) do
 
   create_table "bill_actors", force: true do |t|
     t.integer  "bill_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140512032815) do
     t.integer  "creator"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "self"
   end
 
   create_table "memberships", id: false, force: true do |t|
