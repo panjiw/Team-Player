@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <title>TeamPlayer - Getting Started</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        
+        <!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- CSS code from Bootply.com editor -->
+        
+        <style type="text/css">
+            header {
+	margin-bottom:30px;
+}
+
+        </style>
+    </head>
+    
+    <!-- HTML code from Bootply.com editor -->
+    
+    <body  >
+        
+        
+<header class="navbar navbar-default navbar-static-top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="index.html" class="navbar-brand">Team-Player</a>
+    </div>
+    <nav class="collapse navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="getstarted.html">Get Started</a>
+        </li>
+        <li>
+          <a href="wiki.html">Product Wiki</a>
+        </li>
+        <li>
+          <a href="devteam.html">Dev Team Info</a>
+        </li>
+        <li>
+          <a href="contact.html">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Begin Body -->
+<div class="container">
+	<div class="row">
+  			<div class="col-md-3" id="leftCol">
+              	
+				<div class="well"> 
+              	<ul class="nav nav-stacked" id="sidebar">
+                  <li><a href="#sec1">Build instruction</a></li>
+                  <li><a href="#sec2">Test instruction</a></li>
+                  <li><a href="#sec3">View/Report Bugs</a></li>
+                  <li><a href="#sec4">Release new verion</a></li>
+                  <li><a href="#sec5">File Structure</a></li>
+                  <li><a href="#sec6">Publishing to Heroku</a></li>
+              	</ul>
+  				</div>
+
+      		</div>  
+      		<div class="col-md-9">
+              	<h2 id="sec0">Want to contribute to our product?</h2>
+                “Team Player” is an open source product, all of our source code and releases will be facilitated through Github. Source code for the latest stable released version can be found from our github repository 
+                <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>. 
+                <br>
+                Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found from here <a href="https://github.com/panjiw/Team-Player.git">https://github.com/panjiw/Team-Player.git</a>.
+</a>
+           
+              	<hr class="col-md-12">
+        
+              
+              
+              	<h2 id="sec1">Getting started</h2>
+              	<p>
+                If you are unfamilar with Ruby on Rails, here is a <a href="#sec5">quick guide to the file structure</a>
+                The following installation instruction assume you are using a Linux system.
+              	</p>
+                <p>
+                <ol><li>First setup rails environment for your OS<br>
+                <code><a href="https://www.ruby-lang.org/en/installation/">https://www.ruby-lang.org/en/installation/</a></code></li>
+                <br>
+                <li>Install git, then navigate to folder you want to store our codes and run<br>
+                <code>git clone https://github.com/panjiw/Team-Player.git</code></li>
+                <br>
+                <li>Navigate inside Team-Player folder and run<br>
+                <code>bundle install -- without production</code></li>
+                <br>
+                <li>Note: For security reasons, secrets.yml and database.yml are not shown publicly on github<br>
+                To create your own navigate inside config folder<br>  -- rename the secrets-example.yml to secrets.yml
+                    <br> -- rename database-example.yml to database.yml
+                </li>
+                <br>
+
+                <li>To generate your secret_token, run <br>
+                <code>rake secret</code><br>copy the key, and open secret.yml, replace the "run_rake_seret_and_copy_key_here" message
+                <br> with your copied key, you have to paste it in two places</li>
+                <br>
+
+                <li>To setup the database run<br>
+                <code>bundle exec rake db:migrate</code>
+                </li>
+                <br>
+
+                <li>Finally, you can start the rails server, run<br>
+                <code>rails s</code></li>
+                <br>
+
+                <li>If successful, you can see our application on<br>
+                <code><a href="http://localhost:3000/">http://localhost:3000/</a></code></li>
+                <br>
+
+                </ol>
+                <p>Now you can start editing the codes and view the effects on localhost website!</p>
+
+              	<hr>
+              
+              	<h2 id="sec2">Tools Set</h2>
+              	<p>
+
+We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs (which will be a large factor over our competitors), is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
+-HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.
+-JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
+-AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend
+-Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
+-SQL/MySQL: Our data will be very relational, so it makes sense to use a relational database like MySQL. We will then obviously query it using SQL. The data will solely come from user input, as the application is driven around group task management.
+-Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. It’s bug tracking system is visual and clear.
+
+
+                </p>
+              
+              	<hr>
+              
+              	<h2 id="sec3">Frameworks / Libraries</h2>
+      		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
+ 
+Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
+ 
+From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
+              
+              	<h2 id="sec4">Existing Solutions</h2>
+      			
+                Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
+Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
+
+              
+              	<hr>
+            <h2 id="sec5">Our Solution</h2>
+
+Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
+
+What are its major features? 
+Our application will provide a method to view all tasks and bills on the calendar. This feature will allow users to filter these tasks and bills and view only certain items, whether it be from only specific groups or only bills. 
+Furthermore, our application will provide a method to allow users to create tasks for themselves and for other users in the group. This task will contain a name, description, and members assigned to it. This create task will give users the ability to assign a task to a certain group with themselves or a specific user. Additionally, the user will be able to assign the task a day of completion, and that’s the date that will appear on the calendar.
+Another feature of our application will be the ability to input bills into the calendar. The bills will act like tasks, with specific users, a name, description, and due date. Additionally, these bills will have a total cost, and an ability to split the bill evenly. If the bill is not split evenly, members can be assigned the specific amount they owe on the bill. 
+Our application will allow users to view a running list of their bills and payments. Depending on implementation, our application will allow users to view bills for the entire group or just bills they owe. Additionally, they will be able to view how much they owe an individual person.
+The main feature we have in mind is an ability for users to cycle through tasks and to-dos. This feature will be group focused. Users will have a specific task that will be passed to other users in the group after they have completed the task.
+A possible stretch figure we have considered is an ability to send email notifications when a new event has been posted. Additionally, these email notifications could be sent on the day of an event to remind the user what events they have due that day. 
+Another possible stretch feature is an ability for users to manage their groups. Currently, groups can be created and new members can be added by anyone in the group. A stretch feature would be the possibility to limit adding people to a group to the person who created the group, and adding more admin capabilities over their groups.
+One more possible stretch feature would be to implement different views on the interface. Currently, we are planning one view in calendar format and another view for the bills. For stretch features, we could implement more list views and views on group calendars.                 
+                
+              
+                <hr>
+
+      		</div> 
+  	</div>
+</div>
+
+
+
+        
+        <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+        <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+
+
+
+        
+        <!-- JavaScript jQuery code from Bootply.com editor -->
+        
+        <script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+            
+
+        
+        });
+        
+        </script>
+        
+    </body>
+</html>
