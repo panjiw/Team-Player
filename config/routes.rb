@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   # All routes are manual because of the heavy use of Angular to view the correct
   # pages to the user
   # resources :users

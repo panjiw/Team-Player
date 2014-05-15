@@ -1,19 +1,23 @@
-angular.mock.module('myapp');
-
 describe("Login Tests", function() {
-  var $scope;
+  var $scope, ctrl, UserModel;
+  beforeEach(function() { 
+    module("myapp");
 
-  beforeEach(angular.mock.inject(function($rootScope, $controller) {
-    $scope = $rootScope.$new();
-    $controller('loginViewController', {"$scope": $scope});
-  }));
+    inject(function($rootScope, $controller) {
+      $scope = $rootScope;
+      ctrl = $controller("loginViewController", {"$scope": $scope});
+    });
 
-  it("Dummy test", angular.mock.inject(function() {
-    expect(true).toBe(true);
-  }));
+    inject(function(_UserModel_) {
+      UserModel = _UserModel_;
+    });
+  });
 
-  it("check login missing params fails", angular.mock.inject(function() {
-    console.log($scope.message);
+  it("checks hello world", function() {
     expect($scope.message).toBe("Hello, world");
-  }));
+  });
+
+  it("checks login", function() {
+    expect(UserModel.me).toBe(0);
+  });
 });

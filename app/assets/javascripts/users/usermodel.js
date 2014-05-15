@@ -26,7 +26,7 @@ var User = function(id, uname, fname, lname) {
 //including the data for the current user.
 angular.module("myapp").factory('UserModel', function() {
   var UserModel = {};
-  UserModel.me = 0;
+  UserModel.me = -1;
   UserModel.users = {}; // ID to users
   UserModel.fetchedUser = false;
 

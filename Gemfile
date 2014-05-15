@@ -69,4 +69,8 @@ gem 'angularjs-rails'
 # Jasmine gem
 gem 'jasmine'
 
+group :test, :development do
+    gem 'jasmine-rails'
+end
+
 gem 'validates_existence', '>= 0.4'
