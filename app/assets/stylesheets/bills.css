@@ -92,7 +92,10 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   float: left;
   margin: 0px;
   padding: 0px;
+  width: 175px;
   white-space:nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .bill-amount {
