@@ -39,24 +39,16 @@ class UsersController < ApplicationController
     #@user = User.find(params[:id])
   end
 
-  def test
-    @user = current_user
-    puts @user.username
-  end
-
   # Updates user information after editting
   # If update is successful, status 200. 
   # Else, status 400
   def update
     @user = current_user
     if @user.update_attributes(user_params)
-      render :json => {}, :status => 200
+      render :json => {:updated => "params"}, :status => 200
     else
       render :json => {:errors => @user.errors.full_messages}, :status => 400
     end
-
-    puts @user.username
-    
   end
 
 
