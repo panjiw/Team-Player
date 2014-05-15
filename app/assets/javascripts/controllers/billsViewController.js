@@ -45,15 +45,34 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     });
   }
+  
+  var buildAmountMap = function(members){
+    var map = {};
+
+    for(var i in members){
+      if(members[i].chked){
+        map[members[i].id] = members[i].amount;
+      }
+    }
+    return map;
+  }
 
   $scope.createBill = function(e) {
     // dummy bill data:
-    var groupID = 57;
-    var title = "bill_title 3";
-    var description = "bill_description! 3";
-    var dateDue = new Date();
-    var total = 30;
-    var membersAmountMap = {1:4, 3:6, 4:20};
+    // var groupID = 57;
+    // var title = "bill_title 3";
+    // var description = "bill_description! 3";
+    // var dateDue = new Date();
+    // var total = 30;
+    // var membersAmountMap = {1:4, 3:6, 4:20};
+
+    var groupID = $scope.newBillGroup.id;
+    var title = $scope.newBillTitle;
+    var description = $scope.newBillDescription;
+    var dateDue = $scope.newBillDateDue;
+    var total = $scope.newBillTotal;
+    var membersAmountMap = buildAmountMap($scope.currentMembers);
+
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
       if(error){
@@ -132,3 +151,4 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   });
 
 }]);
+

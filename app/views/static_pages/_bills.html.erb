@@ -31,9 +31,10 @@
                             <br>
                             <div class="bill-members">
                                 <div ng-repeat="mem in currentMembers" style="height:2.2em;">
-                                  <input type="checkbox" ng-model="chked" style="float:left;"/>
+                                  <input type="checkbox" ng-model="mem.chked" style="float:left;" 
+                                   ng-click="mem.amount = 0;"/>
                                   <span style="float:left;">{{mem.username}}</span>
-                                  <input ng-show="chked==true" type="number" 
+                                  <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
                                    min="0.01" step="0.01" max="5000000" style="float:right;"/>
                                    <div style="clear: both;"></div>
                                 </div>
