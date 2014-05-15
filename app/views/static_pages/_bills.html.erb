@@ -30,7 +30,7 @@
                             </select>
                             <br>
                             <div class="bill-members">
-                                <div ng-repeat="mem in currentMembers" style="height:2.2em;">
+                                <div ng-repeat="mem in currentMembers | filter:notSelf" style="height:2.2em;">
                                   <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                                    ng-click="mem.amount = 0;"/>
                                   <span style="float:left;">{{mem.username}}</span>
@@ -161,5 +161,4 @@
                                                 </div>
                             
                                               </div>
-                                            </div>
                     </div>

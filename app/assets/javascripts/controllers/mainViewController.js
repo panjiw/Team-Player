@@ -7,13 +7,22 @@
 angular.module('myapp').controller("mainViewController", ["$scope", "UserModel", function($scope, UserModel) {
 	$scope.activeTab = "selected_home";
     $scope.activeBillTab = "bill_selected_you_owe";
+    $scope.currentUser = {};
 
   UserModel.fetchUserFromServer(function(error){
   	if(error){
   		//TODO
   	} else {
+  		$scope.$apply(function(){
+  			$scope.currentUser = UserModel.users[UserModel.me];
+  		})
   		console.log("fetch user success!");
+
   	}
+  });
+
+  $scope.$watch('currentUser', function(newVal, oldVal){
+    console.log('currentUser changed');
   });
 
 	// Log out the user, or display why it failed
