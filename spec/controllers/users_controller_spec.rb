@@ -64,10 +64,8 @@ end
 # tests the controller's create method
 describe "CREATE new" do
     before(:each) do
-
         @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
                               :password => "player", :password_confirmation => "player"
-        
     end
 
     # tests when every value is correct that create works
@@ -122,6 +120,118 @@ describe "CREATE new" do
     end
 
 end
+
+describe "update user" do
+    before(:each) do
+        post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
+                             :password => "player", :password_confirmation => "player"}
+   
+        post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                             :password => "player", :password_confirmation => "player"}
+
+    end
+
+    #checks if update runs correctly when username is changed
+    context 'it should update users username' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "newname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.empty?).should be_true
+        end
+    end
+
+    #checks if update runs correctly when firstname is changed
+    context 'it should update users firstname' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "newname", :lastname => "Player", :email => "team@player.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.empty?).should be_true
+        end
+    end
+
+    #checks if update runs correctly when lastname is changed
+    context 'it should update users lastname' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "newname", :email => "team@player.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.empty?).should be_true
+        end
+    end
+
+    #checks if update runs correctly when email is changed
+    context 'it should update users email' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.empty?).should be_true
+        end
+    end
+
+    #checks if update runs correctly when password is changed
+    context 'it should update users password' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+            :password => "newplayer", :password_confirmation => "newplayer"}
+            (response.body.empty?).should be_true
+        end
+    end
+
+    #checks if update throws an error when passwords don't match
+    context 'it should not update users password' do
+        it 'should not update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+            :password => "players", :password_confirmation => "player"}
+            (response.body.include? "error").should be_true
+        end
+    end
+
+    #checks if update throws an error when passwords are too small
+    context 'it should not update users password' do
+        it 'should not update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+            :password => "play", :password_confirmation => "play"}
+            (response.body.include? "error").should be_true
+        end
+    end
+
+    #checks if update throws an error when username already exists
+    context 'it should update user' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.include? "error").should be_true
+        end
+    end
+
+    #checks if update throws an error when email already exists
+   context 'it should update user' do
+        it 'should update user information' do
+            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
+            :password => "player", :password_confirmation => "player"}
+            (response.body.include? "error").should be_true
+        end
+    end
+end
+
+
+
+# describe "FINDUSERBYEMAIL new" do
+    
+#     before(:each) do
+#         @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#                               :password => "player", :password_confirmation => "player"
+#     end
+
+#     context 'should find user' do
+#         it 'should be ok' do
+#             post 'finduseremail', {:email => "team@playe.com"}
+#             puts response.body
+#         end
+#     end
+
+# end
+
+
 
 # # 
 # before do
