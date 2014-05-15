@@ -156,9 +156,42 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('.bill-pop').not('#' + p + n).hide();
   }
   
-  $scope.closePop = function (e) {
+  $scope.updateTotal = function(p) {
+    var total = 0;
+    $('#' + p + 1 + " input:checkbox").each(function () {
+      var str = $(this).val();
+      var value = str.substr(0,str.indexOf(' '));
+      total += (this.checked ? parseInt(value) : 0);
+    });
+    $('#' + p + 1 + " .bill-pop-total").html('$' + total);
+  }
+  
+  $scope.closePop = function () {
     $('.bill-pop').hide();
   };
+  
+  $scope.pay = function (p) {
+    $('#' + p + 1 + " input:checkbox").each(function () {
+      var str = $(this).val();
+      var value = parseInt(str.substr(0,str.indexOf(' ')));
+      var why = str.substr(str.indexOf(' ')+1);
+      if (this.checked) {
+        $.each($scope.billsYouOweMap, function(member) {
+          if (this.person == p) {
+            this.amount -= value;
+            for (var i = 0; i < this.bills.length; i++) {
+              if (this.bills[i].amt == value && this.bills[i].why == why) {
+                this.bills.splice(i, 1);
+              }
+            }
+            $('#' + p + 1 + " .bill-pop-total").html('$0');
+            return false;
+          }
+        });
+      }
+    });
+    $('.bill-pop').hide();
+  }
 
   $('#openBtn').click(function(){
     $('#myModal').modal({show:true})
