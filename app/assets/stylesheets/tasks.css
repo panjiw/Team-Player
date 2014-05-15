@@ -81,3 +81,13 @@ textarea {
   height:200px;
   width: 100px;
 }
+
+.tasks-panelbutton {
+  padding:0px;
+  height:95px;
+  width:650px;
+  overflow:hidden;
+  border-color: white;
+  text-align: center;
+  margin-bottom:15px;
+}
