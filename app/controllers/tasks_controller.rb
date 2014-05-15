@@ -21,7 +21,13 @@ class TasksController < ApplicationController
         end
         order = order + 1
       end
-      render :json => @task.to_json(:include => [:task_actors => {:except => [:created_at, :updated_at, :task_id]}]), :status => 200
+      task = {}
+      task[:details] = @task
+      task[:members] = {}
+      @task.task_actors.each do |a|
+        task[:members][a[:user_id]] = a[:order]
+      end
+      render :json => task, :status => 200
     else
       render :json => {:errors => @task.errors.full_messages}, :status => 400
     end
@@ -41,7 +47,7 @@ class TasksController < ApplicationController
         tasks[count] = task
         count = count + 1
       end
-      render :json => bills.to_json, :status => 200
+      render :json => tasks.to_json, :status => 200
     end
     redirect_to '/'
   end
