@@ -57,7 +57,7 @@ class BillsController < ApplicationController
         bill[:due] = {}
         b.bill_actors.each do |a|
           # don't know why just giving a doesn't work
-          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid].to_bool, :paid_date => a[:paid_date]}
+          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
         end
         bills[count] = bill
         count += 1

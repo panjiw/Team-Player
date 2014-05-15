@@ -10,13 +10,9 @@
 //  --membersAmountMap: the members associated with the bill, and how much each owes
 //  --membersPaidMap: which membesr have paid their amounts.
 //  --total: is not explicitly a field, but it is a derived field.
-var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap) {
+var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.membersAmountMap = membersAmountMap;
-  this.membersPaidMap = membersPaidMap;
-  for(userID in membersAmountMap) {
-    this.membersPaidMap[userID] = false;
-  }
 };
 
 angular.module("myapp").factory('BillModel', function() {
@@ -24,7 +20,8 @@ angular.module("myapp").factory('BillModel', function() {
   BillModel.bills = {};   //ID to bills.css
 
   BillModel.updateBill = function(bill){
-    //BillModel.bills[bill.id] = new Bill(bill.id, bill.groupID, bill.title, bill.description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap)
+    BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
+     bill.details.user_id, bill.details.created_at, bill.details.due_date, bill.due);
   }
 
   BillModel.getBillFromServer = function(callback){
@@ -32,6 +29,10 @@ angular.module("myapp").factory('BillModel', function() {
     .success(function(data, status) {
       console.log("bill get Success: " , data);
       // update bill
+      
+      for (var i in data){
+        BillModel.updateBill(data[i]);
+      }
       callback();
     })
     .fail(function(xhr, textStatus, error) {
@@ -54,7 +55,7 @@ angular.module("myapp").factory('BillModel', function() {
     })
     .success(function(data, status) {
       console.log("bill create Success: " , data);
-      // update bill
+      BillModel.updateBill(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {

@@ -5,8 +5,8 @@
 }
 
 .bill-body{
-	padding: 10px;
-	margin: 10px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .bill-summary {
@@ -68,10 +68,34 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   margin-bottom: 20px;
 }
 
+.bill-all {
+  width: 400px;
+}
+
+.bill-pop {
+  position: absolute;
+  right: 325px;
+  top: 205px;
+  padding: 10px;
+  background-color: #F0F0F0;
+  border: 2px solid gray;
+  border-radius: 5px;
+  display: none;
+}
+
+.bill-pop-total {
+  float: right;
+  margin-right: 10px;
+}
+
 .bill-member {
   float: left;
   margin: 0px;
   padding: 0px;
+  width: 175px;
+  white-space:nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .bill-amount {
@@ -120,4 +144,9 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 .bills-selected .bill-amount {
   float: right;
   margin-left: 0px;
+}
+
+.bill-check {
+  margin: 0px;
+  padding: 0px;
 }

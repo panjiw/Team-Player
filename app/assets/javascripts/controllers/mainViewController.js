@@ -4,10 +4,12 @@
  *  This file is not implemented yet. It will be
  *  the controller for the main (home) page
  */
-angular.module('myapp').controller("mainViewController", ["$scope", "UserModel", function($scope, UserModel) {
+angular.module('myapp').controller("mainViewController", ["$scope", "UserModel","GroupModel", 
+  function($scope, UserModel, GroupModel) {
 	$scope.activeTab = "selected_home";
     $scope.activeBillTab = "bill_selected_you_owe";
     $scope.currentUser = {};
+
 
   UserModel.fetchUserFromServer(function(error){
   	if(error){
@@ -15,11 +17,20 @@ angular.module('myapp').controller("mainViewController", ["$scope", "UserModel",
   	} else {
   		$scope.$apply(function(){
   			$scope.currentUser = UserModel.users[UserModel.me];
+        GroupModel.getGroups(function(groups,asynch,error){
+          if(error){
+            console.log("main get group error!");
+          } else {
+            console.log("main get users:",UserModel.users);
+          } 
+        });
   		})
   		console.log("fetch user success!");
 
   	}
   });
+
+  
 
   $scope.$watch('currentUser', function(newVal, oldVal){
     console.log('currentUser changed');
