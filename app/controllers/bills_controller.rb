@@ -33,7 +33,14 @@ class BillsController < ApplicationController
             return
           end
         end
-        render :json => @bill.to_json(:include => [:bill_actors => {:except => [:created_at, :updated_at, :bill_id]}]), :status => 200
+        bill = {}
+        bill[:details] = @bill
+        bill[:due] = {}
+        @bill.bill_actors.each do |a|
+          # don't know why just giving a doesn't work
+          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
+        end
+        render :json => bill.to_json, :status => 200
       end
     else
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
