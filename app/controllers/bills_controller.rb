@@ -33,7 +33,7 @@ class BillsController < ApplicationController
             return
           end
         end
-        render :json => @bill.to_json(:include => [:bill_actors => {:except => [:created_at, :updated_at, :bill_id, :id]}]), :status => 200
+        render :json => @bill.to_json(:include => [:bill_actors => {:except => [:created_at, :updated_at, :bill_id]}]), :status => 200
       end
     else
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
@@ -46,18 +46,12 @@ class BillsController < ApplicationController
       count = 0
       current_user.bills.each do |b|
         bill = {}
-        bill[:bill_id] = b[:id]
-        bill[:group_id] = b[:group_id]
-        bill[:title] = b[:title]
-        bill[:description] = b[:description]
-        bill[:due_date] = b[:due_date]
-        bill[:total_due] = b[:total_due]
-        bill[:created_at] = b[:created_at]
-        bill[:updated_at] = b[:updated_at]
-        you = b.bill_actors.find_by_user_id(current_user[:id])
-        bill[:due] = you[:due]
-        bill[:paid_date] = you[:paid_date]
-        bill[:paid] = you[:paid]
+        bill[:details] = b
+        bill[:due] = {}
+        b.bill_actors.each do |a|
+          # don't know why just giving a doesn't work
+          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
+        end
         bills[count] = bill
         count = count + 1
       end

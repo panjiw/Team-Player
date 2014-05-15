@@ -12,6 +12,12 @@ class Bill < ActiveRecord::Base
   validate :creator_in_group?
 
   # checking total, need bill to check bill_actors and vice versa, what to do?
+  # done dynamically
+
+  # no need to check whether a user is in twice as what expected is a map
+  # can't have duplicate keys (id) in a map
+
+  # Unlike task, finished is different for each member
 
   def creator_in_group?
     return unless errors.blank?

@@ -14,6 +14,14 @@ class Task < ActiveRecord::Base
   validates :user, existence: { :allow_nil => false }
   validate :creator_in_group?
 
+  # no need to check whether a user is in twice as what expected is a map
+  # can't have duplicate keys (id) in a map
+
+  # Unlike bill, finished is for a task
+
+  # Task has no knowledge of task creator as it could be created by the user or
+  # by the generator
+
   def creator_in_group?
     if !group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group")
