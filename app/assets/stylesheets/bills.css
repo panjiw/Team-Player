@@ -83,6 +83,11 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   display: none;
 }
 
+.bill-pop-total {
+  float: right;
+  margin-right: 10px;
+}
+
 .bill-member {
   float: left;
   margin: 0px;
