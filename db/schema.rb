@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140515071131) do
     t.integer  "creator"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "self"
   end
 
   create_table "memberships", id: false, force: true do |t|

@@ -45,12 +45,11 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       .success(function(data, status) {
         for(var i = 0; i < data.length; i++) {
           GroupModel.updateGroup(data[i]);
-          for(member in data[i].users) {
-            UserModel.updateUser(member);
-            console.log("---users updated--,",UserModel.users, member);
+          console.log("update users: ",data[i].users);
+          for(var index in data[i].users) {
+            console.log("update 1 user: " , data[i].users[index])
+            UserModel.updateUser(data[i].users[index]);
           }
-          console.log("group data i ", data[i]);
-
         }
         GroupModel.fetchedGroups = true;
         console.log("model success");

@@ -43,33 +43,50 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     return user.id != UserModel.me;
   }
 
-  $scope.getBillFromModel = function(e) {
+  getBillFromModel = function(e) {
     BillModel.getBillFromServer(
       function(error){
       if(error){
         //TODO
       } else{
         //TODO
-        buildBills();
-        console.log("$scope.billsOweYou",$scope.billsOweYou);
-        buildBillsMap();
+        $scope.$apply(function(){
+          buildBills();
+        });
       }
     });
   };
 
+  getBillFromModel();
+
+  function buildBills(){
+    buildBillsList();
+    buildBillsMap();
+  }
+
   $scope.$watch('billsYouOweMap', function(newVal, oldVal){
     console.log('billsYouOweMap changed');
-  });
+  },true);
 
-   $scope.$watch('billsOweYouMap', function(newVal, oldVal){
+  $scope.$watch('billsYouOwe', function(newVal, oldVal){
+    console.log('billsYouOwe changed');
+  },true);
+
+  $scope.$watch('billsOweYouMap', function(newVal, oldVal){
     console.log('billsOweYouMap changed');
-  });
+  },true);
+
+  $scope.$watch('billsOweYou', function(newVal, oldVal){
+    console.log('billsOweYou changed');
+  },true);
 
   //{person:'Member1', amount: 12, why: 'Bought Lunch'}
 
-  function buildBills(){
+  function buildBillsList(){
     $scope.billsYouOwe = [];
     $scope.billsOweYou = [];
+    $scope.billsOweYouMap =[];
+    $scope.billsYouOweMap =[];
 
     var bills = BillModel.bills;
     console.log("bills is ", bills);
@@ -92,7 +109,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           console.log("creater is not me, bills[i]: ",bills[i]);
           if (j == UserModel.me){
             $scope.billsYouOwe.push({
-              person: UserModel.users[j].fname, 
+              person: UserModel.users[bills[i].event.creator].fname, 
               amount: bills[i].membersAmountMap[j].due, 
               why: bills[i].event.title
             });
@@ -123,12 +140,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   $scope.testingCreate = function(e) {
     // dummy bill data:
-    var groupID = 57;
-    var title = "bill_title 3";
-    var description = "bill_description! 3";
+    var groupID = 5;
+    var title = "bill_title 004";
+    var description = "bill_description! 004";
     var dateDue = new Date();
-    var total = 40;
-    var membersAmountMap = {1:14, 3:16, 4:10};
+    var total = 100;
+    var membersAmountMap = {1:20, 3:30, 4:50};
 
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
@@ -136,6 +153,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         //TODO
       } else{
         //TODO
+        buildBills();
       }
     });
   };
@@ -163,6 +181,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         //TODO
       } else{
         //TODO
+        buildBills();
       }
     });
 
@@ -182,7 +201,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsYouOweMap from billsYouOwe
-  $(function () {
+  function buildBillsMapYouOwe() {
     $.each($scope.billsYouOwe, function(bill) {
       var found = false;
       var bill = this;
@@ -198,7 +217,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{amt: bill.amount, why: bill.why}]});
       }
     });
-  });
+  }
   
   //Map for the total each member owes you
   $scope.billsOweYouMap = [];
@@ -213,7 +232,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsOweYouMap from billsOweYou
-  function buildBillsMap() {
+  function buildBillsMapOweYou() {
     console.log("building bills map");
     $.each($scope.billsOweYou, function(bill) {
       var found = false;
@@ -230,6 +249,11 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{amt: bill.amount, why: bill.why}]});
       }
     });
+  }
+
+  function buildBillsMap(){
+    buildBillsMapOweYou();
+    buildBillsMapYouOwe();
   }
 
   // Function called when Select Bills or View Bills is clicked. Toggles popover
