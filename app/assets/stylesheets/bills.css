@@ -74,8 +74,8 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 
 .bill-pop {
   position: absolute;
-  right: 325px;
-  top: 205px;
+  right: 200px;
+  top: 275px;
   padding: 10px;
   background-color: #F0F0F0;
   border: 2px solid gray;
