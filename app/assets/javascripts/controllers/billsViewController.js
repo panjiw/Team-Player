@@ -4,8 +4,8 @@
  *  This file is not implemented yet. It will be
  *  the controller for the bills page
  */
-angular.module('myapp').controller("billsViewController", ["$scope", "BillModel", "GroupModel", 
-  function($scope, BillModel, GroupModel) {
+angular.module('myapp').controller("billsViewController", ["$scope", "BillModel", "UserModel", "GroupModel", 
+  function($scope, BillModel, UserModel, GroupModel) {
   $scope.activeBillTab='bill_selected_you_owe';
   $scope.newBillTitle = "";
   $scope.newBillDescription = "";
@@ -33,7 +33,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $scope.currentMembers = $scope.newBillGroup.members;
   });
   
-  
+  $scope.notSelf = function(user){
+    console.log("comparing ",user, " and ",UserModel.me);
+    return user.id != UserModel.me;
+  }
 
   $scope.getBillFromModel = function(e) {
     BillModel.getBillFromServer(
@@ -54,6 +57,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         map[members[i].id] = members[i].amount;
       }
     }
+
+    // the user who creates the bill owe nothing to himself
+    map[UserModel.me] = 0;
+
     return map;
   }
 

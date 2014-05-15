@@ -1,7 +1,9 @@
 
 .tasks-addbutton{
-  padding-left: 600px;
+  padding-left: 1050px;
   padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 .task-panel {
@@ -78,4 +80,14 @@ textarea {
   border-width:5px;
   height:200px;
   width: 100px;
+}
+
+.tasks-panelbutton {
+  padding:0px;
+  height:95px;
+  width:650px;
+  overflow:hidden;
+  border-color: white;
+  text-align: center;
+  margin-bottom:15px;
 }

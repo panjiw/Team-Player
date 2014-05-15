@@ -6,18 +6,30 @@
  */
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
 
-	$scope.addTask_members = [];
+  $scope.addTask_members = [];
  
   $scope.openModal = function(e){
-  	$('#myModal').modal({show:true})
+    $('#myModal').modal({show:true})
   };
 
   $scope.addMember = function(e) {
-  	if(e.which != 13) {		// If they didn't press enter, we don't care
-  		return;
-  	}
+    if(e.which != 13) {   // If they didn't press enter, we don't care
+      return;
+    }
 
-  	$scope.addTask_members.push($scope.newMember);
-  	$scope.newMember = "";
+    $scope.addTask_members.push($scope.newMember);
+    $scope.newMember = "";
   }
+
+
+
+    $scope.billsOweYou = [
+    {taskName:'Clean Room', dueDate:'5/20/14', groupName:'Group Name', members:'membersList'},
+    {taskName:'Wash Dishes', dueDate:'5/22/14', groupName:'Group Name', members:'membersList'},
+    {taskName:'Take Out Trash', dueDate:'5/24/14', groupName:'Group Name', members:'membersList'},
+    {taskName:'Pay Water Bill', dueDate:'5/26/14', groupName:'Group Name', members:'membersList'},
+    {taskName:'Clean Bathroom', dueDate:'5/28/14', groupName:'Group Name', members:'membersList'},
+    {taskName:'Do Laundry', dueDate:'5/30/14', groupName:'Group Name', members:'membersList'}];
+
+
 }]);

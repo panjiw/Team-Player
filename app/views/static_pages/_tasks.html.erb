@@ -15,7 +15,8 @@
                       <h3>Create Task</h3>
                     </div>
                     <div class="modal-body tasks-add-body">
-                        <div class="col-md-5">
+                        <div class="col\
+                        '-md-5">
                         <h5>Name:</h5><input type="text" />
                             <h5>Description:</h5>
                               <textarea cols="30" rows="4"></textarea>
@@ -52,56 +53,24 @@
           <div style="width:700px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
 
+         <div ng-repeat="task in billsOweYou"> 
+            <a class="btn btn-default tasks-panelbutton">
+              <div class="panel panel-warning">
+                <div class="panel-heading">
+                  <div class="task-panel">
+                      <h4 class="panel-descr">{{task.taskName}}</h4>
+                      <h4 class="panel-date">{{task.dueDate}}</h4>
+                  </div>
+                </div>
+                <div class="panel-body panel-info">
+                      <div class="panel-groupname">{{task.groupName}}</div>
+                      <div class="panel-groupmembers">{{task.members}}</div>
+                </div>
+              </div>
+            </a>
+          </div>
 
-            <div class="panel panel-warning" id="#task1">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Your Room</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Take Out Trash</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Bathroom</h4>
-                    <h4 class="panel-date">5/3/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning" >
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Buy Toilet Paper</h4>
-                    <h4 class="panel-date">5/5/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
+
           </div>
         </div>
 </div>
-      <!--   ***********scrollbox with task content end ***********  -->

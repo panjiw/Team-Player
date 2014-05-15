@@ -43,6 +43,8 @@ angular.module("myapp").factory('UserModel', function() {
       for(var i = 0; i < data.length; i++) {
         UserModel.updateMe(data);
       }
+
+      updateMe(data);
       callback();
       UserModel.fetchedUser = true;
     })
