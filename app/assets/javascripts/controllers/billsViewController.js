@@ -90,8 +90,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     });
   };
 
+  // Map for the total you owe each member
   $scope.billsYouOweMap = [];
 
+  // Each bill you owe
   $scope.billsYouOwe = [
     {person:'Member1', amount: 12, why: 'Bought Lunch'},
     {person:'Member1', amount: 68, why: 'Paid Electric Bill'},
@@ -100,6 +102,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     {person:'Member2', amount: 23, why: 'Bought Lunch'},
     {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
+  // Fills in billsYouOweMap from billsYouOwe
   $(function () {
     $.each($scope.billsYouOwe, function(bill) {
       var found = false;
@@ -118,8 +121,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     });
   });
   
+  //Map for the total each member owes you
   $scope.billsOweYouMap = [];
 
+  // Each bill a member owes you
   $scope.billsOweYou = [
     {person:'Member1', amount: 12, why: 'Bought Lunch'},
     {person:'Member2', amount: 68, why: 'Paid Electric Bill'},
@@ -128,6 +133,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     {person:'Member2', amount: 23, why: 'Bought Lunch'},
     {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
+  // Fills in billsOweYouMap from billsOweYou
   $(function () {
     $.each($scope.billsOweYou, function(bill) {
       var found = false;
@@ -146,6 +152,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     });
   });
 
+  // Function called when Select Bills or View Bills is clicked. Toggles popover
   $scope.openPop = function (p, n) {
     if ($('#' + p + n).is(':visible')) {
       $('#' + p + n).hide();
@@ -156,6 +163,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('.bill-pop').not('#' + p + n).hide();
   }
   
+  // Function when checkbox is clicked. Updates displayed total
   $scope.updateTotal = function(p) {
     var total = 0;
     $('#' + p + 1 + " input:checkbox").each(function () {
@@ -166,10 +174,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#' + p + 1 + " .bill-pop-total").html('$' + total);
   }
   
+  // Function called when anything is clicked in bills page that should close popover
   $scope.closePop = function () {
     $('.bill-pop').hide();
   };
   
+  // Function called when pay button is pressed
+  // Removes any checked bills and subtracts from total owed
+  // If all bills are paid, removes the whole bill
   $scope.pay = function (p) {
     $('#' + p + 1 + " input:checkbox").each(function () {
       var str = $(this).val();
@@ -179,11 +191,21 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $.each($scope.billsYouOweMap, function(member) {
           if (this.person == p) {
             this.amount -= value;
-            for (var i = 0; i < this.bills.length; i++) {
-              if (this.bills[i].amt == value && this.bills[i].why == why) {
-                this.bills.splice(i, 1);
+            var list = this.bills
+            $.each(list, function(i, bill) {
+              if (this.amt == value && this.why == why) {
+                list.splice(i, 1);
+                if (list.length == 0) {
+                  $.each($scope.billsYouOweMap, function(i, person) {
+                    if (person.person == p) {
+                      $scope.billsYouOweMap.splice(i, 1);
+                      return false;
+                    }
+                  });
+                }
+                return false;
               }
-            }
+            });
             $('#' + p + 1 + " .bill-pop-total").html('$0');
             return false;
           }
