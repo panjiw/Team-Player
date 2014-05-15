@@ -23,13 +23,24 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 
 
-    $scope.billsOweYou = [
+  $scope.myTasks = [
     {taskName:'Clean Room', dueDate:'5/20/14', groupName:'Group Name', members:'membersList'},
     {taskName:'Wash Dishes', dueDate:'5/22/14', groupName:'Group Name', members:'membersList'},
     {taskName:'Take Out Trash', dueDate:'5/24/14', groupName:'Group Name', members:'membersList'},
     {taskName:'Pay Water Bill', dueDate:'5/26/14', groupName:'Group Name', members:'membersList'},
     {taskName:'Clean Bathroom', dueDate:'5/28/14', groupName:'Group Name', members:'membersList'},
-    {taskName:'Do Laundry', dueDate:'5/30/14', groupName:'Group Name', members:'membersList'}];
+    {taskName:'Do Laundry', dueDate:'5/30/14', groupName:'Group Name', members:'membersList'}
+  ];
 
+
+  $scope.openTaskPop = function (p) {
+    if ($('#' + p + 'info').is(':visible')) {
+      $('#' + p + 'info').show();
+    }
+    else {
+      $('#' + p + 'info').hide();
+    }
+    $('.tasks-pop').not('#' + p + 'info').hide();
+  }
 
 }]);

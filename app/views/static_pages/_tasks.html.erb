@@ -49,28 +49,36 @@
             </div>
           </div>
       <!--   ***********scrollbox with task content begin ***********  -->
-      <div class="tasks-scroll">
-          <div style="width:700px;height:400px;line-height:3em;
+  <div class="tasks-area">
+    <div class="tasks-scroll">
+      <div style="width:700px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
-
-         <div ng-repeat="task in billsOweYou"> 
-            <a class="btn btn-default tasks-panelbutton">
-              <div class="panel panel-warning">
-                <div class="panel-heading">
-                  <div class="task-panel">
-                      <h4 class="panel-descr">{{task.taskName}}</h4>
-                      <h4 class="panel-date">{{task.dueDate}}</h4>
-                  </div>
-                </div>
-                <div class="panel-body panel-info">
-                      <div class="panel-groupname">{{task.groupName}}</div>
-                      <div class="panel-groupmembers">{{task.members}}</div>
+        <div ng-repeat="task in myTasks"> 
+          <button ng-click="openTaskPop(task.taskName)" class="btn btn-default tasks-panelbutton" >
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="task-panel">
+                  <h4 class="panel-descr">{{task.taskName}}</h4>
+                  <h4 class="panel-date">{{task.dueDate}}</h4>
                 </div>
               </div>
-            </a>
-          </div>
+              <div class="panel-body panel-info">
+                <div class="panel-groupname">{{task.groupName}}</div>
+                <div class="panel-groupmembers">{{task.members}}</div>
+              </div>
+            </div>
+          </button>
 
-
+          <div id="{{task.taskName}}info" class="tasks-pop">
+              <h4 class="panel-descr">{{task.taskName}}</h4>
+              <h4 class="panel-date">{{task.dueDate}}</h4>
+              <div class="panel-groupname">{{task.groupName}}</div>
+              <div class="panel-groupmembers">{{task.members}}</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
