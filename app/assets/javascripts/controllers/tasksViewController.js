@@ -23,11 +23,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.testingCreateTask = function(e){
     //dummy tasks data; change it for testing!
-    var groupID = 57;
+    var groupID = 2;
     var title = "task 1";
     var description = "this is a good task";
     var dateDue = new Date();
-    var members = [1,2];
+    var members = [2,1];
+    var finished = false;
 
 
     $.post("/create_task", // <<----- url can be changed.
@@ -36,7 +37,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       "task[title]": title,
       "task[description]": description,
       "task[due_date]": dateDue,
-      "task[members]": members
+      "task[members]": members,
+      "task[finished]": finished
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task create Success: " , data);
@@ -50,13 +52,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.testingCreateTaskSpecial = function(e){
     //dummy tasks data; change it for testing!
-    var groupID = 57;
-    var title = "task 1";
-    var description = "this is a good task";
-    var dateDue = new Date();
+    var groupID = 2;
+    var title = "special task 1";
+    var description = "this is a cycling repeating task";
     var members = [1,2];
-    var cycle = true; // cycle within members
+    var cycle = false; // cycle within members
     var repostArray = [false,true,false,false,false,false,false]; //repeat every monday
+    var finished = false;
 
 
     $.post("/create_task_special", // <<----- url can be changed.
@@ -64,10 +66,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       "task[group_id]": groupID,
       "task[title]": title,
       "task[description]": description,
-      "task[due_date]": dateDue,
       "task[members]": members,
       "task[cycle]": cycle,
-      "task[repost]": repostArray
+      "task[repeat_days]": repostArray,
+      "task[finished]": finished
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task special create Success: " , data);

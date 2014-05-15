@@ -7,7 +7,8 @@ class TasksController < ApplicationController
                      user_id: view_context.current_user[:id],
                      title: params[:task][:title],
                      description: params[:task][:description],
-                     due_date: params[:task][:due_date])
+                     due_date: params[:task][:due_date],
+                     finished: params[:task][:finished].to_bool)
     if @task.save
       order = 0
       params[:task][:members].each do |m|
@@ -27,7 +28,7 @@ class TasksController < ApplicationController
       @task.task_actors.each do |a|
         task[:members][a[:user_id]] = a[:order]
       end
-      render :json => task, :status => 200
+      render :json => task.to_json, :status => 200
     else
       render :json => {:errors => @task.errors.full_messages}, :status => 400
     end
@@ -45,10 +46,11 @@ class TasksController < ApplicationController
           task[:members][a[:user_id]] = a[:order]
         end
         tasks[count] = task
-        count = count + 1
+        count += 1
       end
       render :json => tasks.to_json, :status => 200
+    else
+      redirect_to '/'
     end
-    redirect_to '/'
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140515031451) do
+ActiveRecord::Schema.define(version: 20140515071131) do
 
   create_table "bill_actors", id: false, force: true do |t|
     t.integer  "bill_id"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 20140515031451) do
     t.integer  "creator"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "self"
   end
 
   create_table "memberships", id: false, force: true do |t|
@@ -75,14 +74,13 @@ ActiveRecord::Schema.define(version: 20140515031451) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "description"
-    t.date     "due_date"
     t.date     "finished_date"
     t.boolean  "finished"
     t.text     "repeat_days"
     t.boolean  "cycle"
-    t.integer  "current_actor_order"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_task_id"
   end
 
   create_table "tasks", force: true do |t|
