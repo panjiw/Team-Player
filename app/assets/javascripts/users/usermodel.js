@@ -41,7 +41,7 @@ angular.module("myapp").factory('UserModel', function() {
     $.get("/user")
     .success(function(data, status) {
       for(var i = 0; i < data.length; i++) {
-        UserModel.updateMe(data);
+        UserModel.updateUser(data);
       }
 
       updateMe(data);
