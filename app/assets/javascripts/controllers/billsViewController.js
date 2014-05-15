@@ -48,6 +48,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     });
   }
+
+
   
   var buildAmountMap = function(members){
     var map = {};
@@ -58,9 +60,33 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     }
 
+
+
     console.log("adding ", UserModel.me, " to ",map);
 
     return map;
+  }
+
+
+  // for development; should be removed for release
+  $scope.testingCreate = function(){
+    dummy bill data:
+    var groupID = 57;
+    var title = "bill_title 3";
+    var description = "bill_description! 3";
+    var dateDue = new Date();
+    var total = 30;
+    var membersAmountMap = {1:4, 3:6, 4:20};
+
+
+    BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+      }
+    });
   }
 
   $scope.createBill = function(e) {

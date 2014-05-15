@@ -5,6 +5,8 @@
         </div>
     </div>
     <div class="bills-addbutton">
+            <a class="btn btn-default" ng-click="testingCreate()">Test: Create</a>
+            <a class="btn btn-default" ng-click="getBillFromModel()">Test: get</a>
             <a class="btn btn-default" id="openBtn" ng-click="closePop($event)">Add Bill</a>
 
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
@@ -30,7 +32,7 @@
                             </select>
                             <br>
                             <div class="bill-members">
-                                <div ng-repeat="mem in currentMembers | filter:notSelf" style="height:2.2em;">
+                                <div ng-repeat="mem in currentMembers" style="height:2.2em;">
                                   <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                                    ng-click="mem.amount = 0;"/>
                                   <span style="float:left;">{{mem.username}}</span>
