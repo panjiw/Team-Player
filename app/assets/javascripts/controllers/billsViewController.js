@@ -57,6 +57,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         map[members[i].id] = members[i].amount;
       }
     }
+
+    // the user who creates the bill owe nothing to himself
+    map[UserModel.me] = 0;
+
     return map;
   }
 
