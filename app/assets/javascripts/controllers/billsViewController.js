@@ -73,8 +73,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var title = "bill_title 3";
     var description = "bill_description! 3";
     var dateDue = new Date();
-    var total = 30;
-    var membersAmountMap = {1:4, 3:6, 4:20};
+    var total = 50;
+    var membersAmountMap = {1:24, 3:6, 4:20};
 
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
