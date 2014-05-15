@@ -6,6 +6,9 @@
       </div>
 <!--   *** Add Task Button    ***-->
           <div class="tasks-addbutton">
+            <a class="btn btn-default" ng-click="testingCreateTask()">Test: Create</a>
+            <a class="btn btn-default" ng-click="testingCreateTaskSpecial()">Test: Create cycle / repost</a>
+            <a class="btn btn-default" ng-click="testingGetTask()">Test: get</a>
             <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Add Task</a>
                 <div id="myModal" class="modal fade task-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
