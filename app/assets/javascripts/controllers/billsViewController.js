@@ -153,14 +153,17 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   });
 
   // Function called when Select Bills or View Bills is clicked. Toggles popover
-  $scope.openPop = function (p, n) {
+  $scope.openPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
       $('#' + p + n).hide();
+      $(e.target).parent(".bill").css("background-color", "#DFF0D8");
     }
     else {
       $('#' + p + n).show();
+      $(e.target).parent(".bill").css("background-color", "#52D600");
     }
     $('.bill-pop').not('#' + p + n).hide();
+    $('.bill').not($(e.target).parent(".bill")).css("background-color", "#DFF0D8");
   }
   
   // Function when checkbox is clicked. Updates displayed total
@@ -177,6 +180,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   // Function called when anything is clicked in bills page that should close popover
   $scope.closePop = function () {
     $('.bill-pop').hide();
+    $('.bill').css("background-color", "#DFF0D8");
   };
   
   // Function called when pay button is pressed
@@ -213,6 +217,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     });
     $('.bill-pop').hide();
+    $('.bill').css("background-color", "#DFF0D8");
   }
 
   $('#openBtn').click(function(){

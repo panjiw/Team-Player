@@ -118,7 +118,7 @@
                                                                     <div class="bill">
                                                                         <h4 class="bill-member">{{bill.person}}</h4>
                                                                         <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                                        <button type="button" ng-click="openPop(bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
+                                                                        <button type="button" ng-click="openPop($event, bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                                     </div>
                                                                     <div id="{{bill.person}}1" class="bill-pop">
                                                                         <div class="bills-to-pay">
@@ -145,13 +145,15 @@
                                                             <div class="bill">
                                                                 <h4 class="bill-member">{{bill.person}}</h4>
                                                                 <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                                <button type="button" ng-click="openPop(bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
+                                                                <button type="button" ng-click="openPop($event, bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                             </div>
                                                             <div id="{{bill.person}}2" class="bill-pop">
-                                                                <div ng-repeat="b in bill.bills">
-                                                                    <div class="bills-selected">
-                                                                        <h4 class="bill-member">{{b.why}}</h4>
-                                                                        <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                <div class="bills-to-pay-you">
+                                                                    <div ng-repeat="b in bill.bills">
+                                                                        <div class="bills-selected">
+                                                                            <h4 class="bill-member">{{b.why}}</h4>
+                                                                            <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
