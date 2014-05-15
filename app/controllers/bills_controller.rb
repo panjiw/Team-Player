@@ -38,7 +38,7 @@ class BillsController < ApplicationController
         bill[:due] = {}
         @bill.bill_actors.each do |a|
           # don't know why just giving a doesn't work
-          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid].to_bool, :paid_date => a[:paid_date]}
+          bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
         end
         render :json => bill.to_json, :status => 200
       end
