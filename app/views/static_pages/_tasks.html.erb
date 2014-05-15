@@ -15,8 +15,7 @@
                       <h3>Create Task</h3>
                     </div>
                     <div class="modal-body tasks-add-body">
-                        <div class="col\
-                        '-md-5">
+                        <div class="col-md-5">
                         <h5>Name:</h5><input type="text" />
                             <h5>Description:</h5>
                               <textarea cols="30" rows="4"></textarea>
@@ -53,7 +52,7 @@
       <div style="width:700px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
         <div ng-repeat="task in myTasks"> 
-          <button ng-click="openTaskPop(task.taskName)" class="btn btn-default tasks-panelbutton" >
+          <button ng-click="openTaskPop(task.taskID)" class="btn btn-default tasks-panelbutton" >
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="task-panel">
@@ -77,6 +76,49 @@
             </div>
             <div class="selected-buttons">
               <button class="btn btn-default">Edit</button>
+
+
+<!-- 
+              <a class="btn btn-default" id="openEditBtn" ng-click="openEditModal($event)">Edit</a>
+                <div id="editModal" class="modal fade task-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                      <h3>Create Task</h3>
+                    </div>
+                    <div class="modal-body tasks-add-body">
+                        <div class="col-md-5">
+                        <h5>Name:</h5><textarea cols="30" rows="1">{{task.taskName}}</textarea>
+                        <h5>Description:</h5>
+                          <textarea cols="30" rows="4">{{task.taskDec}}</textarea>
+                        <h5>Group:</h5><textarea cols="30" rows="1">{{task.groupName}}</textarea>
+                        <h5>Members:</h5>
+                          <div id="members">
+                            {{task.members}}
+                          </div>
+                        <input type="text" ng-model="newMember" 
+                              ng-keypress="addMember($event)" placeholder="member username" />
+                        </div>
+                        <div class="col-md-6">
+                          <div class="tasks-duedate">
+                            <input type="checkbox" class="large" data-label="Deadline"/>
+                            <span>No Due Date</span>
+                            <div class="tasks-calendar">Calendar here</div>
+                            <input type="checkbox" class="large" data-label="Cycle"/>
+                            <span>Cyclic Task</span><br>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                        <button class="btn" data-dismiss="modal">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+ -->
               <button class="btn btn-default">Completed</button>
             </div>
           </div>
