@@ -68,10 +68,26 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   margin-bottom: 20px;
 }
 
+.bill-all {
+  width: 400px;
+}
+
+.bill-pop {
+  position: absolute;
+  right: 325px;
+  top: 205px;
+  padding: 10px;
+  background-color: #F0F0F0;
+  border: 2px solid gray;
+  border-radius: 5px;
+  display: none;
+}
+
 .bill-member {
   float: left;
   margin: 0px;
   padding: 0px;
+  white-space:nowrap;
 }
 
 .bill-amount {

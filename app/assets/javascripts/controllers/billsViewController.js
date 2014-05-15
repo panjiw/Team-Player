@@ -86,12 +86,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.billsYouOweMap = [];
 
   $scope.billsYouOwe = [
-    {person:'Member 1', amount: 12, why: 'Bought Lunch'},
-    {person:'Member 1', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member 3', amount: 32, why: 'Bought Toilet Paper'},
-    {person:'Member 1', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member 2', amount: 23, why: 'Bought Lunch'},
-    {person:'Member 1', amount: 8, why: 'Bought Dinner'}];
+    {person:'Member1', amount: 12, why: 'Bought Lunch'},
+    {person:'Member1', amount: 68, why: 'Paid Electric Bill'},
+    {person:'Member3', amount: 32, why: 'Bought Toilet Paper'},
+    {person:'Member1', amount: 44, why: 'Paid Internet Bill'},
+    {person:'Member2', amount: 23, why: 'Bought Lunch'},
+    {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   $(function () {
     $.each($scope.billsYouOwe, function(bill) {
@@ -114,12 +114,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.billsOweYouMap = [];
 
   $scope.billsOweYou = [
-    {person:'Member 1', amount: 12, why: 'Bought Lunch'},
-    {person:'Member 2', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member 3', amount: 32, why: 'Bought Toilet Paper'},
-    {person:'Member 4', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member 2', amount: 23, why: 'Bought Lunch'},
-    {person:'Member 1', amount: 8, why: 'Bought Dinner'}];
+    {person:'Member1', amount: 12, why: 'Bought Lunch'},
+    {person:'Member2', amount: 68, why: 'Paid Electric Bill'},
+    {person:'Member3', amount: 32, why: 'Bought Toilet Paper'},
+    {person:'Member4', amount: 44, why: 'Paid Internet Bill'},
+    {person:'Member2', amount: 23, why: 'Bought Lunch'},
+    {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   $(function () {
     $.each($scope.billsOweYou, function(bill) {
@@ -139,11 +139,18 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     });
   });
 
-  $(function () { $("[data-toggle='popover']").popover({ html : true }); });
-  $scope.openPop = function (e) {
-    $('.btn').on('click', function (e) {
-        $('.btn').not(this).popover('hide');
-    });
+  $scope.openPop = function (p, n) {
+    if ($('#' + p + n).is(':visible')) {
+      $('#' + p + n).hide();
+    }
+    else {
+      $('#' + p + n).show();
+    }
+    $('.bill-pop').not('#' + p + n).hide();
+  }
+  
+  $scope.closePop = function (e) {
+    $('.bill-pop').hide();
   };
 
   $('#openBtn').click(function(){
