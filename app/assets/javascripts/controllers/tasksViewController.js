@@ -21,6 +21,23 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   	$scope.newMember = "";
   }
 
+  $scope.testingSendID = function(e){
+
+    $.post("/task_id", // <<----- url can be changed.
+    {
+      "task[task_id]": 2 // <-- change it as you like
+
+    })
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task send id Success: " , data);
+      // update task
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task send id error: ",error);
+    });
+  }
+
   $scope.testingCreateTask = function(e){
     //dummy tasks data; change it for testing!
     var groupID = 2;
