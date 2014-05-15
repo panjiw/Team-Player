@@ -121,11 +121,13 @@
                                                                         <button type="button" ng-click="openPop(bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                                     </div>
                                                                     <div id="{{bill.person}}1" class="bill-pop">
-                                                                        <div ng-repeat="b in bill.bills">
-                                                                            <div class="bills-selected">
-                                                                                <input type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.why}}">
-                                                                                <h4 class="bill-member">{{b.why}}</h4>
-                                                                                <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                        <div class="bills-to-pay">
+                                                                            <div ng-repeat="b in bill.bills">
+                                                                                <div class="bills-selected">
+                                                                                    <input type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.why}}">
+                                                                                    <h4 class="bill-member">{{b.why}}</h4>
+                                                                                    <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
