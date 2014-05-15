@@ -52,9 +52,16 @@ angular.module("myapp").factory('UserModel', function() {
   }
 
 
+  // Save the user information in the UserModel, or return false
+  // if any fields in user are not set, or id is negative
   UserModel.updateUser = function(user) {
+    if(!(user && user.id && user.username && user.firstname && user.lastname && user.id > 0)) {
+      return false;
+    }
+
     UserModel.users[user.id] = new User(user.id, user.username,
                                         user.firstname, user.lastname);
+    return true;
   }
 
   //Update the current user info to the information contained
@@ -168,7 +175,7 @@ angular.module("myapp").factory('UserModel', function() {
   //Get the information for the user with the given id,
   //or "undefined" if there is none
   UserModel.get = function(id) {
-    return UserModel[id];
+    return UserModel.users[id];
   };
 
   return UserModel;
