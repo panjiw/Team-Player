@@ -11,4 +11,7 @@ class Group < ActiveRecord::Base
 
   # bill - group, many-many relation
   has_many :bills
+
+  # task generator - group, many-many relation
+  has_many :task_generators
 end

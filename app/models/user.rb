@@ -9,9 +9,13 @@ class User < ActiveRecord::Base
   has_many :task_actors
   has_many :tasks, :through => :task_actors
 
-  # task - user, many-many
+  # bill - user, many-many
   has_many :bill_actors
   has_many :bills, :through => :bill_actors
+
+  # tack generator - user, many-many
+  has_many :task_generator_actors
+  has_many :task_generators, :through => :task_generator_actors
 
   before_save {
     self.username = username.downcase

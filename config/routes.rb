@@ -26,6 +26,14 @@ Rails.application.routes.draw do
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_bills',   via: 'get'
 
+  match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
+
+  match '/create_task', to: 'tasks#new', via: 'post'
+  match '/get_task', to: 'tasks#get_all', via: 'get'
+
+  match '/create_task_special', to: 'task_generators#new', via: 'post'
+  match '/get_generators', to: 'task_generators#get_all', via: 'get'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
