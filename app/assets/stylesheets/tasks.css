@@ -1,7 +1,9 @@
 
 .tasks-addbutton{
-  padding-left: 600px;
+  padding-left: 1050px;
   padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 .task-panel {
@@ -78,4 +80,31 @@ textarea {
   border-width:5px;
   height:200px;
   width: 100px;
+}
+
+.tasks-panelbutton {
+  padding:0px;
+  height:95px;
+  width:650px;
+  overflow:hidden;
+  border-color: white;
+  text-align: center;
+  margin-bottom:15px;
+}
+
+.tasks-pop {
+  position: absolute;
+  width: 400px;
+  height: 250px;
+  right: 80px;
+  top: 250px;
+  padding: 10px;
+  background-color: #fcf8e3;
+  border: 5px solid #faebcc;
+  border-radius: 5px;
+  display: none;
+}
+
+.selected-buttons {
+  float: right;
 }

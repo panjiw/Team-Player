@@ -16,17 +16,123 @@
                     </div>
                     <div class="modal-body tasks-add-body">
                         <div class="col-md-5">
-                        <h5>Name:</h5><input type="text" />
-                            <h5>Description:</h5>
-                              <textarea cols="30" rows="4"></textarea>
-                            <h5>Group:</h5><input type="text" />
-                            <h5>Members:</h5>
-                            <div id="members">
-                              <div ng-repeat="member in addTask_members">
-                                {{member}}
+                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle"/>
+                          <h5>Description:</h5>
+                          <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
+
+                          <div class="tasks-duedate">
+                              <input type="checkbox" class="large" data-label="Cycle" ng-model="newTaskCycle"/>
+                              <span>Cyclic Task</span><br>
+
+                              <input type="checkbox" class="large" data-label="Deadline" 
+                              ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
+                              <span>No Due Date</span>
+                              <input type="date" ng-hide="noDue" ng-model="newTaskDateDue"
+                              min="2014-01-01" max="2113-01-01"/>
+                              <br>
+
+                              
+
+                              <div ng-hide="noDue" id="repeat_options">
+                                <input type="checkbox" class="large" ng-model="taskRepeat"/>
+                                <span>Repeat Weekly</span><br>
+                                <div ng-show="taskRepeat">
+                                  <input type="checkbox" ng-model="newTaskRepostArray[0]"/>
+                                  <span>Sun  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[1]"/>
+                                  <span>Mon  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[2]"/>
+                                  <span>Tue  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[3]"/>
+                                  <span>Wed  </span><br>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[4]"/>
+                                  <span>Thur  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[5]"/>
+                                  <span>Fri  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[6]"/>
+                                  <span>Sat  </span>
+                                </div>
                               </div>
+                          </div>
+
+                            
+                        </div>
+                        <div class="col-md-6">
+                          <h5>Group:</h5>
+                            <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList">
+                            <option value="">-- choose group --</option>
+                            </select>
+                            <h5>Members</h5>
+                            <div id="members">
+                              <ul ui-sortable ng-model="currentMembers">
+                                <li ng-repeat="mem in currentMembers">
+                                  <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
+                                  <span style="float:left;">{{mem.username}}</span>
+                                  <div style="clear: both;"></div>
+                                </li>
+                              </ul>
                             </div>
-                            <input type="text" ng-model="newMember" 
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                        <button class="btn" data-dismiss="modal">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!--   ***********scrollbox with task content begin ***********  -->
+    <div class="tasks-scroll">
+      <div style="width:700px;height:400px;line-height:3em;
+                      overflow:auto;padding:20px;">
+        <div ng-repeat="task in myTasks"> 
+          <button ng-click="openTaskPop($event, task.taskID)" class="btn btn-default tasks-panelbutton" >
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="task-panel">
+                  <h4 class="panel-descr">{{task.taskName}}</h4>
+                  <h4 class="panel-date">{{task.dueDate}}</h4>
+                </div>
+              </div>
+              <div class="panel-body panel-info">
+                <div class="panel-groupname">{{task.groupName}}</div>
+                <div class="panel-groupmembers">{{task.members}}</div>
+              </div>
+            </div>
+          </button>
+
+          <div id="{{task.taskID}}" class="tasks-pop">
+            <div class="selected-info">
+              <span>Task: {{task.taskName}}</span><br>
+              <span>Due Date: {{task.dueDate}}</span><br>
+              <span>Group: {{task.groupName}}</span><br>
+              <span>Participating Members: {{task.members}}</span><br>
+            </div>
+            <div class="selected-buttons">
+              <button class="btn btn-default">Edit</button>
+
+
+<!-- 
+              <a class="btn btn-default" id="openEditBtn" ng-click="openEditModal($event)">Edit</a>
+                <div id="editModal" class="modal fade task-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                      <h3>Create Task</h3>
+                    </div>
+                    <div class="modal-body tasks-add-body">
+                        <div class="col-md-5">
+                        <h5>Name:</h5><textarea cols="30" rows="1">{{task.taskName}}</textarea>
+                        <h5>Description:</h5>
+                          <textarea cols="30" rows="4">{{task.taskDec}}</textarea>
+                        <h5>Group:</h5><textarea cols="30" rows="1">{{task.groupName}}</textarea>
+                        <h5>Members:</h5>
+                          <div id="members">
+                            {{task.members}}
+                          </div>
+                        <input type="text" ng-model="newMember" 
                               ng-keypress="addMember($event)" placeholder="member username" />
                         </div>
                         <div class="col-md-6">
@@ -46,62 +152,14 @@
                 </div>
               </div>
             </div>
-          </div>
-      <!--   ***********scrollbox with task content begin ***********  -->
-      <div class="tasks-scroll">
-          <div style="width:700px;height:400px;line-height:3em;
-                      overflow:auto;padding:20px;">
 
-
-            <div class="panel panel-warning" id="#task1">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Your Room</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Take Out Trash</h4>
-                    <h4 class="panel-date">5/1/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Clean Bathroom</h4>
-                    <h4 class="panel-date">5/3/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
-            </div>
-            <div class="panel panel-warning" >
-              <div class="panel-heading">
-                <div class="task-panel">
-                    <h4 class="panel-descr">Buy Toilet Paper</h4>
-                    <h4 class="panel-date">5/5/2014</h4>
-                </div>
-              </div>
-              <div class="panel-body panel-info">
-                    <div class="panel-groupname">Group Name</div>
-                    <div class="panel-groupmembers">members linked with task</div>
-              </div>
+ -->
+              <button class="btn btn-default">Completed</button>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+
 </div>
-      <!--   ***********scrollbox with task content end ***********  -->

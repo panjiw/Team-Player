@@ -11,21 +11,21 @@ Displays header after successful login  -->
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ng-click="activeTab='selected_home'; openPop($event)">Team Player</a> <!--Add link to home-->
+      <a class="navbar-brand" ng-click="activeTab='selected_home'; closePop()">Team Player</a> <!--Add link to home-->
     </div>
     <% if signed_in? %>
-        <div class="header-welcome">Welcome!
+        <div class="header-welcome">Welcome, {{currentUser.uname}}! 
         <a class="logout" href="/" ng-click="logout($event)">Logout</a>
     </div>
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
 <!--         <li><a href="/" ng-click="activeTab='selected_home'">Home</a></li> --> <!-- Add link to home--> 
-        <li><a ng-click="activeTab='selected_about'; openPop($event)">About</a></li> <!--Add link to about--> 
-        <li><a ng-click="activeTab='selected_contact'; openPop($event)">Contact</a></li> <!--Add link to contact-->
-        <li><a ng-click="activeTab='selected_help'; openPop($event)">Help</a></li>
+        <li><a ng-click="activeTab='selected_about'; closePop()">About</a></li> <!--Add link to about--> 
+        <li><a ng-click="activeTab='selected_contact'; closePop()">Contact</a></li> <!--Add link to contact-->
+        <li><a ng-click="activeTab='selected_help'; closePop()">Help</a></li>
         <% if signed_in? %>
-          <li><a ng-click="activeTab='selected_settings'; openPop($event)">Settings</a></li>
+          <li><a ng-click="activeTab='selected_settings'; closePop()">Settings</a></li>
         <% end %>
       </ul>
     </div><!--/.nav-collapse -->

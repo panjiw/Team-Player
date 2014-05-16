@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   # Create a new user and sign user in
   def create
+
     @user = User.new(user_params)
     if @user.save
       # adding a self group
@@ -25,7 +26,12 @@ class UsersController < ApplicationController
 
   # Edit a signed-in user's information
   def edit
-    #@user = User.find(params[:id])
+    # @user = current_user
+    # if @user.update_attributes(user_params)
+    #   render :json => {}, :status => 200
+    # else
+    #   render :json => {:errors => @user.errors.full_messages}, :status => 400
+    # end
   end
 
   # displays user information
@@ -37,11 +43,11 @@ class UsersController < ApplicationController
   # If update is successful, status 200. 
   # Else, status 400
   def update
-    @user = current_user.user
+    @user = current_user
     if @user.update_attributes(user_params)
-      render :json => {:token => token}, :status => 200
+      render :json => {}, :status => 200
     else
-      render :josn => {:errors => @user.errors.full_messages}, :status => 400
+      render :json => {:errors => @user.errors.full_messages}, :status => 400
     end
   end
 
@@ -82,7 +88,7 @@ class UsersController < ApplicationController
 
   # Requires sigged-in user
   def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+      redirect_to '/', notice: "Please sign in." unless signed_in?
   end
 
 
