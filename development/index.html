@@ -73,8 +73,7 @@
       		</div>  
       		<div class="col-md-9">
               	<h2 id="sec0">What is Team-Player?</h2>
-                “Team Player” is a group based task manager. Deployed as a web app, users can create and join groups where they can schedule task and manage bills between everyone on their group online. Team Player’s task management system is focused on a monthly calendar where all group tasks can be created, viewed, and modified with a filtering system to help the users view and manage their individual tasks. Another main feature of Team Player is the flexible bill management system, where groups can split and manage their bills between the users in the groups with integration to the main calendar through due dates and notification. Finally, groups can create tasks that automatically rotate between members after they are completed. 
-            
+                TeamPlayer is a group-centered web application that allows you to organize the mess of sharing duties and bills between groups of people in your life, such as friends, roommates, sports teams, and coworkers. With our calendar-centered interface, each member can stay up to date with their individual tasks and group tasks as well as the amount of money they owe one another. This decreases the need for all members to remember what everyone was responsible for and also decreases the need to remind other group mates to pay you back, saving time from communication and stress from memory.
            
               	<hr class="col-md-12">
         
@@ -109,17 +108,30 @@
               	<h2 id="sec2">Tools Set</h2>
               	<p>
 
-We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs (which will be a large factor over our competitors), is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
-<br>-HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.
-<br>-JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
-<br>-AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend
-<br>-Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
-<br>-SQL/MySQL: Our data will be very relational, so it makes sense to use a relational database like MySQL. We will then obviously query it using SQL. The data will solely come from user input, as the application is driven around group task management.
-<br>-Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. It’s bug tracking system is visual and clear.
 
 
-                </p>
-              
+We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs, which will be a large factor over our competitors, is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
+</p>
+<ul>
+  <li>HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.</li>
+  <li>JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
+</li>
+  <li>Bootstrap: Is a JavaScript and CSS library originally from Twitter. We will be using some of their default styles and boilerplate code to help aid our design of the website. For example, it is not terribly easy to implement a professional looking button or form in HTML/CSS, but Bootstrap’s provided CSS will help us make the site more professional. 
+</li>
+  <li>AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend.
+</li>
+  <li>Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
+</li>
+  <li>sqlite3/PostgreSQL: Our data will be very relational, our ruby on rails backend will uses these database to store data, sqlite3 for development and PostgreSQL for production. Then we will query it through the ruby functions. The data will solely come from user input, as the application is driven around group task management.
+</li>
+  <li>Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. Its bug tracking system is visual and clear.
+</li>
+  <li>Heroku: We will be using Heroku to deploy our app. It has Ruby on Rails already installed, so will simplify the deployment process. 
+</li>
+  <li>Jenkins: Continuous integration system used to deploy automated daily testing on our product, and send emails when builds have failed. 
+</li>
+</ul>
+
               	<hr>
               
               	<h2 id="sec3">Frameworks / Libraries</h2>
@@ -141,15 +153,16 @@ From scratch, we will likely need to design/code the frontend views (login, mana
 Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
 <br><br>
 <h4><b>Major features:</b></h4> 
-Our application will provide a method to view all tasks and bills on the calendar. This feature will allow users to filter these tasks and bills and view only certain items, whether it be from only specific groups or only bills. 
-Furthermore, our application will provide a method to allow users to create tasks for themselves and for other users in the group. This task will contain a name, description, and members assigned to it. This create task will give users the ability to assign a task to a certain group with themselves or a specific user. Additionally, the user will be able to assign the task a day of completion, and that’s the date that will appear on the calendar.<br><br>
-Another feature of our application will be the ability to input bills into the calendar. The bills will act like tasks, with specific users, a name, description, and due date. Additionally, these bills will have a total cost, and an ability to split the bill evenly. If the bill is not split evenly, members can be assigned the specific amount they owe on the bill. <br><br>
-Our application will allow users to view a running list of their bills and payments. Depending on implementation, our application will allow users to view bills for the entire group or just bills they owe. Additionally, they will be able to view how much they owe an individual person.
-The main feature we have in mind is an ability for users to cycle through tasks and to-dos. This feature will be group focused. Users will have a specific task that will be passed to other users in the group after they have completed the task.<br><br>
-A possible stretch figure we have considered is an ability to send email notifications when a new event has been posted. Additionally, these email notifications could be sent on the day of an event to remind the user what events they have due that day. <br><br>
-Another possible stretch feature is an ability for users to manage their groups. Currently, groups can be created and new members can be added by anyone in the group. A stretch feature would be the possibility to limit adding people to a group to the person who created the group, and adding more admin capabilities over their groups.<br><br>
-One more possible stretch feature would be to implement different views on the interface. Currently, we are planning one view in calendar format and another view for the bills. For stretch features, we could implement more list views and views on group calendars.                 
-                
+<ul>
+  <li><h3>Group Management</h3><blockquote>Create a TeamPlayer group for every group in your life, and all tasks/bills will be centered around these groups. You will no longer have to personally keep everyone up to date with another’s responsibilities. Every member in the group can see what’s going on.</blockquote></li>
+    <li><h3>Cycling Task Creation</h3><blockquote>For the tasks that you seem to always be the only one doing, like cleaning the bathroom or picking up dinner,  you can include your groups in your tasks. In addition to setting deadlines, you have the choice to cycle your tasks. This means that when one person has finished it, the task will automatically be given to the next person.</blockquote></li>
+    <li><h3>Bill Memory and Bill Splitting</h3><blockquote>For the outstanding bills people still owe you, and the need to keep track of things that were paid. TeamPlayer  compiles expenses paid by and needed to be paid by users. You can see a summary of what people owe you, and what you owe to others.</blockquote></li>
+    <li><h3>Organization</h3><blockquote>Filters allow you to visualize events for all your groups or just a few - 
+    you choose. Displayed in list views, calender views, and simple interface with colorcoding allow you to keep track of things important  
+    to you much easier</blockquote></li>
+
+
+</ul>
               
                 <hr>
 
