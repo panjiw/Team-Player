@@ -25,11 +25,13 @@ Rails.application.routes.draw do
 
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_all',   via: 'get'
+  match '/finish_bill', to: 'bills#mark_finished', via: 'post'
 
   match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
 
   match '/create_task', to: 'tasks#new', via: 'post'
   match '/get_task', to: 'tasks#get_all', via: 'get'
+  match '/finish_task', to: 'tasks#mark_finished', via: 'post'
 
   match '/create_task_special', to: 'task_generators#new', via: 'post'
   match '/get_generators', to: 'task_generators#get_all', via: 'get'

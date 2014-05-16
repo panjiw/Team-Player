@@ -166,7 +166,7 @@ class TaskGeneratorsController < ApplicationController
           end
         end
       end
-      @task_generator.update_attributes(:current_task_id => @next_task[:id])
+      @task_generator.update(current_task_id: @next_task[:id])
       generator_and_task = {}
       generator = {}
       generator[:details] = @task_generator

@@ -111,4 +111,31 @@ class TasksController < ApplicationController
   def get_task_in_range
     render :json => {:errors => "Not implemented yet"}, :status => 400
   end
+
+  # Mark the task with the given id as finished
+  # Returns the info of the task
+  def mark_finished
+    if view_context.signed_in?
+      task = Task.find(params[:task][:id])
+      if task.nil?
+        render :json => {:errors => "Invalid task"}, :status => 400
+      else
+        task_actor = task.task_actors.find_by_user_id(current_user[:id])
+        if task_actor.nil?
+          render :json => {:errors => "Unauthorized action"}, :status => 400
+        else
+          task.update(finished: true, finished_date: Date.today)
+          result = {}
+          result[:details] = task
+          result[:due] = {}
+          task.task_actors.each do |a|
+            result[:members][a[:user_id]] = a[:order]
+          end
+          render :json => result.to_json, :status => 200
+        end
+      end
+    else
+      redirect_to '/'
+    end
+  end
 end

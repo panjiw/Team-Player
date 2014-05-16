@@ -123,4 +123,31 @@ class BillsController < ApplicationController
       redirect_to '/'
     end
   end
+
+  # Mark the bill with the given id as finished
+  # Returns the info of the bill
+  def mark_finished
+    if view_context.signed_in?
+      bill = Bill.find(params[:bill][:id])
+      if bill.nil?
+        render :json => {:errors => "Invalid bill"}, :status => 400
+      else
+        bill_actor = bill.bill_actors.find_by_user_id(current_user[:id])
+        if bill_actor.nil?
+          render :json => {:errors => "Unauthorized action"}, :status => 400
+        else
+          bill_actor.update(finished: true, paid_date: Date.today)
+          result = {}
+          result[:details] = bill
+          result[:due] = {}
+          bill.bill_actors.each do |a|
+            result[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
+          end
+          render :json => result.to_json, :status => 200
+        end
+      end
+    else
+      redirect_to '/'
+    end
+  end
 end
