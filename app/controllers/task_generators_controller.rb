@@ -54,6 +54,9 @@ class TaskGeneratorsController < ApplicationController
     if @task_generator.nil?
       @task_generator = TaskGenerator.find_by_current_task_id(params[:task][:id])
     end
+    if @task_generator[:finished]
+      render :json => {:errors => "The task generator is dead"}, :status => 400
+    end
     @next_task = Task.new(group_id: @task_generator[:group_id],
                           user_id: @task_generator[:user_id],
                           title: @task_generator[:title],

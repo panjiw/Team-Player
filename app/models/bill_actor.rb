@@ -14,7 +14,7 @@ class BillActor < ActiveRecord::Base
   # member must be in the group
   validate :user_in_group?
 
-  # validates whether the creator is in the group
+  # validates whether the member is in the group
   def user_in_group?
     return unless errors.blank?
     if !bill.group.users.include?(user)

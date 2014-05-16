@@ -103,7 +103,6 @@ class BillsController < ApplicationController
   # "due":amount this user owes,
   # "paid":paid or not,
   # "paid_date":date paid (not yet == null)}}}, ...}
-
   def get_all
     if view_context.signed_in?
       bills = {}

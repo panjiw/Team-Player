@@ -1,4 +1,30 @@
 class TasksController < ApplicationController
+  # Creates a new task where the creator is the signed in user
+  # Accepts post request with format of:
+  # Required:
+  # task[group_id]: groupID
+  # task[title]: title
+  # task[total_due]: total
+  # task[members]: {user_id, ..., user_id} (place in array is order)
+  # Optional:
+  # task[description]: description
+  # task[due_date]: dateDue
+  #
+  # See tasks model in the front end for more info
+  #
+  # Returns
+  # {"details":{
+  # "id":task id,
+  # "group_id":group id of the task,
+  # "user_id":1,
+  # "title":task title,
+  # "description": task_description,
+  # "due_date":due date,
+  # "finished_date":finished date,
+  # "finished":finished,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated},
+  # "members":{user_id:order, ..., user_id:order}}}
   def new
     if !view_context.signed_in?
       redirect_to '/'
@@ -34,6 +60,19 @@ class TasksController < ApplicationController
     end
   end
 
+  # Returns all the task of the signed in user
+  # {"details":{
+  # "id":task id,
+  # "group_id":group id of the task,
+  # "user_id":1,
+  # "title":task title,
+  # "description": task_description,
+  # "due_date":due date,
+  # "finished_date":finished date,
+  # "finished":finished,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated},
+  # "members":{user_id:order, ..., user_id:order}}}
   def get_all
     if view_context.signed_in?
       tasks = {}
@@ -54,6 +93,20 @@ class TasksController < ApplicationController
     end
   end
 
+  # Returns all the tasks of the signed in user within the
+  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+  # {"details":{
+  # "id":task id,
+  # "group_id":group id of the task,
+  # "user_id":1,
+  # "title":task title,
+  # "description": task_description,
+  # "due_date":due date,
+  # "finished_date":finished date,
+  # "finished":finished,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated},
+  # "members":{user_id:order, ..., user_id:order}}}
   def get_task_in_range
     render :json => {:errors => "Not implemented yet"}, :status => 400
   end
