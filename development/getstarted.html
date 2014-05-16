@@ -18,10 +18,6 @@
 	margin-bottom:30px;
 }
 
-dd {
-  padding-left: 35px;
-}
-
         </style>
     </head>
     
@@ -106,6 +102,16 @@ dd {
                 <li>Navigate to the Team-Player folder and run<br>
                 <code>bundle install -- without production</code></li>
                 <br>
+                <li>Note: For security reasons, secrets.yml and database.yml are not shown publicly on github<br>
+                To create your own, navigate into the config folder<br>  -- rename the secrets-example.yml to secrets.yml
+                    <br> -- rename database-example.yml to database.yml
+                </li>
+                <br>
+
+                <li>To generate your secret_token, run <br>
+                <code>rake secret</code><br>  -- copy the key, and open secret.yml<br>  -- replace the "run_rake_seret_and_copy_key_here" message
+                with your copied key<br>     -- you will have to paste it in two places</li>
+                <br>
 
                 <li>To setup the database, run<br>
                 <code>bundle exec rake db:migrate</code>
@@ -179,20 +185,14 @@ dd {
                 <p><ol>
                 <li>Be sure to have the heroku toolbelt installed and set up with your account, <a href="https://toolbelt.heroku.com">https://toolbelt.heroku.com</a></li>
                 <li>For the first deployment, the developer should run <br><code>heroku create</code></li>
-                <li>Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer will deploy their repository with <br><code>git push heroku master</code></li></ol></p><br>
+                <li>Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer can deploy their repository with <br><code>git push heroku master</code></li>
+                <li>Be sure to update the requirements, design, user's, and developer's documents on the github after every release.</li></ol></p><br>
                  For more information on how Heroku deploys releases, go to: <br><a href="https://devcenter.heroku.com/articles/releases">https://devcenter.heroku.com/articles/releases</a>. 
 
               
               	<hr>
             <h2 id="sec6">File Structure</h2>
               <p>The directory structure uses the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development. For further information on what those files contain go to: <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
-    <dl>
-  <dt>app/</dt>
-    <dd>contains the application code, our backend ruby code and front end views.</dd>
-  <dt>app/models/</dt>
-    <dd>contain our ruby backend data models</dd>
-</dl>
-
     <ul>
       <li><b>root folder : </b> contains gems and rake files for Ruby<br><br></li>
   
@@ -204,9 +204,9 @@ dd {
       <br><br></li>
       <li><b>app/view/ : </b> our static html pages, the subfolder layout contains shared code like header
       <br><br></li>
-      <li><b>app/assets/javascript/ : </b> contains all of our frontend logic including Angular, Bootstrap and other library code:
+      <li><b>app/assets/javascript/ : </b> contains all of our frontend AngularJS system:
       <br><br></li>
-      <li><b>app/assets/javascript/controllers/ : </b> contains all of our Angular controllers
+      <li><b>app/assets/javascript/controllers/ : </b>  
 
     <br><br></li>
 
@@ -218,13 +218,11 @@ dd {
       <br><br></li>
       <li><b>public/ : </b> contains public HTML documents (I.E. 404 page)
       <br><br></li>
-      <li><b>spec/ : </b> contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.
-
-    <br><br>
-      </li><li>Documentation for the code can be found from the README in the main directory.
-      <br>
-      </li>
+      <li><b>spec/ : </b> contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.</li>
     </ul>
+    <br><br>
+      Documentation for the code can be found from the README in the main directory.
+      <br>
 
 
                 <hr>
