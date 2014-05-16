@@ -122,7 +122,7 @@ angular.module("myapp").factory('TaskModel', function() {
      $.post("/create_task_special", // <<----- url can be changed.
     {
       "task[group_id]": groupID,
-      "task[title]": title,
+      "task[title]": name,
       "task[description]": description,
       "task[members]": members,
       "task[cycle]": cycle,

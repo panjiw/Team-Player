@@ -40,7 +40,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     var count = 0;
     for(var index in $scope.currentMembers){
       if($scope.currentMembers[index].chked){
-        $scope.newTaskMembers[count++] = $scope.currentMembers[index];
+        $scope.newTaskMembers[count++] = $scope.currentMembers[index].id;
       }
     }
   }
@@ -155,19 +155,19 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       //TODO
       } else {
         $scope.$apply(function(){
-          buildBills();
+          buildTasks();
         });
       }
     };
 
     // if normal task
-    if(!$scope.newTaskCycle && !$scope.taskRepeat && $scope.noRepeat()){
-      TaskModel.createTask($scope.newTaskGroup, $scope.newTaskTitle, $scope.newTaskDescription, 
-      $scope.dateDue, $scope.newTaskDateDue, callback);
+    if(!$scope.newTaskCycle && !$scope.taskRepeat && noRepeat()){
+      TaskModel.createTask($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.newTaskDateDue, $scope.newTaskMembers, callback);
       // if special task
     } else{
-      TaskModel.createTaskSpecial($scope.newTaskGroup, $scope.newTaskTitle, $scope.newTaskDescription, 
-      $scope.dateDue, $scope.newTaskDateDue,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
+      TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.newTaskDateDue, $scope.newTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
     }
 
     // clear out data used to create new task
