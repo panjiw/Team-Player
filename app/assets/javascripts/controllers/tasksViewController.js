@@ -32,15 +32,17 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     {taskID: 'task6', taskName:'Do Laundry', taskDesc: 'description', dueDate:'5/30/14', groupName:'GroupName', members:'membersList'}
   ];
 
-
-  $scope.openTaskPop = function (p) {
+  $scope.openTaskPop = function (e, p) {
     if ($('#' + p).is(':visible')) {
       $('#' + p).hide();
+      $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
     }
     else {
       $('#' + p).show();
+      $(e.target).find(".panel-heading").css("background-color", "#52d600");
     }
     $('.tasks-pop').not('#' + p).hide();
+    $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
   }
 
   $scope.openEditModal = function(e){

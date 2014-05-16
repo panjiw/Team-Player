@@ -52,7 +52,7 @@
       <div style="width:700px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
         <div ng-repeat="task in myTasks"> 
-          <button ng-click="openTaskPop(task.taskID)" class="btn btn-default tasks-panelbutton" >
+          <button ng-click="openTaskPop($event, task.taskID)" class="btn btn-default tasks-panelbutton" >
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="task-panel">

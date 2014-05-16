@@ -116,7 +116,7 @@
                                                             <div ng-repeat="bill in billsYouOweMap">
                                                                 <div class="bill-all">
                                                                     <div class="bill">
-                                                                        <h4 class="bill-member">{{bill.person}}</h4>
+                                                                        <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
                                                                         <h4 class="bill-amount">${{bill.amount}}</h4>
                                                                         <button type="button" ng-click="openPop($event, bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                                     </div>
@@ -143,7 +143,7 @@
                                                         <div ng-repeat="bill in billsOweYouMap">
                                                         <div class="bill-all">
                                                             <div class="bill">
-                                                                <h4 class="bill-member">{{bill.person}}</h4>
+                                                                <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
                                                                 <h4 class="bill-amount">${{bill.amount}}</h4>
                                                                 <button type="button" ng-click="openPop($event, bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                             </div>
