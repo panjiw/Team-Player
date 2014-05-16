@@ -152,8 +152,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       if(error){
         //TODO
       } else{
-        //TODO
-        buildBills();
+        $scope.$apply(function(){
+          buildBills();
+        });
       }
     });
   };
@@ -180,8 +181,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       if(error){
         //TODO
       } else{
-        //TODO
-        buildBills();
+        $scope.$apply(function(){
+          buildBills();
+        });
       }
     });
 

@@ -9,12 +9,10 @@
 //Define a task object as an event with additional fields:
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
-var Task = function(id, groupID, title, description, creatorID, dateCreated, dateDue, members, cycle, repostArray) {
+var Task = function(id, groupID, title, description, creatorID, dateCreated, dateDue, members) {
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.members = members;
   this.done = false;
-  this.cycle = cycle;
-  this.repost = repostArray;
 };
 
 angular.module("myapp").factory('TaskModel', function() {
@@ -25,6 +23,22 @@ angular.module("myapp").factory('TaskModel', function() {
   /* TaskModel.updateTask(task) {
     //TODO
   } */
+  TaskModel.getTasksFromServer = function(callback) {
+    $.get("/get_task") // <-- url can be changed!
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task get Success: " , data);
+      // update task
+      for (var i in data){
+        updateTask(data[i]);
+      }
+      callback();
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task get error error: ",error);
+      callback(error);
+    });
+  };
 
   TaskModel.fetchTasksFromServer = function(callback) {
     // We really only need to ask the server for all tasks
@@ -74,6 +88,12 @@ angular.module("myapp").factory('TaskModel', function() {
     });
   }
 
+  function updateTask(task){
+    TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, 
+      task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
+      task.details.due_date, task.members);
+  }
+
   //Create and return a task with the given parameters. This updates to the database, or returns
   //error codes otherwise...
   TaskModel.createTask = function(groupID, name, description, dateDue, members, callback) {
@@ -88,12 +108,35 @@ angular.module("myapp").factory('TaskModel', function() {
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task create Success: " , data);
-      // update task
+      updateTask(data);
       callback();
       
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task create error: ",error);
+      callback(error);
+    });
+  };
+
+  TaskModel.createTaskSpecial = function(groupID, name, description, dateDue, members, cycle, repostArray, callback) {
+     $.post("/create_task_special", // <<----- url can be changed.
+    {
+      "task[group_id]": groupID,
+      "task[title]": title,
+      "task[description]": description,
+      "task[members]": members,
+      "task[cycle]": cycle,
+      "task[repeat_days]": repostArray,
+      "task[finished]": false
+    })
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task special create Success: " , data);
+      updateTask(data);
+      callback();
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task special create error: ",error);
       callback(error);
     });
   };

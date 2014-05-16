@@ -20,7 +20,7 @@
                     </div>
                     <div class="modal-body tasks-add-body">
                         <div class="col-md-5">
-                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle"/>
+                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle" />
                           <h5>Description:</h5>
                           <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
 
@@ -34,8 +34,6 @@
                               <input type="date" ng-hide="noDue" ng-model="newTaskDateDue"
                               min="2014-01-01" max="2113-01-01"/>
                               <br>
-
-                              
 
                               <div ng-hide="noDue" id="repeat_options">
                                 <input type="checkbox" class="large" ng-model="taskRepeat"/>

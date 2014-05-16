@@ -4,8 +4,8 @@
  *  This file is not yet implemented.
  *  It will be the controller for the tasks page when implemented
  */
-angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", 
-  function($scope, TaskModel, GroupModel) {
+angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
+  function($scope, TaskModel, GroupModel, UserModel) {
 
   function initNewTaskData(){
     $scope.newTaskGroup = -1;
@@ -15,24 +15,32 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskMembers = {};
     $scope.newTaskCycle = false;
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
+    $scope.taskRepeat = $scope.noDue = false;
+
   }
 
-  $scope.prt = function(){
-    filterUnchecked();
-    console.log("$scope.newTaskGroup", $scope.newTaskGroup);
-    console.log("$scope.newTaskTitle", $scope.newTaskTitle);
-    console.log("$scope.newTaskDescription", $scope.newTaskDescription);
-    console.log("$scope.newTaskDateDue", $scope.newTaskDateDue);
-    console.log("$scope.newTaskMembers", $scope.newTaskMembers);
-    console.log("$scope.newTaskCycle", $scope.newTaskCycle);
-    console.log("$scope.newTaskRepostArray", $scope.newTaskRepostArray);
+  function getTaskFromModel(){
+    TaskModel.getTasksFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        $scope.$apply(function(){
+          buildTasks();
+        });
+      }
+    });
   }
+
+  getTaskFromModel();
 
   function filterUnchecked(){
     $scope.newTaskMembers = [];
+    var count = 0;
     for(var index in $scope.currentMembers){
       if($scope.currentMembers[index].chked){
-        $scope.newTaskMembers[index] = $scope.currentMembers[index];
+        $scope.newTaskMembers[count++] = $scope.currentMembers[index];
       }
     }
   }
@@ -48,11 +56,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     if (error){
     } else {
       $scope.groupsList = groups;
+      console.log("$scope.groupsList",$scope.groupsList);
     }
   });
 
   $scope.$watch('groupsList', function(newVal, oldVal){
-    console.log('groupList in task changed');
+    console.log('groupList in task changed', $scope.$groupList);
   });
 
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
@@ -65,14 +74,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#myModal').modal({show:true})
   };
 
-  $scope.addMember = function(e) {
-    if(e.which != 13) {   // If they didn't press enter, we don't care
-      return;
-    }
+  // $scope.addMember = function(e) {
+  //   if(e.which != 13) {   // If they didn't press enter, we don't care
+  //     return;
+  //   }
 
-    $scope.addTask_members.push($scope.newMember);
-    $scope.newMember = "";
-  }
+  //   $scope.addTask_members.push($scope.newMember);
+  //   $scope.newMember = "";
+  // }
 
   $scope.testingSendID = function(e){
 
@@ -91,17 +100,79 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-  $scope.createTask = function(e){
-    TaskModel.createTask(newTaskGroup, newTaskTitle, newTaskDescription, dateDue, newTaskDateDue, 
-      // newTaskCycle, newTaskRepostArray, 
-      function(error){
-        if(error){
-          //TODO
-        } else {
 
-        }
-      });
+  // check whether or not the user actually checked the checkboxes
+  function noRepeat(){
+    for(var index in $scope.newTaskRepostArray){
+      if($scope.newTaskRepostArray[index])
+        return false;
+    }
+    return true;
   }
+
+  // build the tasks from variables to the view
+  function buildTasks(){
+    $scope.myTasks = [];
+    var tasks = TaskModel.tasks;
+
+    for(var i in tasks){
+      // turn members in this task into a string to display
+      function memsToString(){
+        var str = "";
+        var first = true;
+        for(var j in tasks[i].members){
+          if(first){
+            str+= UserModel.users[j].uname;
+            first = false;
+          } else {
+            str+= ", "+UserModel.users[j].uname;
+          }
+        }
+        return str;
+      }
+
+      $scope.myTasks.push({
+      taskID: 'task'+tasks[i].event.id,
+      taskName: tasks[i].event.title,
+      taskDesc: tasks[i].event.description,
+      dueDate: tasks[i].event.dateDue,
+      groupName: $scope.groupsList[tasks[i].event.group].name,
+      members: memsToString()
+      });
+    }
+  }
+
+  $scope.$watch('myTasks', function(newVal, oldVal){
+    console.log('myTasks changed');
+  });
+
+  // create a task from user input
+  $scope.createTask = function(e){
+    filterUnchecked();
+
+    function callback(error){
+      if(error){
+      //TODO
+      } else {
+        $scope.$apply(function(){
+          buildBills();
+        });
+      }
+    };
+
+    // if normal task
+    if(!$scope.newTaskCycle && !$scope.taskRepeat && $scope.noRepeat()){
+      TaskModel.createTask($scope.newTaskGroup, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.dateDue, $scope.newTaskDateDue, callback);
+      // if special task
+    } else{
+      TaskModel.createTaskSpecial($scope.newTaskGroup, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.dateDue, $scope.newTaskDateDue,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
+    }
+
+    // clear out data used to create new task
+    initNewTaskData();
+  };
 
   $scope.testingCreateTask = function(e){
     //dummy tasks data; change it for testing!
@@ -134,11 +205,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.testingCreateTaskSpecial = function(e){
     //dummy tasks data; change it for testing!
-    var groupID = 2;
-    var title = "special task 1";
+    var groupID = 4;
+    var title = "special task grp4";
     var description = "this is a cycling repeating task";
-    var members = [1,2];
-    var cycle = false; // cycle within members
+    var members = [3,1];
+    var cycle = true; // cycle within members
     var repostArray = [false,true,false,false,false,false,false]; //repeat every monday
     var finished = false;
 
@@ -173,6 +244,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task get error error: ",error);
+
     });
   }
 
