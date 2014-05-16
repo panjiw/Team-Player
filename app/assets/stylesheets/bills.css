@@ -5,8 +5,8 @@
 }
 
 .bill-body{
-  padding: 10px;
-  margin: 10px;
+	padding: 10px;
+	margin: 10px;
 }
 
 .bill-summary {
@@ -66,6 +66,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   overflow: hidden;
   padding: 10px;
   margin-bottom: 20px;
+  border: 1px solid white;
 }
 
 .bill-all {
@@ -74,8 +75,8 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 
 .bill-pop {
   position: absolute;
-  right: 325px;
-  top: 205px;
+  right: 200px;
+  top: 275px;
   padding: 10px;
   background-color: #F0F0F0;
   border: 2px solid gray;
@@ -94,8 +95,12 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   padding: 0px;
   width: 175px;
   white-space:nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
+}
+
+.bill-member-long {
+  width: 350px;
 }
 
 .bill-amount {
@@ -103,7 +108,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   float: left;
   margin: 0px;
   padding: 0px;
-  margin-left: 30%;
+  margin-left: 10%;
 }
 
 .view-bill {
@@ -132,6 +137,16 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   overflow: hidden;
   padding: 10px;
   margin-bottom: 20px;
+}
+
+.bills-to-pay {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.bills-to-pay-you {
+  height: 400px;
+  overflow-y: auto;
 }
 
 .bills-selected input {

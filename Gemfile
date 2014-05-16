@@ -69,4 +69,10 @@ gem 'angularjs-rails'
 # Jasmine gem
 gem 'jasmine'
 
+group :test, :development do
+    gem 'jasmine-rails'
+end
+
+gem 'protractor-rails'
+
 gem 'validates_existence', '>= 0.4'

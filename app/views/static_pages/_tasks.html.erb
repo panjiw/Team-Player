@@ -6,10 +6,6 @@
       </div>
 <!--   *** Add Task Button    ***-->
           <div class="tasks-addbutton">
-            <a class="btn btn-default" ng-click="testingSendID()">id</a>
-            <a class="btn btn-default" ng-click="testingCreateTask()">Test: Create</a>
-            <a class="btn btn-default" ng-click="testingCreateTaskSpecial()">Test: Create cycle / repost</a>
-            <a class="btn btn-default" ng-click="testingGetTask()">Test: get</a>
             <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Add Task</a>
                 <div id="myModal" class="modal fade task-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
@@ -20,7 +16,7 @@
                     </div>
                     <div class="modal-body tasks-add-body">
                         <div class="col-md-5">
-                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle" />
+                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle"/>
                           <h5>Description:</h5>
                           <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
 
@@ -34,6 +30,8 @@
                               <input type="date" ng-hide="noDue" ng-model="newTaskDateDue"
                               min="2014-01-01" max="2113-01-01"/>
                               <br>
+
+                              
 
                               <div ng-hide="noDue" id="repeat_options">
                                 <input type="checkbox" class="large" ng-model="taskRepeat"/>
@@ -78,7 +76,7 @@
                   </div>
                   <div class="modal-footer">
                     <button class="btn" data-dismiss="modal">Cancel</button>
-                        <button class="btn" data-dismiss="modal" ng-click="createTask($event)">Save</button>
+                        <button class="btn" data-dismiss="modal">Save</button>
                   </div>
                 </div>
               </div>
@@ -89,7 +87,7 @@
       <div style="width:700px;height:400px;line-height:3em;
                       overflow:auto;padding:20px;">
         <div ng-repeat="task in myTasks"> 
-          <button ng-click="openTaskPop(task.taskID)" class="btn btn-default tasks-panelbutton" >
+          <button ng-click="openTaskPop($event, task.taskID)" class="btn btn-default tasks-panelbutton" >
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="task-panel">

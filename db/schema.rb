@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140515071131) do
+ActiveRecord::Schema.define(version: 20140514194650) do
 
-  create_table "bill_actors", id: false, force: true do |t|
+  create_table "bill_actors", force: true do |t|
     t.integer  "bill_id"
     t.integer  "user_id"
-    t.integer  "due",        limit: 8
+    t.decimal  "due",        precision: 8, scale: 2
     t.date     "paid_date"
     t.boolean  "paid"
     t.datetime "created_at"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140515071131) do
     t.string   "title"
     t.string   "description"
     t.date     "due_date"
-    t.integer  "total_due",   limit: 8
+    t.decimal  "total_due",   precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,28 +60,6 @@ ActiveRecord::Schema.define(version: 20140515071131) do
     t.integer  "order"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "task_generator_actors", id: false, force: true do |t|
-    t.integer  "task_generator_id"
-    t.integer  "user_id"
-    t.integer  "order"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "task_generators", force: true do |t|
-    t.integer  "group_id"
-    t.integer  "user_id"
-    t.string   "title"
-    t.string   "description"
-    t.date     "finished_date"
-    t.boolean  "finished"
-    t.text     "repeat_days"
-    t.boolean  "cycle"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "current_task_id"
   end
 
   create_table "tasks", force: true do |t|

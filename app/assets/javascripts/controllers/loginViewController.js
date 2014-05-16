@@ -9,8 +9,6 @@
 */
 
 angular.module('myapp').controller("loginViewController", ["$scope", "UserModel", function($scope, UserModel) {
-  $scope.message = "Hello, world";
-
   function displayErrors(title, errorList) {
     for(var i = 0; i < errorList.length; i++) {
       toastr.error(errorList[i], title);

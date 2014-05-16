@@ -7,37 +7,35 @@
 */
 
 //Define a bil object as an event with additional fields:
-//  --membersAmountMap: the members associated with the bill, and how much each owes, and whether or not it's paid
+//  --membersAmountMap: the members associated with the bill, and how much each owes
+//  --membersPaidMap: which membesr have paid their amounts.
 //  --total: is not explicitly a field, but it is a derived field.
-var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
+var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap) {
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.membersAmountMap = membersAmountMap;
+  this.membersPaidMap = membersPaidMap;
+  for(userID in membersAmountMap) {
+    this.membersPaidMap[userID] = false;
+  }
 };
 
 angular.module("myapp").factory('BillModel', function() {
   var BillModel = {};
   BillModel.bills = {};   //ID to bills.css
 
-  // update a bill to the BillModel.bills map
   BillModel.updateBill = function(bill){
-    BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
-     bill.details.user_id, bill.details.created_at, bill.details.due_date, bill.due);
+    //BillModel.bills[bill.id] = new Bill(bill.id, bill.groupID, bill.title, bill.description, creatorID, dateCreated, dateDue, membersAmountMap, membersPaidMap)
   }
 
-  // get bills from server to bill model
   BillModel.getBillFromServer = function(callback){
     $.get("/get_bills")
     .success(function(data, status) {
       console.log("bill get Success: " , data);
-
-      // update every bill
-      for (var i in data){
-        BillModel.updateBill(data[i]);
-      }
+      // update bill
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("bill get error: ",error);
+      console.log("group get error: ",error);
       callback("Error: " + JSON.parse(xhr.responseText));
     });
   }
@@ -56,11 +54,11 @@ angular.module("myapp").factory('BillModel', function() {
     })
     .success(function(data, status) {
       console.log("bill create Success: " , data);
-      BillModel.updateBill(data);
+      // update bill
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("bill create error: ",error);
+      console.log("group create error: ",error);
       callback("Error: " + JSON.parse(xhr.responseText));
     });
   };
@@ -75,17 +73,17 @@ angular.module("myapp").factory('BillModel', function() {
 
   }
 
-  // //Return all bills.css for this user as a list of Bill objects
-  // BillModel.getBills = function() {
-  //   //TODO ajax
+  //Return all bills.css for this user as a list of Bill objects
+  BillModel.getBills = function() {
+    //TODO ajax
 
-  //   //Dummy objects for now
-  //   var sevenFalse = [false, false, false, false, false, false, false];
-  //   var dummyBill = new Bill(0, 0, 0, "Dummy Bill", "Pay me!", new Date(), new Date(), false, sevenFalse, {1: 17});
-  //   var fakeBill = new Bill(0, 0, 0, "Fake Bill", "Pay me some more!", new Date(), new Date("5/23/2014"), false, sevenFalse, {1: 15});    
+    //Dummy objects for now
+    var sevenFalse = [false, false, false, false, false, false, false];
+    var dummyBill = new Bill(0, 0, 0, "Dummy Bill", "Pay me!", new Date(), new Date(), false, sevenFalse, {1: 17});
+    var fakeBill = new Bill(0, 0, 0, "Fake Bill", "Pay me some more!", new Date(), new Date("5/23/2014"), false, sevenFalse, {1: 15});    
 
-  //   return [dummyBill, fakeBill];
-  // }
+    return [dummyBill, fakeBill];
+  }
 
   return BillModel;
 });

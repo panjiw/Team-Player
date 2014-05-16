@@ -5,55 +5,53 @@
         </div>
     </div>
     <div class="bills-addbutton">
-        <a class="btn btn-default" ng-click="testingCreate()">Test: Create</a>
-        <a class="btn btn-default" ng-click="getBillFromModel()">Test: get</a>
-        <a class="btn btn-default" id="openBtn" ng-click="closePop($event)">Add Bill</a>
+            <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
 
-        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
+                <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>Create Bill</h3>
-                </div>
-                <div class="modal-body tasks-add-body">
-                    <div class="col-md-6">
+                      <h3>Create Bill</h3>
+                  </div>
+                  <div class="modal-body tasks-add-body">
+                        <div class="col-md-6">
                         <h5>Name:</h5><input type="text" ng-model="newBillTitle" />
-                        <h5>Description:</h5>
-                        <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
-                        <h5>Total Cost:</h5><input type="text" ng-model="newBillTotal"/>
-                        <h5>Due Date:</h5><input type="date" ng-model="newBillDateDue"
-                        min="2013-01-01" max="2113-01-01"/>
-                    </div>
-                    <div class="col-md-5">
-                        <h5>Group</h5>
-                        <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
-                            <option value="">-- choose group --</option>
-                        </select>
-                        <br>
-                        <div class="bill-members">
-                            <div ng-repeat="mem in currentMembers" style="height:2.2em;">
-                              <input type="checkbox" ng-model="mem.chked" style="float:left;" 
-                              ng-click="mem.amount = 0;"/>
-                              <span style="float:left;">{{mem.username}}</span>
-                              <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
-                              min="0.01" step="0.01" max="5000000" style="float:right;"/>
-                              <div style="clear: both;"></div>
-                          </div>
+                            <h5>Description:</h5>
+                              <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
+                            <h5>Total Cost:</h5><input type="text" ng-model="newBillTotal"/>
+                            <h5>Due Date:</h5><input type="date" ng-model="newBillDateDue"
+                            min="2013-01-01" max="2113-01-01"/>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Group</h5>
+                            <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
+                                <option value="">-- choose group --</option>
+                            </select>
+                            <br>
+                            <div class="bill-members">
+                                <div ng-repeat="mem in currentMembers | filter:notSelf" style="height:2.2em;">
+                                  <input type="checkbox" ng-model="mem.chked" style="float:left;" 
+                                   ng-click="mem.amount = 0;"/>
+                                  <span style="float:left;">{{mem.username}}</span>
+                                  <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
+                                   min="0.01" step="0.01" max="5000000" style="float:right;"/>
+                                   <div style="clear: both;"></div>
+                                </div>
                                 <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
-                                ng-options="mem.username for mem in currentMembers"></select> -->
+                                 ng-options="mem.username for mem in currentMembers"></select> -->
                                 <input type="checkbox" class="large" data-label="Split Evenly"/>
                                 <span>Split Evenly</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal">Cancel</button>
-                        <button class="btn" data-dismiss="modal" ng-click="createBill($event)">Save</button>
-                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                        <button class="btn" data-dismiss="modal" ng-click="createBill()">Save</button>
+                  </div>
+                  </div>
                 </div>
-            </div>
-        </div>
+                </div>
     </div>
 <!--     <div class="bill-body {{activeBillTab}}" ng-switch on="activeBillTab">
         <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
@@ -105,60 +103,65 @@
         </div>
     </div> -->
 
-  <div class="tabbable">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab3" data-toggle="tab" ng-click="closePop()">You Owe</a></li>
-        <li><a href="#tab4" data-toggle="tab" ng-click="closePop()">Owe You</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="tab3">
-            <h3>Bills you owe</h3>
-            <div class="bill-scroll">
-                <div ng-repeat="bill in billsYouOweMap">
-                    <div class="bill-all">
-                        <div class="bill">
-                            <h4 class="bill-member">{{bill.person}}</h4>
-                            <h4 class="bill-amount">${{bill.amount}}</h4>
-                            <button type="button" ng-click="openPop(bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
-                        </div>
-                        <div id="{{bill.person}}1" class="bill-pop">
-                            <div ng-repeat="b in bill.bills">
-                                <div class="bills-selected">
-                                    <input type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.why}}">
-                                    <h4 class="bill-member">{{b.why}}</h4>
-                                    <h4 class="bill-amount">${{b.amt}}</h4>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
-                            <h4 class="bill-pop-total">$0</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="tab4">
-          <h3>Bills owed to you</h3>
-          <div class="bill-scroll">
-            <div ng-repeat="bill in billsOweYouMap">
-                <div class="bill-all">
-                    <div class="bill">
-                        <h4 class="bill-member">{{bill.person}}</h4>
-                        <h4 class="bill-amount">${{bill.amount}}</h4>
-                        <button type="button" ng-click="openPop(bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
-                    </div>
-                    <div id="{{bill.person}}2" class="bill-pop">
-                        <div ng-repeat="b in bill.bills">
-                            <div class="bills-selected">
-                                <h4 class="bill-member">{{b.why}}</h4>
-                                <h4 class="bill-amount">${{b.amt}}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
 
-     </div>
-  </div>
-</div>
+                                        <div class="tabbable">
+                                              <ul class="nav nav-tabs">
+                                                <li class="active"><a href="#tab3" data-toggle="tab" ng-click="closePop()">You Owe</a></li>
+                                                <li><a href="#tab4" data-toggle="tab" ng-click="closePop()">Owe You</a></li>
+                                              </ul>
+                                              <div class="tab-content">
+                                                <div class="tab-pane active" id="tab3">
+                                                    <h3>Bills you owe</h3>
+                                                        <div class="bill-scroll">
+                                                            <div ng-repeat="bill in billsYouOweMap">
+                                                                <div class="bill-all">
+                                                                    <div class="bill">
+                                                                        <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
+                                                                        <h4 class="bill-amount">${{bill.amount}}</h4>
+                                                                        <button type="button" ng-click="openPop($event, bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
+                                                                    </div>
+                                                                    <div id="{{bill.person}}1" class="bill-pop">
+                                                                        <div class="bills-to-pay">
+                                                                            <div ng-repeat="b in bill.bills">
+                                                                                <div class="bills-selected">
+                                                                                    <input type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.why}}">
+                                                                                    <h4 class="bill-member">{{b.why}}</h4>
+                                                                                    <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
+                                                                        <h4 class="bill-pop-total">Total: $0</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab4">
+                                                  <h3>Bills owed to you</h3>
+                                                    <div class="bill-scroll">
+                                                        <div ng-repeat="bill in billsOweYouMap">
+                                                        <div class="bill-all">
+                                                            <div class="bill">
+                                                                <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
+                                                                <h4 class="bill-amount">${{bill.amount}}</h4>
+                                                                <button type="button" ng-click="openPop($event, bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
+                                                            </div>
+                                                            <div id="{{bill.person}}2" class="bill-pop">
+                                                                <div class="bills-to-pay-you">
+                                                                    <div ng-repeat="b in bill.bills">
+                                                                        <div class="bills-selected">
+                                                                            <h4 class="bill-member">{{b.why}}</h4>
+                                                                            <h4 class="bill-amount">${{b.amt}}</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            
+                                              </div>
+                                        </div>
+                    </div>
