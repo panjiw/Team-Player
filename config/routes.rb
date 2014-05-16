@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   match '/add_to_group', to: 'groups#invitetogroup', via: 'post'
 
   match '/create_bill', to: 'bills#new', via: 'post'
-  match '/get_bills', to: 'bills#get_bills',   via: 'get'
+  match '/get_bills', to: 'bills#get_all',   via: 'get'
 
   match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
 
