@@ -86,3 +86,13 @@ textarea {
 .group-leavebutton {
   float:right;
 }
+
+.list-group .grp_active, .group-members .mem_active{
+  background: #222;
+  color:white;  
+}
+
+.list-group .grp_active:hover, .group-members .mem_active:hover{
+  background: #555;
+  color:white;  
+}

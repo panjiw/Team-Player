@@ -15,8 +15,8 @@
                       <div class="group-scroll">
                         <div class="list-group">
                             <!-- $parent is required because ng-repeat creates a new scope -->
-                            <a class="list-group-item"
-                               ng-repeat="grp in groupsList"
+                            <a ng-repeat="grp in groupsList"
+                               class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
                                ng-click="$parent.selectGroup(grp.id)">
                               <h4>{{grp.name}}</h4>
                             </a>
@@ -35,7 +35,7 @@
                       </div>
                     </div>  
                       <div class="group-members">
-                          <a class="list-group-item"
+                          <a class="list-group-item" ng-class="{mem_active :$parent.member_selected == mem.id}"
                                ng-repeat="mem in currentMembers"
                                ng-click="$parent.member_selected=mem.id">
                               <h4>{{mem.firstname}}</h4>
