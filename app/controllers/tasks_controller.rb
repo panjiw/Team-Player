@@ -53,4 +53,8 @@ class TasksController < ApplicationController
       redirect_to '/'
     end
   end
+
+  def get_task_in_range
+    render :json => {:errors => "Not implemented yet"}, :status => 400
+  end
 end

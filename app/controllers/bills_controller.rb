@@ -1,6 +1,41 @@
 require 'json'
 
 class BillsController < ApplicationController
+  # Creates a new bill where the creator is the signed in user
+  # Accepts post request with format of:
+  # Required:
+  # bill[group_id]: groupID
+  # bill[title]: title
+  # bill[total_due]: total
+  # bill[members]: {user_id:due, ..., user_id:due}
+  # Optional:
+  # bill[description]: description
+  # bill[due_date]: dateDue
+  #
+  # See bills model in the front end for more info
+  #
+  # Returns
+  # {"details":{
+  # "id":bill id,
+  # "group_id":group id of the bill,
+  # "user_id":1,
+  # "title":bill title,
+  # "description": bill_description,
+  # "due_date":due date,
+  # "total_due":total due,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated},
+  # "due":{
+  # user_id:{
+  # "due":amount this user owes,
+  # "paid":paid or not,
+  # "paid_date":date paid (not yet == null)},
+  # ...,
+  # user_id:{
+  # "due":amount this user owes,
+  # "paid":paid or not,
+  # "paid_date":date paid (not yet == null)}}}
+
   def new
     if !view_context.signed_in?
       redirect_to '/'
@@ -14,7 +49,7 @@ class BillsController < ApplicationController
     if @bill.save
       total_count = 0
 
-      # check correct division first
+      # check correct division
       params[:bill][:members].each do |m|
         total_count = total_count + m[1].to_f
       end
@@ -46,6 +81,28 @@ class BillsController < ApplicationController
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
     end
   end
+
+  # Returns all the bills of the signed in user
+  # {number starting from 0:{"details":{
+  # "id":bill id,
+  # "group_id":group id of the bill,
+  # "user_id":1,
+  # "title":bill title,
+  # "description": bill_description,
+  # "due_date":due date,
+  # "total_due":total due,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated},
+  # "due":{
+  # user_id:{
+  # "due":amount this user owes,
+  # "paid":paid or not,
+  # "paid_date":date paid (not yet == null)},
+  # ...,
+  # user_id:{
+  # "due":amount this user owes,
+  # "paid":paid or not,
+  # "paid_date":date paid (not yet == null)}}}, ...}
 
   def get_all
     if view_context.signed_in?
