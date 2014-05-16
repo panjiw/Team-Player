@@ -97,9 +97,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.billsYouOwe = [
     {person:'Member1', amount: 12, why: 'Bought Lunch'},
     {person:'Member1', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member3', amount: 32, why: 'Bought Toilet Paper'},
+    {person:'Member2', amount: 32, why: 'Bought Toilet Paper'},
     {person:'Member1', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member2', amount: 23, why: 'Bought Lunch'},
+    {person:'Member3', amount: 23, why: 'Bought Lunch'},
     {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsYouOweMap from billsYouOwe
@@ -126,12 +126,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   // Each bill a member owes you
   $scope.billsOweYou = [
-    {person:'Member1', amount: 12, why: 'Bought Lunch'},
-    {person:'Member2', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member3', amount: 32, why: 'Bought Toilet Paper'},
-    {person:'Member4', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member2', amount: 23, why: 'Bought Lunch'},
-    {person:'Member1', amount: 8, why: 'Bought Dinner'}];
+    {person:'Member5', amount: 12, why: 'Bought Lunch'},
+    {person:'Member6', amount: 68, why: 'Paid Electric Bill'},
+    {person:'Member7', amount: 32, why: 'Bought Toilet Paper'},
+    {person:'Member8', amount: 44, why: 'Paid Internet Bill'},
+    {person:'Member6', amount: 23, why: 'Bought Lunch'},
+    {person:'Member5', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsOweYouMap from billsOweYou
   $(function () {

@@ -11,7 +11,7 @@ Displays header after successful login  -->
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" ng-click="activeTab='selected_home'; closePop()">Team Player</a> <!--Add link to home-->
+      <a class="navbar-brand" ng-click="activeTab='selected_home'; closePop()">TeamPlayer</a> <!--Add link to home-->
     </div>
     <% if signed_in? %>
         <div class="header-welcome">Welcome, {{currentUser.uname}}! 
@@ -20,7 +20,6 @@ Displays header after successful login  -->
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
-<!--         <li><a href="/" ng-click="activeTab='selected_home'">Home</a></li> --> <!-- Add link to home--> 
         <li><a ng-click="activeTab='selected_about'; closePop()">About</a></li> <!--Add link to about--> 
         <li><a ng-click="activeTab='selected_contact'; closePop()">Contact</a></li> <!--Add link to contact-->
         <li><a ng-click="activeTab='selected_help'; closePop()">Help</a></li>

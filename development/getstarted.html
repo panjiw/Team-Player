@@ -63,10 +63,10 @@
               	
 				<div class="well"> 
               	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#sec1">Build instruction</a></li>
-                  <li><a href="#sec2">Test instruction</a></li>
+                  <li><a href="#sec1">Build instructions</a></li>
+                  <li><a href="#sec2">Test instructions</a></li>
                   <li><a href="#sec3">View/Report Bugs</a></li>
-                  <li><a href="#sec4">Release new verion</a></li>
+                  <li><a href="#sec4">New Verion Releases</a></li>
                   <li><a href="#sec5">File Structure</a></li>
                   <li><a href="#sec6">Publishing to Heroku</a></li>
               	</ul>
@@ -75,9 +75,9 @@
       		</div>  
       		<div class="col-md-9">
               	<h2 id="sec0">Want to contribute to our product?</h2>
-                “Team Player” is an open source product, all of our source code and releases will be facilitated through Github. Source code for the latest stable released version can be found from our github repository 
+                “Team Player” is an open source product, so all of our source code and releases will be facilitated through Github. Source code for the latest stable released version can be found from our github repository: 
                 <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>. 
-                <br>
+                <br><br>
                 Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found from here <a href="https://github.com/panjiw/Team-Player.git">https://github.com/panjiw/Team-Player.git</a>.
 </a>
            
@@ -88,35 +88,35 @@
               	<h2 id="sec1">Getting started</h2>
               	<p>
                 If you are unfamilar with Ruby on Rails, here is a <a href="#sec5">quick guide to the file structure</a>
-                The following installation instruction assume you are using a Linux system.
+                The following installation instructions assume you are using a Linux system.
               	</p>
                 <p>
-                <ol><li>First setup rails environment for your OS<br>
+                <ol><li>First, setup rails environment for your OS<br>
                 <code><a href="https://www.ruby-lang.org/en/installation/">https://www.ruby-lang.org/en/installation/</a></code></li>
                 <br>
-                <li>Install git, then navigate to folder you want to store our codes and run<br>
+                <li>Install git, then navigate to folder you want to store our code and run<br>
                 <code>git clone https://github.com/panjiw/Team-Player.git</code></li>
                 <br>
-                <li>Navigate inside Team-Player folder and run<br>
+                <li>Navigate to the Team-Player folder and run<br>
                 <code>bundle install -- without production</code></li>
                 <br>
                 <li>Note: For security reasons, secrets.yml and database.yml are not shown publicly on github<br>
-                To create your own navigate inside config folder<br>  -- rename the secrets-example.yml to secrets.yml
+                To create your own, navigate into the config folder<br>  -- rename the secrets-example.yml to secrets.yml
                     <br> -- rename database-example.yml to database.yml
                 </li>
                 <br>
 
                 <li>To generate your secret_token, run <br>
-                <code>rake secret</code><br>copy the key, and open secret.yml, replace the "run_rake_seret_and_copy_key_here" message
-                <br> with your copied key, you have to paste it in two places</li>
+                <code>rake secret</code><br>  -- copy the key, and open secret.yml<br>  -- replace the "run_rake_seret_and_copy_key_here" message
+                with your copied key<br>     -- you will have to paste it in two places</li>
                 <br>
 
-                <li>To setup the database run<br>
+                <li>To setup the database, run<br>
                 <code>bundle exec rake db:migrate</code>
                 </li>
                 <br>
 
-                <li>Finally, you can start the rails server, run<br>
+                <li>Finally, you can start the rails server by running<br>
                 <code>rails s</code></li>
                 <br>
 
@@ -125,53 +125,60 @@
                 <br>
 
                 </ol>
-                <p>Now you can start editing the codes and view the effects on localhost website!</p>
+                <p>Now you can start editing the codes and view the effects on the localhost website!</p>
 
               	<hr>
               
               	<h2 id="sec2">Test Instruction</h2>
               	<p>
-The tests provided for the software are in the spec folder. At the moement, these tests cover our backend implementation, and utilize RSpec. 
-After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command <br> 
-<code>bundle exec rspec spec/</code><br>
-This will run all the tests and output the results, more information about RSpec follow this link <a href="http://rubydoc.info/gems/rspec-rails/frames">http://rubydoc.info/gems/rspec-rails/frames</a>
+                The tests provided for the software are in the spec folder. At the moement, these tests cover our backend implementation, and utilize RSpec. 
+                After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command: <br> 
+                <code>bundle exec rspec spec/</code><br><br>
+                This will run all the tests and output the results. For more information about RSpec, go to: <a href="http://rubydoc.info/gems/rspec-rails/frames">http://rubydoc.info/gems/rspec-rails/frames</a>
 
                 </p>
               
               	<hr>
               
               	<h2 id="sec3">View/Report Bugs</h2>
-                <p>We have a list of bugs/issues both open and closed publicly on this page <br><br>
+                <p>We have a public list of bugs/issues, both open and closed, at:  <br><br>
                 <a href="https://github.com/panjiw/Team-Player/issues">https://github.com/panjiw/Team-Player/issues</a>
                 </br><br>
                 If you have a bug to report, you can either use the above link and post an issue with a github account
                 or you can email us at kronoschronus (at) googlegroups.com. <br>
-                Remember to list the steps we need to reproduce this bug, and other informations such as what were you trying to do to reach this 
-                problem? and system info like what browser you were using and how long you been using your account. 
- 
+                Remember to: 
+                <ol>
+                <li>Tell us what browser you are using, and how long you've had a TeamPlayer account.</li>
+                <li>Give us some information about the bug. It must be clear, such as "clicking on home takes me <i>this page</i> instead of <i>that page</i>," not "the home button doesn't work." List the steps we need to reporduce this bug. What did you do to reach this problem? What were you tryingto do?</li>
+                </ol>
                 </p>
 
-              	<h2 id="sec4">Release new verion</h2>
+              	<h2 id="sec4">New Version Releases</h2>
       			
-                Releases will be facilitated by GitHub’s release system. In-depth information on releasing software can be viewed on <br><a href="https://help.github.com/articles/creating-releases">https://help.github.com/articles/creating-releases</a>.<br> When releasing a new version of software, updates and fixes will be documented with the release. Additionally, branch information and version numbers will also be documented with the release. <br>
-                Releases for our software can be found and downloaded from <br><a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br>  New releases will be deployed through Heroku web services. For the first deployment, the developer should call “heroku create”. Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer will deploy their repository with “git push heroku master”. More information on how Heroku deploys releases can be found on <br><a href="https://devcenter.heroku.com/articles/releases">https://devcenter.heroku.com/articles/releases</a>. 
+                Releases will be facilitated through GitHub’s release system. In-depth information on releasing software can be viewed at: <a href="https://help.github.com/articles/creating-releases">https://help.github.com/articles/creating-releases</a>.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
+                Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
+                <p><ol>
+                <li>Be sure to have the heroku toolbelt installed and set up with your account, <a href="https://toolbelt.heroku.com">https://toolbelt.heroku.com</a></li>
+                <li>For the first deployment, the developer should run <br><code>heroku create</code></li>
+                <li>Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer will deploy their repository with <br><code>git push heroku master</code></li></ol></p><br>
+                 For more information on how Heroku deploys releases, go to: <br><a href="https://devcenter.heroku.com/articles/releases">https://devcenter.heroku.com/articles/releases</a>. 
 
               
               	<hr>
             <h2 id="sec5">File Structure</h2>
-    <p>The directory structure is created for Ruby on Rails applications, so we have the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, I.E. bundle and rails files, but not necessary to edit for development. For further information on what those files contain, <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
-<ul>
-  <li>root folder: contains gems and rake files for Ruby</li>
-  <li><ul>
-    <li>app: contains the application code, our backend ruby code and front end views. The subfolders include: assets, controllers, helpers, mailers, and models; contain code relevant to each of those subsections, I.E. the models for our user data will be stored in the model subfolder. The view folder contains the main front-end web files. </li>
-    <li>config: contains the environment and key configuration for the product. </li>
-    <li>db: contains the main backend data files in the database. </li>
-    <li>devfiles: Contains front end development code. Includes Calendar front end  code, style sheets, and html view pages.</li>
-    <li>public: contains public HTML documents (I.E. 404 page)</li>
-    <li>spec: contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.</li>
-  </ul></li>
-  <li>Documentation for the code can be found from the README in the main directory.</li>
-</ul>
+              <p>The directory structure uses the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development. For further information on what those files contain go to: <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
+          <ul>
+            <li><i>root folder</i>: contains gems and rake files for Ruby</li>
+            <ul>
+              <li><i>app</i>: contains the application code, our backend ruby code and front end views. The subfolders include: <i>assets</i>, <i>controllers</i>, <i>helpers</i>, <i>mailers</i>, and <i>models</i>. These contain code relevant to their subsections. For example, the model subfolder contains models for our user data, and the view folder contains the main front-end web files.</li>
+              <li><i>config</i>: contains the environment and key configuration for the product. </li>
+              <li><i>db</i>: contains the main backend data files in the database. </li>
+              <li><i>devfiles</i>: Contains front end development code. This includes the Calendar front end code, style sheets, and html view pages.</li>
+              <li><i>public</i>: contains public HTML documents, such as the 404 page.</li>
+              <li><i>spec</i>: contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder. For example, controller RSpec tests are in the controller subfolder and front-end javascript tests are in the javascripts subfolder.</li>
+            </ul></li>
+            <li>Documentation for the code can be found from the README in the main directory.</li>
+          </ul>
 
                 <hr>
 
