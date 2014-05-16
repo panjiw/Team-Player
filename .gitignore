@@ -28,7 +28,6 @@ doc/
 
 
 # From Ruby gitignore
-database.yml
 *.gem
 *.rbc
 /.config

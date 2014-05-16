@@ -18,6 +18,10 @@
 	margin-bottom:30px;
 }
 
+dd {
+  padding-left: 35px;
+}
+
         </style>
     </head>
     
@@ -102,16 +106,6 @@
                 <li>Navigate to the Team-Player folder and run<br>
                 <code>bundle install -- without production</code></li>
                 <br>
-                <li>Note: For security reasons, secrets.yml and database.yml are not shown publicly on github<br>
-                To create your own, navigate into the config folder<br>  -- rename the secrets-example.yml to secrets.yml
-                    <br> -- rename database-example.yml to database.yml
-                </li>
-                <br>
-
-                <li>To generate your secret_token, run <br>
-                <code>rake secret</code><br>  -- copy the key, and open secret.yml<br>  -- replace the "run_rake_seret_and_copy_key_here" message
-                with your copied key<br>     -- you will have to paste it in two places</li>
-                <br>
 
                 <li>To setup the database, run<br>
                 <code>bundle exec rake db:migrate</code>
@@ -192,6 +186,13 @@
               	<hr>
             <h2 id="sec6">File Structure</h2>
               <p>The directory structure uses the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development. For further information on what those files contain go to: <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
+    <dl>
+  <dt>app/</dt>
+    <dd>contains the application code, our backend ruby code and front end views.</dd>
+  <dt>app/models/</dt>
+    <dd>contain our ruby backend data models</dd>
+</dl>
+
     <ul>
       <li><b>root folder : </b> contains gems and rake files for Ruby<br><br></li>
   
@@ -203,9 +204,9 @@
       <br><br></li>
       <li><b>app/view/ : </b> our static html pages, the subfolder layout contains shared code like header
       <br><br></li>
-      <li><b>app/assets/javascript/ : </b> contains all of our frontend AngularJS system:
+      <li><b>app/assets/javascript/ : </b> contains all of our frontend logic including Angular, Bootstrap and other library code:
       <br><br></li>
-      <li><b>app/assets/javascript/controllers/ : </b>  
+      <li><b>app/assets/javascript/controllers/ : </b> contains all of our Angular controllers
 
     <br><br></li>
 
