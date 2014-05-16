@@ -192,18 +192,38 @@
               	<hr>
             <h2 id="sec6">File Structure</h2>
               <p>The directory structure uses the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development. For further information on what those files contain go to: <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
-          <ul>
-            <li><i>root folder</i>: contains gems and rake files for Ruby</li>
-            <ul>
-              <li><i>app</i>: contains the application code, our backend ruby code and front end views. The subfolders include: <i>assets</i>, <i>controllers</i>, <i>helpers</i>, <i>mailers</i>, and <i>models</i>. These contain code relevant to their subsections. For example, the model subfolder contains models for our user data, and the view folder contains the main front-end web files.</li>
-              <li><i>config</i>: contains the environment and key configuration for the product. </li>
-              <li><i>db</i>: contains the main backend data files in the database. </li>
-              <li><i>devfiles</i>: Contains front end development code. This includes the Calendar front end code, style sheets, and html view pages.</li>
-              <li><i>public</i>: contains public HTML documents, such as the 404 page.</li>
-              <li><i>spec</i>: contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder. For example, controller RSpec tests are in the controller subfolder and front-end javascript tests are in the javascripts subfolder.</li>
-            </ul></li>
-            <li>Documentation for the code can be found from the README in the main directory.</li>
-          </ul>
+    <blockquote>
+      root folder: contains gems and rake files for Ruby<br><br>
+  
+      app/:contains the application code, our backend ruby code and front end views. 
+      <br>
+      app/models: contain our ruby backend data models
+      <br>
+      app/controllers: our ruby controllers, which provide functions for frontend to interact with the data
+      <br>
+      app/view: our static html pages, the subfolder layout contains shared code like header
+      <br>
+      app/assets/javascript: contains all of our frontend AngularJS system:
+      <br>
+      app/assets/javascript/controllers:  
+
+    <br><br>
+
+      config: contains the environment and key configuration for the product.
+      <br>
+      db: contains the backend data model schema and migrations files.
+      <br>
+      development: Contains our development website HTML/CSS code
+      <br>
+      public: contains public HTML documents (I.E. 404 page)
+      <br>
+      spec: contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.
+
+    <br><br>
+      Documentation for the code can be found from the README in the main directory.
+      
+    </blockquote>
+
 
                 <hr>
 
