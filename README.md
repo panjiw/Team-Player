@@ -3,7 +3,7 @@ Team-Player
 	TeamPlayer is a web application for group task management and bill splitting. 
 	
 	
-	Deployed at: <a href="https://team-player.herokuapp.com">https://team-player.herokuapp.com</a>
+	Deployed at: <a href="https://team-player.herokuapp.com">https://team-player.herokuapp.com</a><a href="https://team-player.herokuapp.com">this</a>
 	
 
   A project for UW CSE 403, developed by:
