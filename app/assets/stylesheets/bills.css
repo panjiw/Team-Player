@@ -66,6 +66,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   overflow: hidden;
   padding: 10px;
   margin-bottom: 20px;
+  border: 1px solid white;
 }
 
 .bill-all {

@@ -156,14 +156,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.openPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
       $('#' + p + n).hide();
-      $(e.target).parent(".bill").css("background-color", "#DFF0D8");
+      $(e.target).parent(".bill").css("border", "1px solid white");
     }
     else {
       $('#' + p + n).show();
-      $(e.target).parent(".bill").css("background-color", "#52D600");
+      $(e.target).parent(".bill").css("border", "1px solid green");
     }
     $('.bill-pop').not('#' + p + n).hide();
-    $('.bill').not($(e.target).parent(".bill")).css("background-color", "#DFF0D8");
+    $('.bill').not($(e.target).parent(".bill")).css("border", "1px solid white");
   }
   
   // Function when checkbox is clicked. Updates displayed total
@@ -174,13 +174,13 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       var value = str.substr(0,str.indexOf(' '));
       total += (this.checked ? parseInt(value) : 0);
     });
-    $('#' + p + 1 + " .bill-pop-total").html('$' + total);
+    $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
   }
   
   // Function called when anything is clicked in bills page that should close popover
   $scope.closePop = function () {
     $('.bill-pop').hide();
-    $('.bill').css("background-color", "#DFF0D8");
+    $('.bill').css("border", "1px solid white");
   };
   
   // Function called when pay button is pressed
@@ -210,14 +210,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
                 return false;
               }
             });
-            $('#' + p + 1 + " .bill-pop-total").html('$0');
+            $('#' + p + 1 + " .bill-pop-total").html('Total: $0');
             return false;
           }
         });
       }
     });
     $('.bill-pop').hide();
-    $('.bill').css("background-color", "#DFF0D8");
+    $('.bill').css("border", "1px solid white");
   }
 
   $('#openBtn').click(function(){
