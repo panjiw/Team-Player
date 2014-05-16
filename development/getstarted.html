@@ -65,17 +65,19 @@
               	<ul class="nav nav-stacked" id="sidebar">
                   <li><a href="#sec1">Build instructions</a></li>
                   <li><a href="#sec2">Test instructions</a></li>
-                  <li><a href="#sec3">View/Report Bugs</a></li>
-                  <li><a href="#sec4">New Verion Releases</a></li>
-                  <li><a href="#sec5">File Structure</a></li>
-                  <li><a href="#sec6">Publishing to Heroku</a></li>
+                  <li><a href="#sec3">Daily Build and Test Set Up</a></li>
+                  <li><a href="#sec4">View/Report Bugs</a></li>
+                  <li><a href="#sec5">New Version Releases</a></li>
+                  <li><a href="#sec6">File Structure</a></li>
+                  <li><a href="#sec7">Design Patterns</a></li>
+                  <li><a href="#sec8">Publishing to Heroku</a></li>
               	</ul>
   				</div>
 
       		</div>  
       		<div class="col-md-9">
               	<h2 id="sec0">Want to contribute to our product?</h2>
-                “Team Player” is an open source product, so all of our source code and releases will be facilitated through Github. Source code for the latest stable released version can be found from our github repository: 
+                “Team Player” is an open source product, so all of our source code and releases are facilitated through Github. Source code for the latest stable released version can be found from our github repository: 
                 <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>. 
                 <br><br>
                 Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found from here <a href="https://github.com/panjiw/Team-Player.git">https://github.com/panjiw/Team-Player.git</a>.
@@ -139,8 +141,31 @@
                 </p>
               
               	<hr>
-              
-              	<h2 id="sec3">View/Report Bugs</h2>
+
+                <h2 id="sec3">Daily Builds and Tests Set Up</h2>
+
+                <p>
+                To set up an automated daily build and test, developers will need to find a system to run the test suite above in automation. To run automated daily builds and tests, users will need to run “bundle exec rspec spec/” and “rake jasmine” in automation.
+                <p></p>
+                We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins windows installations</a>.
+                <ol>
+                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
+                  <li>Set the product to deploy daily through. We are currently using a local host, which is subjected to change.</li>
+                  <li>We set up email notifications when the build fails.</li>
+                  <li> In order to rub our test suite, we built the product with a windows batch command with the test automation command <code>bundle exec rspec spec/</code> </li>
+                  <li>For front-end tests, we will use another windows batch command of <code>rake jasmine</code> </li>
+                  <li>And to run ruby through Jenkins, we needed to add ruby’s PATH file to Jenkin’s environment. </li>
+                 </ol>
+                 <br>
+                 Feedback from our daily tests can be viewed on our mailing group at: <a href="https://groups.google.com/forum/#!forum/kronoschronus">https://groups.google.com/forum/#!forum/kronoschronus</a>
+                </p>
+
+
+                <hr>
+
+
+
+              	<h2 id="sec4">View/Report Bugs</h2>
                 <p>We have a public list of bugs/issues, both open and closed, at:  <br><br>
                 <a href="https://github.com/panjiw/Team-Player/issues">https://github.com/panjiw/Team-Player/issues</a>
                 </br><br>
@@ -153,7 +178,7 @@
                 </ol>
                 </p>
 
-              	<h2 id="sec4">New Version Releases</h2>
+              	<h2 id="sec5">New Version Releases</h2>
       			
                 Releases will be facilitated through GitHub’s release system. In-depth information on releasing software can be viewed at: <a href="https://help.github.com/articles/creating-releases">https://help.github.com/articles/creating-releases</a>.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
                 Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
@@ -165,7 +190,7 @@
 
               
               	<hr>
-            <h2 id="sec5">File Structure</h2>
+            <h2 id="sec6">File Structure</h2>
               <p>The directory structure uses the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development. For further information on what those files contain go to: <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
           <ul>
             <li><i>root folder</i>: contains gems and rake files for Ruby</li>
@@ -182,8 +207,14 @@
 
                 <hr>
 
+            <h2 id="sec7">Design Patterns</h2>
+            <p>
 
-            <h2 id="sec6">Publishing To Heroku</h2>
+
+
+            </p>
+
+            <h2 id="sec8">Publishing To Heroku</h2>
 
 Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
 
