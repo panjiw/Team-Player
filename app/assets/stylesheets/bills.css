@@ -69,6 +69,11 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   border: 1px solid white;
 }
 
+.bill:hover {
+  cursor: pointer;
+  background-color: #c2e2b6;
+}
+
 .bill-all {
   width: 400px;
 }
@@ -105,10 +110,9 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 
 .bill-amount {
   color: green;
-  float: left;
+  float: right;
   margin: 0px;
   padding: 0px;
-  margin-left: 10%;
 }
 
 .view-bill {

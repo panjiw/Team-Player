@@ -115,10 +115,9 @@
                                                         <div class="bill-scroll">
                                                             <div ng-repeat="bill in billsYouOweMap">
                                                                 <div class="bill-all">
-                                                                    <div class="bill">
+                                                                    <div class="bill" ng-click="openPop($event, bill.person, 1)">
                                                                         <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
                                                                         <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                                        <button type="button" ng-click="openPop($event, bill.person, 1)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                                     </div>
                                                                     <div id="{{bill.person}}1" class="bill-pop">
                                                                         <div class="bills-to-pay">
@@ -142,10 +141,9 @@
                                                     <div class="bill-scroll">
                                                         <div ng-repeat="bill in billsOweYouMap">
                                                         <div class="bill-all">
-                                                            <div class="bill">
+                                                            <div class="bill" ng-click="openPop($event, bill.person, 2)">
                                                                 <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
                                                                 <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                                <button type="button" ng-click="openPop($event, bill.person, 2)" class="btn-you-owe btn btn-default">Select Bills</button>
                                                             </div>
                                                             <div id="{{bill.person}}2" class="bill-pop">
                                                                 <div class="bills-to-pay-you">
@@ -161,7 +159,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                            
+      
                                               </div>
                                         </div>
                     </div>

@@ -245,14 +245,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.openPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
       $('#' + p + n).hide();
-      $(e.target).parent(".bill").css("border", "1px solid white");
+      $(e.delegateTarget).css("border", "1px solid white");
     }
     else {
       $('#' + p + n).show();
-      $(e.target).parent(".bill").css("border", "1px solid green");
+      $(e.delegateTarget).css("border", "1px solid green");
     }
     $('.bill-pop').not('#' + p + n).hide();
-    $('.bill').not($(e.target).parent(".bill")).css("border", "1px solid white");
+    $('.bill').not($(e.delegateTarget)).css("border", "1px solid white");
   }
   
   // Function when checkbox is clicked. Updates displayed total
