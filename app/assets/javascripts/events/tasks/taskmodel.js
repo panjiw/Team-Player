@@ -76,22 +76,25 @@ angular.module("myapp").factory('TaskModel', function() {
 
   //Create and return a task with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  TaskModel.createTask = function(groupID, name, description, dateCreated, dateDue, cycle, repeatArray, members) {
-    $.post("/add_task",
+  TaskModel.createTask = function(groupID, name, description, dateDue, members, callback) {
+    $.post("/create_task", // <<----- url can be changed.
     {
-      "task[gid]": groupID,               // Group ID
-      "task[name]": name,                 // String
-      "task[description]": description,   // String
-      "task[members]": members,           // Array of uids
-      "task[dateDue]": date.toString(),   // Javascript Date object toString() so that you have date and time info
-      "task[repeatArray]": repeatArray,   // Array like [true, false, false, true, false, false, false]
-      "task[cycle]": cycle                // Boolean: true/false
+      "task[group_id]": groupID,
+      "task[title]": name,
+      "task[description]": description,
+      "task[due_date]": dateDue,
+      "task[members]": members,
+      "task[finished]": false
     })
-    .success(function(data, status) {
-
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task create Success: " , data);
+      // update task
+      callback();
+      
     })
     .fail(function(xhr, textStatus, error) {
-
+      console.log("task create error: ",error);
+      callback(error);
     });
   };
 
