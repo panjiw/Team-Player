@@ -161,13 +161,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   // create a bill from user input
   $scope.createBill = function(e) {
-    // first perform an empty field check
-    if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
-      && $scope.newBillDescription && $scope.membersAmountMap.length > 0)) {
-      e.preventDefault();
-      toastr.error("Empty fields");
-      return;
-    }
 
     var groupID = $scope.newBillGroup.id;
     var title = $scope.newBillTitle;
@@ -175,6 +168,16 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var dateDue = $scope.newBillDateDue;
     var total = $scope.newBillTotal;
     var membersAmountMap = buildAmountMap($scope.currentMembers);
+
+    console.log("membersAmountMap", membersAmountMap);
+
+    // first perform an empty field check
+    if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
+      && $scope.newBillDescription && Object.getOwnPropertyNames(membersAmountMap).length > 0)) {
+      e.preventDefault();
+      toastr.error("Empty fields");
+      return;
+    }
 
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){

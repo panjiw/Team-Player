@@ -132,7 +132,7 @@ angular.module("myapp").factory('TaskModel', function() {
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task special create Success: " , data);
-      updateTask(data);
+      updateTask(data.task);
       callback();
       
     })
