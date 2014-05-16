@@ -5,4 +5,4 @@
  *  for the entire application.
  */
 
-var myApp = angular.module('myapp', ['ui.calendar']);
+var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);

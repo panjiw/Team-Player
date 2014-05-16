@@ -4,9 +4,62 @@
  *  This file is not yet implemented.
  *  It will be the controller for the tasks page when implemented
  */
-angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
+angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", 
+  function($scope, TaskModel, GroupModel) {
+
+  function initNewTaskData(){
+    $scope.newTaskGroup = -1;
+    $scope.newTaskTitle = "";
+    $scope.newTaskDescription = "";
+    $scope.newTaskDateDue = "";
+    $scope.newTaskMembers = {};
+    $scope.newTaskCycle = false;
+    $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
+  }
+
+  $scope.prt = function(){
+    filterUnchecked();
+    console.log("$scope.newTaskGroup", $scope.newTaskGroup);
+    console.log("$scope.newTaskTitle", $scope.newTaskTitle);
+    console.log("$scope.newTaskDescription", $scope.newTaskDescription);
+    console.log("$scope.newTaskDateDue", $scope.newTaskDateDue);
+    console.log("$scope.newTaskMembers", $scope.newTaskMembers);
+    console.log("$scope.newTaskCycle", $scope.newTaskCycle);
+    console.log("$scope.newTaskRepostArray", $scope.newTaskRepostArray);
+  }
+
+  function filterUnchecked(){
+    $scope.newTaskMembers = [];
+    for(var index in $scope.currentMembers){
+      if($scope.currentMembers[index].chked){
+        $scope.newTaskMembers[index] = $scope.currentMembers[index];
+      }
+    }
+  }
+
+  initNewTaskData();
 
   $scope.addTask_members = [];
+
+  $scope.groupsList = {};
+  $scope.currentMembers = {};
+
+  GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+    } else {
+      $scope.groupsList = groups;
+    }
+  });
+
+  $scope.$watch('groupsList', function(newVal, oldVal){
+    console.log('groupList in task changed');
+  });
+
+  $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
+    console.log('group selected');
+    $scope.currentMembers = $scope.newTaskGroup.members;
+    console.log("currentMembers, ", $scope.currentMembers);
+  });
  
   $scope.openModal = function(e){
     $('#myModal').modal({show:true})
