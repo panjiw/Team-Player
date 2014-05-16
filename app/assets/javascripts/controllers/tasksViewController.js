@@ -7,6 +7,7 @@
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
   function($scope, TaskModel, GroupModel, UserModel) {
 
+  // initialize fields for creating a new task to be empty
   function initNewTaskData(){
     $scope.newTaskGroup = -1;
     $scope.newTaskTitle = "";
@@ -19,6 +20,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   }
 
+  // getting task from model for the first time, so ask model to get from server
   function getTaskFromModel(){
     TaskModel.getTasksFromServer(
       function(error){
@@ -35,7 +37,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   getTaskFromModel();
 
-  function filterUnchecked(){
+  // build an array of member ids from a collection of user objects
+  function buildMemberIdArray(){
     $scope.newTaskMembers = [];
     var count = 0;
     for(var index in $scope.currentMembers){
@@ -47,8 +50,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   initNewTaskData();
 
-  $scope.addTask_members = [];
+  // $scope.addTask_members = [];
 
+  // initialize group and members to display for creating tasks
   $scope.groupsList = {};
   $scope.currentMembers = {};
 
@@ -60,6 +64,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     }
   });
 
+  // make sure the group list is updated to the view
   $scope.$watch('groupsList', function(newVal, oldVal){
     console.log('groupList in task changed', $scope.$groupList);
   });
@@ -148,7 +153,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // create a task from user input
   $scope.createTask = function(e){
-    filterUnchecked();
+    buildMemberIdArray();
 
     // first perform an empty field check
     if(!($scope.newTaskGroup && $scope.newTaskTitle 

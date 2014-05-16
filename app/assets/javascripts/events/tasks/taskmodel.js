@@ -20,9 +20,7 @@ angular.module("myapp").factory('TaskModel', function() {
   TaskModel.tasks = {};   //ID to task
   TaskModel.fetchedTasks = false;
 
-  /* TaskModel.updateTask(task) {
-    //TODO
-  } */
+  // get Tasks from server to Task model.
   TaskModel.getTasksFromServer = function(callback) {
     $.get("/get_task") // <-- url can be changed!
     .success(function(data, status) { // on success, there will be message to console
@@ -40,54 +38,55 @@ angular.module("myapp").factory('TaskModel', function() {
     });
   };
 
-  TaskModel.fetchTasksFromServer = function(callback) {
-    // We really only need to ask the server for all tasks
-    // the first time, so return if we already have.
-    if(TaskModel.fetchedTasks) {
-      return;
-    }
+  // TaskModel.fetchTasksFromServer = function(callback) {
+  //   // We really only need to ask the server for all tasks
+  //   // the first time, so return if we already have.
+  //   if(TaskModel.fetchedTasks) {
+  //     return;
+  //   }
 
-    // Return the date object as a string in the form
-    // mm/dd/yyyy. It pads days and months with 0's
-    // to ensure that they are 2 chars.
-    function mmddyyyy(date) {
-      var year = date.getFullYear();
+  //   // Return the date object as a string in the form
+  //   // mm/dd/yyyy. It pads days and months with 0's
+  //   // to ensure that they are 2 chars.
+  //   function mmddyyyy(date) {
+  //     var year = date.getFullYear();
 
-      //JS months are 0 based.
-      //Also pad it to be MM if it is month 1-9
-      var month = (1 + date.getMonth()).toString();
-      month = month.length > 1 ? month : '0' + month;
+  //     //JS months are 0 based.
+  //     //Also pad it to be MM if it is month 1-9
+  //     var month = (1 + date.getMonth()).toString();
+  //     month = month.length > 1 ? month : '0' + month;
 
-      //Pad it to be DD if it is day 1-9 of the month
-      var day = date.getDate().toString();
-      day = day.length > 1 ? day : '0' + day;
-      return month + "/" + day + "/" + year;
-    }
+  //     //Pad it to be DD if it is day 1-9 of the month
+  //     var day = date.getDate().toString();
+  //     day = day.length > 1 ? day : '0' + day;
+  //     return month + "/" + day + "/" + year;
+  //   }
 
-    var startDate = new Date();
-    startDate.setMonth(startDate.getMonth() - 1);
+  //   var startDate = new Date();
+  //   startDate.setMonth(startDate.getMonth() - 1);
 
-    var endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + 1);
+  //   var endDate = new Date();
+  //   endDate.setMonth(endDate.getMonth() + 1);
 
-    // Not changing info, so this is a get request
-    $.get("/view_tasks",
-    {
-      "task[startDate]": mmddyyyy(startDate),
-      "task[endDate]": mmddyyyy(endDate)
-    })
-    .success(function(data, status) {
-      for(var i = 0; i < data.length; i++) {
-        TaskModel.updateTask(data[i]);
-      }
-      callback();
-      TaskModel.fetchedTasks = true;
-    })
-    .fail(function(xhr, textStatus, error) {
-      callback(JSON.parse(xhr.responseText));
-    });
-  }
+  //   // Not changing info, so this is a get request
+  //   $.get("/view_tasks",
+  //   {
+  //     "task[startDate]": mmddyyyy(startDate),
+  //     "task[endDate]": mmddyyyy(endDate)
+  //   })
+  //   .success(function(data, status) {
+  //     for(var i = 0; i < data.length; i++) {
+  //       TaskModel.updateTask(data[i]);
+  //     }
+  //     callback();
+  //     TaskModel.fetchedTasks = true;
+  //   })
+  //   .fail(function(xhr, textStatus, error) {
+  //     callback(JSON.parse(xhr.responseText));
+  //   });
+  // }
 
+  // update a task into the TaskModel.tasks map
   function updateTask(task){
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
@@ -118,12 +117,14 @@ angular.module("myapp").factory('TaskModel', function() {
     });
   };
 
+  // Create a task that might be cycling or repeating
   TaskModel.createTaskSpecial = function(groupID, name, description, dateDue, members, cycle, repostArray, callback) {
      $.post("/create_task_special", // <<----- url can be changed.
     {
       "task[group_id]": groupID,
       "task[title]": name,
       "task[description]": description,
+      // "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
       "task[members]": members,
       "task[cycle]": cycle,
       "task[repeat_days]": repostArray,
@@ -152,14 +153,14 @@ angular.module("myapp").factory('TaskModel', function() {
   };
 
   //Return all tasks for this user as a list of Task objects
-  TaskModel.getTasks = function() {
-    var taskArray = [];
-    for(task in TaskModel.tasks) {
-      taskArray.push(TaskModel.tasks[task]);
-    }
+  // TaskModel.getTasks = function() {
+  //   var taskArray = [];
+  //   for(task in TaskModel.tasks) {
+  //     taskArray.push(TaskModel.tasks[task]);
+  //   }
 
-    return taskArray;
-  };
+  //   return taskArray;
+  // };
 
   return TaskModel;
 });
