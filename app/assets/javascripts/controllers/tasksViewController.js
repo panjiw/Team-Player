@@ -4,9 +4,10 @@
  *  This file is not yet implemented.
  *  It will be the controller for the tasks page when implemented
  */
-angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", 
-  function($scope, TaskModel, GroupModel) {
+angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
+  function($scope, TaskModel, GroupModel, UserModel) {
 
+  // initialize fields for creating a new task to be empty
   function initNewTaskData(){
     $scope.newTaskGroup = -1;
     $scope.newTaskTitle = "";
@@ -15,32 +16,43 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskMembers = {};
     $scope.newTaskCycle = false;
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
+    $scope.taskRepeat = $scope.noDue = false;
+
   }
 
-  $scope.prt = function(){
-    filterUnchecked();
-    console.log("$scope.newTaskGroup", $scope.newTaskGroup);
-    console.log("$scope.newTaskTitle", $scope.newTaskTitle);
-    console.log("$scope.newTaskDescription", $scope.newTaskDescription);
-    console.log("$scope.newTaskDateDue", $scope.newTaskDateDue);
-    console.log("$scope.newTaskMembers", $scope.newTaskMembers);
-    console.log("$scope.newTaskCycle", $scope.newTaskCycle);
-    console.log("$scope.newTaskRepostArray", $scope.newTaskRepostArray);
+  // getting task from model for the first time, so ask model to get from server
+  function getTaskFromModel(){
+    TaskModel.getTasksFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        $scope.$apply(function(){
+          buildTasks();
+        });
+      }
+    });
   }
 
-  function filterUnchecked(){
+  getTaskFromModel();
+
+  // build an array of member ids from a collection of user objects
+  function buildMemberIdArray(){
     $scope.newTaskMembers = [];
+    var count = 0;
     for(var index in $scope.currentMembers){
       if($scope.currentMembers[index].chked){
-        $scope.newTaskMembers[index] = $scope.currentMembers[index];
+        $scope.newTaskMembers[count++] = $scope.currentMembers[index].id;
       }
     }
   }
 
   initNewTaskData();
 
-  $scope.addTask_members = [];
+  // $scope.addTask_members = [];
 
+  // initialize group and members to display for creating tasks
   $scope.groupsList = {};
   $scope.currentMembers = {};
 
@@ -48,11 +60,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     if (error){
     } else {
       $scope.groupsList = groups;
+      console.log("$scope.groupsList",$scope.groupsList);
     }
   });
 
+  // make sure the group list is updated to the view
   $scope.$watch('groupsList', function(newVal, oldVal){
-    console.log('groupList in task changed');
+    console.log('groupList in task changed', $scope.$groupList);
   });
 
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
@@ -65,16 +79,97 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#myModal').modal({show:true})
   };
 
-  $scope.addMember = function(e) {
-    if(e.which != 13) {   // If they didn't press enter, we don't care
+  // $scope.addMember = function(e) {
+  //   if(e.which != 13) {   // If they didn't press enter, we don't care
+  //     return;
+  //   }
+
+  //   $scope.addTask_members.push($scope.newMember);
+  //   $scope.newMember = "";
+  // }
+
+
+  // check whether or not the user actually checked the checkboxes
+  function noRepeat(){
+    for(var index in $scope.newTaskRepostArray){
+      if($scope.newTaskRepostArray[index])
+        return false;
+    }
+    return true;
+  }
+
+  // build the tasks from variables to the view
+  function buildTasks(){
+    $scope.myTasks = [];
+    var tasks = TaskModel.tasks;
+
+    for(var i in tasks){
+      // turn members in this task into a string to display
+      function memsToString(){
+        var str = "";
+        var first = true;
+        for(var j in tasks[i].members){
+          if(first){
+            str+= UserModel.users[j].uname;
+            first = false;
+          } else {
+            str+= ", "+UserModel.users[j].uname;
+          }
+        }
+        return str;
+      }
+
+      $scope.myTasks.push({
+      taskID: 'task'+tasks[i].event.id,
+      taskName: tasks[i].event.title,
+      taskDesc: tasks[i].event.description,
+      dueDate: tasks[i].event.dateDue,
+      groupName: $scope.groupsList[tasks[i].event.group].name,
+      members: memsToString()
+      });
+    }
+  }
+
+  $scope.$watch('myTasks', function(newVal, oldVal){
+    console.log('myTasks changed');
+  });
+
+  // create a task from user input
+  $scope.createTask = function(e){
+    buildMemberIdArray();
+
+    // first perform an empty field check
+    if(!($scope.newTaskGroup && $scope.newTaskTitle 
+      && $scope.newTaskDescription && $scope.newTaskMembers.length > 0)) {
+      e.preventDefault();
+      toastr.error("Empty fields");
       return;
     }
 
-    $scope.addTask_members.push($scope.newMember);
-    $scope.newMember = "";
-  }
+    function callback(error){
+      if(error){
+      //TODO
+      } else {
+        $scope.$apply(function(){
+          buildTasks();
+        });
+        toastr.success("task created!");
+      }
+    };
 
+    // if normal task
+    if(!$scope.newTaskCycle && !$scope.taskRepeat && noRepeat()){
+      TaskModel.createTask($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.newTaskDateDue, $scope.newTaskMembers, callback);
+      // if special task
+    } else{
+      TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
+      $scope.newTaskDateDue, $scope.newTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
+    }
 
+    // clear out data used to create new task
+    initNewTaskData();
+  };
 
   $scope.myTasks = [
     {taskID: 'task1', taskName:'Clean Room', taskDesc: 'description', dueDate:'5/20/14', groupName:'GroupName', members:'membersList'},
