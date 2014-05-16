@@ -4,21 +4,53 @@
  *  This file is not yet implemented.
  *  It will be the controller for the tasks page when implemented
  */
-angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", function($scope, TaskModel) {
+angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", 
+  function($scope, TaskModel, GroupModel) {
 
-	$scope.addTask_members = [];
+  function initNewTaskData(){
+    $scope.newTaskGroup = -1;
+    $scope.newTaskTitle = "";
+    $scope.newTaskDescription = "";
+    $scope.newTaskDateDue = "";
+    $scope.newTaskMembers = {};
+    $scope.newTaskCycle = false;
+    $scope.newTaskRepostArray = [];
+  }
+
+  initNewTaskData();
+
+  $scope.addTask_members = [];
+
+  $scope.groupsList = {};
+  $scope.currentMembers = {};
+
+  GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+    } else {
+      $scope.groupsList = groups;
+    }
+  });
+
+  $scope.$watch('groupsList', function(newVal, oldVal){
+    console.log('groupList in task changed');
+  });
+
+  $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
+    console.log('group selected');
+    $scope.currentMembers = $scope.newTaskGroup.members;
+  });
  
   $scope.openModal = function(e){
-  	$('#myModal').modal({show:true})
+    $('#myModal').modal({show:true})
   };
 
   $scope.addMember = function(e) {
-  	if(e.which != 13) {		// If they didn't press enter, we don't care
-  		return;
-  	}
+    if(e.which != 13) {   // If they didn't press enter, we don't care
+      return;
+    }
 
-  	$scope.addTask_members.push($scope.newMember);
-  	$scope.newMember = "";
+    $scope.addTask_members.push($scope.newMember);
+    $scope.newMember = "";
   }
 
   $scope.testingSendID = function(e){
@@ -38,13 +70,25 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
+  $scope.createTask = function(e){
+    TaskModel.createTask(newTaskGroup, newTaskTitle, newTaskDescription, dateDue, newTaskDateDue, 
+      // newTaskCycle, newTaskRepostArray, 
+      function(error){
+        if(error){
+          //TODO
+        } else {
+
+        }
+      });
+  }
+
   $scope.testingCreateTask = function(e){
     //dummy tasks data; change it for testing!
-    var groupID = 2;
-    var title = "task 1";
-    var description = "this is a good task";
+    var groupID = 4;
+    var title = "task for groupid 4";
+    var description = "this is a good task 4";
     var dateDue = new Date();
-    var members = [2,1];
+    var members = [1,3];
     var finished = false;
 
 
@@ -112,5 +156,29 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
 
+
+  $scope.myTasks = [
+    {taskID: 'task1', taskName:'Clean Room', taskDesc: 'description', dueDate:'5/20/14', groupName:'GroupName', members:'membersList'},
+    {taskID: 'task2', taskName:'Wash Dishes', taskDesc: 'description', dueDate:'5/22/14', groupName:'GroupName', members:'membersList'},
+    {taskID: 'task3', taskName:'Take Out Trash', taskDesc: 'description', dueDate:'5/24/14', groupName:'GroupName', members:'membersList'},
+    {taskID: 'task4', taskName:'Pay Water Bill', taskDesc: 'description', dueDate:'5/26/14', groupName:'GroupName', members:'membersList'},
+    {taskID: 'task5', taskName:'Clean Bathroom', taskDesc: 'description', dueDate:'5/28/14', groupName:'GroupName', members:'membersList'},
+    {taskID: 'task6', taskName:'Do Laundry', taskDesc: 'description', dueDate:'5/30/14', groupName:'GroupName', members:'membersList'}
+  ];
+
+
+  $scope.openTaskPop = function (p) {
+    if ($('#' + p).is(':visible')) {
+      $('#' + p).hide();
+    }
+    else {
+      $('#' + p).show();
+    }
+    $('.tasks-pop').not('#' + p).hide();
+  }
+
+  $scope.openEditModal = function(e){
+    $('#editModal').modal({show:true})
+  };
 
 }]);

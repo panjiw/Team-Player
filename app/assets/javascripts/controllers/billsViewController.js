@@ -30,7 +30,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   });
 
   $scope.$watch('groupsList', function(newVal, oldVal){
-    console.log('changed');
+    console.log('group list in bill changed');
   });
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
