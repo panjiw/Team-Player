@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   # task[group_id]: groupID
   # task[title]: title
   # task[total_due]: total
+  # task[finished]: false
   # task[members]: {user_id, ..., user_id} (place in array is order)
   # Optional:
   # task[description]: description
@@ -34,7 +35,7 @@ class TasksController < ApplicationController
                      title: params[:task][:title],
                      description: params[:task][:description],
                      due_date: params[:task][:due_date],
-                     finished: params[:task][:finished].to_bool)
+                     finished: false)
     if @task.save
       order = 0
       params[:task][:members].each do |m|
@@ -60,8 +61,8 @@ class TasksController < ApplicationController
     end
   end
 
-  # Returns all the task of the signed in user
-  # {"details":{
+  # Returns all the tasks of the signed in user
+  # {number starting from 0:{"details":{
   # "id":task id,
   # "group_id":group id of the task,
   # "user_id":1,
@@ -72,7 +73,7 @@ class TasksController < ApplicationController
   # "finished":finished,
   # "created_at":date and time created,
   # "updated_at":date and time updated},
-  # "members":{user_id:order, ..., user_id:order}}}
+  # "members":{user_id:order, ..., user_id:order}}}, ...}
   def get_all
     if view_context.signed_in?
       tasks = {}
@@ -95,7 +96,7 @@ class TasksController < ApplicationController
 
   # Returns all the tasks of the signed in user within the
   # given (through get) range: date[start] <= task[:created_at] <= date[end]
-  # {"details":{
+  # {number starting from 0:{"details":{
   # "id":task id,
   # "group_id":group id of the task,
   # "user_id":1,
@@ -106,7 +107,7 @@ class TasksController < ApplicationController
   # "finished":finished,
   # "created_at":date and time created,
   # "updated_at":date and time updated},
-  # "members":{user_id:order, ..., user_id:order}}}
+  # "members":{user_id:order, ..., user_id:order}}, ...}
   def get_task_in_range
     render :json => {:errors => "Not implemented yet"}, :status => 400
   end

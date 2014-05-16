@@ -1,5 +1,5 @@
 class TaskActor < ActiveRecord::Base
-  # one - has many (bill actor) relationship
+  # one - has many (task actor) relationship
   belongs_to :task
   belongs_to :user
 

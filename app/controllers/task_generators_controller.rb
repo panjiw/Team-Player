@@ -1,5 +1,21 @@
 class TaskGeneratorsController < ApplicationController
-
+  # Creates a new task generator and a single task based on that
+  # generator where the signed in user is the creator
+  # Required:
+  # task[group_id]: groupID
+  # task[title]: title
+  # task[total_due]: total
+  # task[members]: {user_id, ..., user_id} (place in array is order)
+  # task[repeat_days]: [boolean, ..., boolean]  1 for each day of the week
+  # task[cycle]: boolean
+  # Optional:
+  # task[description]: description
+  #
+  # See tasks model in the front end for more info
+  #
+  # Returns the info of the generator and the new task
+  # {"generator":{generator info (see get_all for format)},
+  #  "task":{task info (see task_controller for format)}}
   def new
     if !view_context.signed_in?
       redirect_to '/'
@@ -13,7 +29,7 @@ class TaskGeneratorsController < ApplicationController
                                         title: params[:task][:title],
                                         description: params[:task][:description],
                                         cycle: params[:task][:cycle].to_bool,
-                                        finished: params[:task][:finished].to_bool)
+                                        finished: false)
     if params[:task][:repeat_days] == ""
       @task_generator[:repeat_days] = nil
     else
@@ -47,12 +63,22 @@ class TaskGeneratorsController < ApplicationController
     end
   end
 
+  # Creates a new task based on the generator of the given task
+  # or the task generator instance set
+  # If the former the task must be the most recent task created by
+  # the generator
+  # Returns the info of the generator and the new task
+  # {"generator":{generator info (see get_all for format)},
+  #  "task":{task info (see task_controller for format)}}
   def create_new_task
     if !view_context.signed_in?
       redirect_to '/'
     end
     if @task_generator.nil?
       @task_generator = TaskGenerator.find_by_current_task_id(params[:task][:id])
+    end
+    if @task_generator.nil?
+      render :json => {:errors => "Invalid task"}, :status => 400
     end
     if @task_generator[:finished]
       render :json => {:errors => "The task generator is dead"}, :status => 400
@@ -159,6 +185,41 @@ class TaskGeneratorsController < ApplicationController
       render :json => generator_and_task.to_json, :status => 200
     else
       render :json => {:errors => @next_task.errors.full_messages}, :status => 400
+    end
+  end
+
+  # Returns all the task geerators of the signed in user
+  # {number starting from 0:{"details":{
+  # "id":task id,
+  # "group_id":group id of the task,
+  # "user_id":1,
+  # "title":task title,
+  # "description": task_description,
+  # "finished_date":finished date,
+  # "finished":finished,
+  # "repeat_days":{"1":bool,...,"7":bool},
+  # "cycle":bool,
+  # "created_at":date and time created,
+  # "updated_at":date and time updated,
+  # "current_task_id":most current task created},
+  # "members":{user_id:order, ..., user_id:order}}, ...}
+  def get_all
+    if view_context.signed_in?
+      task_generators = {}
+      count = 0
+      current_user.task_generators.each do |t|
+        task_generator = {}
+        task_generator[:details] = t
+        task_generator[:members] = {}
+        t.task_generator_actors.each do |a|
+          task_generator[:members][a[:user_id]] = a[:order]
+        end
+        task_generators[count] = task_generator
+        count += 1
+      end
+      render :json => task_generators.to_json, :status => 200
+    else
+      redirect_to '/'
     end
   end
 end
