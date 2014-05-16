@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_all',   via: 'get'
 
+  match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
+
   match '/create_task', to: 'tasks#new', via: 'post'
   match '/get_task', to: 'tasks#get_all', via: 'get'
 

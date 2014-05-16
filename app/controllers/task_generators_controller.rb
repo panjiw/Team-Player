@@ -1,4 +1,5 @@
 class TaskGeneratorsController < ApplicationController
+
   def new
     if !view_context.signed_in?
       redirect_to '/'
@@ -40,14 +41,7 @@ class TaskGeneratorsController < ApplicationController
         end
         order = order + 1
       end
-      gen = {}
-      gen[:details] = @task_generator
-      gen[:members] = {}
-      @task_generator.task_generator_actors.each do |a|
-        gen[:members][a[:user_id]] = a[:order]
-      end
-      render :json => gen.to_json, :status => 200
-      #create_new_task
+      create_new_task
     else
       render :json => {:errors => @task_generator.errors.full_messages}, :status => 400
     end
@@ -57,7 +51,7 @@ class TaskGeneratorsController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     end
-    if !@task_generator
+    if @task_generator.nil?
       @task_generator = TaskGenerator.find_by_current_task_id(params[:task][:id])
     end
     @next_task = Task.new(group_id: @task_generator[:group_id],
@@ -66,33 +60,41 @@ class TaskGeneratorsController < ApplicationController
                           description: @task_generator[:description],
                           finished: false)
 
-    # Repeat
-    if @task_generator[:repeat_days]
-      today = Date.today
-      days = (today.cwday + 1) % 8
-      if days == 0
-        days = 1
+    if @next_task.save
+      if @task_generator[:current_task_id]
+        # get the old task
+        @finished_task = Task.find(@task_generator[:current_task_id]) # not actually marking it finished
+      else
+        @finished_task = nil
       end
-      while days != today.cwday
-        if @task_generator[:repeat_days][days]
-          break
+
+      # Repeat
+      if @task_generator[:repeat_days]
+        if @finished_task
+          today = @finished_task[:due_date]
+        else
+          today = Date.today
         end
-        days = (days + 1) % 8
+        days = (today.cwday + 1) % 8
         if days == 0
           days = 1
         end
+        while days != today.cwday
+          if @task_generator[:repeat_days][days]
+            break
+          end
+          days = (days + 1) % 8
+          if days == 0
+            days = 1
+          end
+        end
+        if days <= today.cwday
+          days += 7
+        end
+        days = days - today.cwday
+        next_due_date = today + days
+        @next_task.update_attributes(:due_date => next_due_date)
       end
-      if days <= today.cwday
-        days += 7
-      end
-      days = days - today.cwday
-      next_due_date = today + days
-      @next_task[:due_date] = next_due_date
-    end
-
-    if @next_task.save
-      # get the old task
-      @finished_task = Task.find_by(params[:task][:id]) # not actually marking it finished
 
       # Cycle
       if @task_generator.cycle && @finished_task
@@ -101,7 +103,8 @@ class TaskGeneratorsController < ApplicationController
         # get info about the actors for the next task
         actors = @task_generator.task_generator_actors
         # get that user's order in the generator
-        current_order = actors.find_by_user_id(current_actor[:id])[:order]
+        current_actor = actors.find_by_user_id(current_actor[:user_id])
+        current_order = current_actor[:order]
         # total number of actors
         total_actors = actors.count
         # the next actor's order in the generator
@@ -110,14 +113,15 @@ class TaskGeneratorsController < ApplicationController
         next_order = 0
         while next_order < total_actors
           @next_task_actor = TaskActor.new(task_id: @next_task[:id],
-                                           user_id: actors.find_by_order(next_order),
+                                           user_id: actors.find_by_order(orders)[:user_id],
                                            order: next_order)
           if !@next_task_actor.save
             # this should never happen
             @next_task.destroy
             render :json => {:errors => @next_task_actor.errors.full_messages}, :status => 400
           end
-          next_order = (next_order + 1) % total_actors
+          orders = (orders + 1) % total_actors
+          next_order += 1
         end
       else
         # no cycle or first one
@@ -133,7 +137,7 @@ class TaskGeneratorsController < ApplicationController
           end
         end
       end
-      @task_generator[:current_task_id] = @next_task[:id]
+      @task_generator.update_attributes(:current_task_id => @next_task[:id])
       task = {}
       task[:details] = @next_task
       task[:members] = {}
