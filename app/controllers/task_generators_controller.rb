@@ -138,13 +138,22 @@ class TaskGeneratorsController < ApplicationController
         end
       end
       @task_generator.update_attributes(:current_task_id => @next_task[:id])
+      generator_and_task = {}
+      generator = {}
+      generator[:details] = @task_generator
+      generator[:members] = {}
+      @task_generator.task_generator_actors.each do |a|
+        generator[:members][a[:user_id]] = a[:order]
+      end
       task = {}
       task[:details] = @next_task
       task[:members] = {}
       @next_task.task_actors.each do |a|
         task[:members][a[:user_id]] = a[:order]
       end
-      render :json => task.to_json, :status => 200
+      generator_and_task[:generator] = generator
+      generator_and_task[:task] = task
+      render :json => generator_and_task.to_json, :status => 200
     else
       render :json => {:errors => @next_task.errors.full_messages}, :status => 400
     end
