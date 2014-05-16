@@ -7,7 +7,6 @@
 require 'spec_helper'
 
 describe UsersController do
-#itegrate_views
 
 # tests if creates a valid user
 describe "GET show" do
@@ -63,65 +62,65 @@ end
 
 # tests the controller's create method
 describe "CREATE new" do
+
     before(:each) do
-        @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                              :password => "player", :password_confirmation => "player"
+        post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                             :password => "player", :password_confirmation => "player"}
     end
 
     # tests when every value is correct that create works
-    context 'should create user' do
-        it 'should be ok ' do
+    context 'every value is correct' do
+        it 'should create user ' do
             post 'create', :user => {:username => "newusername", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "player", :password_confirmation => "player"}
-           #response.body.should_be_valid token:
             (response.body.include? "token").should be_true
-            #value.should_be true
+            (response.status == 200).should be_true
         end
     end
 
     # test when username is already in database that create does not work
-    context 'should not create user' do
-        it 'should not be ok ' do
+    context 'username already in database' do
+        it 'should not create user ' do
             post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "no@player.com",
                              :password => "player", :password_confirmation => "player"}
             (response.body.include? "error").should be_true
-            #(respone.body.include? "Username has already been taken").should be_true
+            (response.status == 400).should be_true
         end 
     end
 
     # tests when email is already in database that create does not work
-    context 'should not create user' do
-        it 'should not be ok ' do
+    context 'email is already in database' do
+        it 'should not create user ' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
                              :password => "player", :password_confirmation => "player"}
             (response.body.include? "error").should be_true
-            #(respone.body.include? "Email has already been taken").should be_true
-        end 
+            (response.status == 400).should be_true        
+            end 
     end
 
     # tests when password size is not long enough that create does not work
-    context 'should not create user' do
-        it 'should not be ok ' do
+    context 'password not long enough' do
+        it 'should not create user' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "play", :password_confirmation => "play"}
             (response.body.include? "error").should be_true
-            #(respone.body.include? "Email has already been taken").should be_true
+            (response.status == 400).should be_true
         end 
     end
 
     # tests when passwords do not match create does not work
-    context 'should not create user' do
-        it 'should not be ok ' do
+    context 'passwords do not match' do
+        it 'should not create user ' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "playrrrrrrr", :password_confirmation => "playeeeee"}
             (response.body.include? "error").should be_true
-            #(respone.body.include? "Email has already been taken").should be_true
+            (response.status == 400).should be_true
         end 
     end
 
 end
 
-describe "update user" do
+describe "UPDATE user" do
     before(:each) do
         post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
                              :password => "player", :password_confirmation => "player"}
@@ -132,11 +131,11 @@ describe "update user" do
     end
 
     #checks if update runs correctly when username is changed
-    context 'it should update users username' do
+    context 'all input correct username changed' do
         it 'should update user information' do
             post 'update', :user => {:username => "newname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "updated").should be_true
+            (response.status == 200).should be_true
         end
     end
 
@@ -145,7 +144,7 @@ describe "update user" do
         it 'should update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "newname", :lastname => "Player", :email => "team@player.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "updated").should be_true
+            (response.status == 200).should be_true
         end
     end
 
@@ -154,7 +153,7 @@ describe "update user" do
         it 'should update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "newname", :email => "team@player.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "updated").should be_true
+            (response.status == 200).should be_true
         end
     end
 
@@ -163,7 +162,7 @@ describe "update user" do
         it 'should update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "updated").should be_true
+            (response.status == 200).should be_true
         end
     end
 
@@ -172,7 +171,7 @@ describe "update user" do
         it 'should update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "newplayer", :password_confirmation => "newplayer"}
-            (response.body.include? "updated").should be_true
+            (response.status == 200).should be_true
         end
     end
 
@@ -182,6 +181,7 @@ describe "update user" do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "players", :password_confirmation => "player"}
             (response.body.include? "error").should be_true
+            (response.status == 400).should be_true
         end
     end
 
@@ -191,6 +191,7 @@ describe "update user" do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "play", :password_confirmation => "play"}
             (response.body.include? "error").should be_true
+            (response.status == 400).should be_true
         end
     end
 
@@ -200,6 +201,7 @@ describe "update user" do
             post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "player", :password_confirmation => "player"}
             (response.body.include? "error").should be_true
+            (response.status == 400).should be_true
         end
     end
 
@@ -209,81 +211,40 @@ describe "update user" do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
             :password => "player", :password_confirmation => "player"}
             (response.body.include? "error").should be_true
+            (response.status == 400).should be_true
         end
     end
 end
 
 #TODO: viewgroup tests
 
-#TODO: finduseremail tests
-
-
-
-
-
-# describe "FINDUSERBYEMAIL new" do
+# tests for finduseremail 
+describe "finduseremail" do
     
-#     before(:each) do
-#         @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#                               :password => "player", :password_confirmation => "player"
-#     end
+    before(:each) do
+        @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                              :password => "player", :password_confirmation => "player"
+        end
 
-#     context 'should find user' do
-#         it 'should be ok' do
-#             post 'finduseremail', {:email => "team@playe.com"}
-#             puts response.body
-#         end
-#     end
+    context 'user exists' do
+        it 'should find user' do
+            post 'finduseremail', :find => {:email => "team@player.com"}
+            (response.body.include? "Team").should be_true
+            (response.body.include? "Player").should be_true
+            (response.body.include? "1").should be_true
+            (response.body.include? "teamplayer").should be_true
+            (response.body.include? "team@player.com").should be_true
+            (response.status == 200).should be_true
+            end
+        end
 
-# end
-
-
-
-# # 
-# before do
-#   @user = [
-#     User.new(username: "teamplayer", firstname: "Team", lastname: "Player", email: "team@player.com",
-#                             password: "player", password_confirmation: "player")
-#     #User.new(username: "tp", firstname: "toilet", lastname: "paper", email: "toilet@paper.com",
-#    #                         password: "papers", password_confirmation: "papers")
-#   ]
-# end
-
-# describe "GET signed_in_user"
-
-
-
-
-# context 'fetching user information' do
-
-#   subject do
-#     puts here
-#     get 'user.json'
-#     puts JSON.parse(response.body)
-  
-#   end
-
-#   it 'should return a correct user information' do
-#     should == [
-#       {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#                             :password => "player", :password_confirmation => "player"}
-#      # {:name => 'Bob', :login => 'bob'}
-#     ]
-#   end
-
-# end
-
-
-# context 'creating a new user' do
-# 	it 'should add one user' do
-#         lambda {
-#           #post '//users.json', :user => {:name => 'Charlie', :login => 'charlie'}
-#    		  post '/users.json',:user=> {:username => "tester", :firstname => "testing", :lastname => "testingln", :email => "tester@paper.com",
-#                             :password => "papers", :password_confirmation => "papers"}
-#        }.should change(User, :count).by(0)
-# 	end
-# end
-
+    context 'user does not exist' do
+        it 'should not find user' do
+            post 'finduseremail', :find => {:email => "no@no.com"}
+            (response.status == 400).should be_true
+            end
+        end
+    end
 
 
 end

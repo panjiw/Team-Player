@@ -63,11 +63,10 @@
               	
 				<div class="well"> 
               	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#sec1">Product Description</a></li>
-                  <li><a href="#sec2">Tools Set</a></li>
-                  <li><a href="#sec3">Frameworks / Libraries</a></li>
-                  <li><a href="#sec4">Existing solutions</a></li>
-                  <li><a href="#sec5">Our solution</a></li>
+                  <li><a href="#sec1">General Team Information</a></li>
+                  <li><a href="#sec2">Weekly Status Report</a></li>
+                  <li><a href="#sec3">Customer Meetings Notes</a></li>
+                  <li><a href="#sec4">Paper Prototype Notes</a></li>
               	</ul>
   				</div>
 
@@ -96,79 +95,281 @@ Panji Wisesa         panjiw   (at) uw (dot) edu</pre>
         
               
               
-              	<h2 id="sec1">Product Description</h2>
+              	<h2 id="sec1">General Team Information</h2>
               	<p>
-                This page contains information about the initial descriptions, plans and designs.
+                The developement team are University of Washington students started this project in a course (CSE 403). 
               	</p>
-              	<div class="row">
-                  <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading"><h3>Who needs TeamPlayer?</h3></div>
-                      <div class="panel-body">
-                      Our target audience are groups who need an application that can help them organize and manage tasks and bills between their members. These functions are important to target groups such as roommates, who need to share household tasks and shared bills. Our target audience expands past roommates as a user base, as our product can be used in project groups who need to organize individual tasks, in planning groups that need to plan events and tasks prepared at specific times, and groups of friends who need to organize who owes what.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="panel panel-default">
-                      <div class="panel-heading"><h3>What problem does it solve?</h3></div>
-                      <div class="panel-body">
-
-                      This application will help solve communication problems between groups of people. For the most part, it will help stop communication problems created by poor scheduling,  poor reminders on due dates, or miscommunications over finances. It will help groups reduce the time needed to communicate with multiple people, reduce misunderstandings on who is assigned what task, and reduce to remember how much each person has spent and owes. Overall, it will help cleanly facilitate group bills and tasks by providing a clean interface to view and assign tasks.
-
-                      </div>
-                    </div>
-                  </div>  
-              	</div>
-              
+              	
               	<hr>
               
-              	<h2 id="sec2">Tools Set</h2>
-              	<p>
+              	<h2 id="sec2">Weekly Team Status Reports</h2>
+              	<h4>Weekly Status Report #1, 4/15/14</h4>
 
-We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs (which will be a large factor over our competitors), is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
--HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.
--JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
--AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend
--Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
--SQL/MySQL: Our data will be very relational, so it makes sense to use a relational database like MySQL. We will then obviously query it using SQL. The data will solely come from user input, as the application is driven around group task management.
--Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. It’s bug tracking system is visual and clear.
+                <h5>Goal from last week:</h5>
+                <ol>
+                  <li>Figure out what our project will be: requirements, interface, tools</li>
+                </ol>
+                <h5>Progress made this past week:</h5>
+                <ol>
+                  <li> Product Description</li>
+                  <li> Process Description w/ timeline</li>
+                  <li> UI Diagrams</li>
+                  <li> Use Cases</li>
+                  <li> Met with customers, and as customers</li>
+                </ol>
+                <h6>Things that went well:</h6>
+                <ul>
+                  <li>Splitting up roles helped us finish tasks faster</li>
+                  <li>Meeting as a group allowed us to feedback and forth on our ideas and get on the same page so that we would be able to split up and know what to write/get done</li>
+                </ul>
+                <h6>Things that we had trouble with: </h6>
+                <ul>
+                  <li>Using time efficiently</li>
+                  <li>Finalizing decisions </li>
+                  <li>Communcation / meetings need to be organized and structured</li>
+                </ul>
+                <h6>Things we learned: </h6>
+                <ul>
+                  <li>Plan group meetings efficiently (know what we need to talk about and get done)</li>
+                  <li>Set time limits on discussion topics to help us make decisions </li>
+                </ul>
 
+                <h5>Goals for following week:</h5>
+                <ol>
+                  <li>Refine UI Diagrams</li>
+                  <li>Learn and brush up new languages needed for project</li>
+                  <li>Figure out where we will host the website</li>
+                  <li>Skethc database</li>
+                  <li>Have organized meetings</li>
+                </ol>
 
-                </p>
-              
               	<hr>
               
-              	<h2 id="sec3">Frameworks / Libraries</h2>
-      		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
- 
-Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
- 
-From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
-              
-              	<h2 id="sec4">Existing Solutions</h2>
-      			
-                Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
-Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
 
-              
-              	<hr>
-            <h2 id="sec5">Our Solution</h2>
+                <h2>Weekly Team Status Reports</h2>
+                <h4>Weekly Status Report #2, 4/22/14</h4>
 
-Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
+                <h5>Goal from last week:</h5>
+                <ol>
+                  <li>Refine UI Diagrams</li>
+                  <li>Learn and brush up new languages needed for project</li>
+                  <li>Figure out where we will host the website</li>
+                  <li>Skethc database</li>
+                  <li>Have organized meetings</li>
+                </ol>
+                <h5>Progress made this past week:</h5>
+                <ol>
+                  <li> Hashed through UI diagrams
+                    <ul><li>fixed ambigous parts</li>
+                    <li>made sure that features were necessary</li>
+                    <li>rethought features that customers did not like</li>
+                    </ul>
 
-What are its major features? 
-Our application will provide a method to view all tasks and bills on the calendar. This feature will allow users to filter these tasks and bills and view only certain items, whether it be from only specific groups or only bills. 
-Furthermore, our application will provide a method to allow users to create tasks for themselves and for other users in the group. This task will contain a name, description, and members assigned to it. This create task will give users the ability to assign a task to a certain group with themselves or a specific user. Additionally, the user will be able to assign the task a day of completion, and that’s the date that will appear on the calendar.
-Another feature of our application will be the ability to input bills into the calendar. The bills will act like tasks, with specific users, a name, description, and due date. Additionally, these bills will have a total cost, and an ability to split the bill evenly. If the bill is not split evenly, members can be assigned the specific amount they owe on the bill. 
-Our application will allow users to view a running list of their bills and payments. Depending on implementation, our application will allow users to view bills for the entire group or just bills they owe. Additionally, they will be able to view how much they owe an individual person.
-The main feature we have in mind is an ability for users to cycle through tasks and to-dos. This feature will be group focused. Users will have a specific task that will be passed to other users in the group after they have completed the task.
-A possible stretch figure we have considered is an ability to send email notifications when a new event has been posted. Additionally, these email notifications could be sent on the day of an event to remind the user what events they have due that day. 
-Another possible stretch feature is an ability for users to manage their groups. Currently, groups can be created and new members can be added by anyone in the group. A stretch feature would be the possibility to limit adding people to a group to the person who created the group, and adding more admin capabilities over their groups.
-One more possible stretch feature would be to implement different views on the interface. Currently, we are planning one view in calendar format and another view for the bills. For stretch features, we could implement more list views and views on group calendars.                 
-                
-              
+                  </li>
+                  <li>Determined what data needed to be stored and created database schema for tables</li>
+                  <li>Finalized our languages, RoR + AngularJS</li>
+                  <li>Ran more efficient meetings!</li>
+                </ol>
+                <h6>Things that went well:</h6>
+                <ul>
+                  <li>meetings had plans</li>
+                  <li>timed meeting topics and tasks helped us get things done efficiently</li>
+                </ul>
+                <h6>Things that we had trouble with: </h6>
+                <ul>
+                  <li>juggling time between our project and all of our other classes
+</li>
+                </ul>
+                <h6>Things we learned: </h6>
+                <ul>
+                  <li>we can’t put this project aside...ever.</li>
+                </ul>
+
+                <h5>Goals for following week:</h5>
+                <ol>
+                  <li>Get everyone situated with languages and servers, download and install RoR, get used to heroku</li>
+                  <li>Practice languages and watch tutorials!</li>
+                  <li>start log in and default home page next week by next Tuesday</li>
+                  <li>Architecture Design due on Friday</li>
+                </ol>
+
                 <hr>
+              
+
+
+                <h2>Weekly Team Status Reports</h2>
+                <h4>Weekly Status Report #3, 4/29/14</h4>
+
+                <h5>Goal from last week:</h5>
+                <ol>
+                  <li>Get everyone situated with languages and servers, download and install RoR, get used to heroku</li>
+                  <li>Practice languages and watch tutorials!</li>
+                  <li>start log in and default home page next week by next Tuesday</li>
+                  <li>Architecture Design due on Friday</li>
+                </ol>
+
+                <h5>Progress made this past week:</h5>
+                <ol>
+                  <li>Finished architecture design</li>
+                  <li>More familiar with languages we need to use</li>
+                  <li>Have a git repository set up for all of our code</li>
+                  <li>Started writing basic code for both backend and front-end</li>
+                  <li>front end: log in and rough home page, tasks</li>
+                  <li>back end: user creation validation, and store to database</li>
+                </ol>
+                
+                <h5>Goals for following week:</h5>
+                <ol>
+                  <li>Have a zero feature website finished</li>
+                  <li>Have a working log-in page (front-end and backend)</li>
+                  <li>Split up different pages and assign to different people</li>
+                  <li>Have at least one page other than log-in finished</li>
+                </ol>
+
+                <hr>
+              
+
+
+
+                <h2>Weekly Team Status Reports</h2>
+                <h4>Weekly Status Report #4, 5/6/14</h4>
+
+                <h5>Goal from last week:</h5>
+                <ol>
+                  <li>Have a zero feature website finished</li>
+                  <li>Have a working log-in page (front-end and backend)</li>
+                  <li>Split up different pages and assign to different people</li>
+                  <li>Have at least one page other than log-in finished</li>
+                </ol>
+
+                <h5>Progress made this past week:</h5>
+                <ol>
+                  <li>Finished the log-in page on the both the frontend and backend! This solidified our confidence as a group about our frameworks.</li>
+                  <li>Released our site for the “zero-feature” release. It contains the completed login, sign-in, session system, as well as static HTML pages (with fake data) for the rest of the major views on the site.</li>
+                  <li>Changed how we were splitting up pages as per Isaac’s advice. We are now going to work on one feature at a time as an entire group. See the updated schedule on the SRS, which reflects our new idea on how to proceed. </li>
+                  
+                </ol>
+                
+                <h5>Goals for following week:</h5>
+                <ol>
+                  <li>First and foremost, write the API between the frontend and backend for the major functions used to communicate between the two (e.g. “add bill”, or “view all tasks for September”). </li>
+                  <li>Split work by functions in the API between us. We plan to have all of groups, tasks, and bills done for the beta release. Frontend: Karthik, Fung, Tiffany, Backend: Keith, Panji, Micaela</li>
+                  <li>Continue working on the HTML pages to add views for adding, editing, and viewing tasks, bills, and groups (Linsen). </li>
+                  <li>Have group creation and editing working by this Friday.</li>
+                </ol>
+
+                <hr>
+              
+
+
+
+                <h2>Weekly Team Status Reports</h2>
+                <h4>Weekly Status Report #5, 5/12/14</h4>
+
+                <h5>Goal from last week:</h5>
+               <ol>
+                  <li>First and foremost, write the API between the frontend and backend for the major functions used to communicate between the two (e.g. “add bill”, or “view all tasks for September”). </li>
+                  <li>Split work by functions in the API between us. We plan to have all of groups, tasks, and bills done for the beta release. Frontend: Karthik, Fung, Tiffany, Backend: Keith, Panji, Micaela</li>
+                  <li>Continue working on the HTML pages to add views for adding, editing, and viewing tasks, bills, and groups (Linsen). </li>
+                  <li>Have group creation and editing working by this Friday.</li>
+                </ol>
+
+                <h5>Progress made this past week:</h5>
+                <ol>
+                  <li>Hashed out API between tasks, bills, and groups; found and cleared up confusions</li>
+                  <li> Split work into front and back end as usual, and also split work among front end and back end groups</li>
+                  <li>Finished create group, add member, view groups, view members of group</li>
+                  <li>HTML for static page views</li>
+                  
+                </ol>
+                
+                <h5>Goals for following week:</h5>
+                <ol>
+                  <li>Beta release due on Friday! it will include create/store/view of all groups, bills and tasks</li>
+                  <li>Link all documentation to website</li>
+                  <li>update SDS and other documents</li>
+                  <li>include documentation in repo</li>
+                  <li>fix areas mentioned in our ZFR comments from TA</li>
+                  <li>Users can create and view tasks and bills</li>
+                  <li>need to get date picker calendar working</li>
+                  <li>integrate front ends and back ends</li>
+                  <li>get click and view events to work correctly</li>
+                </ol>
+
+                <hr>
+
+
+              	<h2 id="sec3">Customer Meetings</h2>
+      		      <h4>Customer Meeting: May 7, 2014</h4>
+                <pre>
+                  
+Notes for Customer meeting May 7, 2014:
+
+ToDo:
+·      Password too short (Doesn’t tell you password restrictions)
+·      Next to Logout button show who is logged in
+·      Maybe make about/contact/help text easier to see
+·      Need a bigger TeamPlayer logo. Something that pops out
+·      Logout button too close to groups? Alignment? Might accidently click logout
+
+ 
+
+Notes:
+·      Went to About/Contact/User Manual first. Easy to use. Figured out how to get back easily
+·      Login is easy. Worried about safety of information
+·      Password too short (Doesn’t tell you password restrictions)
+·      Impressed with our zero feature :D (“Wow”)
+·      Bills expected ordering: due date probably
+·      Buttons on home screen don’t work
+·      Thoughts: Pretty intuitive, easy to use and figure out
+·      User manual looks good
+·      Next to Logout button show who is logged in
+·      Logout button too close to groups? Alignment? Might accidently click logout
+·      Login page could be laid out nicer maybe? Too much spacing below description
+·      Maybe make about/contact/help text easier to see
+·      Need a bigger TeamPlayer logo. Something that pops out
+                </pre>
+              
+                <h4>Customer Meeting: May 12, 2014</h4>
+<pre>
+.      improve the visibility of the tabs on the bills page
+.      (optional) on create group description
+.      developers button on top to link to development information
+</pre>
+              	<h2 id="sec4">Paper Prototype Notes</h2>
+<pre>
+Customer Role:
+Home screen: text amount is good because normally people are bounced away from too much 
+text. 
+Filter Tab: hovering versus tapping. User finds hovering to be cumbersome with the side bar 
+(too easy to activate and too difficult to exit)
+Calendar: initial confusion over rotating tasks because of the multiple member displays. 
+Create Task: Confusion on the specifics of clicking away from a box what shows up. What 
+happens if you hit tab. What happens if you tap on the next box. 
+    Same vocabulary problem- as long as it’s consistent. 
+    Confusion over dateless tasks vs todos at first. 
+Searching: User searching for users not in group could be a problem. Autocomplete or a 
+search function. 
+Create Bill:
+    Amounts that don’t add up lead to an error screen. Application will need to validate that 
+you haven’t filled everything out. 
+    Dateless bills. 
+Pop-Up Dates: Good. Scroll bar commented on.
+Team Page: Weary of the plus and minus buttons because of confusion over functionality.
+Additionally, plus and minus buttons need internal consistency.  
+    Can’t delete a group can only leave a group. 
+    Someone makes the group, invites other people, disappears when everyone leaves.
+    Delete whole group: possibly a manager.
+    No emails at all suggested. 
+
+Advisor Role:
+    Feasible or not is confusing because of the amount of factors involved.
+    Need to prioritize all the features involved. 
+    Work on them in sequence by figuring out dependencies on feature and planning from 
+    there and priority. 
+</pre>
+              	<hr>
+    
 
       		</div> 
   	</div>

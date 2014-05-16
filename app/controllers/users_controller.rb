@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes(user_params)
-      render :json => {:updated => "params"}, :status => 200
+      render :json => {}, :status => 200
     else
       render :json => {:errors => @user.errors.full_messages}, :status => 400
     end

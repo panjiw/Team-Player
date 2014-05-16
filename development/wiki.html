@@ -63,98 +63,143 @@
               	
 				<div class="well"> 
               	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#sec1">Product Description</a></li>
-                  <li><a href="#sec2">Tools Set</a></li>
-                  <li><a href="#sec3">Frameworks / Libraries</a></li>
-                  <li><a href="#sec4">Existing solutions</a></li>
-                  <li><a href="#sec5">Our solution</a></li>
+                  <li><a href="#sec1">Design Choices</a></li>
+                  <li><a href="#sec2">Risks Assessment</a></li>
+                  <li><a href="#sec3">Test Plans</a></li>
+                  <li><a href="#sec4">Coding Style Guidelines</a></li>
               	</ul>
   				</div>
 
       		</div>  
       		<div class="col-md-9">
-              	<h2 id="sec0">What is Team-Player?</h2>
-                “Team Player” is a group based task manager. Deployed as a web app, users can create and join groups where they can schedule task and manage bills between everyone on their group online. Team Player’s task management system is focused on a monthly calendar where all group tasks can be created, viewed, and modified with a filtering system to help the users view and manage their individual tasks. Another main feature of Team Player is the flexible bill management system, where groups can split and manage their bills between the users in the groups with integration to the main calendar through due dates and notification. Finally, groups can create tasks that automatically rotate between members after they are completed. 
-            
+              	<h2 id="sec0">How to use Team-Player?</h2>
+                Wiki Page for the product
            
               	<hr class="col-md-12">
-        
+
               
-              
-              	<h2 id="sec1">Product Description</h2>
-              	<p>
-                This page contains information about the initial descriptions, plans and designs.
-              	</p>
-              	<div class="row">
-                  <div class="col-md-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading"><h3>Who needs TeamPlayer?</h3></div>
-                      <div class="panel-body">
-                      Our target audience are groups who need an application that can help them organize and manage tasks and bills between their members. These functions are important to target groups such as roommates, who need to share household tasks and shared bills. Our target audience expands past roommates as a user base, as our product can be used in project groups who need to organize individual tasks, in planning groups that need to plan events and tasks prepared at specific times, and groups of friends who need to organize who owes what.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="panel panel-default">
-                      <div class="panel-heading"><h3>What problem does it solve?</h3></div>
-                      <div class="panel-body">
-
-                      This application will help solve communication problems between groups of people. For the most part, it will help stop communication problems created by poor scheduling,  poor reminders on due dates, or miscommunications over finances. It will help groups reduce the time needed to communicate with multiple people, reduce misunderstandings on who is assigned what task, and reduce to remember how much each person has spent and owes. Overall, it will help cleanly facilitate group bills and tasks by providing a clean interface to view and assign tasks.
-
-                      </div>
-                    </div>
-                  </div>  
-              	</div>
-              
-              	<hr>
-              
-              	<h2 id="sec2">Tools Set</h2>
-              	<p>
-
-We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs (which will be a large factor over our competitors), is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
--HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.
--JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
--AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend
--Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
--SQL/MySQL: Our data will be very relational, so it makes sense to use a relational database like MySQL. We will then obviously query it using SQL. The data will solely come from user input, as the application is driven around group task management.
--Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. It’s bug tracking system is visual and clear.
-
-
+              	<h2 id="sec1">Design Choices</h2>
+              	<p>A major design decision was around Ruby on Rails. We had to decide between using the full power of Rails—frontend to backend, or, a mix of Rails (backend) and AngularJS on the frontend. We eventually decided on the mixed method because AngularJS has many features that simplify our UI implementation. Here are the main pros and cons of our chosen method:
                 </p>
-              
+                <h4>Pros:</h4>
+	              <ul>
+                 <li> We can better split up the frontend/backend groups, so each can work independently without worrying about the implementation of the other group. This would have been possible in Rails, but we decided it would be easier this way.
+                 </li>
+                 <li>AngularJS allows us to have a MVC on the client side—so as the model updates, the view will instantly be updated.</li>
+                 <li>We still could have used Angular even with using all of Rails, but it would limit the functionality that we could have used from Angular.</li>
+                 <li>Doing a lot more work on the frontend is better because more of us know JavaScript than Ruby. Either way, we felt JavaScript and Angular would be *much* easier to learn than Ruby and Rails.</li> 
+                </ul>
+
+                <h4>Cons:</h4>
+                <ul>
+                  <li> We have two frameworks to learn rather than just one. Since all team members but me (Karthik) are only dealing with frontend *or* backend, they probably would only need to worry about learning one. I would need to learn both because I am connecting the two.</li>
+                  <li> We probably increase the amount of code we have to write, because we now have two sets of models—the databases Events, Users, and Groups, and the parallel AngularJS models. We also have two sets of controllers for Events, Users, and Groups. This will not have a lot of redundant code, because they have very different responsibilities, but it will make the system larger than it would have been otherwise. </li>
+                </ul>
+
               	<hr>
-              
-              	<h2 id="sec3">Frameworks / Libraries</h2>
-      		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
- 
-Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
- 
-From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
-              
-              	<h2 id="sec4">Existing Solutions</h2>
-      			
-                Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
-Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
 
-              
-              	<hr>
-            <h2 id="sec5">Our Solution</h2>
+<p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement these, and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. 
+                </p>
+                <h4>Pros:</h4>
+                <ul>
+                 <li> They would be much simpler for the user, you just check it off when you finish and then it becomes someone else’s turn. We could see this being useful so that people don’t have to worry about dates, and just handle the task when needed. 
+                 </li>
+                </ul>
 
-Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
+                <h4>Cons:</h4>
+                <ul>
+                  <li>It adds a new option to tasks that can be confusing, and we weren’t sure how to fit into the UI both in creating tasks and in the home page.</li>
 
-What are its major features? 
-Our application will provide a method to view all tasks and bills on the calendar. This feature will allow users to filter these tasks and bills and view only certain items, whether it be from only specific groups or only bills. 
-Furthermore, our application will provide a method to allow users to create tasks for themselves and for other users in the group. This task will contain a name, description, and members assigned to it. This create task will give users the ability to assign a task to a certain group with themselves or a specific user. Additionally, the user will be able to assign the task a day of completion, and that’s the date that will appear on the calendar.
-Another feature of our application will be the ability to input bills into the calendar. The bills will act like tasks, with specific users, a name, description, and due date. Additionally, these bills will have a total cost, and an ability to split the bill evenly. If the bill is not split evenly, members can be assigned the specific amount they owe on the bill. 
-Our application will allow users to view a running list of their bills and payments. Depending on implementation, our application will allow users to view bills for the entire group or just bills they owe. Additionally, they will be able to view how much they owe an individual person.
-The main feature we have in mind is an ability for users to cycle through tasks and to-dos. This feature will be group focused. Users will have a specific task that will be passed to other users in the group after they have completed the task.
-A possible stretch figure we have considered is an ability to send email notifications when a new event has been posted. Additionally, these email notifications could be sent on the day of an event to remind the user what events they have due that day. 
-Another possible stretch feature is an ability for users to manage their groups. Currently, groups can be created and new members can be added by anyone in the group. A stretch feature would be the possibility to limit adding people to a group to the person who created the group, and adding more admin capabilities over their groups.
-One more possible stretch feature would be to implement different views on the interface. Currently, we are planning one view in calendar format and another view for the bills. For stretch features, we could implement more list views and views on group calendars.                 
-                
-              
+                </ul>
+
+
+
                 <hr>
+                <h2 id="sec2">Risk Assessment</h2>
+                <h3>1. Keeping up with our schedule and finish all our core features in time</h3>
+                <p>This risk has a medium likelihood of occurring. Scheduling and timing is going to be an issue in any project but I feel like we have split our project up well and done a good job providing ourselves with a reasonable schedule. So if we stick to that we can greatly reduce the risk. The impact would be very high if it occurred, as falling behind schedule pushes everything else back, which can have a landslide effect and cause us to either have to cut features or not finish in time. We based our schedule on past experiences creating a web page and how complex we think each part will be. It will be easier to estimate after we have some actual code finished. Then we can adjust our schedule if needed to better estimate our time, which will help reduce the risk of falling behind schedule.</p>
 
+                <h3>2. Keeping backend synched with frontend</h3>
+                <p>The risk of here is not being able to synch the backend and frontend. That can either happen if we are not working on the same parts at the same time, or if the code is written in a way that we can’t connect the two. The risk of this happening is low because while we don’t always meet as a whole group, but at the same time we have a schedule we are all following so we should all be on the same page. And Karthik meets with both to make sure that everything is connected and going according to plan. If it does happen though, the impact will be quite high as we may have to go back and redo our code to integrate the parts because our app won’t work if the two parts don’t connect right. So to reduce the risk, we are making sure we have good team communication through weekly team meetings, talking through facebook and email, and Karthik checking both sides.</p>
+
+
+                <h3>3. Keep UI simple and useable, but still functional</h3>
+                <p>The risk is that we might go too far in one direction. We can potentially make the UI way too simple and not having enough functionality for users to use our application to manage their group easily. We also might make the application way too complex, during planning we often have new ideas, new features we could add, so we have to pay attention to the feature creep problem. We need to have a good balance between the two, and could be difficult. Especially because we are biased because this is our product, it is easy for us to think a UI is simple to use when it actually isn’t. The impact of this is medium, because the app will still have all of its features available, but it will just look different confusing and uninviting. Depending on how simple or how complex it is, it can push some users away from using our app. To try and reduce this risk, it is important for us to keep having customer meetings because that is a great way to get an outside opinion on our UI. Once we have a working UI, we can also use hallway usability tests to see what new users think of our UI. </p>
+
+                <h3>4. Have everyone work close enough to help each other, but on separate tasks for efficiency</h3>
+                <p>The risk is that we may not balance between the two well. For instance, if we always work together as a group, where all seven of us are sitting together, we might not get as much done because we will end up all working on the same part of our product. On the other hand, if we always work individually and just merge everyone’s work, we might not be able to understand each other’s work and merging becomes difficult. If we don’t understand other’s work, it is impossible to understand the product as a whole. It also increase the difficulty of debugging other’s code. The likelihood of this occurring is low, as we have separated into smaller groups to do group work, and also assign task for everyone to work on individually. On the other hand, we also have regular group meeting for everyone to communicate with the whole group. In other words, we have been using an approach that deals with this problem. The impact of this risk is medium, especially later in the development process since as the project grow, it is harder to understand what other did in the past. To detect this, we will have weekly meetings where everyone will talk briefly about what they think others have done. If someone is clearly not understanding the group progress, we need to get everyone up to date by showing each other what we have done. Also, we need to adjust our meetings to make communication more clear and efficient. </p>
+
+
+                <h3>5. Create variety of options for events to be simple but fit all needs of user</h3>
+                <p>This is a pretty big risk for us because we are trying to add enough features to meet the needs of our users, such as tasks or bills that may not always have a date. Or repeating/cycle tasks like taking out the trash or getting milk which may not always have a set date. But depending on how we implement these features, it can be extremely cluttered and difficult for the user to use. The create event feature would be extremely complex with too many options and unfriendly to users. So the impact is high because this is one of our most important features that differentiates our app from other similar ones. So we need to add these features in a way that is easy to use and understandable to the user, but also helpful. To reduce the risk here we need to do a lot of user testing through customer meetings and hallway usability tests specifically for this portion of our app. 
+                <br><br>
+                Our risks are pretty similar to the risks we had from the SRS, except now we have some more specific risks because we know more about our app. Timing and integration between frontend and backend are always going to be risks that can have a huge impact on the project throughout the whole entire process. But now that we have spent more time working on the UI and making design decisions according to feedback from customers, we better understand what will be difficult and is a high risk for the project. We know that the events cycling will be difficult, but necessary, and also understand that creating a simple, usable UI that is pleasing to users is difficult.</p>
+
+
+              	<hr>
+              
+
+                <h2 id="sec3">Test Plans</h2>
+                <ul>
+                  <li><h3>Unit Test Strategy</h3>
+                    <ul>
+                      <li>The unit tests will test most (not all as small private functions may be tested as part of other functions) functions in a black box and glass box way.</li>
+                      <li>Ruby on Rails provides an integrated unit testing system so making tests will not be very complicated, the tests will be written by the developer of the function. We will not write major functions without testing them thoroughly. Here is a good reference tutorial and style guide to follow: http://guides.rubyonrails.org/testing.html for the specifics of how we would unit test controllers in Ruby.</li>
+                      <li>AngularJS (frontend) also provides a unit testing system. It is a little more complicated because it deals with simulating certain events, but we plan to follow a similar strategy. The major controller functions and model functions will be tested in parallel with developing them. Here is a good reference tutorial we will use: https://docs.angularjs.org/guide/unit-testing for the specifics on how testing works in Angular.</li>
+                      <li>We plan to create test usually while developing a class so testing should be done once a function is done. We will require that before pushing code to the master branch, all of their test code must pass and seen by at least one team member. No automation system seems necessary at the moment--we can just run the tests before pushing. </li>
+                      <li>In general, we may not have the backend implemented at the same time as the frontend (and vice versa), so we will likely hardcode dummy JSON objects on both ends to use for testing, and actually connect them during system testing. </li>
+                    </ul>
+                  </li>
+                  <li><h3>System Test Strategy</h3>
+                    <ul>
+                      <li>The system test will test the integration of composite classes and the connection between the backend and frontend. While unit tests on each end used dummy JSON values, now we will actually allow the frontend and backend to communicate over the wire. These tests will mainly check that this communication works correctly. </li>
+                      <li>We will mainly do systems testing on the frontend. We can use similar (or even the same) tests from the unit tests, and now ensure that sending/receiving data on the frontend and backend work correctly.</li>
+                      <li>We will do system tests after every major component (e.g. viewing and creating events) is done both on the frontend and backend. Again, we are not going to use automation testing. </li>
+                    </ul>
+                  </li>
+                  <li><h3>Usability Test Strategy</h3>
+                  <ul>
+                    <li>We will mainly focus on hallway usability testing, because we have a limited amount of time for the project. Our strategy will be to identify major components of the UI we need feedback (as we are designing them), just like the paper prototype, and try to ask specific questions of the random people we find. </li>
+                    <li>This will mostly give us feedback specifically on whether is a component is *simple and intuitive*, but will not give us feedback on whether higher level ideas components like “automatically splitting bills evenly” is useful or will be used a lot. </li>
+                    <li>This will be done while developing. We plan to develop the product in a sequential way--implement the high level features one at a time together. Then, when a use case is completely finished (or at least the UI portion), we will try to grab people to try the system to see if it is usable. </li>
+                  </ul>
+                  </li>
+                  <li><h3>Bug Tracking</h3>
+                    <p>We will be using GitHub’s issue tracker, any issue not merged yet will be dealt with in pull request but any bug found after merging will be posted on the tracker. We will essentially follow the guidelines from class today and Joel’s blog--find bugs early (testing), fix bugs early (don’t forget about them), and formally keep track of bugs (Git). </p>
+                  </li>
+                </ul>
+
+
+              <h2 id="sec3">Coding Style Guidelines</h2>
+              <p>We have HTML/CSS, AngularJS/JavaScript, and Ruby On Rails, they follow the guidelines below</p>
+                <ul>
+                 <li><h5>HTML/CSS we will be using the google HTML/CSS guidelines</h5>
+                 <p><a href="https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml">https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml</a><br>
+                  There are many other posts expanding on each of those points, in addition to that we should look over CSS best-practices which optimize browser rendering in this page here: <br><a href="https://developers.google.com/speed/docs/best-practices/rendering">https://developers.google.com/speed/docs/best-practices/rendering</a><br>
+                  For HTML and CSS there are validators like <a href="http://validator.w3.org/">http://validator.w3.org/</a> that can validate HTML and CSS, stylewise we got options like CSS Lint http://csslint.net/ but of course code review by other group mates would be able to check consistency with the google style guide.</p>
+                 </li>
+
+
+                 <li><h5>JavaScript and AngularJS, we again will be using the google style guide, we use the basic  JS </h5>
+                 <p><a href="http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml">http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml</a><br> and in additional to that we have our AngularJS which expanded on the JS guide, <br><a href="https://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html">https://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html</a><br>
+                 I couldn’t find a style checker for google  style JS, but we will be using this JS Lint<br> <a href="http://www.jslint.com/">http://www.jslint.com/</a> we will be using that and also code review by teamates.</p>
+                 </li>
+
+                 <li><h5>Ruby on rails</h5>
+                 <p>RoR doesn’t have a style guide from google or other major source, but we do have style guide for rails and for ruby, so we will be using these two from github <br><a href="https://github.com/bbatsov/ruby-style-guide">https://github.com/bbatsov/ruby-style-guide</a><br>and we have a ruby static code analyzer from the same person which can enforce these styles <br><a href="https://github.com/bbatsov/rubocop">https://github.com/bbatsov/rubocop</a><br>
+                 Overall we have to code review each other’s code, we are all pretty new the these new frameworks so when we look and understand each other’s code we also learn more about the language itself too.
+</p>
+                 </li>
+
+
+
+
+
+
+
+
+
+                </ul>
       		</div> 
   	</div>
 </div>

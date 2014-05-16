@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   match '/user',        to: 'sessions#user',       via: 'get'
   match '/help',        to: 'static_pages#help',   via: 'get'
   match '/update_user', to: 'users#update',        via: 'post'
-  match '/edit_user',   to: 'users#edit',          via: 'post'
+  #match '/edit_user',   to: 'users#edit',          via: 'post'
   #match '/settings',    to: 'static_pages#settings',      via: 'get'
  
   # user
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   match '/add_to_group', to: 'groups#invitetogroup', via: 'post'
 
   match '/create_bill', to: 'bills#new', via: 'post'
-  match '/get_bills', to: 'bills#get_all',   via: 'get'
+  match '/get_bills', to: 'bills#get_bills',   via: 'get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

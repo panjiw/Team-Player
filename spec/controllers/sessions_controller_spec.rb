@@ -8,10 +8,6 @@ require 'spec_helper'
 
 describe SessionsController do
 
-# match '/sign_in',     to: 'sessions#create',     via: 'post'
-# match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
-# match '/user',        to: 'sessions#user',       via: 'get'
-
 # create
 context 'logining in the user' do
     

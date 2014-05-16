@@ -129,51 +129,57 @@
 
               	<hr>
               
-              	<h2 id="sec2">Tools Set</h2>
+              	<h2 id="sec2">Test Instruction</h2>
               	<p>
-
-We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs (which will be a large factor over our competitors), is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
--HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.
--JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
--AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend
--Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
--SQL/MySQL: Our data will be very relational, so it makes sense to use a relational database like MySQL. We will then obviously query it using SQL. The data will solely come from user input, as the application is driven around group task management.
--Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. It’s bug tracking system is visual and clear.
-
+The tests provided for the software are in the spec folder. At the moement, these tests cover our backend implementation, and utilize RSpec. 
+After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command <br> 
+<code>bundle exec rspec spec/</code><br>
+This will run all the tests and output the results, more information about RSpec follow this link <a href="http://rubydoc.info/gems/rspec-rails/frames">http://rubydoc.info/gems/rspec-rails/frames</a>
 
                 </p>
               
               	<hr>
               
-              	<h2 id="sec3">Frameworks / Libraries</h2>
-      		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
+              	<h2 id="sec3">View/Report Bugs</h2>
+                <p>We have a list of bugs/issues both open and closed publicly on this page <br><br>
+                <a href="https://github.com/panjiw/Team-Player/issues">https://github.com/panjiw/Team-Player/issues</a>
+                </br><br>
+                If you have a bug to report, you can either use the above link and post an issue with a github account
+                or you can email us at kronoschronus (at) googlegroups.com. <br>
+                Remember to list the steps we need to reproduce this bug, and other informations such as what were you trying to do to reach this 
+                problem? and system info like what browser you were using and how long you been using your account. 
  
-Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
- 
-From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
-              
-              	<h2 id="sec4">Existing Solutions</h2>
+                </p>
+
+              	<h2 id="sec4">Release new verion</h2>
       			
-                Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
-Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
+                Releases will be facilitated by GitHub’s release system. In-depth information on releasing software can be viewed on <br><a href="https://help.github.com/articles/creating-releases">https://help.github.com/articles/creating-releases</a>.<br> When releasing a new version of software, updates and fixes will be documented with the release. Additionally, branch information and version numbers will also be documented with the release. <br>
+                Releases for our software can be found and downloaded from <br><a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br>  New releases will be deployed through Heroku web services. For the first deployment, the developer should call “heroku create”. Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer will deploy their repository with “git push heroku master”. More information on how Heroku deploys releases can be found on <br><a href="https://devcenter.heroku.com/articles/releases">https://devcenter.heroku.com/articles/releases</a>. 
 
               
               	<hr>
-            <h2 id="sec5">Our Solution</h2>
+            <h2 id="sec5">File Structure</h2>
+    <p>The directory structure is created for Ruby on Rails applications, so we have the standard Ruby on Rails structure. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, I.E. bundle and rails files, but not necessary to edit for development. For further information on what those files contain, <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm</a> </p>
+<ul>
+  <li>root folder: contains gems and rake files for Ruby</li>
+  <li><ul>
+    <li>app: contains the application code, our backend ruby code and front end views. The subfolders include: assets, controllers, helpers, mailers, and models; contain code relevant to each of those subsections, I.E. the models for our user data will be stored in the model subfolder. The view folder contains the main front-end web files. </li>
+    <li>config: contains the environment and key configuration for the product. </li>
+    <li>db: contains the main backend data files in the database. </li>
+    <li>devfiles: Contains front end development code. Includes Calendar front end  code, style sheets, and html view pages.</li>
+    <li>public: contains public HTML documents (I.E. 404 page)</li>
+    <li>spec: contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.</li>
+  </ul></li>
+  <li>Documentation for the code can be found from the README in the main directory.</li>
+</ul>
+
+                <hr>
+
+
+            <h2 id="sec6">Publishing To Heroku</h2>
 
 Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
 
-What are its major features? 
-Our application will provide a method to view all tasks and bills on the calendar. This feature will allow users to filter these tasks and bills and view only certain items, whether it be from only specific groups or only bills. 
-Furthermore, our application will provide a method to allow users to create tasks for themselves and for other users in the group. This task will contain a name, description, and members assigned to it. This create task will give users the ability to assign a task to a certain group with themselves or a specific user. Additionally, the user will be able to assign the task a day of completion, and that’s the date that will appear on the calendar.
-Another feature of our application will be the ability to input bills into the calendar. The bills will act like tasks, with specific users, a name, description, and due date. Additionally, these bills will have a total cost, and an ability to split the bill evenly. If the bill is not split evenly, members can be assigned the specific amount they owe on the bill. 
-Our application will allow users to view a running list of their bills and payments. Depending on implementation, our application will allow users to view bills for the entire group or just bills they owe. Additionally, they will be able to view how much they owe an individual person.
-The main feature we have in mind is an ability for users to cycle through tasks and to-dos. This feature will be group focused. Users will have a specific task that will be passed to other users in the group after they have completed the task.
-A possible stretch figure we have considered is an ability to send email notifications when a new event has been posted. Additionally, these email notifications could be sent on the day of an event to remind the user what events they have due that day. 
-Another possible stretch feature is an ability for users to manage their groups. Currently, groups can be created and new members can be added by anyone in the group. A stretch feature would be the possibility to limit adding people to a group to the person who created the group, and adding more admin capabilities over their groups.
-One more possible stretch feature would be to implement different views on the interface. Currently, we are planning one view in calendar format and another view for the bills. For stretch features, we could implement more list views and views on group calendars.                 
-                
-              
                 <hr>
 
       		</div> 
