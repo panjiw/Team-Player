@@ -14,7 +14,27 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskDateDue = "";
     $scope.newTaskMembers = {};
     $scope.newTaskCycle = false;
-    $scope.newTaskRepostArray = [];
+    $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
+  }
+
+  $scope.prt = function(){
+    filterUnchecked();
+    console.log("$scope.newTaskGroup", $scope.newTaskGroup);
+    console.log("$scope.newTaskTitle", $scope.newTaskTitle);
+    console.log("$scope.newTaskDescription", $scope.newTaskDescription);
+    console.log("$scope.newTaskDateDue", $scope.newTaskDateDue);
+    console.log("$scope.newTaskMembers", $scope.newTaskMembers);
+    console.log("$scope.newTaskCycle", $scope.newTaskCycle);
+    console.log("$scope.newTaskRepostArray", $scope.newTaskRepostArray);
+  }
+
+  function filterUnchecked(){
+    $scope.newTaskMembers = [];
+    for(var index in $scope.currentMembers){
+      if($scope.currentMembers[index].chked){
+        $scope.newTaskMembers[index] = $scope.currentMembers[index];
+      }
+    }
   }
 
   initNewTaskData();
@@ -38,6 +58,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
     console.log('group selected');
     $scope.currentMembers = $scope.newTaskGroup.members;
+    console.log("currentMembers, ", $scope.currentMembers);
   });
  
   $scope.openModal = function(e){
@@ -55,9 +76,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.testingSendID = function(e){
 
-    $.post("/task_id", // <<----- url can be changed.
+    $.post("/run_generator", // <<----- url can be changed.
     {
-      "task[task_id]": 2 // <-- change it as you like
+      "task[id]": 20 // <-- change it as you like
 
     })
     .success(function(data, status) { // on success, there will be message to console

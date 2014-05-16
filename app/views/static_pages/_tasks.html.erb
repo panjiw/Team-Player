@@ -20,35 +20,67 @@
                     </div>
                     <div class="modal-body tasks-add-body">
                         <div class="col-md-5">
-                        <h5>Name:</h5><input type="text" ng-model="newTaskTitle"/>
-                            <h5>Description:</h5>
-                              <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
-                            <h5>Group:</h5>
-                            <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList">
-                            <option value="">-- choose group --</option>
-                        </select>
-                            <h5>Members:</h5>
-                            <div id="members">
-                              <div ng-repeat="member in addTask_members">
-                                {{member}}
+                          <h5>Name:</h5><input type="text" ng-model="newTaskTitle"/>
+                          <h5>Description:</h5>
+                          <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
+
+                          <div class="tasks-duedate">
+                              <input type="checkbox" class="large" data-label="Cycle" ng-model="newTaskCycle"/>
+                              <span>Cyclic Task</span><br>
+
+                              <input type="checkbox" class="large" data-label="Deadline" 
+                              ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
+                              <span>No Due Date</span>
+                              <input type="date" ng-hide="noDue" ng-model="newTaskDateDue"
+                              min="2014-01-01" max="2113-01-01"/>
+                              <br>
+
+                              
+
+                              <div ng-hide="noDue" id="repeat_options">
+                                <input type="checkbox" class="large" ng-model="taskRepeat"/>
+                                <span>Repeat Weekly</span><br>
+                                <div ng-show="taskRepeat">
+                                  <input type="checkbox" ng-model="newTaskRepostArray[0]"/>
+                                  <span>Sun  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[1]"/>
+                                  <span>Mon  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[2]"/>
+                                  <span>Tue  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[3]"/>
+                                  <span>Wed  </span><br>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[4]"/>
+                                  <span>Thur  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[5]"/>
+                                  <span>Fri  </span>
+                                  <input type="checkbox" ng-model="newTaskRepostArray[6]"/>
+                                  <span>Sat  </span>
+                                </div>
                               </div>
-                            </div>
-                            <input type="text" ng-model="newMember" 
-                              ng-keypress="addMember($event)" placeholder="member username" />
+                          </div>
+
+                            
                         </div>
                         <div class="col-md-6">
-                          <div class="tasks-duedate">
-                            <input type="checkbox" class="large" data-label="Deadline"/>
-                            <span>No Due Date</span>
-                            <div class="tasks-calendar">Calendar here</div>
-                            <input type="checkbox" class="large" data-label="Cycle"/>
-                            <span>Cyclic Task</span><br>
-                          </div>
-                      </div>
+                          <h5>Group:</h5>
+                            <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList">
+                            <option value="">-- choose group --</option>
+                            </select>
+                            <h5>Members</h5>
+                            <div id="members">
+                              <ul ui-sortable ng-model="currentMembers">
+                                <li ng-repeat="mem in currentMembers">
+                                  <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
+                                  <span style="float:left;">{{mem.username}}</span>
+                                  <div style="clear: both;"></div>
+                                </li>
+                              </ul>
+                            </div>
+                        </div>
                   </div>
                   <div class="modal-footer">
                     <button class="btn" data-dismiss="modal">Cancel</button>
-                        <button class="btn" data-dismiss="modal">Save</button>
+                        <button class="btn" data-dismiss="modal" ng-click="prt()">Save</button>
                   </div>
                 </div>
               </div>
