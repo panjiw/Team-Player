@@ -159,15 +159,15 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     });
   };
 
-
+  // create a bill from user input
   $scope.createBill = function(e) {
-    // dummy bill data:
-    // var groupID = 57;
-    // var title = "bill_title 3";
-    // var description = "bill_description! 3";
-    // var dateDue = new Date();
-    // var total = 30;
-    // var membersAmountMap = {1:4, 3:6, 4:20};
+    // first perform an empty field check
+    if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
+      && $scope.newBillDescription && $scope.membersAmountMap.length > 0)) {
+      e.preventDefault();
+      toastr.error("Empty fields");
+      return;
+    }
 
     var groupID = $scope.newBillGroup.id;
     var title = $scope.newBillTitle;
@@ -184,6 +184,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           buildBills();
         });
+        toastr.success("bill created!");
       }
     });
 

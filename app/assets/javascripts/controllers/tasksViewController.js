@@ -150,6 +150,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.createTask = function(e){
     filterUnchecked();
 
+    // first perform an empty field check
+    if(!($scope.newTaskGroup && $scope.newTaskTitle 
+      && $scope.newTaskDescription && $scope.newTaskMembers.length > 0)) {
+      e.preventDefault();
+      toastr.error("Empty fields");
+      return;
+    }
+
     function callback(error){
       if(error){
       //TODO
@@ -157,6 +165,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.$apply(function(){
           buildTasks();
         });
+        toastr.success("task created!");
       }
     };
 
