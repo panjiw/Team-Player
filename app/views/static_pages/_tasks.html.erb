@@ -31,8 +31,6 @@
                               min="2014-01-01" max="2113-01-01"/>
                               <br>
 
-                              
-
                               <div ng-hide="noDue" id="repeat_options">
                                 <input type="checkbox" class="large" ng-model="taskRepeat"/>
                                 <span>Repeat Weekly</span><br>
@@ -76,7 +74,7 @@
                   </div>
                   <div class="modal-footer">
                     <button class="btn" data-dismiss="modal">Cancel</button>
-                        <button class="btn" data-dismiss="modal">Save</button>
+                        <button class="btn" data-dismiss="modal" ng-click="createTask($event)">Save</button>
                   </div>
                 </div>
               </div>
