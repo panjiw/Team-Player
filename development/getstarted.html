@@ -147,13 +147,14 @@
                 <p>
                 To set up an automated daily build and test, developers will need to find a system to run the test suite above in automation. To run automated daily builds and tests, users will need to run “bundle exec rspec spec/” and “rake jasmine” in automation.
                 <p></p>
-                We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins windows installations</a>.
+                We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins..</a>.
                 <ol>
-                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
+                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins">Jenkins Installation Guide</a> to do this.</li>
                   <li>Set the product to deploy daily through. We are currently using a local host, which is subjected to change.</li>
                   <li>We set up email notifications when the build fails.</li>
-                  <li> In order to rub our test suite, we built the product with a windows batch command with the test automation command <code>bundle exec rspec spec/</code> </li>
+                  <li> In order to rub our test suite, we built the product with batch command with the test automation command <code>bundle exec rspec spec/ RAILS_ENV=test bundle exec rake spec:javascript</code> </li>
                   <li>For front-end tests, we will use another windows batch command of <code>rake jasmine</code> </li>
+				  <li>Our integration tests are through the commands listed above. </li>
                   <li>And to run ruby through Jenkins, we needed to add ruby’s PATH file to Jenkin’s environment. </li>
                  </ol>
                  <br>
