@@ -20,10 +20,10 @@
 <h3>Current Release</h3>
 <hr>
 Our current release (beta) provides the following functionalities:
-<ul><li>Successful Sign In
-account creation, the user has a self group so they can create tasks for just
-     themselves. They will not be able to modify this group.
-- User Sign-in, Sessions, Sign-out
+<ul><li>Successful account creation</li>
+<ul><li>the user has a self group so they can create tasks for just
+     themselves. They will not be able to modify this group.</li></ul>
+<li>User sign-in, sessions, sign-out</li>
 <li>New group creation + member addition</li>
    <ul><li>Users can create new groups and add members to them by email</li></ul>
 <li>Add and view tasks + bills</li>
