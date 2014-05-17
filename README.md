@@ -8,14 +8,14 @@
 	TeamPlayer is a web application for group task management and bill splitting. 
 	
 	Developed as a project for UW CSE 403 by: 
-		- Karthik Palaniappan(karth295)
-		- Ki Yeung(kyeungk)
-		- Linsen Wu(linsenwu)
-		- Tiffany Lin(lintiff)
-		- Tsz Fung Cheung(tfcheung)
-		- Micaela Tolliver(mictol42)
-		- Panji Wisesa(panjiw)
-	
+		- Karthik Palaniappan (karth295)
+		- Ki Yeung (kyeungk)
+		- Linsen Wu (linsenwu)
+		- Tiffany Lin (lintiff)
+		- Tsz Fung Cheung (tfcheung)
+		- Micaela Tolliver (mictol42)
+		- Panji Wisesa (panjiw)
+	 
 
 <h3>Current Release</h3>
 <hr>
@@ -37,8 +37,7 @@ Our current release (beta) provides the following functionalities:
 
 <h3>User Documentation</h3>
 <hr>
-New and curious users can read more about TeamPlayer through our <a href="https://team-player.herokuapp.com/">User Documentation</a> or get help through our <a href="https://team-player.herokuapp.com/">FAQ</a>.
-
+New and curious users can read more about TeamPlayer through our <a href="documentation/"></a>
 
 
 <h3>Developer Documentation</h3>
