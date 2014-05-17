@@ -37,7 +37,7 @@ Our current release (beta) provides the following functionalities:
 
 <h3>User Documentation</h3>
 <hr>
-New and curious users can read more about TeamPlayer through our <a href="documentation/Zero_Feature_Release/ZFR-UserDocumentation.html">user documentation</a>
+New and curious users can read more about TeamPlayer through our <a href="documentation/Zero_Feature_Release/ZFR-UserDocumentation/ZFRUserDocumentation.html">user documentation</a>
 
 
 <h3>Developer Documentation</h3>
