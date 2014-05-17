@@ -138,7 +138,7 @@ describe 'Task Generator data:' do
     # Task
     describe "when the task is not valid" do
       before {
-        @tactor1.task_id = 2
+        @tactor1.task_generator_id = 2
         @tactor1.save
       }
       it { should_not be_valid }
