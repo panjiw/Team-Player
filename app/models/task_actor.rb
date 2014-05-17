@@ -1,3 +1,9 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the Task actors (users involved in the task)
+#
+
 class TaskActor < ActiveRecord::Base
   # one - has many (task actor) relationship
   belongs_to :task
@@ -15,6 +21,7 @@ class TaskActor < ActiveRecord::Base
 
   # validates whether the member is in the group
   def user_in_group?
+    return unless errors.blank?
     if !task.group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group of the task")
     end

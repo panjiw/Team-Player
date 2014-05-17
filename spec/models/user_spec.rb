@@ -22,7 +22,6 @@ describe User do
   it { should respond_to(:groups) }
   it { should respond_to(:memberships) }
   it { should respond_to(:groups) }
-  it { should respond_to(:member?) }
   it { should respond_to(:member!) }
 
 
