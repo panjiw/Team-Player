@@ -1,3 +1,10 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the cycling/repeating task actors
+# (users involved in the task)
+#
+
 class TaskGeneratorActor < ActiveRecord::Base
   # one - has many (task generator actor) relationship
   belongs_to :task_generator
@@ -15,6 +22,7 @@ class TaskGeneratorActor < ActiveRecord::Base
 
   # validates whether the member is in the group
   def user_in_group?
+    return unless errors.blank?
     if !task_generator.group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group of the task generator")
     end

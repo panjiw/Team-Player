@@ -1,4 +1,8 @@
-# User model, saves uer data to db
+#
+# TeamPlayer -- 2014
+#
+# Models a Team Player user
+#
 class User < ActiveRecord::Base
 
   # group - user, many-many relation

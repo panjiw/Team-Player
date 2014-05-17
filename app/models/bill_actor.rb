@@ -1,3 +1,9 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the Bill actors (users involved in the bill)
+#
+
 class BillActor < ActiveRecord::Base
   # one - has many (bill actor) relationship
   belongs_to :bill
@@ -13,6 +19,10 @@ class BillActor < ActiveRecord::Base
   validates :paid, :inclusion => {:in => [true, false]}
   # member must be in the group
   validate :user_in_group?
+
+  # paid_date is set internally and there's really
+  # no restriction except the ones from the Ruby Date class
+  # so no validation needed
 
   # validates whether the member is in the group
   def user_in_group?

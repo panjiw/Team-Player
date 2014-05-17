@@ -1,3 +1,9 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the specifications needed to create cycling/repeating tasks
+#
+
 class TaskGenerator < ActiveRecord::Base
   # one - has many (task generator) relationship
   belongs_to :group
@@ -31,17 +37,22 @@ class TaskGenerator < ActiveRecord::Base
   # users that are members are not checked whether they're
   # assigned twice as they are listed as keys in a map
 
+  # due_date isn't checked cause there could be no due date
+
   # behavior
   # cycle -> cycle current actor
   # repeat -> determines the next date (based on date) of the next task
-  # cycle + no repeat -> a to-do, must have no due date
-  # cycle + repeat -> a due date will be based on the nearest day
-  #                   on repeat that the generator is called
-  # no cycle + repeat -> same as above but the user doesn't change
+  # cycle + no repeat & due date -> a to-do, must have no due date
+  # with due dates:
+  # cycle + repeat -> the due date will be based on the nearest day
+  #                   on repeat that the generator is called or at first
+  #                   the due date given
+  # no cycle + repeat -> same as above but the actor doesn't change
   # no cycle + no repeat -> you're not supposed to be here
 
   # validates whether the creator is in the group
   def creator_in_group?
+    return unless errors.blank?
     if !group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group")
     end
