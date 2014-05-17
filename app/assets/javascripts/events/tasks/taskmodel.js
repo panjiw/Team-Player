@@ -124,7 +124,7 @@ angular.module("myapp").factory('TaskModel', function() {
       "task[group_id]": groupID,
       "task[title]": name,
       "task[description]": description,
-      // "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
+      "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
       "task[members]": members,
       "task[cycle]": cycle,
       "task[repeat_days]": repostArray,
