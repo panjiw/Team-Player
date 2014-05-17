@@ -128,6 +128,46 @@ describe 'Task Generator data:' do
     end
   end
   describe TaskGeneratorActor do
+    subject {@tactor1}
 
+    it { should respond_to(:task_id) }
+    it { should respond_to(:user_id) }
+    it { should respond_to(:order) }
+    it { should be_valid }
+
+    # Task
+    describe "when the task is not valid" do
+      before {
+        @tactor1.task_id = 2
+        @tactor1.save
+      }
+      it { should_not be_valid }
+    end
+
+    # Member
+    describe "when the member is not valid" do
+      before {
+        @tactor1.user_id = 4
+        @tactor1.save
+      }
+      it { should_not be_valid }
+    end
+
+    describe "when the member is not in the group" do
+      before {
+        @tactor1.user_id = 3
+        @tactor1.save
+      }
+      it { should_not be_valid }
+    end
+
+    # Order
+    describe "when there's no order" do
+      before {
+        @tactor1.order = nil
+        @tactor1.save
+      }
+      it { should_not be_valid }
+    end
   end
 end
