@@ -50,15 +50,31 @@ class GroupsController < ApplicationController
   def invitetogroup
     group = Group.find(params[:invite][:gid])
     user = User.where("email = ?", params[:invite][:email].downcase)
-
+    error = []
+    flag = false
     if !User.member?(current_user, group)
-      render :json => {:errors => {"message" => "you not in group"}}, :status => 400
-    elsif user.empty?
-      render :json => {:errors => {"message" => "user not found"}}, :status => 400
-    elsif group.self
-      render :json => {:errors => {"message" => "Can not add to self group"}}, :status => 400
-    elsif User.member?(user, group)
-      render :json => {:errors => {"message" => "User already in group"}}, :status => 400
+      flag = true
+      error << "You not in group, no permission"
+      # render :json => {:errors => {"message" => "you not in group"}}, :status => 400
+    end
+    if user.empty?
+      flag = true
+      error << "User not found"
+      #render :json => {:errors => {"message" => "user not found"}}, :status => 400
+    end
+    if group.self
+      flag = true
+      error << "Can not add to self group"
+      #render :json => {:errors => {"message" => "Can not add to self group"}}, :status => 400
+    end
+    if User.member?(user, group)
+      flag = true
+      error << "User already in group"
+      #render :json => {:errors => {"message" => "User already in group"}}, :status => 400
+    end
+
+    if flag
+      render :json => {:errors => error}, :status => 400
     else
       group.users << user
       render :json => group.users, :status => 200
