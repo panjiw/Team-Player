@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
   }
 
   # true if user is in group
-  def member?(other_group)
-    !(memberships.find_by(group: other_group).nil?)
+  def self.member?(user, other_group)
+    !(Membership.find_by(user: user, group: other_group).nil?)
   end
 
   # given group, user will join group

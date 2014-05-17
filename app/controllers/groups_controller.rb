@@ -48,15 +48,20 @@ class GroupsController < ApplicationController
 
   # invite user to group, give email to identify user, and gid to identify group
   def invitetogroup
-    @group = Group.find(params[:invite][:gid])
-    @user = User.where("email = ?", params[:invite][:email].downcase)
+    group = Group.find(params[:invite][:gid])
+    user = User.where("email = ?", params[:invite][:email].downcase)
 
-    if current_user.member?(@group) && !@user.nil? && !@group.self 
-       @group.users << @user
-       render :json => @group.users, :status => 200
+    if !User.member?(current_user, group)
+      render :json => {:errors => {"message" => "you not in group"}}, :status => 400
+    elsif user.empty?
+      render :json => {:errors => {"message" => "user not found"}}, :status => 400
+    elsif group.self
+      render :json => {:errors => {"message" => "Can not add to self group"}}, :status => 400
+    elsif User.member?(user, group)
+      render :json => {:errors => {"message" => "User already in group"}}, :status => 400
     else
-       #render :json => {:errors => {"message" = "you not in group or no user"}}, 
-       render :status => 400
+      group.users << user
+      render :json => group.users, :status => 200
     end
   end
 
