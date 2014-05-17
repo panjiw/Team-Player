@@ -8,7 +8,7 @@ class BillActor < ActiveRecord::Base
   # member (user) must be an actual user
   validates :user, existence: { :allow_nil => false }
   # due is in cents and must be greater than 0
-  validates :due, numericality: { greater_than: 0 }
+  validates :due, numericality: { greater_than_or_equal_to: 0 }
   # paid must be present boolean
   validates :paid, :inclusion => {:in => [true, false]}
   # member must be in the group

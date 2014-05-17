@@ -35,16 +35,18 @@ class GroupsController < ApplicationController
     end
   end
 
-  # view all the members in the given group by gid
-  def viewmembers
-    @group = Group.find(params[:view][:id])
-    if current_user.member?(@group)
-       render :json => {:groups =>  @group.users}, :status => 200
-    else
-       #render :json => {:errors => {"message" = "you not in group"}}, 
-       render :status => 400
-    end
-  end
+  # implemented in a different controller
+
+  # # view all the members in the given group by gid
+  # def viewmembers
+  #   @group = Group.find(params[:view][:id])
+  #   if current_user.member?(@group)
+  #      render :json => {:groups =>  @group.users}, :status => 200
+  #   else
+  #      #render :json => {:errors => {"message" = "you not in group"}}, 
+  #      render :status => 400
+  #   end
+  # end
 
   # invite user to group, give email to identify user, and gid to identify group
   def invitetogroup
