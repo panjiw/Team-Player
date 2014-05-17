@@ -24,6 +24,10 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.updateGroup = function(group) {
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
                                               group.creator, new Date(group.dateCreated), group.users);
+    for(var index in group.users) {
+      console.log("update 1 user: " , group.users[index])
+      UserModel.updateUser(group.users[index]);
+    }
   }
 
   GroupModel.checkByEmail = function(email, callback) {
@@ -46,10 +50,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
         for(var i = 0; i < data.length; i++) {
           GroupModel.updateGroup(data[i]);
           console.log("update users: ",data[i].users);
-          for(var index in data[i].users) {
-            console.log("update 1 user: " , data[i].users[index])
-            UserModel.updateUser(data[i].users[index]);
-          }
         }
         GroupModel.fetchedGroups = true;
         console.log("model success");

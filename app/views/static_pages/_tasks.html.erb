@@ -106,6 +106,7 @@
               <span>Due Date: {{task.dueDate}}</span><br>
               <span>Group: {{task.groupName}}</span><br>
               <span>Participating Members: {{task.members}}</span><br>
+              <span>Done: {{task.done}}</span><br />
             </div>
             <div class="selected-buttons">
               <button class="btn btn-default">Edit</button>
@@ -152,7 +153,7 @@
             </div>
 
  -->
-              <button class="btn btn-default">Completed</button>
+              <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
             </div>
           </div>
         </div>

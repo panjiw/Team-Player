@@ -124,7 +124,7 @@ angular.module("myapp").factory('TaskModel', function() {
       "task[group_id]": groupID,
       "task[title]": name,
       "task[description]": description,
-      // "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
+      "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
       "task[members]": members,
       "task[cycle]": cycle,
       "task[repeat_days]": repostArray,
@@ -148,8 +148,22 @@ angular.module("myapp").factory('TaskModel', function() {
   };
 
   //Set the given task as finished, and update to the database
-  TaskModel.setFinished = function(taskID) {
-    //TODO
+  TaskModel.setFinished = function(taskID, callback) {
+    if(!taskID) {
+      callback("no task id provided");
+    }
+
+    $.post("/finish_task",
+    {
+      "task[id]": taskID
+    })
+    .success(function(data, status) {
+      updateTask(data);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
   };
 
   //Return all tasks for this user as a list of Task objects

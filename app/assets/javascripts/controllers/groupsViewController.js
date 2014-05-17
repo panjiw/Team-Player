@@ -12,6 +12,7 @@
   $scope.member_selected = -1
   $scope.currentMembers = {};
   $scope.groupsList = {};
+  $scope.currentUser = UserModel.get(UserModel.me);
 
   function getGroupsFromModel(callback) {
     GroupModel.getGroups(function(groups, asynch, error) {
@@ -68,7 +69,7 @@
 
   $scope.user = {};
 
-  $scope.newMemberList = [];
+  $scope.newMemberList = [$scope.currentUser];
 
   $scope.showAddGroup = function(e){
     $('#myModal').modal({show:true});
@@ -99,7 +100,7 @@
         getGroupsFromModel();
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
-          $scope.newMemberList = [];
+          $scope.newMemberList = [$scope.currentUser];
         });
       }
     });

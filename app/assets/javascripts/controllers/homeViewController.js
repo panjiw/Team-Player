@@ -9,8 +9,20 @@ angular.module('myapp').controller("homeViewController",
 	function($scope, UserModel, GroupModel, TaskModel, BillModel) {
 
   $scope.groupsList = {};
+  $scope.currentUser = {};
 
-	GroupModel.getGroups(function(groups, asynch, error) {
+  UserModel.fetchUserFromServer(function(error){
+    if(error){
+      //TODO
+    } else {
+      $scope.$apply(function(){
+        $scope.currentUser = UserModel.get(UserModel.me);
+      })
+      console.log("fetch user success!");
+    }
+  });
+
+  GroupModel.getGroups(function(groups, asynch, error) {
     if (error){
       console.log("fetch group error:");
       console.log(error);
@@ -19,6 +31,7 @@ angular.module('myapp').controller("homeViewController",
         $scope.groupsList = groups;
       }
       if(asynch) {
+        console.log("Asynch groups got:", groups);
         $scope.$apply(groupsToApply);
       } else {
         groupsToApply();

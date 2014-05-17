@@ -120,12 +120,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       }
 
       $scope.myTasks.push({
-      taskID: 'task'+tasks[i].event.id,
-      taskName: tasks[i].event.title,
-      taskDesc: tasks[i].event.description,
-      dueDate: tasks[i].event.dateDue,
-      groupName: $scope.groupsList[tasks[i].event.group].name,
-      members: memsToString()
+        taskID: 'task'+tasks[i].event.id,
+        taskName: tasks[i].event.title,
+        taskDesc: tasks[i].event.description,
+        dueDate: tasks[i].event.dateDue,
+        groupName: $scope.groupsList[tasks[i].event.group].name,
+        members: memsToString(),
+        done: tasks[i].done
       });
     }
   }
@@ -170,6 +171,16 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     // clear out data used to create new task
     initNewTaskData();
   };
+
+  $scope.finish = function(id) {
+    TaskModel.setFinished(id, function(error) {
+      if(error) {
+        toastr.warning("Task could not be set finished")
+      } else {
+        buildTasks();
+      }
+    });
+  }
 
   $scope.myTasks = [
     {taskID: 'task1', taskName:'Clean Room', taskDesc: 'description', dueDate:'5/20/14', groupName:'GroupName', members:'membersList'},
