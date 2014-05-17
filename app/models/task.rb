@@ -1,3 +1,9 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the Task
+#
+
 class Task < ActiveRecord::Base
   # one - has many (task) relationship
   belongs_to :group
@@ -24,11 +30,18 @@ class Task < ActiveRecord::Base
 
   # finished is on a task basis
 
+  # finished_date is set internally and there's really
+  # no restriction except the ones from the Ruby Date class
+  # so no validation needed
+
+  # due_date isn't checked cause there could be no due date
+
   # Task has no knowledge of its creator as it could be
   # created by the user or by the generator
 
   # validates whether the creator is in the group
   def creator_in_group?
+    return unless errors.blank?
     if !group.users.include?(user)
       errors.add(:user, user.username + " isn't in the group")
     end

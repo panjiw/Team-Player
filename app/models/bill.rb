@@ -1,3 +1,9 @@
+#
+# TeamPlayer -- 2014
+#
+# Models the Bill
+#
+
 class Bill < ActiveRecord::Base
   # one - has many (bill) relationship
   belongs_to :group

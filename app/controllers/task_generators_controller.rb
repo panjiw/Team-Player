@@ -5,6 +5,7 @@ class TaskGeneratorsController < ApplicationController
   # task[group_id]: groupID
   # task[title]: title
   # task[total_due]: total
+  # task[due_date]: date
   # task[members]: {user_id, ..., user_id} (place in array is order)
   # task[repeat_days]: [boolean, ..., boolean]  1 for each day of the week
   # task[cycle]: boolean
@@ -20,7 +21,7 @@ class TaskGeneratorsController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     end
-    if params[:task][:repeat_days] == "" && !params[:task][:cycle].to_bool
+    if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
       render :json => {:errors => "No need for generator"}, :status => 400
       return
     end
@@ -29,10 +30,14 @@ class TaskGeneratorsController < ApplicationController
                                         title: params[:task][:title],
                                         description: params[:task][:description],
                                         cycle: params[:task][:cycle].to_bool,
+                                        due_date: params[:task][:due_date],
                                         finished: false)
     if params[:task][:repeat_days] == ""
       @task_generator[:repeat_days] = nil
     else
+      if params[:task][:repeat_days].length != 7
+        render :json => {:errors => "Invalid repeat pattern"}, :status => 400
+      end
       @task_generator[:repeat_days] = {}
       day = 1
       params[:task][:repeat_days].each do |d|
@@ -101,27 +106,27 @@ class TaskGeneratorsController < ApplicationController
       if @task_generator[:repeat_days]
         if @finished_task
           today = @finished_task[:due_date]
-        else
-          today = Date.today
-        end
-        days = (today.cwday + 1) % 8
-        if days == 0
-          days = 1
-        end
-        while days != today.cwday
-          if @task_generator[:repeat_days][days]
-            break
-          end
-          days = (days + 1) % 8
+          days = (today.cwday + 1) % 8
           if days == 0
             days = 1
           end
+          while days != today.cwday
+            if @task_generator[:repeat_days][days]
+              break
+            end
+            days = (days + 1) % 8
+            if days == 0
+              days = 1
+            end
+          end
+          if days <= today.cwday
+            days += 7
+          end
+          days = days - today.cwday
+          next_due_date = today + days
+        else
+          next_due_date = @task_generator[:due_date]
         end
-        if days <= today.cwday
-          days += 7
-        end
-        days = days - today.cwday
-        next_due_date = today + days
         @next_task.update_attributes(:due_date => next_due_date)
       end
 
