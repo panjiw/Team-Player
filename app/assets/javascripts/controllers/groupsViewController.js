@@ -12,6 +12,7 @@
   $scope.member_selected = -1
   $scope.currentMembers = {};
   $scope.groupsList = {};
+  $scope.currentUser = UserModel.get(UserModel.me);
 
   function getGroupsFromModel(callback) {
     GroupModel.getGroups(function(groups, asynch, error) {
@@ -136,15 +137,6 @@
   $scope.checkByEmail = function(e) {
     if(e.which != 13) {   // didn't press enter
       return;
-    }
-
-    function indexOfId(array, el) {
-      for(var i = 0; i < array.length; i++) {
-        if(array[i].id == el.id) {
-          return i;
-        }
-      }
-      return -1;
     }
 
     GroupModel.checkByEmail($scope.newMember, function(user, error) {
