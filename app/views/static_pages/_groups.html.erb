@@ -80,7 +80,6 @@
           <div class="col-md-5">
               <h5>Members:</h5>
               <div id="groupMembers">
-                <div>{{currentUser.fname + " " + currentUser.lname + " (" + currentUser.uname + ")"}}
                 <div ng-repeat="mem in newMemberList">{{mem.fname + " " + mem.lname + " (" + mem.uname + ")"}}</div>
               </div>
               <input ng-model="newMember" ng-keypress="checkByEmail($event)" type="text" placeholder="add member by email" />

@@ -69,7 +69,7 @@
 
   $scope.user = {};
 
-  $scope.newMemberList = [];
+  $scope.newMemberList = [$scope.currentUser];
 
   $scope.showAddGroup = function(e){
     $('#myModal').modal({show:true});
@@ -100,7 +100,7 @@
         getGroupsFromModel();
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
-          $scope.newMemberList = [];
+          $scope.newMemberList = [$scope.currentUser];
         });
       }
     });
@@ -137,6 +137,15 @@
   $scope.checkByEmail = function(e) {
     if(e.which != 13) {   // didn't press enter
       return;
+    }
+
+    function indexOfId(array, el) {
+      for(var i = 0; i < array.length; i++) {
+        if(array[i].id == el.id) {
+          return i;
+        }
+      }
+      return -1;
     }
 
     GroupModel.checkByEmail($scope.newMember, function(user, error) {
