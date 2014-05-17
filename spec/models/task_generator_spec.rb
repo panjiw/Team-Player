@@ -46,15 +46,15 @@ describe 'Task Generator data:' do
       day += 1
     end
     @task_generator.save
-    @tactor1 = TaskActor.new(task_id: @task_generator[:id],
-                             user_id: @user1[:id],
-                             order: 0)
-    @tactor2 = TaskActor.new(task_id: @task_generator[:id],
-                             user_id: @user2[:id],
-                             order: 1)
-    @tactor3 = TaskActor.new(task_id: @task_generator[:id],
-                             user_id: @user3[:id],
-                             order: 2)
+    @tactor1 = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
+                                      user_id: @user1[:id],
+                                      order: 0)
+    @tactor2 = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
+                                      user_id: @user2[:id],
+                                      order: 1)
+    @tactor3 = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
+                                      user_id: @user3[:id],
+                                      order: 2)
   }
 
   describe TaskGenerator do
@@ -130,7 +130,7 @@ describe 'Task Generator data:' do
   describe TaskGeneratorActor do
     subject {@tactor1}
 
-    it { should respond_to(:task_id) }
+    it { should respond_to(:task_generator_id) }
     it { should respond_to(:user_id) }
     it { should respond_to(:order) }
     it { should be_valid }
