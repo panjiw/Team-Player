@@ -31,7 +31,7 @@ class GroupsController < ApplicationController
 			:password_digest, :remember_token]}], :memberError => merror), :status => 206
       end
     else
-      render :json => {:errors => group.errors.full_messages}, :status => 400
+      render :json => {group.errors.full_messages}, :status => 400
     end
   end
 
@@ -57,26 +57,22 @@ class GroupsController < ApplicationController
     if !User.member?(current_user, group)
       flag = true
       error << "You not in group, no permission"
-      # render :json => {:errors => {"message" => "you not in group"}}, :status => 400
     end
     if user.empty?
       flag = true
       error << "User not found"
-      #render :json => {:errors => {"message" => "user not found"}}, :status => 400
     end
     if group.self
       flag = true
       error << "Can not add to self group"
-      #render :json => {:errors => {"message" => "Can not add to self group"}}, :status => 400
     end
     if User.member?(user, group)
       flag = true
       error << "User already in group"
-      #render :json => {:errors => {"message" => "User already in group"}}, :status => 400
     end
 
     if flag
-      render :json => {:errors => error}, :status => 400
+      render :json => error, :status => 400
     else
       group.users << user
       render :json => group.users, :status => 200
