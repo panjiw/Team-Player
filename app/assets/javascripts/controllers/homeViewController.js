@@ -8,7 +8,7 @@ angular.module('myapp').controller("homeViewController",
 	["$scope", "UserModel", "GroupModel", "TaskModel", "BillModel", 
 	function($scope, UserModel, GroupModel, TaskModel, BillModel) {
 
-  $scope.groupsList = {};
+  // $scope.groupsList = {};
   $scope.currentUser = {};
 
   UserModel.fetchUserFromServer(function(error){
@@ -22,22 +22,22 @@ angular.module('myapp').controller("homeViewController",
     }
   });
 
-  GroupModel.getGroups(function(groups, asynch, error) {
-    if (error){
-      console.log("fetch group error:");
-      console.log(error);
-    } else {
-      function groupsToApply() {
-        $scope.groupsList = groups;
-      }
-      if(asynch) {
-        console.log("Asynch groups got:", groups);
-        $scope.$apply(groupsToApply);
-      } else {
-        groupsToApply();
-      }
-    }
-  });
+  // GroupModel.getGroups(function(groups, asynch, error) {
+  //   if (error){
+  //     console.log("fetch group error:");
+  //     console.log(error);
+  //   } else {
+  //     function groupsToApply() {
+  //       $scope.groupsList = groups;
+  //     }
+  //     if(asynch) {
+  //       console.log("Asynch groups got:", groups);
+  //       $scope.$apply(groupsToApply);
+  //     } else {
+  //       groupsToApply();
+  //     }
+  //   }
+  // });
 
   $('#addTaskBut').click(function(){
   	$('#taskModal').modal({show:true})

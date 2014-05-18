@@ -32,8 +32,6 @@ angular.module("myapp").factory('UserModel', function() {
 
 
   UserModel.fetchUserFromServer = function(callback) {
-    // We really only need to ask the server for all groups
-    // the first time, so return if we already have.
     if(UserModel.fetchedUser) {
       return;
     }

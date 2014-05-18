@@ -22,23 +22,23 @@ angular.module('myapp').controller("mainViewController", ["$scope", "UserModel",
   	}
   });
 
-  GroupModel.getGroups(function(groups, asynch, error) {
-      if (error){
-        console.log("fetch group error:");
-        console.log(error);
-      } else {
-        function groupsToApply() {
-          console.log("Got groups:");
-          console.log(groups);
-          $scope.groupsList = groups;
-        }
-        if(asynch) {
-          $scope.$apply(groupsToApply);
-        } else {
-          groupsToApply();
-        }
-      }
-    });
+  // GroupModel.getGroups(function(groups, asynch, error) {
+  //     if (error){
+  //       console.log("fetch group error:");
+  //       console.log(error);
+  //     } else {
+  //       function groupsToApply() {
+  //         console.log("Got groups:");
+  //         console.log(groups);
+  //         $scope.groupsList = groups;
+  //       }
+  //       if(asynch) {
+  //         $scope.$apply(groupsToApply);
+  //       } else {
+  //         groupsToApply();
+  //       }
+  //     }
+  //   });
 
   $scope.$watch('currentUser', function(newVal, oldVal){
     console.log('currentUser changed');

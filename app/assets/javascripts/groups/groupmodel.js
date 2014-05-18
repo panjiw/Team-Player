@@ -47,6 +47,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     if(!GroupModel.fetchedGroups) {
       $.get("/view_groups")
       .success(function(data, status) {
+        console.log("Data length is: ", data.length);
         for(var i = 0; i < data.length; i++) {
           GroupModel.updateGroup(data[i]);
           console.log("update users: ",data[i].users);
