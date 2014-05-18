@@ -132,7 +132,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .fail(function(xhr, textStatus, error) {
       console.log("Failed");
-      callback("Error: " + JSON.parse(xhr.responseText));
+      callback(JSON.parse(xhr.responseText).errors);
     });
   };
 
