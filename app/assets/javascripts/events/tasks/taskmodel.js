@@ -113,7 +113,7 @@ angular.module("myapp").factory('TaskModel', function() {
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task create error: ",error);
-      callback(error);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
@@ -138,7 +138,7 @@ angular.module("myapp").factory('TaskModel', function() {
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task special create error: ",error);
-      callback(error);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 

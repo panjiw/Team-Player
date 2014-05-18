@@ -102,7 +102,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .fail(function(xhr, textStatus, error) {
       console.log("group create error: "+error);
-      callback("Error: " + JSON.parse(xhr.responseText));
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
@@ -112,7 +112,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   //of a group will be placed in the group by default.
   GroupModel.addMember = function(group, email, callback) {
     if(!(email && group)) {
-      return;
+      callback("Missing fields");
     }
 
     console.log("Trying to add member " + email + " to group: " + group);
@@ -132,7 +132,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .fail(function(xhr, textStatus, error) {
       console.log("Failed");
-      callback(JSON.parse(xhr.responseText).errors);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 

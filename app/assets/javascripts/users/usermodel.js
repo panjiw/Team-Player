@@ -88,8 +88,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./";
     })
     .fail(function(xhr, textStatus, error) {
-      var res = JSON.parse(xhr.responseText);
-      callback(res["errors"]);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
@@ -112,8 +111,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
-      var res = JSON.parse(xhr.responseText);
-      callback(res["errors"]);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
@@ -147,8 +145,7 @@ angular.module("myapp").factory('UserModel', function() {
       window.location = "./home";
     })
     .fail(function(xhr, textStatus, error) {
-      var res = JSON.parse(xhr.responseText);
-      callback(res["errors"]);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 

@@ -38,7 +38,7 @@ angular.module("myapp").factory('BillModel', function() {
     })
     .fail(function(xhr, textStatus, error) {
       console.log("bill get error: ",error);
-      callback("Error: " + JSON.parse(xhr.responseText));
+      callback(JSON.parse(xhr.responseText));
     });
   }
 
@@ -61,7 +61,7 @@ angular.module("myapp").factory('BillModel', function() {
     })
     .fail(function(xhr, textStatus, error) {
       console.log("bill create error: ",error);
-      callback("Error: " + JSON.parse(xhr.responseText));
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
