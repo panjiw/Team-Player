@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       token = view_context.sign_in @user
       render :json => {:token => token}, :status => 200
     else
-      render :json => {:errors => @user.errors.full_messages}, :status => 400
+      render :json => @user.errors.full_messages, :status => 400
     end
   end
 
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       render :json => {}, :status => 200
     else
-      render :json => {:errors => @user.errors.full_messages}, :status => 400
+      render :json => @user.errors.full_messages, :status => 400
     end
   end
 

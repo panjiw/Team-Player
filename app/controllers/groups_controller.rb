@@ -31,7 +31,7 @@ class GroupsController < ApplicationController
 			:password_digest, :remember_token]}], :memberError => merror), :status => 206
       end
     else
-      render :json => {group.errors.full_messages}, :status => 400
+      render :json => group.errors.full_messages, :status => 400
     end
   end
 
