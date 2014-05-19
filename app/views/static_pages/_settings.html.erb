@@ -1,0 +1,47 @@
+<div style= "padding-top:100px; padding-left:100px">
+  <div class="header-row">
+    <h1>{{currentUser.uname}}</h1>
+  </div>
+  <div class="settings-body" style="margin-top:10px; margin-left:50px;">
+    <div class="col-md-2 settings-options" style="border:1px solid gray; padding:10px; margin:10px; text-align:center">
+      <button class="btn btn-default settings-btn" value="changePassword">Change Password</button>
+      <button class="btn btn-default settings-btn" value="option1">Option 2</button>
+      <button class="btn btn-default settings-btn" value="option2">Option 3</button>
+      <button class="btn btn-default settings-btn" value="option3">Option 4</button>
+    </div>
+    <div class="col-md-8 settings-form" style="border:1px solid gray; padding:10px; margin:10px; text-align:center">
+      <div id="changePassword" class="settings-section">
+        <input type="password" class="form-control input-md" placeholder="Previous Password">
+        <input type="password" class="form-control input-md" placeholder="New Password">
+        <input type="password" class="form-control input-md" placeholder="Confirm New Password">
+        <button class="btn btn-success">Submit</button>
+      </div>
+      <div id="option1" class="settings-section">
+        <h4>Option 1</h4>
+      </div>
+      <div id="option2" class="settings-section">
+         <h4>Option 2</h4>
+      </div>
+      <div id="option3" class="settings-section">
+         <h4>Option 3</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(".settings-btn").click(function(b) {
+    $("#" + $(this).attr("value")).show();
+    $(".settings-section").not("#" + $(this).attr("value")).hide();
+  });
+</script>
+
+<style>
+  .settings-btn {
+    width: 140px;
+    margin-bottom: 5px;
+  }
+  .settings-section {
+    display: none;
+  }
+</style>
