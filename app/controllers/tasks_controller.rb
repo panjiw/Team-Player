@@ -127,10 +127,10 @@ class TasksController < ApplicationController
           task.update(finished: true, finished_date: Date.today)
           result = {}
           result[:details] = task
-          result[:due] = {}
-          #task.task_actors.each do |a|
-          #  result[:members][a[:user_id]] = a[:order]
-          #end
+          result[:members] = {}
+          task.task_actors.each do |a|
+            result[:members][a[:user_id]] = a[:order]
+          end
           render :json => result.to_json, :status => 200
         end
       end
