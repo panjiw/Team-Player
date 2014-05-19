@@ -84,11 +84,20 @@
   // }
 
   $scope.createGroup = function(e) {
-    if(!($scope.groupCreateName && $scope.groupCreateDescription)) {
+    if(!$scope.groupCreateName || !$scope.groupCreateDescription) {
       e.preventDefault();
-      toastr.error("Empty fields");
+
+      if(!$scope.groupCreateName)
+        toastr.error("Group Name Required");
+      
+      if (!$scope.groupCreateDescription)
+        toastr.error("Group Description Required");
+
+      // if member is not added 
+      // toastr.error("Members Required");
       return;
     }
+
 
     console.log("Trying to create a group...");
 
@@ -103,6 +112,7 @@
           $scope.newMemberList = [$scope.currentUser];
           toastr.success("Group created!");
         });
+        $('#myModal').modal('hide');
       }
     });
   }
