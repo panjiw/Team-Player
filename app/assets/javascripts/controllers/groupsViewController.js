@@ -101,6 +101,7 @@
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [$scope.currentUser];
+          toastr.success("Group created!");
         });
       }
     });

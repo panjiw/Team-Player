@@ -150,7 +150,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
     function callback(error){
       if(error){
-      //TODO
+      for (var index in error){
+          toastr.error(error[index]);  
+        }
       } else {
         $scope.$apply(function(){
           buildTasks();
@@ -182,10 +184,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     // otherwise, set it to finished
     TaskModel.setFinished(id, function(error) {
       if(error) {
-        toastr.warning("Task could not be set finished")
+        toastr.warning("Task could not be set finished");
       } else {
         $scope.$apply(function() {
           buildTasks();
+          toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
         });
       }
     });
