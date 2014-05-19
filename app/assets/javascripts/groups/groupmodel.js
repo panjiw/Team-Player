@@ -25,7 +25,6 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
                                               group.creator, new Date(group.dateCreated), group.users);
     for(var index in group.users) {
-      console.log("update 1 user: " , group.users[index])
       UserModel.updateUser(group.users[index]);
     }
   }

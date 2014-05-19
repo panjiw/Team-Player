@@ -28,14 +28,28 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
       } else{
         //TODO
+        console.log("<<<<task from model!!>>>");
         $scope.$apply(function(){
           buildTasks();
+
         });
       }
     });
   }
 
-  getTaskFromModel();
+  // initialize group and members to display for creating tasks
+  $scope.groupsList = {};
+  $scope.currentMembers = {};
+
+  // get groups before loading task so that group and user info are updated
+  GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+    } else {
+      $scope.groupsList = groups;
+      console.log("$scope.groupsList",$scope.groupsList);
+      getTaskFromModel();
+    }
+  });
 
   // build an array of member ids from a collection of user objects
   function buildMemberIdArray(){
@@ -49,20 +63,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   initNewTaskData();
-
-  // $scope.addTask_members = [];
-
-  // initialize group and members to display for creating tasks
-  $scope.groupsList = {};
-  $scope.currentMembers = {};
-
-  GroupModel.getGroups(function(groups, asynch, error) {
-    if (error){
-    } else {
-      $scope.groupsList = groups;
-      console.log("$scope.groupsList",$scope.groupsList);
-    }
-  });
 
   // make sure the group list is updated to the view
   $scope.$watch('groupsList', function(newVal, oldVal){
@@ -129,6 +129,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         done: tasks[i].done
       });
     }
+    console.log("built tasks: ",$scope.myTasks);
   }
 
   $scope.$watch('myTasks', function(newVal, oldVal){

@@ -22,10 +22,26 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.groupsList = {};
   $scope.currentMembers = {};
 
+  getBillFromModel = function(e) {
+    BillModel.getBillFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        $scope.$apply(function(){
+          buildBills();
+        });
+      }
+    });
+  };
+
+  // getBillFromModel after groups and users are loaded
   GroupModel.getGroups(function(groups, asynch, error) {
     if (error){
     } else {
       $scope.groupsList = groups;
+      getBillFromModel();
     }
   });
 
@@ -42,23 +58,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     console.log("comparing ",user, " and ",UserModel.me);
     return user.id != UserModel.me;
   }
-
-  getBillFromModel = function(e) {
-    BillModel.getBillFromServer(
-      function(error){
-      if(error){
-        //TODO
-      } else{
-        //TODO
-        $scope.$apply(function(){
-          buildBills();
-        });
-      }
-    });
-  };
-
-  getBillFromModel();
-
+  
   function buildBills(){
     buildBillsList();
     buildBillsMap();
