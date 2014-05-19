@@ -161,7 +161,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     BillModel.createBill(groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
       if(error){
-        //TODO
+        for (var index in error){
+          toastr.error(error[index]);  
+        }
       } else{
         $scope.$apply(function(){
           buildBills();
