@@ -155,7 +155,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.$apply(function(){
           buildTasks();
         });
-        toastr.success("task created!");
+        toastr.success("Task Created!");
       }
     };
 

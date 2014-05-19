@@ -16,3 +16,13 @@
   width: 50px;
   text-align: center;
 }
+
+/* color of links on top left (about contact help) */
+.navbar-inverse .navbar-nav > li > a {
+    color: #DDDDDD;
+}
+
+/* Team-Player Text top left */
+.navbar-inverse .navbar-brand {
+    color: #DDDDDD;
+}

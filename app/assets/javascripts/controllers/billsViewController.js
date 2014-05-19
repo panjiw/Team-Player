@@ -166,7 +166,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           buildBills();
         });
-        toastr.success("bill created!");
+        toastr.success("Bill Created!");
       }
     });
 
