@@ -133,7 +133,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.$watch('myTasks', function(newVal, oldVal){
     console.log('myTasks changed');
-  });
+  }, true);
 
   // create a task from user input
   $scope.createTask = function(e){
@@ -183,7 +183,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       if(error) {
         toastr.warning("Task could not be set finished")
       } else {
-        buildTasks();
+        $scope.$apply(function() {
+          buildTasks();
+        });
       }
     });
   }
