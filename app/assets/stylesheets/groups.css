@@ -88,11 +88,11 @@ textarea {
 }
 
 .list-group .grp_active, .group-members .mem_active{
-  background: #222;
+  background: #5bc0de;
   color:white;  
 }
 
 .list-group .grp_active:hover, .group-members .mem_active:hover{
-  background: #555;
+  background: #5bc0de;
   color:white;  
 }

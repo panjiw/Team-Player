@@ -95,7 +95,7 @@ textarea {
 .tasks-pop {
   position: absolute;
   width: 400px;
-  height: 250px;
+  height: 330px;
   right: 80px;
   top: 250px;
   padding: 10px;
@@ -105,6 +105,9 @@ textarea {
   display: none;
 }
 
+
 .selected-buttons {
-  float: right;
+  position: absolute;
+  margin-left: 215px;
+  padding-top: 50px;
 }
