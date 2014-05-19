@@ -106,12 +106,12 @@
 
                                         <div class="tabbable">
                                               <ul class="nav nav-tabs">
-                                                <li class="active"><a href="#tab3" data-toggle="tab" ng-click="closePop()">You Owe</a></li>
-                                                <li><a href="#tab4" data-toggle="tab" ng-click="closePop()">Owe You</a></li>
+                                                <li class="active"><a href="#tab3" data-toggle="tab" ng-click="closePop()">Bills You Owe</a></li>
+                                                <li><a href="#tab4" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a></li>
                                               </ul>
                                               <div class="tab-content">
                                                 <div class="tab-pane active" id="tab3">
-                                                    <h3>Bills you owe</h3>
+                                                    <h3>Bills You Owe</h3>
                                                         <div class="bill-scroll">
                                                             <div ng-repeat="bill in billsYouOweMap">
                                                                 <div class="bill-all">
@@ -141,7 +141,7 @@
                                                         </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab4">
-                                                  <h3>Bills owed to you</h3>
+                                                  <h3>Bills Owed To You</h3>
                                                     <div class="bill-scroll">
                                                         <div ng-repeat="bill in billsOweYouMap">
                                                         <div class="bill-all">
