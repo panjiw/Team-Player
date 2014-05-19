@@ -9,6 +9,17 @@ a {
   padding: 5px;
 }
 
+.login-notSignedIn {
+  padding-top:10px;
+  padding-right:10px;
+  float:right;
+  color:gray;
+}
+
+.login-notSignedIn:hover {
+  color: white;
+}
+
 .header-welcome {
   float: right;
   color: white;
