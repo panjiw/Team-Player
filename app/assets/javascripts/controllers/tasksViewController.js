@@ -173,6 +173,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   };
 
   $scope.finish = function(id) {
+    // if the task is already done, we have nothing to do
+    if(TaskModel.tasks[id].done) {
+      return;
+    }
+
+    // otherwise, set it to finished
     TaskModel.setFinished(id, function(error) {
       if(error) {
         toastr.warning("Task could not be set finished")
