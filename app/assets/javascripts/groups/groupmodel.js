@@ -132,8 +132,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("Failed");
-      callback(JSON.parse(xhr.responseText));
+      callback("User not found: " + email);
     });
   };
 

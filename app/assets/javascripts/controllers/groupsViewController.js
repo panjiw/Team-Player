@@ -135,7 +135,7 @@
   }
 
   $scope.checkByEmail = function(e) {
-    if(e.which != 13) {   // didn't press enter
+    if(e.which != 13 && e.type != "click") {   // didn't press enter or click
       return;
     }
 
@@ -156,11 +156,10 @@
         $scope.$apply(function() {
           if(indexOfId($scope.newMemberList, user) == -1) {
             $scope.newMemberList.push(user);
+            $scope.newMember = "";
           }
         });
       }
     });
-
-    $scope.newMember = "";
   }
 }]);
