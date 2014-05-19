@@ -128,9 +128,9 @@ class TasksController < ApplicationController
           result = {}
           result[:details] = task
           result[:due] = {}
-          task.task_actors.each do |a|
-            result[:members][a[:user_id]] = a[:order]
-          end
+          #task.task_actors.each do |a|
+          #  result[:members][a[:user_id]] = a[:order]
+          #end
           render :json => result.to_json, :status => 200
         end
       end

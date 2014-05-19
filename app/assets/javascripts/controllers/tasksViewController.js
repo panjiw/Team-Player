@@ -120,7 +120,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       }
 
       $scope.myTasks.push({
-        taskID: 'task'+tasks[i].event.id,
+        taskID: tasks[i].event.id,
         taskName: tasks[i].event.title,
         taskDesc: tasks[i].event.description,
         dueDate: tasks[i].event.dateDue,
