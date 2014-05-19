@@ -140,6 +140,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.createTask = function(e){
     buildMemberIdArray();
 
+    // get javascript object from datapicker
+    $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
+
     // first perform an empty field check
     if(!($scope.newTaskGroup && $scope.newTaskTitle 
       && $scope.newTaskDescription && $scope.newTaskMembers.length > 0)) {
@@ -195,6 +198,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   $scope.myTasks = [];
+
+  // function for datepicker to popup
+  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   $scope.openTaskPop = function (e, p) {
     if ($('#' + p).is(':visible')) {

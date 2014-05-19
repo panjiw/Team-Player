@@ -144,7 +144,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var groupID = $scope.newBillGroup.id;
     var title = $scope.newBillTitle;
     var description = $scope.newBillDescription;
-    var dateDue = $scope.newBillDateDue;
+    var dateDue = $("#bill_datepicker").datepicker( 'getDate' );
     var total = $scope.newBillTotal;
     var membersAmountMap = buildAmountMap($scope.currentMembers);
 
@@ -242,6 +242,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     buildBillsMapOweYou();
     buildBillsMapYouOwe();
   }
+
+  // function for datepicker to popup
+  $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   // Function called when Select Bills or View Bills is clicked. Toggles popover
   $scope.openPop = function (e, p, n) {
