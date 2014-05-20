@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
   # Required:
   # group[name]: name
   # group[description]: description
+  # add[members]: with members as array of ids
   #
   # See group model in the front end for more info
   #
@@ -67,12 +68,16 @@ class GroupsController < ApplicationController
   # return the new group and all the users in this group
   # look at (creategroup) above for return details
   def editgroup
-    group = Group.find(params[:id])
-    if group.update_attributes(group_params)
-      render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}]), :status => 200
+    if(params[:editgroup] && params[:editgroup][:id])
+      group = Group.find(params[:id])
+      if group.update_attributes(group_params)
+        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+	  		  :password_digest, :remember_token]}]), :status => 200
+      else
+        render :json => group.errors.full_messages, :status => 400
+      end
     else
-      render :json => {:errors => group.errors.full_messages}, :status => 400
+        render :json => ["Group ID Param not Found"], :status => 400
     end
   end
 
