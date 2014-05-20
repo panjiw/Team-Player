@@ -85,10 +85,19 @@ angular.module('myapp').controller("homeViewController",
     $.each(TaskModel.getTasksArray(), function() {
       if (this.dueDate != null) {
         var dueDate = this.dueDate.split("-");
-        events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, dueDate[2])});
+        events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+          dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black"});
       }
       else {
         $scope.todos.push(this);
+      }
+    })
+    
+    $.each(BillModel.bills, function() {
+      if (this.event.dateDue != null) {
+        var dueDate = this.event.dateDue.split("-");
+        events.push({title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+          dueDate[2]), backgroundColor: "#dff0d8", textColor: "black"});
       }
     })
     

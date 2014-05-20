@@ -25,8 +25,8 @@ Rails.application.routes.draw do
   # groups
   match '/create_group', to: 'groups#create',      via: 'post'
   match '/view_groups', to: 'users#viewgroup', 	   via: 'get'
-  match '/view_members', to: 'groups#viewmembers', via: 'post'
   match '/add_to_group', to: 'groups#invitetogroup', via: 'post'
+  match '/leave_group', to: 'groups#leavegroup', via: 'post'
 
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_all',   via: 'get'

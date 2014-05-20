@@ -55,29 +55,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  # view all the members in the given group by gid
-  # require user to be logined
-  #
-  # Returns
-  # {
-  # "id":group id,
-  # "name":name of group,
-  # "description":description of group,
-  # "creator":id of person created the group (logined user),
-  # "created_at":date and time created,
-  # "updated_at":date and time updated},
-  # "self":true or false indicating self group or not, false when call this method
-  # "users":[{"id":1, "username":"User1"....user info}]
-  # at the end it return a list of useres who are in that group
-  def viewmembers
-    @group = Group.find(params[:view][:id])
-    if current_user.member?(@group)
-       render :json => {:groups =>  @group.users}, :status => 200
-    else
-       #render :json => {:errors => {"message" = "you not in group"}}, 
-       render :status => 400
-    end
-  end
 
   # edit group, given the following params, this will change the 
   # require user to be logined, and creator of the group
@@ -86,8 +63,20 @@ class GroupsController < ApplicationController
   # editgroup[description]: new description
 
 
+  
+  def leavegroup
 
-
+    if(params[:leave] && params[:leave][:id])    
+      @group = Group.find(params[:leave][:id])
+      if current_user.member?(@group)
+         @group.users.delete(current_user)
+      else
+        render :json => ["You Not in group"], :status => 400
+      end
+    else
+      render :json => ["Group Not Selected"], :status => 400
+    end
+  end
 
 
 
@@ -115,33 +104,37 @@ class GroupsController < ApplicationController
   #   "email": email of user
   #}  .. user 2 user 3... etc for all members of the group]
   def invitetogroup
-    group = Group.find(params[:invite][:gid])
-    user = User.where("email = ?", params[:invite][:email].downcase)
-    error = []
-    flag = false
-    if !User.member?(current_user, group)
-      flag = true
-      error << "You not in group, no permission"
-    end
-    if user.empty?
-      flag = true
-      error << "User not found"
-    end
-    if group.self
-      flag = true
-      error << "Can not add to self group"
-    end
-    if User.member?(user, group)
-      flag = true
-      error << "User already in group"
-    end
+    if(params[:invite] && params[:invite][:gid] && params[:invite][:email])    
+      group = Group.find(params[:invite][:gid])
+      user = User.where("email = ?", params[:invite][:email].downcase)
+      error = []
+      flag = false
+      if !User.member?(current_user, group)
+        flag = true
+        error << "You not in group, no permission"
+      end
+      if user.empty?
+        flag = true
+        error << "User not found"
+      end
+      if group.self
+        flag = true
+        error << "Can not add to self group"
+      end
+      if User.member?(user, group)
+        flag = true
+        error << "User already in group"
+      end
 
-    if flag
-      render :json => {:errors => error}, :status => 400
+      if flag
+        render :json => {:errors => error}, :status => 400
+      else
+        group.users << user
+        render :json => group.users.to_json(:except => [:created_at, :updated_at, 
+        :password_digest, :remember_token]), :status => 200
+      end
     else
-      group.users << user
-      render :json => group.users.to_json(:except => [:created_at, :updated_at, 
-      :password_digest, :remember_token]), :status => 200
+      render :json => ["Missing Params"], :status => 400
     end
   end
 
@@ -156,10 +149,6 @@ class GroupsController < ApplicationController
       params.require(:group).permit(:name, :description).merge(creator: current_user.id, self: false)
     end
 
-    # not used?    
-    def members_params
-      params.require(:add).permit(:members => [])
-    end
 
 end
 

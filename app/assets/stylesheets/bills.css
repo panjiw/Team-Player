@@ -150,7 +150,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 }
 
 .bills-to-pay-you {
-  height: 400px;
+  height: 300px;
   overflow-y: auto;
 }
 

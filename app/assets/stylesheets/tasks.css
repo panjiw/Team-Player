@@ -1,9 +1,11 @@
 
 .tasks-addbutton, .tasks-editbutton{
-  padding-left: 1050px;
+/*  padding-left: 1050px;
+  padding-bottom: 10px;*/
+/*  border-bottom: 1px solid #ddd;*/
+/*  margin-bottom: 10px;*/
+  float: right;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 10px;
 }
 
 .task-panel {

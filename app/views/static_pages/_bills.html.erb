@@ -6,7 +6,6 @@
     </div>
     <div class="bills-addbutton">
             <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
-
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -52,117 +51,99 @@
             </div>
         </div>
     </div>
-<!--     <div class="bill-body {{activeBillTab}}" ng-switch on="activeBillTab">
-        <div class="you-owe-tab" ng-click="activeBillTab='bill_selected_you_owe'">
-            <h4>You Owe</h4>
-        </div>
-        <div class="owe-you-tab" ng-click="activeBillTab='bill_selected_owe_you'">
-            <h4>Owe You</h4>
-        </div>
-        <div class="bill-summary">
-            <h2>Bill Summary</h2>
-            <div class="you-owe" ng-switch-when="bill_selected_you_owe">
-                <h3>You owe</h3>
-                <div class="bill-scroll">
-                    <div class="bill">
-                        <h4 class="bill-member">Member 1</h4>
-                        <h4 class="bill-amount">$100</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                    <div class="bill">
-                        <h4 class="bill-member">Member 2</h4>
-                        <h4 class="bill-amount">$200</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 3</h4>
-                        <h4 class="bill-amount">$300</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div><div class="bill">
-                        <h4 class="bill-member">Member 4</h4>
-                        <h4 class="bill-amount">$400</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                </div>
-            </div>
-            <div class="owe-you" ng-switch-when="bill_selected_owe_you">
-                <h3>Owed to you</h3>
-                <div class="bill-scroll">
-                    <div class="bill">
-                        <h4 class="bill-member">Member 7</h4>
-                        <h4 class="bill-amount">$700</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                    <div class="bill">
-                        <h4 class="bill-member">Member 8</h4>
-                        <h4 class="bill-amount">$80</h4>
-                        <button type="button" class="view-bill btn btn-default">View Bill</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 
-                                        <div class="tabbable">
-                                              <ul class="nav nav-tabs">
-                                                <li class="active"><a href="#tab3" data-toggle="tab" ng-click="closePop()">Bills You Owe</a></li>
-                                                <li><a href="#tab4" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a></li>
-                                              </ul>
-                                              <div class="tab-content">
-                                                <div class="tab-pane active" id="tab3">
-                                                    <h3>Bills You Owe</h3>
-                                                        <div class="bill-scroll">
-                                                            <div ng-repeat="bill in billsYouOweMap">
-                                                                <div class="bill-all">
-                                                                    <div class="bill" ng-click="openPop($event, bill.person, 1)">
-                                                                        <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
-                                                                        <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                                    </div>
-                                                                    <div id="{{bill.person}}1" class="bill-pop">
-                                                                        <div class="bills-to-pay">
-                                                                            <div ng-repeat="b in bill.bills">
-                                                                                <label for="{{b.id}}">
-                                                                                    <div style="">
-                                                                                        <div class="bills-selected" class=""style="margin-bottom: 0px;" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
-                                                                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
-                                                                                            <h4 class="bill-member">{{b.why}}</h4>
-                                                                                            <h4 class="bill-amount">${{b.amt}}</h4>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
-                                                                        <h4 class="bill-pop-total">Total: $0</h4>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                                <div class="tab-pane" id="tab4">
-                                                  <h3>Bills Owed To You</h3>
-                                                    <div class="bill-scroll">
-                                                        <div ng-repeat="bill in billsOweYouMap">
-                                                        <div class="bill-all">
-                                                            <div class="bill" ng-click="openPop($event, bill.person, 2)" >
-                                                                <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
-                                                                <h4 class="bill-amount">${{bill.amount}}</h4>
-                                                            </div>
-                                                            <div id="{{bill.person}}2" class="bill-pop">
-                                                                <div class="bills-to-pay-you">
-                                                                    <div ng-repeat="b in bill.bills">
-                                                                        <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
-                                                                            <h4 class="bill-member">{{b.why}}</h4>
-                                                                            <h4 class="bill-amount">${{b.amt}}</h4>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        </div>
+
+    <div class="tabbable">
+          <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#billsOwe" data-toggle="tab" ng-click="closePop()">Bills You Owe</a>
+            </li>
+            <li>
+                <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
+            </li>
+            <li>
+                <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="billsOwe">
+                <h3>Bills You Owe</h3>
+                    <div class="bill-scroll">
+                        <div ng-repeat="bill in billsYouOweMap">
+                            <div class="bill-all">
+                                <div class="bill" ng-click="openPop($event, bill.person, 1)">
+                                    <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
+                                    <h4 class="bill-amount">${{bill.amount}}</h4>
+                                </div>
+                                <div id="{{bill.person}}1" class="bill-pop">
+                                    <div class="bills-to-pay">
+                                        <div ng-repeat="b in bill.bills">
+                                            <label for="{{b.id}}">
+                                                <div style="">
+                                                    <div class="bills-selected" class=""style="margin-bottom: 0px;" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
+                                                        <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
+                                                        <h4 class="bill-member">{{b.why}}</h4>
+                                                        <h4 class="bill-amount">${{b.amt}}</h4>
                                                     </div>
                                                 </div>
-      
-                                              </div>
+                                            </label>
                                         </div>
+                                    </div>
+                                    <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
+                                    <h4 class="bill-pop-total">Total: $0</h4>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+            </div>
+            <div class="tab-pane" id="billsDebt">
+              <h3>Bills Owed To You</h3>
+                <div class="bill-scroll">
+                    <div ng-repeat="bill in billsOweYouMap">
+                    <div class="bill-all">
+                        <div class="bill" ng-click="openPop($event, bill.person, 2)" >
+                            <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
+                            <h4 class="bill-amount">${{bill.amount}}</h4>
+                        </div>
+                        <div id="{{bill.person}}2" class="bill-pop">
+                            <div class="bills-to-pay-you">
+                                <div ng-repeat="b in bill.bills">
+                                    <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
+                                        <h4 class="bill-member">{{b.why}}</h4>
+                                        <h4 class="bill-amount">${{b.amt}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="billsSummary">
+              <h3>Bills You've Created</h3>
+                <div class="bill-scroll">
+                    <!-- <div ng-repeat="bill in billsOweYouMap">
+                    <div class="bill-all">
+                        <div class="bill" ng-click="openPop($event, bill.person, 2)" >
+                            <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
+                            <h4 class="bill-amount">${{bill.amount}}</h4>
+                        </div>
+                        <div id="{{bill.person}}2" class="bill-pop">
+                            <div class="bills-to-pay-you">
+                                <div ng-repeat="b in bill.bills">
+                                    <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
+                                        <h4 class="bill-member">{{b.why}}</h4>
+                                        <h4 class="bill-amount">${{b.amt}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div> -->
+                </div>
+            </div>
+
+          </div>
+    </div>
+    </div>
