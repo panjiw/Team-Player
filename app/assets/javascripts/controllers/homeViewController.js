@@ -79,25 +79,17 @@ angular.module('myapp').controller("homeViewController",
     var m = date.getMonth();
     var y = date.getFullYear();
     
+    var events = [];
+    
+    $.each(TaskModel.getTasksArray(), function() {
+      if (this.dueDate != null) {
+        var dueDate = this.dueDate.split("-");
+        events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, dueDate[2])});
+      }
+    })
+    
     $('#calendar-display').fullCalendar({
-      events: [
-        {
-          title: 'All Day Event',
-          start: new Date(y, m, 1)
-        },
-        {
-          title: 'Long Event',
-          start: new Date(y, m, d-5),
-          end: new Date(y, m, d-2)
-        },
-        {
-          title: 'Click for Google',
-          start: new Date(y, m, 28),
-          end: new Date(y, m, 29),
-          url: 'http://google.com/',
-          backgroundColor: 'pink'
-        }
-      ],
+      events: events,
       eventClick: function(event) {
         if (event.url) {
             window.open(event.url);
