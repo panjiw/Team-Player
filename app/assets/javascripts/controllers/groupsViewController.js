@@ -142,6 +142,10 @@
     });
   }
 
+  $scope.showEditGroup = function(e) {
+    console.log("Clicked");
+  }
+
   $scope.editGroup = function(id) {
     // TODO
   }

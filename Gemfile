@@ -59,6 +59,7 @@ end
 gem 'bootstrap-sass'
 gem 'sprockets'
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap-glyphicons'
 
 # Password gem
 gem 'bcrypt-ruby'
@@ -73,6 +74,7 @@ group :test, :development do
     gem 'jasmine-rails'
 end
 
+# Angular testing framework
 gem 'protractor-rails'
 
 gem 'validates_existence', '>= 0.4'

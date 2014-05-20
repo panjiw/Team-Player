@@ -31,7 +31,12 @@
                         <button ng-click="leaveGroup(groupsList[group_selected].id)" type="button" class="btn btn-default">Leave Group</button>
                       </div>
                       <div class="group-name">
-                        <h3>{{groupsList[group_selected].name}}</h3>
+                        <h3>
+                          <button type="button" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                          </button>
+                          <span>{{groupsList[group_selected].name}}<span>
+                        </h3>
                       </div>
                     </div>  
                       <div class="group-members">
