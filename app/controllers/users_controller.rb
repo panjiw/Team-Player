@@ -16,7 +16,6 @@ class UsersController < ApplicationController
       # adding a self group
       @user.groups.create(name: 'Me', description: 'Assign task/bills to the Me group, if those task/bills are for yourself', 
               creator: @user.id, self: true)
-
       token = view_context.sign_in @user
       render :json => {:token => token}, :status => 200
     else
@@ -24,25 +23,76 @@ class UsersController < ApplicationController
     end
   end
 
+  # changes password (write in what it takes in / outputs)
   # Edit a signed-in user's information
-  def edit
-    # @user = current_user
-    # if @user.update_attributes(user_params)
-    #   render :json => {}, :status => 200
-    # else
-    #   render :json => {:errors => @user.errors.full_messages}, :status => 400
-    # end
+  def edit_password
+    @user = current_user
+    if @user.authenticate(params[:edit][:password])
+      userinfo = {:username => @user.username, :firstname => @user.firstname, :lastname => @user.lastname, :email => @user.email,
+                             :password => params[:edit][:new_password], :password_confirmation => params[:edit][:new_password_confirmation]}
+      if @user.update_attributes(userinfo)
+        render :json => {}, :status => 200
+      else
+        render :json => @user.errors.full_messages, :status => 400
+      end
+    else
+      render :json => "incorrect password", :status => 400
+    end
   end
 
-  # displays user information
-  def show
-    #@user = User.find(params[:id])
+  # edit username
+  def edit_username
+    @user = current_user
+    if @user.authenticate(params[:edit][:password])
+      userinfo = {:username => params[:edit][:username], :firstname => @user.firstname, :lastname => @user.lastname, :email => @user.email,
+                             :password => params[:edit][:password], :password_confirmation => params[:edit][:password]}
+      if @user.update_attributes(userinfo)
+        render :json => {}, :status => 200
+      else
+        render :json => @user.errors.full_messages, :status => 400
+      end
+    else
+      render :json => "incorrect password", :status => 400
+    end
+  end
+
+  # edit name
+  def edit_name
+    @user = current_user
+    if @user.authenticate(params[:edit][:password])
+      userinfo = {:username => @user.username, :firstname => params[:edit][:firstname], :lastname => params[:edit][:lastname], :email => @user.email,
+                             :password => params[:edit][:password], :password_confirmation => params[:edit][:password]}
+      if @user.update_attributes(userinfo)
+        render :json => {}, :status => 200
+      else
+        render :json => @user.errors.full_messages, :status => 400
+      end
+    else
+      render :json => "incorrect password", :status => 400
+    end
+  end
+
+  # edit email
+  def edit_email
+    @user = current_user
+    if @user.authenticate(params[:edit][:password])
+      userinfo = {:username => @user.username, :firstname => @user.firstname, :lastname => @user.lastname, :email => params[:edit][:email],
+                             :password => params[:edit][:password], :password_confirmation => params[:edit][:password]}
+      if @user.update_attributes(userinfo)
+        render :json => {}, :status => 200
+      else
+        render :json => @user.errors.full_messages, :status => 400
+      end
+    else
+      render :json => "incorrect password", :status => 400
+    end
   end
 
   # Updates user information after editting
   # If update is successful, status 200. 
   # Else, status 400
   def update
+
     @user = current_user
     if @user.update_attributes(user_params)
       render :json => {}, :status => 200

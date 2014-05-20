@@ -10,13 +10,18 @@ Rails.application.routes.draw do
   match '/sign_in',     to: 'sessions#create',     via: 'post'
   match '/sign_out',    to: 'sessions#destroy',    via: 'delete'
   match '/user',        to: 'sessions#user',       via: 'get'
-  match '/help',        to: 'static_pages#help',   via: 'get'
-  match '/update_user', to: 'users#update',        via: 'post'
+  match '/help',        to: 'static_pages#help',   via: 'get' 
   #match '/edit_user',   to: 'users#edit',          via: 'post'
   #match '/settings',    to: 'static_pages#settings',      via: 'get'
  
   # user
   match '/find_user_email',        to: 'users#finduseremail',   via: 'post'
+  match '/update_user',    to: 'users#update',        via: 'post'
+  match '/edit_password',  to: 'users#edit_password',          via: 'post'
+  match '/edit_username',  to: 'users#edit_username',          via: 'post'
+  match '/edit_email',  to: 'users#edit_email',          via: 'post'
+  match '/edit_name',  to: 'users#edit_name',          via: 'post'
+
   # groups
   match '/create_group', to: 'groups#create',      via: 'post'
   match '/view_groups', to: 'users#viewgroup', 	   via: 'get'

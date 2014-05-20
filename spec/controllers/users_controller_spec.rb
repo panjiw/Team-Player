@@ -78,12 +78,13 @@ describe "CREATE new" do
         end
     end
 
+    # WRITE NEW CHECKS
+
     # test when username is already in database that create does not work
     context 'username already in database' do
         it 'should not create user ' do
             post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "no@player.com",
                              :password => "player", :password_confirmation => "player"}
-            (response.body.include? "error").should be_true
             (response.status == 400).should be_true
         end 
     end
@@ -93,7 +94,7 @@ describe "CREATE new" do
         it 'should not create user ' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
                              :password => "player", :password_confirmation => "player"}
-            (response.body.include? "error").should be_true
+            
             (response.status == 400).should be_true        
             end 
     end
@@ -103,7 +104,7 @@ describe "CREATE new" do
         it 'should not create user' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "play", :password_confirmation => "play"}
-            (response.body.include? "error").should be_true
+            
             (response.status == 400).should be_true
         end 
     end
@@ -113,7 +114,7 @@ describe "CREATE new" do
         it 'should not create user ' do
             post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "playrrrrrrr", :password_confirmation => "playeeeee"}
-            (response.body.include? "error").should be_true
+            
             (response.status == 400).should be_true
         end 
     end
@@ -180,7 +181,6 @@ describe "UPDATE user" do
         it 'should not update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "players", :password_confirmation => "player"}
-            (response.body.include? "error").should be_true
             (response.status == 400).should be_true
         end
     end
@@ -190,7 +190,6 @@ describe "UPDATE user" do
         it 'should not update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "play", :password_confirmation => "play"}
-            (response.body.include? "error").should be_true
             (response.status == 400).should be_true
         end
     end
@@ -200,7 +199,6 @@ describe "UPDATE user" do
         it 'should update user information' do
             post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "error").should be_true
             (response.status == 400).should be_true
         end
     end
@@ -210,13 +208,189 @@ describe "UPDATE user" do
         it 'should update user information' do
             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
             :password => "player", :password_confirmation => "player"}
-            (response.body.include? "error").should be_true
             (response.status == 400).should be_true
         end
     end
 end
 
-#TODO: viewgroup tests
+
+# #viewgroup-> give all groups login user is in, and for each group includes all
+#   # t he users of that group, excluding private infos
+#   def viewgroup
+#     groups = current_user.groups
+#     render :json => groups.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+#             :password_digest, :remember_token]}]), :status => 200
+#   end
+
+# tests for viewgroup
+describe 'viewgroup' do
+    before(:each) do
+        # user only in self group
+        @user = User.create! :username => "one", :firstname => "Team", :lastname => "Player", :email => "one@player.com",
+                              :password => "player", :password_confirmation => "player"
+
+        # user in group and group with self
+        @user = User.create! :username => "two", :firstname => "Team", :lastname => "Player", :email => "two@player.com",
+                              :password => "player", :password_confirmation => "player"
+
+        # user in group and group created themself
+        @user = User.create! :username => "three", :firstname => "Team", :lastname => "Player", :email => "tjree@player.com",
+                              :password => "player", :password_confirmation => "player"
+
+        # user in group and group created by someone else
+        @user = User.create! :username => "four", :firstname => "Team", :lastname => "Player", :email => "four@player.com",
+                              :password => "player", :password_confirmation => "player"
+
+        # user in three groups
+        @user = User.create! :username => "five", :firstname => "Team", :lastname => "Player", :email => "five@player.com",
+                              :password => "player", :password_confirmation => "player"
+        @user = User.create! :username => "six", :firstname => "Team", :lastname => "Player", :email => "six@player.com",
+                              :password => "player", :password_confirmation => "player"
+        @user = User.create! :username => "seven", :firstname => "Team", :lastname => "Player", :email => "seven@player.com",
+                              :password => "player", :password_confirmation => "player"
+
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "two", :password => "player"}
+
+        @controller = GroupsController.new
+        post 'create', :group => {:name => "2 group", :description => "two desc"}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "three", :password => "player"}
+
+        @controller = GroupsController.new
+        post 'create', :group => {:name => "34 group", :description => "34 desc"}, :add => {:members => [4]}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "five", :password => "player"}
+
+        @controller = GroupsController.new
+        post 'create', :group => {:name => "567 group", :description => "567 desc"}, :add => {:members => [6,7]}
+        post 'create', :group => {:name => "567 new group", :description => "567 desc"}, :add => {:members => [6,7]}        
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        
+        @controller = UsersController.new
+
+        end
+
+        context 'the user is in a self group' do                
+                before(:each) do
+                    @controller = SessionsController.new
+                    post 'create', :user => {:username => "one", :password => "player"}
+
+                    @controller = UsersController.new
+                    get 'viewgroup'
+                    end
+
+                it 'should return 200' do
+                    (response.status == 200).should be_true
+                    end
+
+                it 'should return a blank string' do
+                    (response.body.include? "[]").should be_true
+                    end
+        end
+
+        context 'the user is one group with one person and one self group' do
+            
+            before(:each) do
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "two", :password => "player"}
+
+                @controller = UsersController.new
+                get 'viewgroup'
+            end
+
+            it 'should return 200' do
+                (response.status == 200).should be_true
+                end
+
+                # test for group info
+            it 'should return twos groups user info' do
+                twosinfo = "[{\"id\":2"
+
+                (response.status == 200).should be_true
+                end
+
+
+                # test for two's info
+
+        end
+
+        context 'the user is one group they created with two people and one self group' do
+            it 'should return one group' do
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "three", :password => "player"}
+
+                @controller = UsersController.new
+                get 'viewgroup'
+
+                # test for group info
+
+                # test for three's info
+
+                # test for four's info
+
+            end
+        end
+
+        context 'the user is one group they did not create with two people and one self group' do
+            it 'should return one group' do
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "four", :password => "player"}
+
+                @controller = UsersController.new
+                get 'viewgroup'
+
+                # test for group info
+
+                # test for three's info
+
+                # test for four's info
+            end
+        end
+
+        context 'the user is two groups they created with three people and one self group' do
+            it 'should return one group' do
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "five", :password => "player"}
+
+                @controller = UsersController.new
+                get 'viewgroup'
+
+                # test for group info
+
+                # test for five's info
+
+                # test for six's info
+
+                # test for seven's info
+            end
+        end
+
+        context 'the user is two groups they did not create with three people and one self group' do
+            it 'should return one group' do
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "six", :password => "player"}
+
+                @controller = UsersController.new
+                get 'viewgroup'
+
+                # test for group info
+
+                # test for five's info
+
+                # test for six's info
+
+                # test for seven's info
+            end
+        end
+
+end
 
 # tests for finduseremail 
 describe "finduseremail" do
@@ -245,6 +419,100 @@ describe "finduseremail" do
             end
         end
     end
+
+# edit
+describe 'EDIT tests' do
+    
+    before(:each) do
+            @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                              :password => "player", :password_confirmation => "player"
+            @user = User.create! :username => "taken", :firstname => "Team", :lastname => "Player", :email => "taken@player.com",
+                            :password => "player", :password_confirmation => "player"
+            @controller = SessionsController.new
+            post 'create',  :user => {:username => "teamplayer", :password => "player"}
+            @controller = UsersController.new
+        end
+
+    context 'change password' do
+        it 'should change the password' do
+            post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "newpass"}
+            (response.status == 200).should be_true
+        end 
+
+        it 'should not change the password because old password doesnt match' do
+            post 'edit_password', :edit => {:password => "notthispassword", :new_password => "newpass", :new_password_confirmation => "newpass"}
+            (response.status == 400).should be_true
+        end
+
+        it 'should not change the password because new passwords dont match' do
+            post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "hahahnope"}
+            (response.status == 400).should be_true
+        end
+
+        it 'should not change the password because new password is too short' do
+            post 'edit_password', :edit => {:password => "player", :new_password => "new", :new_password_confirmation => "new"}
+            (response.status == 400).should be_true
+        end
+
+    context 'change username' do
+
+        it 'should change the username' do
+            post 'edit_username', :edit => {:password => "player", :username => "newname"}
+            (response.status == 200).should be_true
+            end
+
+        it 'should not change the username because password doesnt match' do
+            post 'edit_username', :edit => {:password => "hahahahah", :username => "newname"}
+            (response.status == 400).should be_true
+            end
+
+        it 'should not change the username because username already exists' do
+            post 'edit_username', :edit => {:password => "player", :username => "taken"}
+            (response.status == 400).should be_true
+            end
+
+        end
+
+    context 'change names' do
+
+        it 'should change the names' do
+            post 'edit_name', :edit => {:password => "player", :firstname => "newname", :lastname => "newlastname"}
+            (response.status == 200).should be_true
+        end
+
+        it 'should not change the names because password does not match' do
+            post 'edit_name', :edit => {:password => "hahahahah", :firstname => "newname", :lastname => "newlastname"}
+            (response.status == 400).should be_true
+        end
+
+        end
+
+    context 'change email' do
+
+        it 'should change the username' do
+            post 'edit_email', :edit => {:password => "player", :email => "newname@gmail.com"}
+            (response.status == 200).should be_true
+            end
+
+        it 'should not change the username because password doesnt match' do
+            post 'edit_email', :edit => {:password => "hahahahah", :email => "newname@gmail.com"}
+            (response.status == 400).should be_true
+            end
+
+        it 'should not change the username because username already exists' do
+            post 'edit_email', :edit => {:password => "player", :email => "taken@player.com"}
+            (response.status == 400).should be_true
+            end
+
+
+    end
+
+
+
+    end
+ end
+
+
 
 
 end
