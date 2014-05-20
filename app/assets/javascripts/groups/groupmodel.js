@@ -157,7 +157,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "editgroup[description]": description
     })
     .success(function(data, status) {
-      updateGroup(data);
+      GroupModel.updateGroup(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {

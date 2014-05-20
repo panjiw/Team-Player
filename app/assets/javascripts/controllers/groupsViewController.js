@@ -25,7 +25,7 @@
           console.log(groups);
           $scope.groupsList = groups;
         }
-        if(asynch) {
+        if(asynch || (!$scope.$$phase && !$scope.$root.$$phase)) {
           $scope.$apply(groupsToApply);
         } else {
           groupsToApply();
@@ -154,12 +154,9 @@
       if(error) {
         toastr.error(error);
       } else {
-        getGroupsFromModel(function() {
-          $scope.apply(function() {
-            // TOOD
-          });
-        });
+        getGroupsFromModel();
       }
+      $('#editModal').modal('hide');
     });
 
     $scope.editDescription = $scope.editName = "";
