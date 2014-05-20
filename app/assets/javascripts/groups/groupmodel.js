@@ -150,7 +150,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "leave[id]": groupID
     })
     .success(function(data, status) {
-      // nothing to do
+      GroupModel.groups[groupID] = undefined;
       callback();
     })
     .fail(function(xhr, textStatus, error) {

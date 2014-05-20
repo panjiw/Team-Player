@@ -68,7 +68,7 @@ class GroupsController < ApplicationController
 
     if(params[:leave] && params[:leave][:id])    
       @group = Group.find(params[:leave][:id])
-      if current_user.member?(@group)
+      if User.member?(current_user, @group)
          @group.users.delete(current_user)
       else
         render :json => ["You Not in group"], :status => 400
