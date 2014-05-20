@@ -114,12 +114,10 @@ angular.module('myapp').controller("homeViewController",
     })
     
     $('#calendar-display').fullCalendar({
+      // editable:true,
       events: events,
       eventClick: function(event) {
-        if (event.url) {
-            window.open(event.url);
-            return false;
-        }
+        $('#eventModal').modal({show:true})
       }
     });
     
