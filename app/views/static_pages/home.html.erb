@@ -93,7 +93,7 @@ Displays pages for after successful login:
             <div class="home-tasks">
                 <h3>To Do's</h3>
                 <div class="home-todos" ng-repeat="todo in todos">
-                    <div class="panel-danger" >
+                    <div class="panel-danger home-todo" ng-click="openCalendarModal(todo)">
                       <div class="panel-heading">
                         <div class="task-panel">
                             <h4 class="panel-descr">{{todo.taskName}}</h4>

@@ -111,3 +111,7 @@ div.tabs.selected_groups button.selected_groups{
 .fc-event:hover {
   cursor: pointer;
 }
+
+.home-todo:hover {
+  cursor: pointer;
+}

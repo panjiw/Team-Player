@@ -76,6 +76,12 @@ angular.module('myapp').controller("homeViewController",
     $('#manualModal').modal({show:true})
   };
 
+  $scope.openCalendarModal = function(todo) {
+    $('#calendarModal').modal({show:true})
+    $("#calendarModal-header").html(todo.taskName);
+    $("#calendarModal-content").html(todo.taskDesc + "<br/>" + todo.members);
+  }
+
   $(document).ready(function() {
   
     var date = new Date();
