@@ -10,6 +10,7 @@ angular.module('myapp').controller("homeViewController",
 
   // $scope.groupsList = {};
   $scope.currentUser = {};
+  $scope.todos = [];
 
   UserModel.fetchUserFromServer(function(error){
     if(error){
@@ -85,6 +86,9 @@ angular.module('myapp').controller("homeViewController",
       if (this.dueDate != null) {
         var dueDate = this.dueDate.split("-");
         events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, dueDate[2])});
+      }
+      else {
+        $scope.todos.push(this);
       }
     })
     

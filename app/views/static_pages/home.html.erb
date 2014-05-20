@@ -16,32 +16,11 @@ Displays pages for after successful login:
             </div> 
             <div class="home-tasks">
                 <h3>To Do's</h3>
-                <div class="home-todos">
+                <div class="home-todos" ng-repeat="todo in todos">
                     <div class="panel-danger" >
                       <div class="panel-heading">
                         <div class="task-panel">
-                            <h4 class="panel-descr">Clean Your Room</h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-danger" >
-                      <div class="panel-heading">
-                        <div class="task-panel">
-                            <h4 class="panel-descr">Pay Rent</h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-danger" >
-                      <div class="panel-heading">
-                        <div class="task-panel">
-                            <h4 class="panel-descr">Take Out Trash</h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-danger" >
-                      <div class="panel-heading">
-                        <div class="task-panel">
-                            <h4 class="panel-descr">Buy Toilet Paper</h4>
+                            <h4 class="panel-descr">{{todo.taskName}}</h4>
                         </div>
                       </div>
                     </div>
