@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
   # look at (creategroup) above for return details
   def editgroup
     if(params[:editgroup] && params[:editgroup][:id])
-      group = Group.find(params[:id])
+      group = Group.find(params[:editgroup][:id])
       if group.update_attributes(group_params)
         render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
 	  		  :password_digest, :remember_token]}]), :status => 200
