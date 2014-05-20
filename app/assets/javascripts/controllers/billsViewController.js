@@ -99,7 +99,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             $scope.billsOweYou.push({
               person: UserModel.users[j].fname, 
               amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].event.title
+              why: bills[i].event.title,
+              id: bills[i].event.id,
+              desc: bills[i].event.description
             });
           }
         }
@@ -111,7 +113,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             $scope.billsYouOwe.push({
               person: UserModel.users[bills[i].event.creator].fname, 
               amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].event.title
+              why: bills[i].event.title,
+              id: bills[i].event.id,
+              desc: bills[i].event.description
             });
           }
         }
@@ -144,7 +148,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var groupID = $scope.newBillGroup.id;
     var title = $scope.newBillTitle;
     var description = $scope.newBillDescription;
-    var dateDue = $scope.newBillDateDue;
+    var dateDue = $("#bill_datepicker").datepicker( 'getDate' );
     var total = $scope.newBillTotal;
     var membersAmountMap = buildAmountMap($scope.currentMembers);
 
@@ -174,18 +178,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     initNewBillData();
   };
-
-  // Map for the total you owe each member
-  $scope.billsYouOweMap = [];
-
-  // Each bill you owe
-  $scope.billsYouOwe = [
-    {person:'Member1', amount: 12, why: 'Bought Lunch'},
-    {person:'Member1', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member2', amount: 32, why: 'Bought Toilet Paper'},
-    {person:'Member1', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member3', amount: 23, why: 'Bought Lunch'},
-    {person:'Member1', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsYouOweMap from billsYouOwe
   function buildBillsMapYouOwe() {
@@ -195,28 +187,16 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $.each($scope.billsYouOweMap, function(member) {
         if (this.person == bill.person) {
           this.amount += bill.amount;
-          this.bills.push({amt: bill.amount, why: bill.why});
+          this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc});
           found = true;
           return false;
         }
       });
       if (!found) {
-        $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{amt: bill.amount, why: bill.why}]});
+        $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc}]});
       }
     });
   }
-  
-  //Map for the total each member owes you
-  $scope.billsOweYouMap = [];
-
-  // Each bill a member owes you
-  $scope.billsOweYou = [
-    {person:'Member5', amount: 12, why: 'Bought Lunch'},
-    {person:'Member6', amount: 68, why: 'Paid Electric Bill'},
-    {person:'Member7', amount: 32, why: 'Bought Toilet Paper'},
-    {person:'Member8', amount: 44, why: 'Paid Internet Bill'},
-    {person:'Member6', amount: 23, why: 'Bought Lunch'},
-    {person:'Member5', amount: 8, why: 'Bought Dinner'}];
     
   // Fills in billsOweYouMap from billsOweYou
   function buildBillsMapOweYou() {
@@ -227,13 +207,13 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $.each($scope.billsOweYouMap, function(member) {
         if (this.person == bill.person) {
           this.amount += bill.amount;
-          this.bills.push({amt: bill.amount, why: bill.why});
+          this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc});
           found = true;
           return false;
         }
       });
       if (!found) {
-        $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{amt: bill.amount, why: bill.why}]});
+        $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc}]});
       }
     });
   }
@@ -242,6 +222,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     buildBillsMapOweYou();
     buildBillsMapYouOwe();
   }
+
+  // function for datepicker to popup
+  $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   // Function called when Select Bills or View Bills is clicked. Toggles popover
   $scope.openPop = function (e, p, n) {
@@ -255,6 +238,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
     $('.bill-pop').not('#' + p + n).hide();
     $('.bill').not($(e.delegateTarget)).css("border", "1px solid white");
+    $(".bills-selected").popover();
   }
   
   // Function when checkbox is clicked. Updates displayed total
@@ -281,14 +265,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#' + p + 1 + " input:checkbox").each(function () {
       var str = $(this).val();
       var value = parseInt(str.substr(0,str.indexOf(' ')));
-      var why = str.substr(str.indexOf(' ')+1);
+      var id = str.substr(str.indexOf(' ')+1);
       if (this.checked) {
         $.each($scope.billsYouOweMap, function(member) {
           if (this.person == p) {
             this.amount -= value;
             var list = this.bills
             $.each(list, function(i, bill) {
-              if (this.amt == value && this.why == why) {
+              if (this.id == id) {
                 list.splice(i, 1);
                 if (list.length == 0) {
                   $.each($scope.billsYouOweMap, function(i, person) {

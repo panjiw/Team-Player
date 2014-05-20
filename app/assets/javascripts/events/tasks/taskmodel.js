@@ -15,7 +15,7 @@ var Task = function(id, groupID, title, description, creatorID, dateCreated, dat
   this.done = done;
 };
 
-angular.module("myapp").factory('TaskModel', function() {
+angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function(GroupModel, UserModel) {
   var TaskModel = {};
   TaskModel.tasks = {};   //ID to task
   TaskModel.fetchedTasks = false;
@@ -37,6 +37,40 @@ angular.module("myapp").factory('TaskModel', function() {
       callback(error);
     });
   };
+
+  TaskModel.getTasksArray = function(){
+    var myTasks = [];
+    var tasks = TaskModel.tasks;
+
+    for(var i in tasks){
+      // turn members in this task into a string to display
+      function memsToString(){
+        var str = "";
+        var first = true;
+        for(var j in tasks[i].members){
+          if(first){
+            str+= UserModel.users[j].uname;
+            first = false;
+          } else {
+            str+= ", "+UserModel.users[j].uname;
+          }
+        }
+        return str;
+      }
+
+      myTasks.push({
+        taskID: tasks[i].event.id,
+        taskName: tasks[i].event.title,
+        taskDesc: tasks[i].event.description,
+        dueDate: tasks[i].event.dateDue,
+        groupName: GroupModel.groups[tasks[i].event.group].name,
+        members: memsToString(),
+        done: tasks[i].done
+      });
+    }
+    console.log("built tasks: ",myTasks);
+    return myTasks;
+  }
 
   // TaskModel.fetchTasksFromServer = function(callback) {
   //   // We really only need to ask the server for all tasks
@@ -177,4 +211,4 @@ angular.module("myapp").factory('TaskModel', function() {
   // };
 
   return TaskModel;
-});
+}]);

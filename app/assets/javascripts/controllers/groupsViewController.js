@@ -72,7 +72,7 @@
   $scope.newMemberList = [$scope.currentUser];
 
   $scope.showAddGroup = function(e){
-    $('#myModal').modal({show:true});
+    $('#groupModal').modal({show:true});
   }
 
   // experimental code; when the second line of
@@ -84,11 +84,20 @@
   // }
 
   $scope.createGroup = function(e) {
-    if(!($scope.groupCreateName && $scope.groupCreateDescription)) {
+    if(!$scope.groupCreateName || !$scope.groupCreateDescription) {
       e.preventDefault();
-      toastr.error("Empty fields");
+
+      if(!$scope.groupCreateName)
+        toastr.error("Group Name Required");
+      
+      if (!$scope.groupCreateDescription)
+        toastr.error("Group Description Required");
+
+      // if member is not added 
+      // toastr.error("Members Required");
       return;
     }
+
 
     console.log("Trying to create a group...");
 
@@ -103,6 +112,7 @@
           $scope.newMemberList = [$scope.currentUser];
           toastr.success("Group created!");
         });
+        $('#groupModal').modal('hide');
       }
     });
   }

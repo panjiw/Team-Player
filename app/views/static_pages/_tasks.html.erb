@@ -7,7 +7,7 @@
 <!--   *** Add Task Button    ***-->
           <div class="tasks-addbutton">
             <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Add Task</a>
-                <div id="myModal" class="modal fade task-modal" tabindex="-1" role="dialog">
+                <div id="taskModal" class="modal fade task-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -27,8 +27,7 @@
                               <input type="checkbox" class="large" data-label="Deadline" 
                               ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
                               <span>No Due Date</span>
-                              <input type="date" ng-hide="noDue" ng-model="newTaskDateDue"
-                              min="2014-01-01" max="2113-01-01" placeholder="mm/dd/yyyy"/>
+                              <input type="text" id="task_datepicker"/>
                               <br>
 
                               <div ng-hide="noDue" id="repeat_options">
