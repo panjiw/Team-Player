@@ -142,16 +142,20 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     //TODO
   };
 
-  // Add a user into a group. If the user is already in the group, does nothing and return true.
-  // If adding fails (e.g. user does not exist), return false.
-  GroupModel.addToGroup = function(groupID, userID) {
-    //TODO
-  }
-
-  // Remove a user from a group. If the user is not in the group, does nothing and return true.
-  // If removing fails (e.g. user does not exist), return false.
-  GroupModel.removeFromGroup = function(id, userID) {
-   //TODO
+  // Remove the current user from a group. On error, calls callback with error;
+  // otherwise just calls callback with no params.
+  GroupModel.leaveGroup = function(groupID, callback) {
+    $.post("/leave_group",
+    {
+      "leave[id]": groupID
+    })
+    .success(function(data, status) {
+      // nothing to do
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
   }
 
   return GroupModel;

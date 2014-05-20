@@ -139,6 +139,20 @@
     });
   }
 
+  $scope.editGroup = function(id) {
+    // TODO
+  }
+
+  $scope.leaveGroup = function(id) {
+    GroupModel.leaveGroup(id, function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        getGroupsFromModel();
+      }
+    });
+  }
+
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
     $scope.currentMembers = buildMemberMap($scope.groupsList[id].members);

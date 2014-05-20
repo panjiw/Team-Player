@@ -27,8 +27,8 @@
               <div class="col-md-7">
                   <div class="group-display">
                     <div class="group-titlerow">
-                      <div class="group-leavebutton">
-                        <button type="button" class="btn btn-default">Leave Group</button>
+                      <div class="group-leavebutton" ng-hide="groupsList[group_selected].isSelfGroup">
+                        <button ng-click="leaveGroup(grp.id)" type="button" class="btn btn-default">Leave Group</button>
                       </div>
                       <div class="group-name">
                         <h3>{{groupsList[group_selected].name}}</h3>
