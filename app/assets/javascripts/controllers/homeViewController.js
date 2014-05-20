@@ -72,6 +72,9 @@ angular.module('myapp').controller("homeViewController",
   	$('#billModal').modal({show:true})
   });
 
+  $scope.openModal = function(e){
+    $('#manualModal').modal({show:true})
+  };
 
   $(document).ready(function() {
   
@@ -85,11 +88,20 @@ angular.module('myapp').controller("homeViewController",
     $.each(TaskModel.getTasksArray(), function() {
       if (this.dueDate != null) {
         var dueDate = this.dueDate.split("-");
-        events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-          dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black"});
+        if (this.done == null) {
+          events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black"});
+        }
+        else
+        {
+          events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "grey", textColor: "black"});
+        }
       }
       else {
-        $scope.todos.push(this);
+        if (this.done == null) {
+          $scope.todos.push(this);
+        }
       }
     })
     
