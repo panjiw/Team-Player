@@ -30,7 +30,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
         console.log("<<<<task from model!!>>>");
         $scope.$apply(function(){
-          buildTasks();
+          $scope.myTasks = TaskModel.getTasksArray();
 
         });
       }
@@ -76,7 +76,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   });
  
   $scope.openModal = function(e){
-    $('#myModal').modal({show:true})
+    $('#taskModal').modal({show:true})
   };
 
   // $scope.addMember = function(e) {
@@ -98,39 +98,41 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     return true;
   }
 
+  $scope.myTasks = TaskModel.getTasksArray();
+
   // build the tasks from variables to the view
-  function buildTasks(){
-    $scope.myTasks = [];
-    var tasks = TaskModel.tasks;
+  // function buildTasks(){
+  //   $scope.myTasks = [];
+  //   var tasks = TaskModel.tasks;
 
-    for(var i in tasks){
-      // turn members in this task into a string to display
-      function memsToString(){
-        var str = "";
-        var first = true;
-        for(var j in tasks[i].members){
-          if(first){
-            str+= UserModel.users[j].uname;
-            first = false;
-          } else {
-            str+= ", "+UserModel.users[j].uname;
-          }
-        }
-        return str;
-      }
+  //   for(var i in tasks){
+  //     // turn members in this task into a string to display
+  //     function memsToString(){
+  //       var str = "";
+  //       var first = true;
+  //       for(var j in tasks[i].members){
+  //         if(first){
+  //           str+= UserModel.users[j].uname;
+  //           first = false;
+  //         } else {
+  //           str+= ", "+UserModel.users[j].uname;
+  //         }
+  //       }
+  //       return str;
+  //     }
 
-      $scope.myTasks.push({
-        taskID: tasks[i].event.id,
-        taskName: tasks[i].event.title,
-        taskDesc: tasks[i].event.description,
-        dueDate: tasks[i].event.dateDue,
-        groupName: $scope.groupsList[tasks[i].event.group].name,
-        members: memsToString(),
-        done: tasks[i].done
-      });
-    }
-    console.log("built tasks: ",$scope.myTasks);
-  }
+  //     $scope.myTasks.push({
+  //       taskID: tasks[i].event.id,
+  //       taskName: tasks[i].event.title,
+  //       taskDesc: tasks[i].event.description,
+  //       dueDate: tasks[i].event.dateDue,
+  //       groupName: $scope.groupsList[tasks[i].event.group].name,
+  //       members: memsToString(),
+  //       done: tasks[i].done
+  //     });
+  //   }
+  //   console.log("built tasks: ",$scope.myTasks);
+  // }
 
   $scope.$watch('myTasks', function(newVal, oldVal){
     console.log('myTasks changed');
@@ -158,7 +160,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         }
       } else {
         $scope.$apply(function(){
-          buildTasks();
+          $scope.myTasks = TaskModel.getTasksArray();
         });
         toastr.success("Task Created!");
       }
@@ -190,7 +192,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         toastr.warning("Task could not be set finished");
       } else {
         $scope.$apply(function() {
-          buildTasks();
+          $scope.myTasks = TaskModel.getTasksArray();
           toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
         });
       }

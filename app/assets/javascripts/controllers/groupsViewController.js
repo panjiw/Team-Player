@@ -72,7 +72,7 @@
   $scope.newMemberList = [$scope.currentUser];
 
   $scope.showAddGroup = function(e){
-    $('#myModal').modal({show:true});
+    $('#groupModal').modal({show:true});
   }
 
   // experimental code; when the second line of
@@ -112,7 +112,7 @@
           $scope.newMemberList = [$scope.currentUser];
           toastr.success("Group created!");
         });
-        $('#myModal').modal('hide');
+        $('#groupModal').modal('hide');
       }
     });
   }
