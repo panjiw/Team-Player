@@ -37,27 +37,29 @@
     });
   }
 
-  getGroupsFromModel(function() {
-    function getGroups(){
-      if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
-        $scope.group_selected = Object.keys($scope.groupsList)[0];
-        console.log("$scope.groupsList", $scope.groupsList);
-        console.log("$scope.group_selected", $scope.group_selected);
-        if($scope.group_selected != -1) {
-          console.log("member selected",$scope.member_selected);
-          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;    
-          $scope.currentMembers = buildMemberMap($scope.currentMembers);
-          console.log("$scope.currentMembers",$scope.currentMembers);
+  function updateGroups() {
+    getGroupsFromModel(function() {
+      function getGroups(){
+        if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
+          $scope.group_selected = Object.keys($scope.groupsList)[0];
+          console.log("$scope.groupsList", $scope.groupsList);
+          console.log("$scope.group_selected", $scope.group_selected);
+          if($scope.group_selected != -1) {
+            console.log("member selected",$scope.member_selected);
+            $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;    
+            $scope.currentMembers = buildMemberMap($scope.currentMembers);
+            console.log("$scope.currentMembers",$scope.currentMembers);
+          }
         }
       }
-    }
 
-    if(!$scope.$$phase && !$scope.$root.$$phase) {
-      $scope.$apply(getGroups);
-    } else {
-      getGroups();
-    }
-  });
+      if(!$scope.$$phase && !$scope.$root.$$phase) {
+        $scope.$apply(getGroups);
+      } else {
+        getGroups();
+      }
+    });
+  }
 
   function buildMemberMap(memberArray){
     var map = {};
@@ -148,7 +150,7 @@
       if(error) {
         toastr.error(error);
       } else {
-        getGroupsFromModel();
+        updateGroups();
       }
     });
   }

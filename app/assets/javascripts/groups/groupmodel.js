@@ -145,12 +145,17 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   // Remove the current user from a group. On error, calls callback with error;
   // otherwise just calls callback with no params.
   GroupModel.leaveGroup = function(groupID, callback) {
+    if(!groupID) {
+      callback("No group selected");
+      return;
+    }
+
     $.post("/leave_group",
     {
       "leave[id]": groupID
     })
     .success(function(data, status) {
-      GroupModel.groups[groupID] = undefined;
+      delete GroupModel.groups[groupID];
       callback();
     })
     .fail(function(xhr, textStatus, error) {
