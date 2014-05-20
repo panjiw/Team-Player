@@ -22,6 +22,30 @@ angular.module('myapp').controller("homeViewController",
     }
   });
 
+  function getTaskFromModel(){
+    TaskModel.getTasksFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        console.log("<<<< home view: task from model!!>>>");
+        $scope.$apply(function(){
+          $scope.myTasks = TaskModel.getTasksArray();
+        });
+      }
+    });
+  }
+
+  // get groups before loading task so that group and user info are updated
+  GroupModel.getGroups(function(groups, asynch, error) {
+    if (error){
+    } else {
+      //$scope.groupsList = groups;
+      getTaskFromModel();
+    }
+  });
+
   // GroupModel.getGroups(function(groups, asynch, error) {
   //   if (error){
   //     console.log("fetch group error:");
