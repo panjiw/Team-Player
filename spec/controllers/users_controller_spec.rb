@@ -234,7 +234,7 @@ describe 'viewgroup' do
                               :password => "player", :password_confirmation => "player"
 
         # user in group and group created themself
-        @user = User.create! :username => "three", :firstname => "Team", :lastname => "Player", :email => "tjree@player.com",
+        @user = User.create! :username => "three", :firstname => "Team", :lastname => "Player", :email => "three@player.com",
                               :password => "player", :password_confirmation => "player"
 
         # user in group and group created by someone else
@@ -296,7 +296,6 @@ describe 'viewgroup' do
         end
 
         context 'the user is one group with one person and one self group' do
-            
             before(:each) do
                 @controller = SessionsController.new
                 post 'create', :user => {:username => "two", :password => "player"}
@@ -309,85 +308,169 @@ describe 'viewgroup' do
                 (response.status == 200).should be_true
                 end
 
-                # test for group info
+            # test for group info
             it 'should return twos groups user info' do
-                twosinfo = "[{\"id\":2"
-
-                (response.status == 200).should be_true
+                groupinfo = "[{\"id\":1,\"name\":\"2 group\",\"description\":\"two desc\",\"creator\":2,"
+                (response.body.include? groupinfo).should be_true
                 end
 
-
-                # test for two's info
-
+            # test for two's info
+            it 'should return twos user info' do
+                twosinfo = "\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
+                (response.body.include? twosinfo).should be_true
+                end
         end
 
         context 'the user is one group they created with two people and one self group' do
-            it 'should return one group' do
-                @controller = SessionsController.new
-                post 'create', :user => {:username => "three", :password => "player"}
+                before(:each) do
+                    @controller = SessionsController.new
+                    post 'create', :user => {:username => "three", :password => "player"}
 
-                @controller = UsersController.new
-                get 'viewgroup'
+                    @controller = UsersController.new
+                    get 'viewgroup'
+                    end
+
+                it 'should return 200' do
+                    (response.status == 200).should be_true
+                    end
 
                 # test for group info
+                it 'should return twos groups user info' do
+                    groupinfo = "[{\"id\":2,\"name\":\"34 group\",\"description\":\"34 desc\",\"creator\":3,"
+                    (response.body.include? groupinfo).should be_true
+                    end
 
                 # test for three's info
+                it 'should return threes user info' do
+                    threesinfo = "\"id\":3,\"username\":\"three\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"three@player.com\""
+                    (response.body.include? threesinfo).should be_true
+                    end
 
                 # test for four's info
-
-            end
+                it 'should return twos user info' do
+                    foursinfo = "\"id\":4,\"username\":\"four\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"four@player.com\""
+                    (response.body.include? foursinfo).should be_true
+                    end            
         end
 
         context 'the user is one group they did not create with two people and one self group' do
-            it 'should return one group' do
+            before(:each) do
                 @controller = SessionsController.new
                 post 'create', :user => {:username => "four", :password => "player"}
 
                 @controller = UsersController.new
                 get 'viewgroup'
 
+            end
+
+            it 'should return 200' do
+                    (response.status == 200).should be_true
+                    end
+
                 # test for group info
+                it 'should return twos groups user info' do
+                    groupinfo = "[{\"id\":2,\"name\":\"34 group\",\"description\":\"34 desc\",\"creator\":3,"
+                    (response.body.include? groupinfo).should be_true
+                    end
 
                 # test for three's info
+                it 'should return threes user info' do
+                    threesinfo = "\"id\":3,\"username\":\"three\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"three@player.com\""
+                    (response.body.include? threesinfo).should be_true
+                    end
 
                 # test for four's info
-            end
+                it 'should return twos user info' do
+                    foursinfo = "\"id\":4,\"username\":\"four\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"four@player.com\""
+                    (response.body.include? foursinfo).should be_true
+                    end
+
         end
 
         context 'the user is two groups they created with three people and one self group' do
-            it 'should return one group' do
+            before(:each) do
                 @controller = SessionsController.new
                 post 'create', :user => {:username => "five", :password => "player"}
 
                 @controller = UsersController.new
                 get 'viewgroup'
+            end
+
+                it 'should return 200' do
+                    (response.status == 200).should be_true
+                    end
 
                 # test for group info
+                it 'should return twos groups user info' do
+                    groupinfo = "[{\"id\":3,\"name\":\"567 group\",\"description\":\"567 desc\",\"creator\":5,"
+                    (response.body.include? groupinfo).should be_true
+                    end
+
+                # test for new group info
+                it 'should return twos groups user info' do
+                    newgroupinfo = "\"id\":4,\"name\":\"567 new group\",\"description\":\"567 desc\",\"creator\":5,"
+                    (response.body.include? newgroupinfo).should be_true
+                    end
 
                 # test for five's info
+                it 'should return fives user info' do
+                    fivesinfo = "\"id\":5,\"username\":\"five\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"five@player.com\""
+                    (response.body.include? fivesinfo).should be_true
+                    end
 
                 # test for six's info
+                it 'should return sixs user info' do
+                    sixsinfo = "\"id\":6,\"username\":\"six\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"six@player.com\""
+                    (response.body.include? sixsinfo).should be_true
+                    end
 
                 # test for seven's info
-            end
+                it 'should return sevens user info' do
+                    sevensinfo = "\"id\":7,\"username\":\"seven\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"seven@player.com\""
+                    (response.body.include? sevensinfo).should be_true
+                    end
+
         end
 
         context 'the user is two groups they did not create with three people and one self group' do
-            it 'should return one group' do
+            before(:each) do
                 @controller = SessionsController.new
                 post 'create', :user => {:username => "six", :password => "player"}
 
                 @controller = UsersController.new
                 get 'viewgroup'
+            end
 
-                # test for group info
+            # test for group info
+                it 'should return twos groups user info' do
+                    groupinfo = "[{\"id\":3,\"name\":\"567 group\",\"description\":\"567 desc\",\"creator\":5,"
+                    (response.body.include? groupinfo).should be_true
+                    end
+
+                # test for new group info
+                it 'should return twos groups user info' do
+                    newgroupinfo = "\"id\":4,\"name\":\"567 new group\",\"description\":\"567 desc\",\"creator\":5,"
+                    (response.body.include? newgroupinfo).should be_true
+                    end
 
                 # test for five's info
+                it 'should return fives user info' do
+                    fivesinfo = "\"id\":5,\"username\":\"five\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"five@player.com\""
+                    (response.body.include? fivesinfo).should be_true
+                    end
 
                 # test for six's info
+                it 'should return sixs user info' do
+                    sixsinfo = "\"id\":6,\"username\":\"six\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"six@player.com\""
+                    (response.body.include? sixsinfo).should be_true
+                    end
 
                 # test for seven's info
-            end
+                it 'should return sevens user info' do
+                    sevensinfo = "\"id\":7,\"username\":\"seven\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"seven@player.com\""
+                    (response.body.include? sevensinfo).should be_true
+                    end
+
         end
 
 end
