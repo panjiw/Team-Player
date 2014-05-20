@@ -134,8 +134,8 @@
                   <h3>Task History</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <!-- <div ng-repeat="task in myTasks">
-                          <div ng-hide="task.done">
+                        <div ng-repeat="task in myTasks">
+                          <div ng-show="task.done">
                             <button ng-click="openTaskPop($event, 'task' + task.taskID)" class="btn btn-default tasks-panelbutton" >
                               <div class="panel panel-warning">
                                 <div class="panel-heading">
@@ -165,7 +165,7 @@
                             </div>
                             <div id="task{{task.taskID}}_edit"></div>
                           </div>
-                        </div> -->
+                        </div>
                       </div>
                     </div>
                 </div>
