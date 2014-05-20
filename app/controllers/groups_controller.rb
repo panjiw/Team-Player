@@ -68,9 +68,16 @@ class GroupsController < ApplicationController
   # return the new group and all the users in this group
   # look at (creategroup) above for return details
   def editgroup
-    if(params[:editgroup] && params[:editgroup][:id])
+    if(params[:editgroup] && params[:editgroup][:id] && params[:editgroup][:name]&& params[:editgroup][:description])
+
       group = Group.find(params[:editgroup][:id])
-      if group.update_attributes(group_params)
+      
+      gpinfo = {:name => params[:editgroup][:name], 
+                :description => params[:editgroup][:description], 
+                :creator => group.creator, 
+                :self => group.self}
+
+      if group.update_attributes(gpinfo)
         render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
 	  		  :password_digest, :remember_token]}]), :status => 200
       else
