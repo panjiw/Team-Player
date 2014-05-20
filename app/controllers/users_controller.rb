@@ -23,8 +23,13 @@ class UsersController < ApplicationController
     end
   end
 
-  # changes password (write in what it takes in / outputs)
+  # changes password 
   # Edit a signed-in user's information
+  # Input: 
+  # :edit => { :password => (old password), :new_password => (new password), :new_password_confirmation => (new password)}
+  # Output:
+  # If correct old password and new passwords match and are the correct length, changes the password with status 200
+  # Else, returns the JSON error with status 400
   def edit_password
     @user = current_user
     if @user.authenticate(params[:edit][:password])
@@ -41,6 +46,12 @@ class UsersController < ApplicationController
   end
 
   # edit username
+  # Edit a signed-in user's information
+  # Input: 
+  # :edit => { :password => (password), :username => (new username)}
+  # Output:
+  # If correct password and username is not taken, changes the username with status 200
+  # Else, returns the JSON error with status 400
   def edit_username
     @user = current_user
     if @user.authenticate(params[:edit][:password])
@@ -57,6 +68,12 @@ class UsersController < ApplicationController
   end
 
   # edit name
+  # Edit a signed-in user's information
+  # Input: 
+  # :edit => { :password => (password), :firstname => (new firstname), :lastname => (new lastname)}
+  # Output:
+  # If correct password, changes the username with status 200
+  # Else, returns the JSON error with status 400
   def edit_name
     @user = current_user
     if @user.authenticate(params[:edit][:password])
@@ -73,6 +90,12 @@ class UsersController < ApplicationController
   end
 
   # edit email
+  # Edit a signed-in user's information
+  # Input: 
+  # :edit => { :password => ( password), :email => (new email)}
+  # Output:
+  # If correct password and new email is not taken and is an email format, changes the password with status 200
+  # Else, returns the JSON error with status 400
   def edit_email
     @user = current_user
     if @user.authenticate(params[:edit][:password])
@@ -88,18 +111,17 @@ class UsersController < ApplicationController
     end
   end
 
-  # Updates user information after editting
-  # If update is successful, status 200. 
-  # Else, status 400
-  def update
-
-    @user = current_user
-    if @user.update_attributes(user_params)
-      render :json => {}, :status => 200
-    else
-      render :json => @user.errors.full_messages, :status => 400
-    end
-  end
+  # # Updates user information after editting
+  # # If update is successful, status 200. 
+  # # Else, status 400
+  # def update
+  #   @user = current_user
+  #   if @user.update_attributes(user_params)
+  #     render :json => {}, :status => 200
+  #   else
+  #     render :json => @user.errors.full_messages, :status => 400
+  #   end
+  # end
 
 
   # find user by email

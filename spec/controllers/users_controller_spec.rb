@@ -121,106 +121,97 @@ describe "CREATE new" do
 
 end
 
-describe "UPDATE user" do
-    before(:each) do
-        post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
-                             :password => "player", :password_confirmation => "player"}
+# describe "UPDATE user" do
+#     before(:each) do
+#         post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
+#                              :password => "player", :password_confirmation => "player"}
    
-        post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                             :password => "player", :password_confirmation => "player"}
+#         post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#                              :password => "player", :password_confirmation => "player"}
 
-    end
+#     end
 
-    #checks if update runs correctly when username is changed
-    context 'all input correct username changed' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "newname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 200).should be_true
-        end
-    end
+#     #checks if update runs correctly when username is changed
+#     context 'all input correct username changed' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "newname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 200).should be_true
+#         end
+#     end
 
-    #checks if update runs correctly when firstname is changed
-    context 'it should update users firstname' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "newname", :lastname => "Player", :email => "team@player.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 200).should be_true
-        end
-    end
+#     #checks if update runs correctly when firstname is changed
+#     context 'it should update users firstname' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "newname", :lastname => "Player", :email => "team@player.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 200).should be_true
+#         end
+#     end
 
-    #checks if update runs correctly when lastname is changed
-    context 'it should update users lastname' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "newname", :email => "team@player.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 200).should be_true
-        end
-    end
+#     #checks if update runs correctly when lastname is changed
+#     context 'it should update users lastname' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "newname", :email => "team@player.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 200).should be_true
+#         end
+#     end
 
-    #checks if update runs correctly when email is changed
-    context 'it should update users email' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 200).should be_true
-        end
-    end
+#     #checks if update runs correctly when email is changed
+#     context 'it should update users email' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 200).should be_true
+#         end
+#     end
 
-    #checks if update runs correctly when password is changed
-    context 'it should update users password' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            :password => "newplayer", :password_confirmation => "newplayer"}
-            (response.status == 200).should be_true
-        end
-    end
+#     #checks if update runs correctly when password is changed
+#     context 'it should update users password' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#             :password => "newplayer", :password_confirmation => "newplayer"}
+#             (response.status == 200).should be_true
+#         end
+#     end
 
-    #checks if update throws an error when passwords don't match
-    context 'it should not update users password' do
-        it 'should not update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            :password => "players", :password_confirmation => "player"}
-            (response.status == 400).should be_true
-        end
-    end
+#     #checks if update throws an error when passwords don't match
+#     context 'it should not update users password' do
+#         it 'should not update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#             :password => "players", :password_confirmation => "player"}
+#             (response.status == 400).should be_true
+#         end
+#     end
 
-    #checks if update throws an error when passwords are too small
-    context 'it should not update users password' do
-        it 'should not update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            :password => "play", :password_confirmation => "play"}
-            (response.status == 400).should be_true
-        end
-    end
+#     #checks if update throws an error when passwords are too small
+#     context 'it should not update users password' do
+#         it 'should not update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#             :password => "play", :password_confirmation => "play"}
+#             (response.status == 400).should be_true
+#         end
+#     end
 
-    #checks if update throws an error when username already exists
-    context 'it should update user' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 400).should be_true
-        end
-    end
+#     #checks if update throws an error when username already exists
+#     context 'it should update user' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 400).should be_true
+#         end
+#     end
 
-    #checks if update throws an error when email already exists
-   context 'it should update user' do
-        it 'should update user information' do
-            post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
-            :password => "player", :password_confirmation => "player"}
-            (response.status == 400).should be_true
-        end
-    end
-end
-
-
-# #viewgroup-> give all groups login user is in, and for each group includes all
-#   # t he users of that group, excluding private infos
-#   def viewgroup
-#     groups = current_user.groups
-#     render :json => groups.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-#             :password_digest, :remember_token]}]), :status => 200
-#   end
+#     #checks if update throws an error when email already exists
+#    context 'it should update user' do
+#         it 'should update user information' do
+#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
+#             :password => "player", :password_confirmation => "player"}
+#             (response.status == 400).should be_true
+#         end
+#     end
+# end
 
 # tests for viewgroup
 describe 'viewgroup' do
@@ -572,21 +563,25 @@ describe 'EDIT tests' do
 
     context 'change email' do
 
-        it 'should change the username' do
+        it 'should change the email' do
             post 'edit_email', :edit => {:password => "player", :email => "newname@gmail.com"}
             (response.status == 200).should be_true
             end
 
-        it 'should not change the username because password doesnt match' do
+        it 'should not change the email because password doesnt match' do
             post 'edit_email', :edit => {:password => "hahahahah", :email => "newname@gmail.com"}
             (response.status == 400).should be_true
             end
 
-        it 'should not change the username because username already exists' do
+        it 'should not change the email because email already exists' do
             post 'edit_email', :edit => {:password => "player", :email => "taken@player.com"}
             (response.status == 400).should be_true
             end
 
+        it 'should not change the email because the email is invalid' do
+             post 'edit_email', :edit => {:password => "player", :email => "lol"}
+            (response.status == 400).should be_true
+        end
 
     end
 
