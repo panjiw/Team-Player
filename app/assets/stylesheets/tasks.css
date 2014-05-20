@@ -1,5 +1,5 @@
 
-.tasks-addbutton{
+.tasks-addbutton, .tasks-editbutton{
   padding-left: 1050px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
@@ -54,7 +54,7 @@
   position: center;
 }
 
-.tasks-add-body {
+.tasks-add-body, .tasks-edit-body {
   overflow: hidden;
 }
 

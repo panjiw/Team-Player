@@ -9,7 +9,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // initialize fields for creating a new task to be empty
   function initNewTaskData(){
-    $scope.newTaskGroup = -1;
+    $scope.newTaskGroup = null;
     $scope.newTaskTitle = "";
     $scope.newTaskDescription = "";
     $scope.newTaskDateDue = "";
@@ -70,9 +70,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   });
 
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
-    console.log('group selected');
-    $scope.currentMembers = $scope.newTaskGroup.members;
-    console.log("currentMembers, ", $scope.currentMembers);
+    if($scope.newTaskGroup){
+      console.log('group selected');
+      $scope.currentMembers = $scope.newTaskGroup.members;
+      console.log("currentMembers, ", $scope.currentMembers);
+    } else {
+      $scope.currentMembers = {};
+    }
   });
  
   $scope.openModal = function(e){
@@ -146,10 +150,21 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
 
     // first perform an empty field check
-    if(!($scope.newTaskGroup && $scope.newTaskTitle 
-      && $scope.newTaskDescription && $scope.newTaskMembers.length > 0)) {
+    if(!$scope.newTaskGroup || !$scope.newTaskTitle 
+      || !$scope.newTaskDescription || !$scope.newTaskMembers.length > 0) {
       e.preventDefault();
-      toastr.error("Empty fields");
+      
+      if (!$scope.newTaskGroup)
+        toastr.error("Group not selected");
+
+      if (!$scope.newTaskTitle)
+        toastr.error("Task Title required");
+
+      if (!$scope.newTaskDescription)
+        toastr.error("Task Description required");
+
+      if (!$scope.newTaskMembers.length > 0)
+        toastr.error("Member not selected");
       return;
     }
 
@@ -163,6 +178,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
           $scope.myTasks = TaskModel.getTasksArray();
         });
         toastr.success("Task Created!");
+        $('#taskModal').modal('hide');
       }
     };
 
