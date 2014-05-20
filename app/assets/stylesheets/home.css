@@ -107,3 +107,7 @@ div.tabs.selected_groups button.selected_groups{
 .help-body {
   overflow:hidden;
 }
+
+.fc-event:hover {
+  cursor: pointer;
+}

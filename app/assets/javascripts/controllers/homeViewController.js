@@ -90,12 +90,12 @@ angular.module('myapp').controller("homeViewController",
         var dueDate = this.dueDate.split("-");
         if (this.done == null) {
           events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black"});
+            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black", desc: this.taskDesc, members: this.members});
         }
         else
         {
           events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "grey", textColor: "black"});
+            dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members});
         }
       }
       else {
@@ -109,7 +109,8 @@ angular.module('myapp').controller("homeViewController",
       if (this.event.dateDue != null) {
         var dueDate = this.event.dateDue.split("-");
         events.push({title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-          dueDate[2]), backgroundColor: "#dff0d8", textColor: "black"});
+          dueDate[2]), backgroundColor: "#dff0d8", textColor: "black", 
+          desc: this.event.description, members: this.event.creator});
       }
     })
     
@@ -117,7 +118,9 @@ angular.module('myapp').controller("homeViewController",
       // editable:true,
       events: events,
       eventClick: function(event) {
-        $('#eventModal').modal({show:true})
+        $('#calendarModal').modal({show:true})
+        $("#calendarModal-header").html(event.title);
+        $("#calendarModal-content").html(event.desc + "<br/>" + event.members);
       }
     });
     
