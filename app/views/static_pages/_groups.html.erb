@@ -32,7 +32,7 @@
                       </div>
                       <div class="group-name">
                         <h3>
-                          <button type="button" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
+                          <button type="button" ng-hide="groupsList[group_selected].isSelfGroup" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-pencil"></span>
                           </button>
                           <span>{{groupsList[group_selected].name}}<span>
@@ -94,6 +94,31 @@
        <div class="modal-footer">
         <button class="btn" data-dismiss="modal">Cancel</button>
         <button class="btn" ng-click="createGroup($event)">Save</button>
+       </div>
+       </div>
+      </div>
+      </div>
+
+      <!-- popup end -->
+
+      <!-- Popup for editing group -->
+
+      <div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+       <div class="modal-content">
+       <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal">×</button>
+       <h3>Add Group</h3>
+       </div>
+       <div class="modal-body group-add-body">
+          <div class="col-md-6">
+            <h5>Name:</h5><input ng-model="editName" type="text" />
+            <h5>Description:</h5><textarea ng-model="editDescription"></textarea>
+          </div>
+       </div>
+       <div class="modal-footer">
+        <button class="btn" data-dismiss="modal">Cancel</button>
+        <button class="btn" ng-click="editGroup($event)">Save</button>
        </div>
        </div>
       </div>

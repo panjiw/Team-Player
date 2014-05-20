@@ -143,11 +143,26 @@
   }
 
   $scope.showEditGroup = function(e) {
-    console.log("Clicked");
+    $scope.editName = $scope.groupsList[$scope.group_selected].name;
+    $scope.editDescription = $scope.groupsList[$scope.group_selected].description;
+    $('#editModal').modal({show:true});
   }
 
-  $scope.editGroup = function(id) {
-    // TODO
+  $scope.editGroup = function(e) {
+    var id = $scope.groupsList[$scope.group_selected].id;
+    GroupModel.editGroup(id, $scope.editName, $scope.editDescription, function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        getGroupsFromModel(function() {
+          $scope.apply(function() {
+            // TOOD
+          });
+        });
+      }
+    });
+
+    $scope.editDescription = $scope.editName = "";
   }
 
   $scope.leaveGroup = function(id) {

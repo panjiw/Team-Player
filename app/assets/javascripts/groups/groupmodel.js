@@ -138,8 +138,31 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   //Update any or all of these fields for the group with the groupID (which is required).
   //If a field is null, that field is not updated. If the groupID is not found,
   //indicates failure...
-  GroupModel.editGroup = function(groupID, name, description, members) {
-    //TODO
+  GroupModel.editGroup = function(groupID, name, description, callback) {
+    var old = GroupModel.groups[groupID];
+
+    if(!(groupID && name && description)) {
+      callback("Name or description cannot be empty");
+    }
+
+    // If nothing changed, do nothing
+    if(old.name == name && old.description == description) {
+      callback();
+    }
+
+    $.post("/edit_group",
+    {
+      "editgroup[id]": groupID,
+      "editgroup[name]": name,
+      "editgroup[description]": description
+    })
+    .success(function(data, status) {
+      updateGroup(data);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
   };
 
   // Remove the current user from a group. On error, calls callback with error;
