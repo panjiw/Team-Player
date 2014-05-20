@@ -60,6 +60,7 @@
       }
     });
   }
+  updateGroups();
 
   function buildMemberMap(memberArray){
     var map = {};
