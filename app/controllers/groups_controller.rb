@@ -61,9 +61,30 @@ class GroupsController < ApplicationController
   # editgroup[id]: group to be edited
   # editgroup[name]: new name or same name for this group
   # editgroup[description]: new description
+  # 
+  # Returns the the group changed info
+  #  
+  # return the new group and all the users in this group
+  # look at (creategroup) above for return details
+  def editgroup
+    group = Group.find(params[:id])
+    if group.update_attributes(group_params)
+      render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
+			:password_digest, :remember_token]}]), :status => 200
+    else
+      render :json => {:errors => group.errors.full_messages}, :status => 400
+    end
+  end
 
 
-  
+
+
+  # leave group
+  # leave[id]: group to leave
+  # 
+  # Require: user to be in group
+  # if last user leave group, group id destroy
+  # and so are all the dependents (tasks, bills, task generator)
   def leavegroup
     if(params[:leave] && params[:leave][:id])    
       group = Group.find_by_id(params[:leave][:id])
@@ -85,12 +106,6 @@ class GroupsController < ApplicationController
       render :json => ["Group Not Selected"], :status => 400
     end
   end
-
-
-
-
-
-
 
 
 
