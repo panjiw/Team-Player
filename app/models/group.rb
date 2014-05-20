@@ -7,11 +7,11 @@ class Group < ActiveRecord::Base
   validates :creator, presence: true
 
   # task - group, many-many relation
-  has_many :tasks
+  has_many :tasks, :dependent => :destroy
 
   # bill - group, many-many relation
-  has_many :bills
+  has_many :bills, :dependent => :destroy
 
   # task generator - group, many-many relation
-  has_many :task_generators
+  has_many :task_generators, :dependent => :destroy
 end

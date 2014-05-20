@@ -65,13 +65,21 @@ class GroupsController < ApplicationController
 
   
   def leavegroup
-
     if(params[:leave] && params[:leave][:id])    
-      @group = Group.find(params[:leave][:id])
-      if User.member?(current_user, @group)
-         @group.users.delete(current_user)
+      group = Group.find_by_id(params[:leave][:id])
+      if group.nil?
+        render :json => ["Group not found"], :status => 400
       else
-        render :json => ["You Not in group"], :status => 400
+        if User.member?(current_user, group)
+           group.users.delete(current_user)
+           if group.users.empty?
+             # delete group no more user
+             group.destroy
+           end
+           render :nothing => true, :status => 200
+        else
+          render :json => ["Unable to leave group #{group.name}"], :status => 400
+        end
       end
     else
       render :json => ["Group Not Selected"], :status => 400
