@@ -72,6 +72,9 @@ angular.module('myapp').controller("homeViewController",
   	$('#billModal').modal({show:true})
   });
 
+  $scope.openModal = function(e){
+    $('#manualModal').modal({show:true})
+  };
 
   $(document).ready(function() {
   

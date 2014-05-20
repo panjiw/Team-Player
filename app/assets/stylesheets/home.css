@@ -82,7 +82,7 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .home-tasks {
-  border: 2px solid gray;
+  border: 1px solid #ddd;
   float: left;
   clear: left;
   width: 220px;
@@ -102,4 +102,8 @@ div.tabs.selected_groups button.selected_groups{
   margin-top: 30px;
   width: 600px;
   height: 500px;
+}
+
+.help-body {
+  overflow:hidden;
 }
