@@ -23,6 +23,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   var activeEditTask = -1;
 
   function initEditTaskData(task, generator){
+    console.log("initedit");
     if (activeEditTask != task.event.id){
       $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.event.group]);
       activeEditTask = task.event.id;
@@ -177,6 +178,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   };
 
   $scope.openEditModal = function(e, taskID){
+    console.log("open edit");
     initEditTaskData(TaskModel.tasks[taskID],TaskModel.generators[taskID]);
     $('#taskEditModal').modal({show:true})
   };
@@ -335,10 +337,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('.tasks-pop').not('#' + p).hide();
     $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
   }
-
-  $scope.openEditModal = function(e){
-    $('#editModal').modal({show:true})
-  };
 
   $scope.openTaskHelpModal = function(e){
     $('#taskHelpModal').modal({show:true})
