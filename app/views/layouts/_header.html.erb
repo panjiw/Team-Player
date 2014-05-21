@@ -19,7 +19,7 @@ Displays header after successful login  -->
 
 
     <% if signed_in? %>
-        <div class="header-welcome">Welcome, {{currentUser.uname}}!
+        <div class="header-welcome">Welcome, {{currentUser.username}}!
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a class="logout" href="/" ng-click="logout($event)">Logout</a>
     </div>

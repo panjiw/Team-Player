@@ -13,6 +13,7 @@ var Task = function(id, groupID, title, description, creatorID, dateCreated, dat
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.members = members;
   this.done = done;
+  this.creator = creatorID;
 };
 
 angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function(GroupModel, UserModel) {
@@ -72,10 +73,10 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         var first = true;
         for(var j in tasks[i].members){
           if(first){
-            str+= UserModel.users[j].uname;
+            str+= UserModel.users[j].username;
             first = false;
           } else {
-            str+= ", "+UserModel.users[j].uname;
+            str+= ", "+UserModel.users[j].username;
           }
         }
         return str;

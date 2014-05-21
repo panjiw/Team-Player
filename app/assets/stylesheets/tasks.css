@@ -86,6 +86,16 @@ textarea {
 .tasks-panelbutton {
   padding:0px;
   height:95px;
+  width:650px;
+  overflow:hidden;
+  border-color: white;
+  text-align: center;
+  margin-bottom:15px;
+}
+
+.tasks-panelbutton-comp {
+  padding:0px;
+  height:95px;
   width:300px;
   overflow:hidden;
   border-color: white;
@@ -106,6 +116,18 @@ textarea {
   display: none;
 }
 
+.tasks-pop-gray {
+  position: absolute;
+  width: 400px;
+  height: 330px;
+  right: 80px;
+  top: 250px;
+  padding: 10px;
+  background-color: #F0F0F0;
+  border: 5px solid #ddd;
+  border-radius: 5px;
+  display: none;
+}
 
 .selected-buttons {
   position: absolute;
@@ -114,5 +136,11 @@ textarea {
 }
 
 .panel-gray {
-  background-color: gray;
+  border-color:#ddd;
+}
+
+.panel-gray-header {
+  color: #505050;
+  background-color: #F0F0F0;
+  border-color: #ddd;
 }
