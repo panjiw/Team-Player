@@ -119,13 +119,13 @@ angular.module('myapp').controller("homeViewController",
       if (this.dueDate != null) {
         var dueDate = this.dueDate.split("-");
         if (this.done == null) {
-          events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+          events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
             dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black", desc: this.taskDesc, members: this.members,
             group: this.groupName});
         }
         else
         {
-          events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+          events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
             dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members,
             group: this.groupName});
         }
