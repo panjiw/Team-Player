@@ -142,7 +142,7 @@ angular.module('myapp').controller("homeViewController",
         var dueDate = this.event.dateDue.split("-");
         events.push({type: "Bill", title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
           dueDate[2]), backgroundColor: "#dff0d8", textColor: "black", 
-          desc: this.event.description, members: UserModel.users[this.event.creator].uname, group: GroupModel.groups[this.event.group].name});
+          desc: this.event.description, members: UserModel.users[this.event.creator].username, group: GroupModel.groups[this.event.group].name});
       }
     })
     
