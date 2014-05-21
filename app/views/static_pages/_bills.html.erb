@@ -1,9 +1,83 @@
 <div class="container">
     <div class="header-row">
-        <div class= "bills-header">
-            <h1>My Bills</h1>
-        </div>
-    </div>
+          <div class= "tasks-header">
+            <div class="col-md-11">
+              <h1>My Bills</h1>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-default" id="taskBtn" ng-click="openBillHelpModal($event)">
+                <span class="glyphicon glyphicon-info-sign"></span>
+              </button>
+                <div id="billHelpModal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                          <h3>Help Guide</h3>
+                      </div>
+                    <div class="modal-body help-body">
+                      <div class="instruction-row">
+                        <div id="billHelp1">
+                          <h3>Page1</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-10"></div>
+                              <div class="col-md-2">
+                                <button ng-click="billNext(1)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="billHelp2">
+                          <h3>Page2</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="billBack(2)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="billNext(2)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="billHelp3">
+                          <h3>Page3</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="billBack(3)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="billNext(3)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none"  id="billHelp4">
+                          <h3>Page4</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>
+                              </div>
+                              <div class="col-md-10"></div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+
+
+
+
+
+
+<!--Add Bill Button-->
     <div class="bills-addbutton">
             <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">

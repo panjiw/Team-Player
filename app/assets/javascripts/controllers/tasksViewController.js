@@ -237,4 +237,19 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#editModal').modal({show:true})
   };
 
+  $scope.openTaskHelpModal = function(e){
+    $('#taskHelpModal').modal({show:true})
+  };
+
+  $scope.taskNext = function(pageNum) {
+    $('#'+'taskHelp'+pageNum).hide();
+    $('#'+'taskHelp'+(parseInt(pageNum)+1)).show();
+  }
+
+  $scope.taskBack = function(pageNum) {
+    $('#'+'taskHelp'+pageNum).hide();
+    $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
+  }
+
+
 }]);
