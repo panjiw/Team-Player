@@ -1,5 +1,5 @@
 
-.bills-addbutton{
+.bills-addbutton, .bills-editbutton{
   float: right;
   padding-top: 30px;
 }

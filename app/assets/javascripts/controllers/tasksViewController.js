@@ -34,7 +34,27 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
       $scope.editTaskTitle = task.event.title;
       $scope.editTaskDescription = task.event.description;
-      $scope.editTaskDateDue = $.extend(true, {}, task.event.dateDue);
+
+      /** set the date; somehow bill.event.dateDue is returning and object like 
+          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
+          weirdly with indexing **/
+      var dateObj = $.extend(true, {}, task.event.dateDue);
+      
+      var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
+      var month = parseInt(""+dateObj[5] + dateObj[6]);
+      month -=1;
+      var day = parseInt(""+dateObj[8] + dateObj[9]);
+
+      $scope.editTaskDateDue = new Date(year,month,day);
+
+      console.log("date due",$scope.editTaskDateDue);
+      if ($scope.editTaskDateDue == ""){
+        $.datepicker._clearDate('#task_edit_datepicker');
+      } else {
+        $('#task_edit_datepicker').datepicker("setDate", $scope.editTaskDateDue);
+      }
+
+      /** end set date **/
 
 
       /********** start rearange member according to task list *******/
@@ -180,13 +200,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   // });
  
   $scope.openModal = function(e){
-    $('#taskModal').modal({show:true})
+    $('#taskModal').modal({show:true});
   };
 
   $scope.openEditModal = function(e, taskID){
     console.log("open edit");
     initEditTaskData(TaskModel.tasks[taskID],TaskModel.generators[taskID]);
-    $('#taskEditModal').modal({show:true})
+    $('#taskEditModal').modal({show:true});
   };
 
   // $scope.addMember = function(e) {

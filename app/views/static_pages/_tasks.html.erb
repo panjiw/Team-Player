@@ -18,18 +18,30 @@
                     <div class="modal-body help-body">
                       <div class="instruction-row">
                         <div id="taskHelp1">
-                          <h3>Page1</h3>
-                            <div class="info"></div>
-                            <div class="backNext">
-                              <div class="col-md-10"></div>
-                              <div class="col-md-2">
-                                <button ng-click="taskNext(1)" class="btn btn-default">Next</button>
-                              </div>
+                          <h4>Navigating Through Task Tabs</h4>
+                          <div class="info">
+                            Click on the "My Tasks" tab to see all of your unfinished tasks.<br>
+                            Click on the "Task History" tab to see all of your finished tasks.
+                          </div>
+                            <hr>
+                          <div class="helpImage"></div>
+                          <div class="backNext">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2">
+                              <button ng-click="taskNext(1)" class="btn btn-default">Next</button>
                             </div>
+                          </div>
                         </div>
                         <div style="display:none" id="taskHelp2">
-                          <h3>Page2</h3>
-                            <div class="info"></div>
+                          <h4>Adding Tasks</h4>
+                            <div class="info">
+                              Click on "Add Task" to create a task!<br>
+                              <i>Cyclic Tasks</i> mean that tasks can be rotated between members - given to the next when another has finished. <br>
+                              <i>Repeat Weekly</i> ...<br>
+                              Select the members you want to assign the task.
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(2)" class="btn btn-default">Back</button>
@@ -41,8 +53,12 @@
                             </div>
                         </div>
                         <div style="display:none" id="taskHelp3">
-                          <h3>Page3</h3>
-                            <div class="info"></div>
+                          <h4>Editing/Completing Tasks</h4>
+                            <div class="info">
+                              Click on a task to see a pop up containing more information about it. Here, you can click "Completed" if you're done, or "Edit" if you want to update it.
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(3)" class="btn btn-default">Back</button>
@@ -56,6 +72,8 @@
                         <div style="display:none"  id="taskHelp4">
                           <h3>Page4</h3>
                             <div class="info"></div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(4)" class="btn btn-default">Back</button>
@@ -80,6 +98,9 @@
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">×</button>
                         <h3>Create Task</h3>
+                        <button class="btn btn-default" id="taskBtn" ng-click="openTaskHelpModal($event)">
+                          <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
                     </div>
                   <div class="modal-body tasks-add-body">
                     <div class="col-md-5">
@@ -253,11 +274,11 @@
                             </button>
                             <div id="task{{task.taskID}}" class="tasks-pop">
                               <div class="selected-info">
-                                <span>Task: {{task.taskName}}</span><br>
-                                <span>Due Date: {{task.dueDate}}</span><br>
-                                <span>Group: {{task.groupName}}</span><br>
-                                <span>Participating Members: {{task.members}}</span><br>
-                                <span>Done: {{task.done}}</span><br />
+                                <span><strong>Task:</strong> {{task.taskName}}</span><br>
+                                <span><strong>Due Date:</strong> {{task.dueDate}}</span><br>
+                                <span><strong>Group:</strong> {{task.groupName}}</span><br>
+                                <span><strong>Participating Members:</strong> {{task.members}}</span><br>
+                                <span><strong>Done:</strong> {{task.done}}</span><br />
                                 <div class="selected-buttons">
                                   <button class="btn btn-default" ng-click="openEditModal($event, task.taskID)">Edit</button>
                                   <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
@@ -271,35 +292,75 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="taskHist">
-                  <h3>Task History</h3>
-                    <div class="tasks-scroll">
-                      <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in myTasks | orderEvents">
-                          <div ng-show="task.done">
-                            <button ng-click="openTaskPop($event, 'task' + task.taskID)" class="btn btn-default tasks-panelbutton" >
-                              <div class="panel panel-warning">
-                                <div class="panel-heading">
-                                  <div class="task-panel">
-                                    <h4 class="panel-descr">{{task.taskName}}</h4>
-                                    <h4 class="panel-date">{{task.dueDate}}</h4>
+                    <div class="col-md-4">
+                      <h3>Tasks I've Created</h3>
+                      <div class="task-created tasks-scroll">
+                        <div style="width:350px;height:400px;line-height:3em;overflow:auto;padding:20px;">
+                          <div ng-repeat="task in myTasks">
+                            <div ng-show="task.done">
+                              <button ng-click="openTaskPop($event, 'task' + task.taskID)" class="btn btn-default tasks-panelbutton" >
+                                <div class="panel panel-warning">
+                                  <div class="panel-heading">
+                                    <div class="task-panel">
+                                      <h4 class="panel-descr">{{task.taskName}}</h4>
+                                      <h4 class="panel-date">{{task.dueDate}}</h4>
+                                    </div>
+                                  </div>
+                                  <div class="panel-body panel-info">
+                                    <div class="panel-groupname">{{task.groupName}}</div>
+                                    <div class="panel-groupmembers">{{task.members}}</div>
                                   </div>
                                 </div>
-                                <div class="panel-body panel-info">
-                                  <div class="panel-groupname">{{task.groupName}}</div>
-                                  <div class="panel-groupmembers">{{task.members}}</div>
+                              </button>
+                              <div id="task{{task.taskID}}" class="tasks-pop">
+                                <div class="selected-info">
+                                  <span>Task: {{task.taskName}}</span><br>
+                                  <span>Due Date: {{task.dueDate}}</span><br>
+                                  <span>Group: {{task.groupName}}</span><br>
+                                  <span>Participating Members: {{task.members}}</span><br>
+                                  <span>Done: {{task.done}}</span><br />
+                                  <div class="selected-buttons">
+                                    <button class="btn btn-default" ng-click="">Edit</button>
+                                    <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
+                                  </div>
                                 </div>
                               </div>
-                            </button>
-                            <div id="task{{task.taskID}}" class="tasks-pop">
-                              <div class="selected-info">
-                                <span>Task: {{task.taskName}}</span><br>
-                                <span>Due Date: {{task.dueDate}}</span><br>
-                                <span>Group: {{task.groupName}}</span><br>
-                                <span>Participating Members: {{task.members}}</span><br>
-                                <span>Done: {{task.done}}</span><br />
-                                <div class="selected-buttons">
-                                  <button class="btn btn-default" ng-click="">Edit</button>
-                                  <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <h3>Tasks Completed</h3>
+                      <div class="task-completed tasks-scroll">
+                        <div style="width:350px;height:400px;line-height:3em;overflow:auto;padding:20px;">
+                          <div ng-repeat="task in myTasks">
+                            <div ng-show="task.done">
+                              <button ng-click="openTaskPop($event, 'task' + task.taskID)" class="btn btn-default tasks-panelbutton" >
+                                <div class="panel panel-warning">
+                                  <div class="panel-heading panel-gray">
+                                    <div class="task-panel">
+                                      <h4 class="panel-descr">{{task.taskName}}</h4>
+                                      <h4 class="panel-date">{{task.dueDate}}</h4>
+                                    </div>
+                                  </div>
+                                  <div class="panel-body panel-info">
+                                    <div class="panel-groupname">{{task.groupName}}</div>
+                                    <div class="panel-groupmembers">{{task.members}}</div>
+                                  </div>
+                                </div>
+                              </button>
+                              <div id="task{{task.taskID}}" class="tasks-pop">
+                                <div class="selected-info">
+                                  <span>Task: {{task.taskName}}</span><br>
+                                  <span>Due Date: {{task.dueDate}}</span><br>
+                                  <span>Group: {{task.groupName}}</span><br>
+                                  <span>Participating Members: {{task.members}}</span><br>
+                                  <span>Done: {{task.done}}</span><br />
+                                  <div class="selected-buttons">
+                                    <button class="btn btn-default" ng-click="">Edit</button>
+                                    <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
+                                  </div>
                                 </div>
                               </div>
                             </div>

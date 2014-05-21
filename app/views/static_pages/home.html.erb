@@ -15,61 +15,7 @@ Displays pages for after successful login:
                 <button type="button" class="btn btn-default" id="addBillBut">Add Bill</button>
             </div>
 
-            <!-- <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Temp Manual Button</a>
-              <div id="manualModal" class="modal fade manual-modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h3>Help Guide</h3>
-                    </div>
-                    <div class="modal-body">
 
-
-
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-           <!--  <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Temp Manual Button</a> -->
-              <div id="eventModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h3>Help Guide</h3>
-                    </div>
-                  <div class="modal-body help-body">
-                    <div class="col-md-4">
-                      <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#homeHelp">Home</a></li>
-                        <li><a href="#tasksHelp">Tasks</a></li>
-                        <li><a href="#billsHelp">Bills</a></li>
-                        <li><a href="#groupHelp">Groups</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-8">
-                      <div class="tab-pane active" id="homeHelp">
-                        <h3>Stuff</h3>
-                      </div>
-                      <div class="tab-pane" id="tasksHelp">
-                        <h3>Stuff</h3>
-                      </div>
-                      <div class="tab-pane" id="billsHelp">
-                        <h3>Stuff</h3>
-                      </div>
-                      <div class="tab-pane" id="groupHelp">
-                        <h3>Stuff</h3>
-                      </div>
-                    </div>
-                  </div>
-
-                  </div>
-                  
-                </div>
-              </div>
-              
               <div id="calendarModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -77,14 +23,17 @@ Displays pages for after successful login:
                       <button type="button" class="close" data-dismiss="modal">×</button>
                       <h3 id="calendarModal-header"></h3>
                     </div>
-                  <div class="modal-body help-body">
-                    <div id="calendarModal-content"></div>
-                    <button class="btn btn-success">Edit</button>
-                    <button class="btn btn-success" data-dismiss="modal">Done</button>
-                  </div>
-
-                  </div>
-                  
+                    <div class="modal-body help-body">
+                      <div id="calendarModal-content"></div>
+                        <div class="calendarModal-buttons">
+                          <div class="col-md-8"></div>
+                          <div class="col-md-4">
+                            <button class="btn btn-warning">Edit</button>
+                            <button class="btn btn-success" data-dismiss="modal">Done</button>
+                          </div>
+                        </div>
+                    </div>
+                  </div> 
                 </div>
               </div>
           
@@ -103,10 +52,10 @@ Displays pages for after successful login:
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <div id="calendar-display" class="home-calendar">
-               <!--  <div ui-calendar ng-model="eventSources"></div> -->
-            </div>
+        <div class="col-md-8">
+          <div class="home-calendar" style="position:relative; right: 100px">
+            <div id="calendar-display"></div>
+          </div>
         </div>
     </div>
 </div>

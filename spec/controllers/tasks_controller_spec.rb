@@ -355,6 +355,82 @@ end
 # mark_finished
   # Mark the task with the given id as finished
   # Returns the info of the task
+describe 'MARK_FINISHED tests' do
+
+   before(:each) do
+      @controller = SessionsController.new
+      post 'create', :user => {:username => "four", :password => "player"}
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [4]}
+      @controller = SessionsController.new
+      delete 'destroy'
+
+      @controller = SessionsController.new
+      post 'create', :user => {:username => "three", :password => "player"}
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [3,4]}
+
+    end
+
+  # user not signed in
+  context 'the user is not signed in' do
+
+    before(:each) do
+      @controller = SessionsController.new
+      delete 'destroy'
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => 1}
+    end
+
+    it 'it should return a 400 status' do
+      (response.status == 400).should be_true
+    end
+
+  end
+
+  # task does not exist
+  context 'the task does not exist' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => "99"}
+    end
+
+    it 'it should return a 400 status' do
+      (response.status == 400).should be_true
+    end
+
+  end
+
+  # not a member of the task
+  context 'the user is not a member of the task' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => "1"}
+    end
+
+    it 'it should return a 400 status' do
+      (response.status == 400).should be_true
+    end
+
+  end
+
+  # task finished successfully; check info
+  context 'the task is marked as finished' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => "2"}
+    end
+
+    it 'it should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+  end
+
+end
 
 
 # tasks in range
@@ -372,8 +448,6 @@ end
   # "created_at":date and time created,
   # "updated_at":date and time updated},
   # "members":{user_id:order, ..., user_id:order}}, ...}
-
-
 describe "TEST get_task_in_range" do
 
 	context "tasks within month range" do

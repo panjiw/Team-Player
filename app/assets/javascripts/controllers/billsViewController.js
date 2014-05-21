@@ -13,8 +13,68 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $scope.newBillDateDue = "";
     $scope.newBillTotal = "";
     $scope.newBillGroup = "";
-    $scope.newBillMembers = "";
   };
+
+  var activeEditBill = -1;
+  function initEditBillData(bill){
+    // reset if no bill is passed in
+    if(!bill){
+      activeEditBill = -1;
+      return;
+    }
+    if (activeEditBill != bill.event.id){
+      $scope.editBillTitle = bill.event.title;
+      $scope.editBillDescription = bill.event.description;
+
+      /** set the date; somehow bill.event.dateDue is returning and object like 
+          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
+          weirdly with indexing **/
+      var dateObj = $.extend(true, {}, bill.event.dateDue);
+      
+      var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
+      var month = parseInt(""+dateObj[5] + dateObj[6]);
+      month -=1;
+      var day = parseInt(""+dateObj[8] + dateObj[9]);
+
+      $scope.editBillDateDue = new Date(year,month,day);
+
+      console.log("date due",$scope.editBillDateDue);
+      if ($scope.editBillDateDue == ""){
+        $.datepicker._clearDate('#bill_edit_datepicker');
+      } else {
+        $('#bill_edit_datepicker').datepicker("setDate", $scope.editBillDateDue);
+      }
+
+      /** end set date **/
+      
+      $scope.editBillGroup = $.extend(true, {}, GroupModel.groups[bill.event.group]);
+
+      $scope.editBillTotal = deriveTotal(bill.membersAmountMap);
+      
+      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.event.group].members);
+
+      for (var id in bill.membersAmountMap){
+        for (var index in $scope.currentEditMembers){
+          if($scope.currentEditMembers[index].id == id){
+            $scope.currentEditMembers[index].chked = true;
+            $scope.currentEditMembers[index].amount = bill.membersAmountMap[id].due;
+          }
+        }
+      }
+
+
+      activeEditBill = bill.event.id;
+    }
+
+  };
+
+  function deriveTotal(amountMap){
+    var total = 0;
+    for (var index in amountMap){
+      total += amountMap[index].due;
+    }
+    return total;
+  }
 
   $scope.activeBillTab='bill_selected_you_owe';
   
@@ -196,8 +256,17 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     
   };
 
-  $scope.showEditBill = function(e){
-    toastr.warning("Bill edit modal should show up");
+  $scope.editBill = function(e) {
+    toastr.warning("Bill edit called in controller");
+
+    $('#billEditModal').modal('hide');
+  };
+
+
+
+  $scope.showEditBill = function(e, billID){
+    initEditBillData(BillModel.bills[billID]);
+    $('#billEditModal').modal({show:true});
   };
     
   // Fills in billsYouOweMap from billsYouOwe
@@ -270,6 +339,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   // function for datepicker to popup
   $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+  $(function() {$( "#bill_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   // Function called when Select Bills or View Bills is clicked. Toggles popover
   $scope.openPop = function (e, p, n) {
