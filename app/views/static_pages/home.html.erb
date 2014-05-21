@@ -42,21 +42,25 @@ Displays pages for after successful login:
             <div class="home-tasks">
                 <h3>To Do's</h3>
                 <div class="home-todos">
-                  <div class="home-dateless" ng-repeat="todo in todos">
-                    <div class="panel-danger home-todo" ng-click="openCalendarModal(todo)">
-                      <div class="panel-heading">
-                        <div class="task-panel">
-                            <h4 class="panel-descr">{{todo.taskName}}</h4>
+                  <div class="home-dateless">
+                    <div ng-repeat="todo in todos">
+                      <div class="panel-danger home-todo" ng-click="openCalendarModal(todo)">
+                        <div class="panel-heading">
+                          <div class="task-panel">
+                              <h4 class="panel-descr">{{todo.taskName}}</h4>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <h3>Today's Tasks</h3>
-                  <div class="home-todays" ng-repeat="today in todaysTasks | orderEvents">
-                    <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
-                      <div class="panel-heading">
-                        <div class="task-panel">
-                            <h4 class="panel-descr">{{today.taskName}}</h4>
+                  <div class="home-todays">
+                    <div ng-repeat="today in todaysTasks | orderEvents">
+                      <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
+                        <div class="panel-heading">
+                          <div class="task-panel">
+                              <h4 class="panel-descr">{{today.taskName}}</h4>
+                          </div>
                         </div>
                       </div>
                     </div>
