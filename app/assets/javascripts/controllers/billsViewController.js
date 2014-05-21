@@ -158,7 +158,18 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
       && $scope.newBillDescription && Object.getOwnPropertyNames(membersAmountMap).length > 0)) {
       e.preventDefault();
-      toastr.error("Empty fields");
+
+      if (!$scope.newBillGroup)
+        toastr.error("Group not selected");
+      if (!$scope.newBillTitle)
+        toastr.error("Bill Name required");
+      if (!($scope.newBillTotal) > 0)
+        toastr.error("Bill total needs to be more than 0");
+      if (!$scope.newBillDescription)
+        toastr.error("Bill Description required");
+      if (!(Object.getOwnPropertyNames(membersAmountMap).length > 0))
+        toastr.error("Member not selected");
+
       return;
     }
 
@@ -171,12 +182,16 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       } else{
         $scope.$apply(function(){
           buildBills();
+          initNewBillData();
         });
         toastr.success("Bill Created!");
+        $('#billModal').modal('hide');
+
       }
+
     });
 
-    initNewBillData();
+    
   };
     
   // Fills in billsYouOweMap from billsYouOwe
@@ -296,7 +311,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   }
 
   $('#openBtn').click(function(){
-    $('#myModal').modal({show:true})
+    $('#billModal').modal({show:true})
   });
 
   $scope.openBillHelpModal = function(e){

@@ -282,6 +282,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
+          // clear out data used to create new task
+          initNewTaskData();
+
+          for(var index in $scope.currentMembers){
+            $scope.currentMembers[index].chked = false;
+          }
         });
         toastr.success("Task Created!");
         $('#taskModal').modal('hide');
@@ -296,13 +302,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     } else{
       TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
       $scope.newTaskDateDue, createTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
-    }
-
-    // clear out data used to create new task
-    initNewTaskData();
-
-    for(var index in $scope.currentMembers){
-      $scope.currentMembers[index].chked = false;
     }
 
   };
