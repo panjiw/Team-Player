@@ -86,7 +86,7 @@ textarea {
 .tasks-panelbutton {
   padding:0px;
   height:95px;
-  width:650px;
+  width:300px;
   overflow:hidden;
   border-color: white;
   text-align: center;
@@ -111,4 +111,8 @@ textarea {
   position: absolute;
   margin-left: 215px;
   padding-top: 50px;
+}
+
+.panel-gray {
+  background-color: gray;
 }

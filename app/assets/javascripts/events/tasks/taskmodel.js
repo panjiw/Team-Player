@@ -72,10 +72,10 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         var first = true;
         for(var j in tasks[i].members){
           if(first){
-            str+= UserModel.users[j].uname;
+            str+= UserModel.users[j].username;
             first = false;
           } else {
-            str+= ", "+UserModel.users[j].uname;
+            str+= ", "+UserModel.users[j].username;
           }
         }
         return str;

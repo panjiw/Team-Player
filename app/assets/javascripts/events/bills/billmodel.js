@@ -66,8 +66,31 @@ angular.module("myapp").factory('BillModel', function() {
   };
 
   //Update a bill with all of the fields. If a field is null, it is not updated
-  BillModel.editBill = function(billID, title, description, dateCreated, dateDue, cycle, repostArray, membersAmountMap) {
-    //TODO
+  BillModel.editBill = function(billID, groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
+    
+    toastr.warning("editBill called in billmodel.js. modify function 'editBill' to implement.");
+
+    /******* the following block of code should be modified and used when backend "edit_bill" is ready ****/
+
+    // $.post("/edit_bill",
+    // {
+    //   "bill[bill_id]": billID,
+    //   "bill[group_id]": groupID,
+    //   "bill[title]": title,
+    //   "bill[description]": description,
+    //   "bill[due_date]": dateDue,
+    //   "bill[total_due]": total,
+    //   "bill[members]": membersAmountMap,
+    // })
+    // .success(function(data, status) {
+    //   console.log("bill edit Success: " , data);
+    //   BillModel.updateBill(data);
+    //   callback();
+    // })
+    // .fail(function(xhr, textStatus, error) {
+    //   console.log("bill edit error: ",error);
+    //   callback(JSON.parse(xhr.responseText));
+    // });
   };
 
   // Set that a member of the bill has paid

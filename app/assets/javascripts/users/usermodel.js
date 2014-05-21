@@ -16,9 +16,9 @@ It also provides the login and create account interface to the backend.
 // --last name
 var User = function(id, uname, fname, lname) {
   this.id = id,
-  this.uname = uname,
-  this.fname = fname,
-  this.lname = lname
+  this.username = uname,
+  this.firstname = fname,
+  this.lastname = lname
 };
 
 //This is the UserModel for the application. It houses
