@@ -78,53 +78,100 @@
 
 
 <!--Add Bill Button-->
-    <div class="bills-addbutton">
-            <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
-                <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                      <h3>Create Bill</h3>
-                  </div>
-                  <div class="modal-body tasks-add-body">
-                        <div class="col-md-6">
-                        <h5>Name:</h5><input type="text" ng-model="newBillTitle" />
-                        <h5>Description:</h5>
-                        <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
-                        <h5>Total Cost:</h5><input ng-model="newBillTotal" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
-                        <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
-                    </div>
-                    <div class="col-md-5">
-                        <h5>Group</h5>
-                        <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
-                            <option value="">-- choose group --</option>
-                        </select>
-                        <br>
-                        <div class="bill-members">
-                            <div ng-repeat="mem in currentMembers" style="height:2.2em;">
-                              <input type="checkbox" ng-model="mem.chked" style="float:left;" 
-                              ng-click="mem.amount = 0;"/>
-                              <span style="float:left;">{{mem.username}}</span>
-                              <input ng-show="mem.chked==true && !split_evenly" ng-model="mem.amount" type="number" 
-                              min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
-                              <div style="clear: both;"></div>
-                          </div>
-                                <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
-                                 ng-options="mem.username for mem in currentMembers"></select> -->
-                                <input type="checkbox" class="large" ng-model="split_evenly" data-label="Split Evenly"/>
-                                <span>Split Evenly</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal">Cancel</button>
-                        <button class="btn" ng-click="createBill($event)">Save</button>
-                    </div>
-                </div>
-            </div>
+<div class="bills-addbutton">
+  <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
+  <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h3>Create Bill</h3>
         </div>
+        <div class="modal-body tasks-add-body">
+          <div class="col-md-6">
+            <h5>Name:</h5><input type="text" ng-model="newBillTitle" />
+            <h5>Description:</h5>
+            <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
+            <h5>Total Cost:</h5><input ng-model="newBillTotal" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
+            <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
+          </div>
+          <div class="col-md-5">
+            <h5>Group</h5>
+            <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
+              <option value="">-- choose group --</option>
+            </select>
+            <br>
+            <div class="bill-members">
+              <div ng-repeat="mem in currentMembers" style="height:2.2em;">
+                <input type="checkbox" ng-model="mem.chked" style="float:left;" 
+                ng-click="mem.amount = 0;"/>
+                <span style="float:left;">{{mem.username}}</span>
+                <input ng-show="mem.chked==true && !split_evenly" ng-model="mem.amount" type="number" 
+                min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
+                <div style="clear: both;"></div>
+              </div>
+                                <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
+                                ng-options="mem.username for mem in currentMembers"></select> -->
+              <input type="checkbox" class="large" ng-model="split_evenly" data-label="Split Evenly"/>
+              <span>Split Evenly</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal">Cancel</button>
+          <button class="btn" ng-click="createBill($event)">Save</button>
+        </div>
+      </div>
     </div>
+  </div>
+</div> <!-- bill-addbutton -->
+
+<!-- bill edit button -->
+<div class="bills-editbutton">
+  <div id="billEditModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h3>Edit Bill</h3>
+        </div>
+        <div class="modal-body tasks-add-body">
+          <div class="col-md-6">
+            <h5>Name:</h5><input type="text" ng-model="editBillTitle" />
+            <h5>Description:</h5>
+            <textarea cols="30" rows="4" ng-model="editBillDescription"></textarea>
+            <h5>Total Cost:</h5><input ng-model="editBillTotal" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
+            <h5>Due Date:</h5><input type="text" id="bill_edit_datepicker"/>
+          </div>
+          <div class="col-md-5">
+            <h5>Group</h5>
+            <!-- <select ng-model="editBillGroup" ng-options="grp.name for (id, grp) in groupsList">
+              <option value="">-- choose group --</option>
+            </select> -->
+            <span>{{editBillGroup.name}}</span>
+            <br>
+            <div class="bill-members">
+              <div ng-repeat="mem in currentEditMembers" style="height:2.2em;">
+                <input type="checkbox" ng-model="mem.chked" style="float:left;" 
+                ng-click="mem.amount = 0;"/>
+                <span style="float:left;">{{mem.username}}</span>
+                <input ng-show="mem.chked==true && !split_evenly" ng-model="mem.amount" type="number" 
+                min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
+                <div style="clear: both;"></div>
+              </div>
+              <input type="checkbox" class="large" ng-model="split_evenly" data-label="Split Evenly"/>
+              <span>Split Evenly</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal">Cancel</button>
+          <button class="btn" ng-click="editBill($event)">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- bill-editbutton -->
 
 
 
@@ -185,7 +232,7 @@
                                 <div ng-repeat="b in bill.bills">
                                     <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">
-                                          <button type="button" ng-click="showEditBill($event)" class="btn btn-default btn-xs">
+                                          <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                           </button> {{b.why}}
                                         </h4>
