@@ -18,8 +18,14 @@
                     <div class="modal-body help-body">
                       <div class="instruction-row">
                         <div id="billHelp1">
-                          <h3>Page1</h3>
-                            <div class="info"></div>
+                          <h4>Navigated Through Bills</h4>
+                            <div class="info">
+                              Click on the "Bills You Owe" tab to...<br>
+                              Click on the "Bills Owed To You" tab to...<br>
+                              Click on the "Bill Summary" tab to...
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-10"></div>
                               <div class="col-md-2">
@@ -28,8 +34,14 @@
                             </div>
                         </div>
                         <div style="display:none" id="billHelp2">
-                          <h3>Page2</h3>
-                            <div class="info"></div>
+                          <h4>Adding a Bill</h4>
+                            <div class="info">
+                              Click on "Add Bill" to form debts...<br>
+                              <i>Split Evenly</i> to automatically divide costs amongst members that have been checkmarked.
+                              <i>Customize</i> costs for members you've checkmarked.
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(2)" class="btn btn-default">Back</button>
@@ -41,8 +53,12 @@
                             </div>
                         </div>
                         <div style="display:none" id="billHelp3">
-                          <h3>Page3</h3>
-                            <div class="info"></div>
+                          <h4>Bills You Owe</h4>
+                            <div class="info">
+                              Select to see all bills you owe to specific person...
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(3)" class="btn btn-default">Back</button>
@@ -54,8 +70,12 @@
                             </div>
                         </div>
                         <div style="display:none"  id="billHelp4">
-                          <h3>Page4</h3>
-                            <div class="info"></div>
+                          <h4>Bills Owed To You</h4>
+                            <div class="info">
+                              Select a name to see all bills owed to you by selected person. Click the pencil icon to edit a specific bill. 
+                            </div>
+                            <hr>
+                            <div class="helpImage"></div>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>

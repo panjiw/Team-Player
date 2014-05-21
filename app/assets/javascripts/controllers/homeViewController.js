@@ -96,12 +96,14 @@ angular.module('myapp').controller("homeViewController",
         var dueDate = this.dueDate.split("-");
         if (this.done == null) {
           events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black", desc: this.taskDesc, members: this.members});
+            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black", desc: this.taskDesc, members: this.members,
+            group: this.groupName});
         }
         else
         {
           events.push({title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members});
+            dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members,
+            group: this.groupName});
         }
       }
       else {
@@ -126,7 +128,9 @@ angular.module('myapp').controller("homeViewController",
       eventClick: function(event) {
         $('#calendarModal').modal({show:true})
         $("#calendarModal-header").html(event.title);
-        $("#calendarModal-content").html(event.desc + "<br/>" + event.members);
+        $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
+                  + "<strong>Group:</strong> " + event.groupName + "<br/><br/>" 
+                  + "<strong>Members:</strong> " + event.members);
       }
     });
     
