@@ -23,6 +23,7 @@ angular.module('myapp').controller("homeViewController",
     }
   });
 
+  $scope.myTasks = [];
   function getTaskFromModel(){
     TaskModel.getTasksFromServer(
       function(error){
@@ -33,10 +34,25 @@ angular.module('myapp').controller("homeViewController",
         console.log("<<<< home view: task from model!!>>>");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
+          
         });
       }
     });
   }
+
+  getBillFromModel = function(e) {
+    BillModel.getBillFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        $scope.$apply(function(){
+          $scope.myBills = BillModel.bills;          
+        });
+      }
+    });
+  };
 
   // get groups before loading task so that group and user info are updated
   GroupModel.getGroups(function(groups, asynch, error) {
@@ -44,7 +60,16 @@ angular.module('myapp').controller("homeViewController",
     } else {
       //$scope.groupsList = groups;
       getTaskFromModel();
+      getBillFromModel();
+      
     }
+  });
+
+  // redraw calendar when mytasks and my bills are updated
+  $scope.$watchCollection('[myTasks,myBills]', function(newVal, oldVal){
+    console.log('myTasks in home changed', $scope.myTasks);
+    $('#calendar-display').empty();
+    dataReady();
   });
 
   // GroupModel.getGroups(function(groups, asynch, error) {
@@ -82,7 +107,8 @@ angular.module('myapp').controller("homeViewController",
     $("#calendarModal-content").html(todo.taskDesc + "<br/>" + todo.members);
   }
 
-  $(document).ready(function() {
+  // $(document).ready(function() {
+    var dataReady = function() {
   
     var date = new Date();
     var d = date.getDate();
@@ -91,7 +117,7 @@ angular.module('myapp').controller("homeViewController",
     
     var events = [];
     
-    $.each(TaskModel.getTasksArray(), function() {
+    $.each($scope.myTasks, function() {
       if (this.dueDate != null) {
         var dueDate = this.dueDate.split("-");
         if (this.done == null) {
@@ -113,7 +139,7 @@ angular.module('myapp').controller("homeViewController",
       }
     })
     
-    $.each(BillModel.bills, function() {
+    $.each($scope.myBills, function() {
       if (this.event.dateDue != null) {
         var dueDate = this.event.dateDue.split("-");
         events.push({title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
@@ -134,6 +160,6 @@ angular.module('myapp').controller("homeViewController",
       }
     });
     
-  });
+  }; // });
 
 }]);
