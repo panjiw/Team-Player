@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       token = sign_in user
       render :json => {:token => token}, :status => 200
     else
-      render :json => {:errors => ["Wrong user name or password"]}, :status => 400
+      render :json => ["Wrong username or password"], :status => 400
     end
   end
 
