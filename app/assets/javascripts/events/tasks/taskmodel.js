@@ -18,6 +18,7 @@ var Task = function(id, groupID, title, description, creatorID, dateCreated, dat
 angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function(GroupModel, UserModel) {
   var TaskModel = {};
   TaskModel.tasks = {};   //ID to task
+  TaskModel.generators = {};
   TaskModel.fetchedTasks = false;
 
   // get Tasks from server to Task model.
@@ -37,6 +38,28 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       callback(error);
     });
   };
+
+  // get Tasks from server to Task model.
+  TaskModel.getTaskGeneratorsFromServer = function(callback) {
+    $.get("/get_generators") // <-- url can be changed!
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task gen get Success: " , data);
+      // update task generator
+      for (var i in data){
+        updateGenerator(data[i]);
+      }
+      callback();
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task gen get error error: ",error);
+      callback(error);
+    });
+  };
+
+  function updateGenerator(generator){
+    TaskModel.generators[generator.details.current_task_id] = generator;
+  }
 
   TaskModel.getTasksArray = function(){
     var myTasks = [];

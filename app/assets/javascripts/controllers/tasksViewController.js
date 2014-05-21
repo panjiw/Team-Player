@@ -20,6 +20,76 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   }
 
+  var activeEditTask = -1;
+
+  function initEditTaskData(task, generator){
+    if (activeEditTask != task.event.id){
+      $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.event.group]);
+      activeEditTask = task.event.id;
+
+      $scope.editTaskTitle = task.event.title;
+      $scope.editTaskDescription = task.event.description;
+      $scope.editTaskDateDue = $.extend(true, {}, task.event.dateDue);
+
+
+      /********** start rearange member according to task list *******/
+      // $scope.currentEditMembers = GroupModel.groups[task.event.group].members;
+      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.event.group].members);
+      console.log("currentEditMembers from ", GroupModel.groups[task.event.group].members);
+      console.log("currentEditMembers", $scope.currentEditMembers);
+      console.log("taskmem", task.members);
+
+
+      var memArray = [];
+      var count = 0;
+      // set checked for each involved member
+      for (var id in task.members){
+        for (var index in $scope.currentEditMembers){
+          if($scope.currentEditMembers[index].id == id){
+            $scope.currentEditMembers[index].chked = true;
+            memArray[task.members[id]] = $scope.currentEditMembers[index];
+            delete $scope.currentEditMembers[index];
+            count++;
+          }
+            
+        }
+      }
+
+      for (var index in $scope.currentEditMembers){
+        memArray[count++] = $scope.currentEditMembers[index];
+      }
+      $scope.currentEditMembers = memArray;
+
+      console.log("currentEditMembers after", $scope.currentEditMembers);
+
+      /*** end ***/
+
+      // if there is a generator, initialize with data in it
+      if (generator){
+        $scope.editTaskCycle = generator.details.cycle;
+        $scope.editTaskRepostArray = [];
+        $scope.editTaskRepeat = false;
+        for (var id in generator.repeat_days){
+          $scope.editTaskRepostArray.push(generator.repeat_days[id]);
+
+          // if it is repeating someday
+          if(generator.repeat_days[id])
+            $scope.editTaskRepeat = true;
+        }
+      } else {
+        $scope.editTaskCycle = false;
+        $scope.editTaskRepostArray = [false,false,false,false,false,false,false];
+        $scope.editTaskRepeat = false;
+      }
+      
+      if (task.event.dateDue)
+        $scope.editNoDue = false;
+      else $scope.editNoDue = true;
+
+      
+    }
+  }
+
   // getting task from model for the first time, so ask model to get from server
   function getTaskFromModel(){
     TaskModel.getTasksFromServer(
@@ -34,6 +104,17 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
         });
       }
+    });
+
+    TaskModel.getTaskGeneratorsFromServer(
+      function(error){
+      if(error){
+        //TODO
+      } else{
+        //TODO
+        console.log("<<<<task gen from model!!>>>");
+      }
+
     });
   }
 
@@ -78,9 +159,26 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.currentMembers = {};
     }
   });
+
+  // $scope.$watch('editTaskGroup', function(newVal, oldVal){ 
+  //   if(activeEditTask != -1){
+  //     if($scope.editTaskGroup){
+  //       console.log('edit group selected', $scope.editTaskGroup );
+  //       $scope.currentEditMembers = $scope.editTaskGroup.members;
+  //       console.log("currentEditMembers, ", $scope.currentEditMembers);
+  //     } else {
+  //       $scope.currentEditMembers = {};
+  //     }
+  //   }
+  // });
  
   $scope.openModal = function(e){
     $('#taskModal').modal({show:true})
+  };
+
+  $scope.openEditModal = function(e, taskID){
+    initEditTaskData(TaskModel.tasks[taskID],TaskModel.generators[taskID]);
+    $('#taskEditModal').modal({show:true})
   };
 
   // $scope.addMember = function(e) {
@@ -194,6 +292,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
     // clear out data used to create new task
     initNewTaskData();
+
+    for(var index in $scope.currentMembers){
+      $scope.currentMembers[index].chked = false;
+    }
+
   };
 
   $scope.finish = function(id) {
@@ -232,9 +335,5 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('.tasks-pop').not('#' + p).hide();
     $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
   }
-
-  $scope.openEditModal = function(e){
-    $('#editModal').modal({show:true})
-  };
 
 }]);

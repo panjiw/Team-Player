@@ -80,6 +80,80 @@
             </div> <!-- id="taskModal" -->
           </div> <!-- tasks-addbutton -->
 
+          <div class="tasks-editbutton">
+            <div id="taskEditModal" class="modal fade task-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h3>Edit Task</h3>
+                    </div>
+                  <div class="modal-body tasks-add-body">
+                    <div class="col-md-5">
+                      <h5>Name:</h5><input type="text" ng-model="editTaskTitle"/>
+                      <h5>Description:</h5>
+                      <textarea cols="30" rows="4" ng-model="editTaskDescription"></textarea>
+                      <div class="tasks-duedate">
+                        <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
+                        <span>Cyclic Task</span><br>
+                        <input type="checkbox" class="large" data-label="Deadline" 
+                        ng-model="editNoDue" ng-click="editTaskDateDue='';editTaskRepeat=false;"/>
+                        <span>No Due Date</span>
+                        <input type="text" id="task_datepicker"/>
+                        <br>
+
+                        <div ng-hide="editNoDue" id="repeat_options">
+                          <input type="checkbox" class="large" ng-model="editTaskRepeat"/>
+                          <span>Repeat Weekly</span><br>
+                          <div ng-show="editTaskRepeat">
+                            <input type="checkbox" ng-model="editTaskRepostArray[0]"/>
+                            <span>Sun  </span>
+                            <input type="checkbox" ng-model="editTaskRepostArray[1]"/>
+                            <span>Mon  </span>
+                            <input type="checkbox" ng-model="editTaskRepostArray[2]"/>
+                            <span>Tue  </span>
+                            <input type="checkbox" ng-model="editTaskRepostArray[3]"/>
+                            <span>Wed  </span><br>
+                            <input type="checkbox" ng-model="editTaskRepostArray[4]"/>
+                            <span>Thur  </span>
+                            <input type="checkbox" ng-model="editTaskRepostArray[5]"/>
+                            <span>Fri  </span>
+                            <input type="checkbox" ng-model="editTaskRepostArray[6]"/>
+                            <span>Sat  </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-6">
+                      <h5>Group:</h5>
+                        <!-- <span class="nullable">
+                          <select ng-model="editTaskGroup" ng-options="grp.name for (id, grp) in editGroupsList">
+                            <option value="">-- choose group --</option>
+                          </select>
+                        </span> -->
+                      <span>{{editTaskGroup.name}}</span>
+                      <h5>Members</h5>
+                        <div id="members">
+                          <ul ui-sortable ng-model="currentEditMembers">
+                            <li ng-repeat="mem in currentEditMembers">
+                              <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
+                              <span style="float:left;">{{mem.username}}</span>
+                              <div style="clear: both;"></div>
+                            </li>
+                          </ul>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                    <button class="btn" ng-click="editTask($event)">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- id="taskModal" -->
+          </div><!--taskedit button -->
+
       <div class="tasks-row">
             <div class="tabbable">
               <ul class="nav nav-tabs">
@@ -119,7 +193,7 @@
                                 <span>Participating Members: {{task.members}}</span><br>
                                 <span>Done: {{task.done}}</span><br />
                                 <div class="selected-buttons">
-                                  <button class="btn btn-default" ng-click="">Edit</button>
+                                  <button class="btn btn-default" ng-click="openEditModal($event, task.taskID)">Edit</button>
                                   <button ng-click="finish(task.taskID)" class="btn btn-default">Completed</button>
                                 </div>
                               </div>
@@ -163,7 +237,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div id="task{{task.taskID}}_edit"></div>
+                            <div id="task{{task.taskID}}_edit">                            </div>
                           </div>
                         </div>
                       </div>
