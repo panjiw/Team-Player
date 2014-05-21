@@ -112,11 +112,6 @@ angular.module('myapp').controller("homeViewController",
 
   // $(document).ready(function() {
     var dataReady = function() {
-  
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
     
     var events = [];
     
