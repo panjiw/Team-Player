@@ -184,7 +184,11 @@
                             <div class="bills-to-pay-you">
                                 <div ng-repeat="b in bill.bills">
                                     <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
-                                        <h4 class="bill-member">{{b.why}}</h4>
+                                        <h4 class="bill-member">
+                                          <button type="button" ng-click="showEditBill($event)" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                          </button> {{b.why}}
+                                        </h4>
                                         <h4 class="bill-amount">${{b.amt}}</h4>
                                     </div>
                                 </div>

@@ -195,6 +195,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     
   };
+
+  $scope.showEditBill = function(e){
+    toastr.warning("Bill edit modal should show up");
+  };
     
   // Fills in billsYouOweMap from billsYouOwe
   function buildBillsMapYouOwe() {
