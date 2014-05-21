@@ -83,7 +83,7 @@
                       <div class="group-scroll">
                         <div class="list-group">
                             <!-- $parent is required because ng-repeat creates a new scope -->
-                            <a ng-repeat="grp in groupsList"
+                            <a ng-repeat="grp in groupsList | orderObjectByArray:['!isSelfGroup', 'name']"
                                class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
                                ng-click="$parent.selectGroup(grp.id)">
                               <h4>{{grp.name}}</h4>
