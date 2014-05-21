@@ -433,8 +433,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.createdTasks = [];
 
-  s.each(TaskModel.tasks, function() {
-    if (this.creator == task.creator) {
+  $.each(TaskModel.task, function() {
+    if (this.creator == UserModel.me) {
       createdTasks.push(this);
     }
   });
