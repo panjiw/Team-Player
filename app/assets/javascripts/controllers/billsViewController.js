@@ -299,5 +299,19 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#myModal').modal({show:true})
   });
 
+  $scope.openBillHelpModal = function(e){
+    $('#billHelpModal').modal({show:true})
+  };
+
+  $scope.billNext = function(pageNum) {
+    $('#'+'billHelp'+pageNum).hide();
+    $('#'+ 'billHelp'+(parseInt(pageNum)+1)).show();
+  }
+
+  $scope.billBack = function(pageNum) {
+    $('#'+'billHelp'+pageNum).hide();
+    $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
+  }
+
 }]);
 
