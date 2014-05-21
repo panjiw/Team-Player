@@ -30,6 +30,9 @@ class TasksController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     end
+
+    puts params[:task][:group_id]
+
     @task = Task.new(group_id: params[:task][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:task][:title],
