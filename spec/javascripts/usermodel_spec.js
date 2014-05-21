@@ -69,14 +69,14 @@ describe("User Model Tests", function() {
       UserModel.updateUser({id: 234, username: "test", firstname: "test", lastname: "test"});
       expect(UserModel.users[234]).toBeDefined();
 
-      console.log(UserModel.get(234).uname);
+      console.log(UserModel.get(234).username);
 
       var user = UserModel.get(234);
       expect(user).toBeDefined();
       expect(user.id).toBe(234);
-      expect(user.uname).toBe("test");
-      expect(user.fname).toBe("test");
-      expect(user.lname).toBe("test");
+      expect(user.username).toBe("test");
+      expect(user.firstname).toBe("test");
+      expect(user.lastname).toBe("test");
     });
 
     it("check get user returns updated information", function() {
@@ -86,9 +86,9 @@ describe("User Model Tests", function() {
       var user = UserModel.get(234);
       expect(user).toBeDefined();
       expect(user.id).toBe(234);
-      expect(user.uname).toBe("hello");
-      expect(user.fname).toBe("hello");
-      expect(user.lname).toBe("hello");
+      expect(user.username).toBe("hello");
+      expect(user.firstname).toBe("hello");
+      expect(user.lastname).toBe("hello");
     });
 
     it("ensures that you can update multiple users information", function() {
@@ -98,16 +98,16 @@ describe("User Model Tests", function() {
       var user = UserModel.get(2);
       expect(user).toBeDefined();
       expect(user.id).toBe(2);
-      expect(user.uname).toBe("test");
-      expect(user.fname).toBe("test");
-      expect(user.lname).toBe("test");
+      expect(user.username).toBe("test");
+      expect(user.firstname).toBe("test");
+      expect(user.lastname).toBe("test");
 
       user = UserModel.get(1);
       expect(user).toBeDefined();
       expect(user.id).toBe(1);
-      expect(user.uname).toBe("hello");
-      expect(user.fname).toBe("hello");
-      expect(user.lname).toBe("hello");
+      expect(user.username).toBe("hello");
+      expect(user.firstname).toBe("hello");
+      expect(user.lastname).toBe("hello");
     });
   });
 });
