@@ -17,8 +17,7 @@ function compareProperties(a, b){
     }
 }
 
-myApp.filter('orderObjectByArray', function(){
- return function(input, attributes) {
+function sort(input, attributes) {
     if (!angular.isObject(input)) return input;
 
     var array = [];
@@ -41,4 +40,23 @@ myApp.filter('orderObjectByArray', function(){
     });
     return array;
  }
+
+myApp.filter('orderUsers', function(){
+ return function(input) {
+ 	return sort(input, ['username', 'firstname', 'lastname', 'id']);
+ };
 });
+
+myApp.filter('orderGroups', function() {
+	return function(input) {
+		return sort(input, ['!isSelfGroup' , 'name', 'description', 'id']);
+	}
+});
+
+myApp.filter('orderEvents', function() {
+	// TODO
+	return function(input) {
+		console.log("Called unimplemented function")
+		return input;
+	}
+})
