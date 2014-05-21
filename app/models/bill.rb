@@ -10,7 +10,7 @@ class Bill < ActiveRecord::Base
   belongs_to :user
 
   # one (bill) - has many relationships
-  has_many :bill_actors, :dependent => :destroy
+  has_many :bill_actors, :dependent => :delete_all
   has_many :users, :through => :bill_actors
 
   # title must be there and at most 255 char
