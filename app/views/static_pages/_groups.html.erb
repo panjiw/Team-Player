@@ -1,9 +1,77 @@
   <div class="container">
           <div class="header-row">
-              <div class= "groups-header">
-                  <h1>My Groups</h1>
-              </div>
+          <div class= "tasks-header">
+            <div class="col-md-11">
+              <h1>My Groups</h1>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-default" ng-click="openGroupHelpModal($event)">
+                <span class="glyphicon glyphicon-info-sign"></span>
+              </button>
+                <div id="groupHelpModal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                          <h3>Help Guide</h3>
+                      </div>
+                    <div class="modal-body help-body">
+                      <div class="instruction-row">
+                        <div id="groupHelp1">
+                          <h3>Page1</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-10"></div>
+                              <div class="col-md-2">
+                                <button ng-click="groupNext(1)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="groupHelp2">
+                          <h3>Page2</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="groupBack(2)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="groupNext(2)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="groupHelp3">
+                          <h3>Page3</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="groupBack(3)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="groupNext(3)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none"  id="groupHelp4">
+                          <h3>Page4</h3>
+                            <div class="info"></div>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="groupBack(4)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-10"></div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
           </div>
+      </div>
+
 
           <div class="group-body">
               <div class="col-md-5">

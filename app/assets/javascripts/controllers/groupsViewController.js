@@ -206,4 +206,20 @@
       }
     });
   }
+
+  $scope.openGroupHelpModal = function(e){
+    $('#groupHelpModal').modal({show:true})
+  };
+
+  $scope.groupNext = function(pageNum) {
+    $('#'+'groupHelp'+pageNum).hide();
+    $('#'+'groupHelp'+(parseInt(pageNum)+1)).show();
+  }
+
+  $scope.groupBack = function(pageNum) {
+    $('#'+'groupHelp'+pageNum).hide();
+    $('#'+'groupHelp'+(parseInt(pageNum)-1)).show();
+  }
+
+
 }]);

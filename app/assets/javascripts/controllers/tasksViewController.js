@@ -98,7 +98,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
       } else{
         //TODO
-        console.log("<<<<task from model!!>>>");
+        console.log("---- task from model!! ---");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
 
@@ -112,7 +112,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
       } else{
         //TODO
-        console.log("<<<<task gen from model!!>>>");
+        console.log("---- task gen from model!! ---");
       }
 
     });
@@ -334,6 +334,24 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     }
     $('.tasks-pop').not('#' + p).hide();
     $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
+  }
+
+  $scope.openEditModal = function(e){
+    $('#editModal').modal({show:true})
+  };
+
+  $scope.openTaskHelpModal = function(e){
+    $('#taskHelpModal').modal({show:true})
+  };
+
+  $scope.taskNext = function(pageNum) {
+    $('#'+'taskHelp'+pageNum).hide();
+    $('#'+'taskHelp'+(parseInt(pageNum)+1)).show();
+  }
+
+  $scope.taskBack = function(pageNum) {
+    $('#'+'taskHelp'+pageNum).hide();
+    $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
   }
 
 }]);

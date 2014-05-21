@@ -1,6 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :signed_in_user
 
+
+  before_action :signed_in_user
+  include BillsHelper
  
   # create a new group and add current_user to group + creator
   # require user to be logined
@@ -104,6 +106,8 @@ class GroupsController < ApplicationController
         render :json => ["Group not found"], :status => 400
       else
         if User.member?(current_user, group)
+           # delete all bills related to group of user
+           remove_user(group)
            group.users.delete(current_user)
            if group.users.empty?
              # delete group no more user
