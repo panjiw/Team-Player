@@ -11,6 +11,7 @@ angular.module('myapp').controller("homeViewController",
   // $scope.groupsList = {};
   $scope.currentUser = {};
   $scope.todos = [];
+  $scope.todaysTasks = [];
 
   UserModel.fetchUserFromServer(function(error){
     if(error){

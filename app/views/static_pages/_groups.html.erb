@@ -120,11 +120,13 @@
                       </div>
                     </div>  
                       <div class="group-members">
+                        <div class="group-members-scroll">
                           <a class="list-group-item" ng-class="{mem_active :$parent.member_selected == mem.id}"
                                ng-repeat="mem in currentMembers | orderUsers"
                                ng-click="$parent.member_selected=mem.id">
                               <h4>{{mem.firstname}}</h4>
                             </a>
+                        </div>
                           <div ng-hide="groupsList[group_selected].isSelfGroup">
                             <input type="text" ng-model="addNewMember" ng-keypress="addMember($event)" class="form-control group-add" placeholder="new member email" />
                             <button type="button" ng-click="addMember($event)" class="btn btn-default group-add">Add Member</button>
