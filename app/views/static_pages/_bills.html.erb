@@ -155,7 +155,7 @@
                                         <div ng-repeat="b in bill.bills">
                                             <label for="{{b.id}}">
                                                 <div style="">
-                                                    <div class="bills-selected" class=""style="margin-bottom: 0px;" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
+                                                    <div class="bills-selected" class=""style="margin-bottom: 0px;" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                                         <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
                                                         <h4 class="bill-member">{{b.why}}</h4>
                                                         <h4 class="bill-amount">${{b.amt}}</h4>
@@ -183,7 +183,7 @@
                         <div id="{{bill.person}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
                                 <div ng-repeat="b in bill.bills">
-                                    <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
+                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">{{b.why}}</h4>
                                         <h4 class="bill-amount">${{b.amt}}</h4>
                                     </div>

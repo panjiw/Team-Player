@@ -101,7 +101,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
               amount: bills[i].membersAmountMap[j].due, 
               why: bills[i].event.title,
               id: bills[i].event.id,
-              desc: bills[i].event.description
+              desc: bills[i].event.description,
+              due: bills[i].event.dateDue
             });
           }
         }
@@ -115,7 +116,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
               amount: bills[i].membersAmountMap[j].due, 
               why: bills[i].event.title,
               id: bills[i].event.id,
-              desc: bills[i].event.description
+              desc: bills[i].event.description,
+              due: bills[i].event.dateDue
             });
           }
         }
@@ -202,13 +204,25 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $.each($scope.billsYouOweMap, function(member) {
         if (this.person == bill.person) {
           this.amount += bill.amount;
-          this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc});
+          if (bill.due != null) {
+            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
+          }
+          else {
+            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
+          }
           found = true;
           return false;
         }
       });
       if (!found) {
-        $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc}]});
+        if (bill.due != null) {
+          $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+            why: bill.why, desc: bill.desc, due: bill.due}]});
+        }
+        else {
+          $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+            why: bill.why, desc: bill.desc, due: "No Date"}]});  
+        }
       }
     });
   }
@@ -222,13 +236,25 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $.each($scope.billsOweYouMap, function(member) {
         if (this.person == bill.person) {
           this.amount += bill.amount;
-          this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc});
+          if (bill.due != null) {
+            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
+          }
+          else {
+            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
+          }
           found = true;
           return false;
         }
       });
       if (!found) {
-        $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc}]});
+        if (bill.due != null) {
+          $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+            why: bill.why, desc: bill.desc, due: bill.due}]});
+        }
+        else {
+          $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+            why: bill.why, desc: bill.desc, due: "No Date"}]});  
+        }
       }
     });
   }
