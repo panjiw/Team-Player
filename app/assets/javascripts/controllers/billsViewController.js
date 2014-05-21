@@ -157,7 +157,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           if (j != UserModel.me){
             console.log("users,",UserModel.users);
             $scope.billsOweYou.push({
-              person: UserModel.users[j].fname, 
+              person: UserModel.users[j].firstname, 
               amount: bills[i].membersAmountMap[j].due, 
               why: bills[i].event.title,
               id: bills[i].event.id,
@@ -172,7 +172,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           console.log("creater is not me, bills[i]: ",bills[i]);
           if (j == UserModel.me){
             $scope.billsYouOwe.push({
-              person: UserModel.users[bills[i].event.creator].fname, 
+              person: UserModel.users[bills[i].event.creator].firstname, 
               amount: bills[i].membersAmountMap[j].due, 
               why: bills[i].event.title,
               id: bills[i].event.id,
