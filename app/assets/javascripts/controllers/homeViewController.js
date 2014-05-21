@@ -140,9 +140,9 @@ angular.module('myapp').controller("homeViewController",
     $.each($scope.myBills, function() {
       if (this.event.dateDue != null) {
         var dueDate = this.event.dateDue.split("-");
-        events.push({title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+        events.push({type: "Bill", title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
           dueDate[2]), backgroundColor: "#dff0d8", textColor: "black", 
-          desc: this.event.description, members: this.event.creator});
+          desc: this.event.description, members: UserModel.users[this.event.creator].uname, group: GroupModel.groups[this.event.group].name});
       }
     })
     
@@ -152,9 +152,16 @@ angular.module('myapp').controller("homeViewController",
       eventClick: function(event) {
         $('#calendarModal').modal({show:true})
         $("#calendarModal-header").html(event.title);
+        if (event.type == "Task") {
         $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
                   + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                   + "<strong>Members:</strong> " + event.members);
+        }
+        else {
+          $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
+                    + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
+                    + "<strong>Creator:</strong> " + event.members);
+        }
       }
     });
     
