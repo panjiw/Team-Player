@@ -11,6 +11,7 @@ angular.module('myapp').controller("homeViewController",
   // $scope.groupsList = {};
   $scope.currentUser = {};
   $scope.todos = [];
+  $scope.todaysTasks = [];
 
   UserModel.fetchUserFromServer(function(error){
     if(error){
@@ -128,6 +129,9 @@ angular.module('myapp').controller("homeViewController",
           events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
             dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members,
             group: this.groupName});
+        }
+        if (this.dueDate == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
+          $scope.todaysTasks.push(this);
         }
       }
       else {

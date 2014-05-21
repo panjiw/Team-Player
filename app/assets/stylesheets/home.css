@@ -115,3 +115,13 @@ div.tabs.selected_groups button.selected_groups{
 .home-todo:hover {
   cursor: pointer;
 }
+
+.home-dateless {
+  height: 125px;
+  overflow-y: auto;
+}
+
+.home-todays {
+  height: 100px;
+  overflow-y: auto;
+}

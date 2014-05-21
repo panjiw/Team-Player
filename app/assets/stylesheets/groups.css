@@ -96,3 +96,8 @@ textarea {
   background: #5bc0de;
   color:white;  
 }
+
+.group-members-scroll {
+  height: 300px;
+  overflow-y: auto;
+}
