@@ -9,7 +9,7 @@ Displays pages for after successful login:
 <div id="content" ng-switch on="activeTab">
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
     <div class="container">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="home-buttons" style="visibility: hidden">
                 <button type="button" class="btn btn-default" id="addTaskBut">Add Task</button>
                 <button type="button" class="btn btn-default" id="addBillBut">Add Bill</button>
@@ -52,8 +52,8 @@ Displays pages for after successful login:
                 </div>
             </div>
         </div>
-        <div class="col-md-10">
-          <div class="home-calendar">
+        <div class="col-md-8">
+          <div class="home-calendar" style="position:relative; right: 100px">
             <div id="calendar-display"></div>
           </div>
         </div>
