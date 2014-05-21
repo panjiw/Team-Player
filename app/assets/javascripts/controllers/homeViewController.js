@@ -130,6 +130,9 @@ angular.module('myapp').controller("homeViewController",
             dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members,
             group: this.groupName});
         }
+        if (this.dueDate == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
+          $scope.todaysTasks.push(this);
+        }
       }
       else {
         if (this.done == null) {
