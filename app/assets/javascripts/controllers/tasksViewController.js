@@ -13,7 +13,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskTitle = "";
     $scope.newTaskDescription = "";
     $scope.newTaskDateDue = "";
-    $scope.newTaskMembers = {};
     $scope.newTaskCycle = false;
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
     $scope.taskRepeat = $scope.noDue = false;
@@ -23,6 +22,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   var activeEditTask = -1;
 
   function initEditTaskData(task, generator){
+    // reset if task field is null
+    if (!task){
+      activeEditTask = -1;
+      return;
+    }
     console.log("initedit");
     if (activeEditTask != task.event.id){
       $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.event.group]);
@@ -134,14 +138,16 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   });
 
   // build an array of member ids from a collection of user objects
-  function buildMemberIdArray(){
-    $scope.newTaskMembers = [];
+  function buildMemberIdArray(members){
+    var taskMembers = [];
     var count = 0;
-    for(var index in $scope.currentMembers){
-      if($scope.currentMembers[index].chked){
-        $scope.newTaskMembers[count++] = $scope.currentMembers[index].id;
+    for(var index in members){
+      if(members[index].chked){
+        taskMembers[count++] = members[index].id;
       }
     }
+
+    return taskMembers;
   }
 
   initNewTaskData();
@@ -194,9 +200,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 
   // check whether or not the user actually checked the checkboxes
-  function noRepeat(){
-    for(var index in $scope.newTaskRepostArray){
-      if($scope.newTaskRepostArray[index])
+  function noRepeat(repostArray){
+    for(var index in repostArray){
+      if(repostArray[index])
         return false;
     }
     return true;
@@ -244,14 +250,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // create a task from user input
   $scope.createTask = function(e){
-    buildMemberIdArray();
+    var createTaskMembers = buildMemberIdArray($scope.currentMembers);
 
     // get javascript object from datapicker
     $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
 
     // first perform an empty field check
     if(!$scope.newTaskGroup || !$scope.newTaskTitle 
-      || !$scope.newTaskDescription || !$scope.newTaskMembers.length > 0) {
+      || !$scope.newTaskDescription || !createTaskMembers.length > 0) {
       e.preventDefault();
       
       if (!$scope.newTaskGroup)
@@ -263,7 +269,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       if (!$scope.newTaskDescription)
         toastr.error("Task Description required");
 
-      if (!$scope.newTaskMembers.length > 0)
+      if (!createTaskMembers.length > 0)
         toastr.error("Member not selected");
       return;
     }
@@ -283,13 +289,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     };
 
     // if normal task
-    if(!$scope.newTaskCycle && !$scope.taskRepeat && noRepeat()){
+    if(!$scope.newTaskCycle && !$scope.taskRepeat && noRepeat($scope.newTaskRepostArray)){
       TaskModel.createTask($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
-      $scope.newTaskDateDue, $scope.newTaskMembers, callback);
+      $scope.newTaskDateDue, createTaskMembers, callback);
       // if special task
     } else{
       TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
-      $scope.newTaskDateDue, $scope.newTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
+      $scope.newTaskDateDue, createTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
     }
 
     // clear out data used to create new task
@@ -299,6 +305,59 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.currentMembers[index].chked = false;
     }
 
+  };
+
+  $scope.editTask = function(e) {
+
+
+    var editTaskMembers = buildMemberIdArray($scope.currentEditMembers);
+
+    // get javascript object from datapicker
+    $scope.editTaskDateDue = $("#task_edit_datepicker").datepicker( 'getDate' );
+
+    // first perform an empty field check
+    if(!$scope.editTaskGroup || !$scope.editTaskTitle 
+      || !$scope.editTaskDescription || !editTaskMembers.length > 0) {
+      e.preventDefault();
+      
+      if (!$scope.editTaskGroup)
+        toastr.error("Group not selected");
+
+      if (!$scope.editTaskTitle)
+        toastr.error("Task Title required");
+
+      if (!$scope.editTaskDescription)
+        toastr.error("Task Description required");
+
+      if (!editTaskMembers.length > 0)
+        toastr.error("Member not selected");
+      return;
+    }
+
+    function callback(error){
+      if(error){
+      for (var index in error){
+          toastr.error(error[index]);  
+        }
+      } else {
+        toastr.success("Task Edited!");
+        $('#taskEditModal').modal('hide');
+      }
+    };
+
+    // if normal task
+    if(!$scope.editTaskCycle && !$scope.editTaskRepeat && noRepeat($scope.editTaskRepostArray)){
+      TaskModel.editTask(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
+      $scope.editTaskDateDue, editTaskMembers, callback);
+
+      // if special task
+    } else{
+      TaskModel.editTaskSpecial(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
+      $scope.editTaskDateDue, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback);
+    }
+
+    // clear out data used to create new task
+    initEditTaskData();
   };
 
   $scope.finish = function(id) {
@@ -324,6 +383,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // function for datepicker to popup
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   $scope.openTaskPop = function (e, p) {
     if ($('#' + p).is(':visible')) {

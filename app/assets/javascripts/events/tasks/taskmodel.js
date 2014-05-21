@@ -174,6 +174,32 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     });
   };
 
+  TaskModel.editTask = function(taskID, groupID, name, description, dateDue, members, callback) {
+    toastr.warning("edit task is called. change 'editTask' function in Taskmodel.js to implement");
+
+    /*** The following block of code should be used when "edit_task" is done ***/
+
+    // $.post("/edit_task", 
+    // {
+    //   "task[task_id]": taskID,
+    //   "task[group_id]": groupID,
+    //   "task[title]": name,
+    //   "task[description]": description,
+    //   "task[due_date]": dateDue,
+    //   "task[members]": members
+    // })
+    // .success(function(data, status) { // on success, there will be message to console
+    //   console.log("task edit Success: " , data);
+    //   // updateTask(data);
+    //   callback();
+      
+    // })
+    // .fail(function(xhr, textStatus, error) {
+    //   console.log("task edit error: ",error);
+    //   callback(JSON.parse(xhr.responseText));
+    // });
+  };
+
   // Create a task that might be cycling or repeating
   TaskModel.createTaskSpecial = function(groupID, name, description, dateDue, members, cycle, repostArray, callback) {
      $.post("/create_task_special", // <<----- url can be changed.
@@ -199,9 +225,32 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     });
   };
 
-  //Update a task with all of the fields. If a field is null, it is not updated
-  TaskModel.editTask = function(taskID, title, description, dateDue, cycle, repeatArray, members) {
-    //TODO
+  TaskModel.editTaskSpecial = function(taskID, groupID, name, description, dateDue, members, cycle, repostArray, callback) {
+    toastr.warning("edit task special is called. change 'editTaskSpecial' function in Taskmodel.js to implement");
+
+    /*** The following block of code should be used when "edit_task" is done ***/
+
+    // $.post("/edit_task_special", 
+    // {
+    //   "task[task_id]": taskID,
+    //   "task[group_id]": groupID,
+    //   "task[title]": name,
+    //   "task[description]": description,
+    //   "task[due_date]": dateDue,
+    //   "task[members]": members,
+    //   "task[cycle]": cycle,
+    //   "task[repeat_days]": repostArray
+    // })
+    // .success(function(data, status) { // on success, there will be message to console
+    //   console.log("task edit special Success: " , data);
+    //   // updateTask(data);
+    //   callback();
+      
+    // })
+    // .fail(function(xhr, textStatus, error) {
+    //   console.log("task edit special error: ",error);
+    //   callback(JSON.parse(xhr.responseText));
+    // });
   };
 
   //Set the given task as finished, and update to the database
