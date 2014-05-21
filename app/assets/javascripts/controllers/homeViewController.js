@@ -79,7 +79,9 @@ angular.module('myapp').controller("homeViewController",
   $scope.openCalendarModal = function(todo) {
     $('#calendarModal').modal({show:true})
     $("#calendarModal-header").html(todo.taskName);
-    $("#calendarModal-content").html(todo.taskDesc + "<br/>" + todo.members);
+    $("#calendarModal-content").html("<strong>Description:</strong> " + todo.taskDesc + "<br/><br/>" 
+                      + "<strong>Group:</strong> " + todo.groupName + "<br/><br/>" 
+                      + "<strong>Members:</strong> " + todo.members);
   }
 
   $(document).ready(function() {
@@ -129,7 +131,7 @@ angular.module('myapp').controller("homeViewController",
         $('#calendarModal').modal({show:true})
         $("#calendarModal-header").html(event.title);
         $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
-                  + "<strong>Group:</strong> " + event.groupName + "<br/><br/>" 
+                  + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                   + "<strong>Members:</strong> " + event.members);
       }
     });
