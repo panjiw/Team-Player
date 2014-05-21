@@ -3,7 +3,8 @@ class GroupsController < ApplicationController
 
   before_action :signed_in_user
   include BillsHelper
- 
+  include TasksHelper
+
   # create a new group and add current_user to group + creator
   # require user to be logined
   # Accepts post request with format of:
@@ -107,7 +108,8 @@ class GroupsController < ApplicationController
       else
         if User.member?(current_user, group)
            # delete all bills related to group of user
-           remove_user(group)
+           remove_user_bills(group)
+           remove_user_tasks(group)
            group.users.delete(current_user)
            if group.users.empty?
              # delete group no more user
