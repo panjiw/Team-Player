@@ -9,75 +9,33 @@ require 'spec_helper'
 describe TasksController do
 
   before(:each) do
-        # user only in self group
-        @user = User.create! :username => "one", :firstname => "Team", :lastname => "Player", :email => "one@player.com",
-                              :password => "player", :password_confirmation => "player"
-
-        # user in group and group with self
-        @user = User.create! :username => "two", :firstname => "Team", :lastname => "Player", :email => "two@player.com",
-                              :password => "player", :password_confirmation => "player"
-
-        # user in three groups
-        @user = User.create! :username => "three", :firstname => "Team", :lastname => "Player", :email => "three@player.com",
-                              :password => "player", :password_confirmation => "player"
-        @user = User.create! :username => "four", :firstname => "Team", :lastname => "Player", :email => "four@player.com",
-                              :password => "player", :password_confirmation => "player"
-        @user = User.create! :username => "five", :firstname => "Team", :lastname => "Player", :email => "five@player.com",
-                              :password => "player", :password_confirmation => "player"
-
+        @controller = UsersController.new
+        post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "one@player.com",
+          :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "two", :firstname => "New", :lastname => "User", :email => "two@player.com",
+          :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "three", :firstname => "New", :lastname => "User", :email => "three@player.com",
+           :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "four", :firstname => "New", :lastname => "User", :email => "four@player.com",
+           :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "five", :firstname => "New", :lastname => "User", :email => "five@player.com",
+           :password => "player", :password_confirmation => "player"}
+            
         @controller = SessionsController.new
-        post 'create', :user => {:username => "two", :password => "player"}
+        post 'create', :user => {:username => "one", :password => "player"}
 
         @controller = GroupsController.new
-        post 'create', :group => {:name => "one group", :description => "one desc"}
-
-        @controller = SessionsController.new
-        delete 'destroy'
-        post 'create', :user => {:username => "three", :password => "player"}
-
-        @controller = GroupsController.new
-        post 'create', :group => {:name => "two group", :description => "two desc"}, :add => {:members => [4]}
-        post 'create', :group => {:name => "three group", :description => "three desc"}, :add => {:members => [4,5]}
-
-        @controller = SessionsController.new
-        delete 'destroy'
+        post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3,4]}
+        post 'create', :group => {:name => "own group", :description => "desc"}
     end
 
 
 # new
-  # Creates a new task where the creator is the signed in user
-  # Accepts post request with format of:
-  # Required:
-  # task[group_id]: groupID
-  # task[title]: title
-  # task[total_due]: total
-  # task[finished]: false
-  # task[members]: {user_id, ..., user_id} (place in array is order)
-  # Optional:
-  # task[description]: description
-  # task[due_date]: dateDue
-  #
-  # See tasks model in the front end for more info
-  #
-  # Returns
-  # {"details":{
-  # "id":task id,
-  # "group_id":group id of the task,
-  # "user_id":1,
-  # "title":task title,
-  # "description": task_description,
-  # "due_date":due date,
-  # "finished_date":finished date,
-  # "finished":finished,
-  # "created_at":date and time created,
-  # "updated_at":date and time updated},
-  # "members":{user_id:order, ..., user_id:order}}}
-  describe "NEW tests" do
+describe "NEW tests" do
 
     
-      # task[group_id]: groupID
+  # task[group_id]: groupID
   # task[title]: title
-  # task[total_due]: total
   # task[finished]: false
   # task[members]: {user_id, ..., user_id} (place in array is order)
   # Optional:
@@ -89,9 +47,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "two", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [2]}
+          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
           end
 
           it 'should return a 200 status' do
@@ -107,9 +65,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "two", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [2]}, :description => "desc"
+          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}, :description => "desc"
           end
 
         it 'should return a 200 status' do
@@ -125,9 +83,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "two", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [2]}, :due_date => "2015-05-05"
+          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}, :due_date => "2015-05-05"
           end
 
         it 'should return a 200 status' do
@@ -143,9 +101,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "two", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [2]}, :due_date => "2015-05-05", :description => "desc"
+          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}, :due_date => "2015-05-05", :description => "desc"
           end
 
         it 'should return a 200 status' do
@@ -156,7 +114,6 @@ describe TasksController do
 
       end
 
-    # self group tasks ?
     # correct with self group
     describe 'creates a task for a self group' do
 
@@ -164,7 +121,7 @@ describe TasksController do
           @controller = SessionsController.new
           post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "-1", :title => "title", :finished => false, :members => [1]}
+          post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
           end
 
         it 'should return a 200 status' do
@@ -180,9 +137,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "three", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [4]}
+          post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [4]}
           end
 
         it 'should return a 200 status' do
@@ -198,9 +155,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "three", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "3", :title => "title", :finished => false, :members => [4,5]}
+          post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [1,2]}
           end
 
         it 'should return a 200 status' do
@@ -217,9 +174,9 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "three", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
-          post 'new', :task => {:group_id => "3", :title => "title", :finished => false, :members => [3,4,5]}
+          post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [1,2,3]}
           end
 
         it 'should return a 200 status' do
@@ -235,7 +192,7 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "three", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
           post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [1]}
           end
@@ -271,7 +228,7 @@ describe TasksController do
 
         before(:each) do
           @controller = SessionsController.new
-          post 'create', :user => {:username => "three", :password => "player"}
+          post 'create', :user => {:username => "one", :password => "player"}
           @controller = TasksController.new
           post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [4]}
           end
@@ -305,7 +262,7 @@ describe "GETALL tests" do
 
     before(:each) do
       @controller = SessionsController.new
-      post 'create', :user => {:username => "three", :password => "player"}
+      post 'create', :user => {:username => "one", :password => "player"}
       @controller = TasksController.new
       get 'get_all'
     end
@@ -319,9 +276,9 @@ describe "GETALL tests" do
   context 'user has one task they created' do
     before(:each) do
       @controller = SessionsController.new
-      post 'create', :user => {:username => "three", :password => "player"}
+      post 'create', :user => {:username => "one", :password => "player"}
       @controller = TasksController.new
-      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [3,4]}
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [3,4]}
       get 'get_all'
     end
 
@@ -334,9 +291,9 @@ describe "GETALL tests" do
   context 'user has one tasks they did not create' do
     before(:each) do
       @controller = SessionsController.new
-      post 'create', :user => {:username => "three", :password => "player"}
+      post 'create', :user => {:username => "one", :password => "player"}
       @controller = TasksController.new
-      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [4]}
+      post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [4]}
       @controller = SessionsController.new
       post 'create', :user => {:username => "four", :password => "player"}
       @controller = TasksController.new
@@ -359,17 +316,19 @@ describe 'MARK_FINISHED tests' do
 
    before(:each) do
       @controller = SessionsController.new
-      post 'create', :user => {:username => "four", :password => "player"}
+      post 'create', :user => {:username => "one", :password => "player"}
       @controller = TasksController.new
-      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [4]}
+      post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [2]}
       @controller = SessionsController.new
       delete 'destroy'
 
       @controller = SessionsController.new
-      post 'create', :user => {:username => "three", :password => "player"}
+      post 'create', :user => {:username => "two", :password => "player"}
       @controller = TasksController.new
-      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [3,4]}
-
+      post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [3,4]}
+      post 'new', :task => {:group_id => "2", :title => "title", :finished => false, :members => [2]}
+      # puts "here"
+      # puts response.body
     end
 
   # user not signed in
@@ -379,35 +338,35 @@ describe 'MARK_FINISHED tests' do
       @controller = SessionsController.new
       delete 'destroy'
       @controller = TasksController.new
-      post 'mark_finished', :task => {:id => 1}
+      post 'mark_finished', :task => {:id => "1"}
     end
 
-    it 'it should return a 400 status' do
-      (response.status == 400).should be_true
-    end
-
-  end
-
-  # task does not exist
-  context 'the task does not exist' do
-
-    before(:each) do
-      @controller = TasksController.new
-      post 'mark_finished', :task => {:id => "99"}
-    end
-
-    it 'it should return a 400 status' do
-      (response.status == 400).should be_true
+    it 'it should redirect the user' do
+      (response.status == 302).should be_true
     end
 
   end
+
+  # # task does not exist
+  # context 'the task does not exist' do
+
+  #   before(:each) do
+  #     @controller = TasksController.new
+  #     post 'mark_finished', :task => {:id => "3"}
+  #   end
+
+  #   it 'it should return a 400 status' do
+  #     (response.status == 400).should be_true
+  #   end
+
+  # end
 
   # not a member of the task
   context 'the user is not a member of the task' do
 
     before(:each) do
       @controller = TasksController.new
-      post 'mark_finished', :task => {:id => "1"}
+      post 'mark_finished', :task => {:id => "2"}
     end
 
     it 'it should return a 400 status' do
@@ -421,7 +380,7 @@ describe 'MARK_FINISHED tests' do
 
     before(:each) do
       @controller = TasksController.new
-      post 'mark_finished', :task => {:id => "2"}
+      post 'mark_finished', :task => {:id => "3"}
     end
 
     it 'it should return a 200 status' do
@@ -429,6 +388,9 @@ describe 'MARK_FINISHED tests' do
     end
 
   end
+
+  # adding self task ?
+
 
 end
 

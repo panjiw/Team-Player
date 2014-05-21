@@ -73,6 +73,7 @@ describe "CREATE new" do
         it 'should create user ' do
             post 'create', :user => {:username => "newusername", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "player", :password_confirmation => "player"}
+            
             (response.body.include? "token").should be_true
             (response.status == 200).should be_true
         end
