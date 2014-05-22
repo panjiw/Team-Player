@@ -237,7 +237,7 @@ class TaskGeneratorsController < ApplicationController
       return
     end
     @task_generator = TaskGenerator.find(params[:task][:id])
-    if !@task_generator.users.find_by_user_id(view_context.current_user[:id])
+    if !@task_generator.users.find_by_user_id(view_context.current_user[:id]) || @task_generator.user != view_context.current_user[:id]
       render :json => {:errors => "Unauthorized action"}, :status => 400
     end
     @task_generator.group_id = params[:task][:group_id]
