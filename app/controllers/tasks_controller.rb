@@ -140,53 +140,57 @@ class TasksController < ApplicationController
     end
   end
   def edit
-    if !view_context.signed_in?
-      redirect_to '/'
-    end
-    @task = Task.find(params[:task][:id])
-    if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) || @task.user != view_context.current_user[:id]
-      render :json => {:errors => "Unauthorized action"}, :status => 400
-    end
-    if @task.update(group_id: params[:task][:group_id],
-                    user_id: view_context.current_user[:id],
-                    title: params[:task][:title],
-                    description: params[:task][:description],
-                    due_date: params[:task][:due_date],
-                    finished: params[:task][:finished])
-      @task.users.delete_all
-      order = 0
-      params[:task][:members].each do |m|
-        @task_actor = TaskActor.new(task_id: @task[:id],
-                                    user_id: m,
-                                    order: order)
-        if !@task_actor.save
-          @task.destroy
-          render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
-          return
+    if view_context.signed_in?
+      @task = Task.find(params[:task][:id])
+      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) || @task.user != view_context.current_user[:id]
+        render :json => {:errors => "Unauthorized action"}, :status => 400
+      else
+        if @task.update(group_id: params[:task][:group_id],
+                        user_id: view_context.current_user[:id],
+                        title: params[:task][:title],
+                        description: params[:task][:description],
+                        due_date: params[:task][:due_date],
+                        finished: params[:task][:finished])
+          @task.users.delete_all
+          order = 0
+          params[:task][:members].each do |m|
+            @task_actor = TaskActor.new(task_id: @task[:id],
+                                        user_id: m,
+                                        order: order)
+            if !@task_actor.save
+              @task.destroy
+              render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
+              return
+            end
+            order = order + 1
+          end
+          task = {}
+          task[:details] = @task
+          task[:members] = {}
+          @task.task_actors.each do |a|
+            task[:members][a[:user_id]] = a[:order]
+          end
+          render :json => task.to_json, :status => 200
+        else
+          render :json => {:errors => @task.errors.full_messages}, :status => 400
         end
-        order = order + 1
       end
-      task = {}
-      task[:details] = @task
-      task[:members] = {}
-      @task.task_actors.each do |a|
-        task[:members][a[:user_id]] = a[:order]
-      end
-      render :json => task.to_json, :status => 200
     else
-      render :json => {:errors => @task.errors.full_messages}, :status => 400
+      redirect_to '/'
     end
   end
 
   def delete
-    if !view_context.signed_in?
+    if view_context.signed_in?
+      @task = Task.find(params[:task][:id])
+      if !@task.users.find_by_user_id(view_context.current_user[:id])
+        render :json => {:errors => "Unauthorized action"}, :status => 400
+      else
+        @task.destroy
+        render :json => {:status => "success"}, :status => 200
+      end
+    else
       redirect_to '/'
     end
-    @task = Task.find(params[:task][:id])
-    if !@task.users.find_by_user_id(view_context.current_user[:id])
-      render :json => {:errors => "Unauthorized action"}, :status => 400
-    end
-    @task.destroy
-    render :json => {:status => "success"}, :status => 200
   end
 end
