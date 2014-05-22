@@ -191,8 +191,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
   }
 
-
-  
   var buildAmountMap = function(members){
     var map = {};
 
@@ -201,11 +199,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         map[members[i].id] = members[i].amount;
       }
     }
-
-
-
-    console.log("adding ", UserModel.me, " to ",map);
-
     return map;
   }
 
@@ -261,10 +254,52 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     
   };
 
-  $scope.editBill = function(e) {
-    toastr.warning("Bill edit called in controller");
+  $scope.editBill = function(e, billID) {
 
-    $('#billEditModal').modal('hide');
+    var groupID = $scope.editBillGroup.id;
+    var title = $scope.editBillTitle;
+    var description = $scope.editBillDescription;
+    var dateDue = $("#bill_datepicker").datepicker( 'getDate' );
+    var total = $scope.editBillTotal;
+    var membersAmountMap = buildAmountMap($scope.currentEditMembers);
+
+    console.log("membersAmountMap", membersAmountMap);
+
+    // first perform an empty field check
+    if(!($scope.editBillGroup && $scope.editBillTitle && $scope.editBillTotal > 0
+      && $scope.editBillDescription && Object.getOwnPropertyNames(membersAmountMap).length > 0)) {
+      e.preventDefault();
+
+      if (!$scope.editBillGroup)
+        toastr.error("Group not selected");
+      if (!$scope.editBillTitle)
+        toastr.error("Bill Name required");
+      if (!($scope.editBillTotal) > 0)
+        toastr.error("Bill total needs to be more than 0");
+      if (!$scope.editBillDescription)
+        toastr.error("Bill Description required");
+      if (!(Object.getOwnPropertyNames(membersAmountMap).length > 0))
+        toastr.error("Member not selected");
+
+      return;
+    }
+
+    BillModel.editBill(billID, groupID, title, description, dateDue, total, membersAmountMap,
+      function(error){
+      if(error){
+        for (var index in error){
+          toastr.error(error[index]);  
+        }
+      } else{
+        $scope.$apply(function(){
+          buildBills();
+          initEditBillData();
+        });
+        //toastr.success("Bill Edited!");
+        $('#billEditModal').modal('hide');
+      }
+
+    });
   };
 
 
