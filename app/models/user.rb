@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
 
   # group - user, many-many relation
   has_many :memberships, :class_name => "Membership", dependent: :destroy
+  has_many :acceptmemberships, :class_name => "Acceptmembership", dependent: :destroy
+
   has_many :groups, :through => :memberships
+  has_many :pending_groups, :through => :acceptmemberships, :source => :group
 
   # task - user, many-many
   has_many :task_actors
