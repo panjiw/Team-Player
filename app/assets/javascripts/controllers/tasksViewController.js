@@ -404,16 +404,16 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
   $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
-  $scope.openTaskPop = function (e, p) {
-    if ($('#' + p).is(':visible')) {
-      $('#' + p).hide();
+  $scope.openTaskPop = function (e, p, n) {
+    if ($('#' + p + n).is(':visible')) {
+      $('#' + p + n).hide();
       $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
     }
     else {
-      $('#' + p).show();
+      $('#' + p + n).show();
       $(e.target).find(".panel-heading").css("background-color", "#52d600");
     }
-    $('.tasks-pop').not('#' + p).hide();
+    $('.tasks-pop').not('#' + p + n).hide();
     $(e.target).find(".panel-heading").css("background-color", "#FCF8E3");
   }
 
@@ -430,5 +430,16 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
   }
+
+  $scope.createdTasks = [];
+
+  $.each($scope.myTasks, function() {
+    if (this.creator == UserModel.me) {
+      $scope.createdTasks.push(this);
+    }
+  });
+  $scope.$watch('createdTasks', function(newVal, oldVal){
+    console.log('createdTasks in task changed', $scope.createdTasks);
+  });
 
 }]);

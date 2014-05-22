@@ -111,7 +111,6 @@ describe GroupsController do
 
 # invitetogroup
 
-# 
 
 # destroy
 
