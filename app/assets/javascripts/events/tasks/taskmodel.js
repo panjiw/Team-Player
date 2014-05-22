@@ -175,7 +175,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     });
   };
 
-  TaskModel.editTask = function(taskID, groupID, name, description, dateDue, members, callback) {
+  TaskModel.editTask = function(taskID, groupID, name, description, dateDue, finished, members, callback) {
     toastr.warning("edit task is called. change 'editTask' function in Taskmodel.js to implement");
 
     /*** The following block of code should be used when "edit_task" is done ***/
@@ -187,6 +187,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     //   "task[title]": name,
     //   "task[description]": description,
     //   "task[due_date]": dateDue,
+    //   "task[finished]": finished,
     //   "task[members]": members
     // })
     // .success(function(data, status) { // on success, there will be message to console
