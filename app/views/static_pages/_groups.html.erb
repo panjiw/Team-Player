@@ -20,10 +20,12 @@
                         <div id="groupHelp1">
                           <h4>Adding A Group</h4>
                             <div class="info">
-                              Click on "Add Group"...
+                              Click on "Add Group" and simply input a name and description for your group.
+                              You'll be able to add members by email. Note: members won't display until they have created an account.
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "groups-page1.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-10"></div>
                               <div class="col-md-2">
@@ -34,10 +36,11 @@
                         <div style="display:none" id="groupHelp2">
                           <h4>Adding a Member to an Existing Group</h4>
                             <div class="info">
-                              Click on the group, and enter member's email address.
+                              Click on the existing group - it will turn blue. <br> Then enter the new member's email address and click "Add Member".
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "groups-page2.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="groupBack(2)" class="btn btn-default">Back</button>
@@ -49,12 +52,13 @@
                             </div>
                         </div>
                         <div style="display:none" id="groupHelp3">
-                          <h4>Leaving A Group</h4>
+                          <h4>Editing A Group</h4>
                             <div class="info">
-                              ...
+                              You must be the creator of the group to be able to edit it. Select the group and click the edit button next to the group's name. 
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "groups-page3.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="groupBack(3)" class="btn btn-default">Back</button>
@@ -66,8 +70,13 @@
                             </div>
                         </div>
                         <div style="display:none"  id="groupHelp4">
-                          <h3>Page4</h3>
-                            <div class="info"></div>
+                          <h3>Leaving A Group</h3>
+                            <div class="info">
+                              Simply click "Leave Group" to disconnect from group. All tasks and bills related to this group will be gone. 
+                            </div>
+                            <hr>
+                            <div class="helpImage"><%= image_tag "groups-page4.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="groupBack(4)" class="btn btn-default">Back</button>

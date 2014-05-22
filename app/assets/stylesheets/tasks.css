@@ -144,3 +144,12 @@ textarea {
   background-color: #F0F0F0;
   border-color: #ddd;
 }
+
+.helpImage {
+  padding-left:30px;
+}
+
+.instruction-row{
+  width: 570px;
+  height: 375px;
+}
