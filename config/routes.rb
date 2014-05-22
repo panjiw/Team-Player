@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   match '/create_task', to: 'tasks#new', via: 'post'
   match '/get_task', to: 'tasks#get_all', via: 'get'
   match '/finish_task', to: 'tasks#mark_finished', via: 'post'
+  match '/edit_task', to: 'tasks#edit_task', via: 'post'
 
   match '/create_task_special', to: 'task_generators#new', via: 'post'
   match '/get_generators', to: 'task_generators#get_all', via: 'get'
