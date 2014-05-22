@@ -278,7 +278,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     var createTaskMembers = buildMemberIdArray($scope.currentMembers);
 
     // get javascript object from datapicker
-    $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
+    if (noDue) 
+      $scope.newTaskDateDue = null;
+    else
+      $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
 
     // first perform an empty field check
     if(!$scope.newTaskGroup || !$scope.newTaskTitle 
@@ -333,11 +336,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.editTask = function(e) {
 
-
     var editTaskMembers = buildMemberIdArray($scope.currentEditMembers);
 
     // get javascript object from datapicker
-    $scope.editTaskDateDue = $("#task_edit_datepicker").datepicker( 'getDate' );
+    if (editNoDue) 
+      $scope.editTaskDateDue = null;
+    else
+      $scope.editTaskDateDue = $("#task_edit_datepicker").datepicker( 'getDate' );
 
     // first perform an empty field check
     if(!$scope.editTaskGroup || !$scope.editTaskTitle 

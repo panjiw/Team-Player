@@ -35,7 +35,7 @@ function sort(input, attributes) {
   array.sort(function(a, b) {
   	var compare = 0;
   	for(var i = 0; i < attributes.length && compare == 0; i++) {
-  		console.log("Looking at: ", attributes[i]);
+  		//console.log("Looking at: ", attributes[i]);
   		if(attributes[i][0] == "!") {
   			var attrib = attributes[i].substring(1);
   			compare = compareProperties(b[attrib], a[attrib]);
