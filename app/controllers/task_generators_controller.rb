@@ -227,4 +227,55 @@ class TaskGeneratorsController < ApplicationController
       redirect_to '/'
     end
   end
+
+  def edit
+    if !view_context.signed_in?
+      redirect_to '/'
+    end
+    if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
+      render :json => {:errors => "No need for generator"}, :status => 400
+      return
+    end
+    @task_generator = TaskGenerator.new(group_id: params[:task][:group_id],
+                                        user_id: view_context.current_user[:id],
+                                        title: params[:task][:title],
+                                        description: params[:task][:description],
+                                        cycle: params[:task][:cycle].to_bool,
+                                        due_date: params[:task][:due_date],
+                                        finished: false)
+    if params[:task][:repeat_days] == ""
+      @task_generator[:repeat_days] = nil
+    else
+      if params[:task][:repeat_days].length != 7
+        render :json => {:errors => "Invalid repeat pattern"}, :status => 400
+      end
+      @task_generator[:repeat_days] = {}
+      day = 1
+      params[:task][:repeat_days].each do |d|
+        if d.to_bool
+          @task_generator[:repeat_days][day] = true
+        else
+          @task_generator[:repeat_days][day] = false
+        end
+        day += 1
+      end
+    end
+    if @task_generator.save
+      order = 0
+      params[:task][:members].each do |m|
+        @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
+                                                       user_id: m[0],
+                                                       order: order)
+        if !@task_generator_actor.save
+          @task_generator.destroy
+          render :json => {:errors => @task_generator_actor.errors.full_messages}, :status => 400
+          return
+        end
+        order = order + 1
+      end
+      create_new_task
+    else
+      render :json => {:errors => @task_generator.errors.full_messages}, :status => 400
+    end
+  end
 end
