@@ -364,6 +364,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
           toastr.error(error[index]);  
         }
       } else {
+         $scope.$apply(function(){
+          $scope.myTasks = TaskModel.getTasksArray();
+          // clear out data used to create new task
+          initEditTaskData();
+
+        });
         toastr.success("Task Edited!");
         $('#taskEditModal').modal('hide');
       }
@@ -380,8 +386,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.editTaskDateDue, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback);
     }
 
-    // clear out data used to create new task
-    initEditTaskData();
   };
 
   $scope.finish = function(id) {
