@@ -60,37 +60,14 @@ myApp.filter('orderGroups', function() {
 	}
 });
 
-myApp.filter('orderEvents', function() {
-	// TODO
+myApp.filter('orderTasks', function() {
 	return function(input) {
-    var array;
-    if (input instanceof Array) {
-      console.log("Ordering array", input);
-      array = input;
-    } else {
-      console.log("Ordering events", input);
+    return sort(input, ['dueDate', 'taskName', 'taskDesc', 'taskID']);
+  }
+});
 
-      var attributes = ['dateDue', 'title', 'description', 'id'];
-      array = [];
-      for(var objectKey in input) {
-          array.push(input[objectKey]);
-      }
-    }
-
-    array.sort(function(a, b) {
-      var compare = 0;
-      for(var i = 0; i < attributes.length && compare == 0; i++) {
-        console.log("Looking at: ", attributes[i]);
-        if(attributes[i][0] == "!") {
-          var attrib = attributes[i].substring(1);
-          compare = compareProperties(b.event[attrib], a.event[attrib]);
-        } else {
-          compare = compareProperties(a.event[attributes[i]], b.event[attributes[i]]);
-        }
-      }
-      return compare;
-    });
-
-    return array;
+myApp.filter('orderBills', function() {
+  return function(input) {
+    return sort(input, ['due', 'why', 'desc', 'id']);
   }
 });
