@@ -193,13 +193,13 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task edit Success: " , data);
-      // updateTask(data);
+      updateTask(data);
       callback();
       
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task edit error: ",error);
-      callback(JSON.parse(xhr.responseText));
+      callback(error);
     });
   };
 

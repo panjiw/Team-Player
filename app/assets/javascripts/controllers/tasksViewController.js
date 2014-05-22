@@ -278,7 +278,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     var createTaskMembers = buildMemberIdArray($scope.currentMembers);
 
     // get javascript object from datapicker
-    if (noDue) 
+    if ($scope.noDue) 
       $scope.newTaskDateDue = null;
     else
       $scope.newTaskDateDue = $("#task_datepicker").datepicker( 'getDate' );
@@ -339,7 +339,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     var editTaskMembers = buildMemberIdArray($scope.currentEditMembers);
 
     // get javascript object from datapicker
-    if (editNoDue) 
+    if ($scope.editNoDue) 
       $scope.editTaskDateDue = null;
     else
       $scope.editTaskDateDue = $("#task_edit_datepicker").datepicker( 'getDate' );
@@ -383,12 +383,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     // if normal task
     if(!$scope.editTaskCycle && !$scope.editTaskRepeat && noRepeat($scope.editTaskRepostArray)){
       TaskModel.editTask(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
-      $scope.editTaskDateDue, editTaskMembers, callback);
+      $scope.editTaskDateDue, false, editTaskMembers, callback);
 
       // if special task
     } else{
       TaskModel.editTaskSpecial(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
-      $scope.editTaskDateDue, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback);
+      $scope.editTaskDateDue, false, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback);
     }
 
   };
