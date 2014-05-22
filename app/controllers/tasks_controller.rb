@@ -177,4 +177,16 @@ class TasksController < ApplicationController
       render :json => {:errors => @task.errors.full_messages}, :status => 400
     end
   end
+
+  def delete
+    if !view_context.signed_in?
+      redirect_to '/'
+    end
+    @task = Task.find(params[:task][:id])
+    if !@task.users.find_by_user_id(view_context.current_user[:id])
+      render :json => {:errors => "Unauthorized action"}, :status => 400
+    end
+    @task.destroy
+    render :json => {:status => "success"}, :status => 200
+  end
 end

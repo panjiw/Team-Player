@@ -236,13 +236,17 @@ class TaskGeneratorsController < ApplicationController
       render :json => {:errors => "No need for generator"}, :status => 400
       return
     end
-    @task_generator = TaskGenerator.new(group_id: params[:task][:group_id],
-                                        user_id: view_context.current_user[:id],
-                                        title: params[:task][:title],
-                                        description: params[:task][:description],
-                                        cycle: params[:task][:cycle].to_bool,
-                                        due_date: params[:task][:due_date],
-                                        finished: false)
+    @task_generator = TaskGenerator.find(params[:task][:id])
+    if !@task_generator.users.find_by_user_id(view_context.current_user[:id])
+      render :json => {:errors => "Unauthorized action"}, :status => 400
+    end
+    @task_generator.group_id = params[:task][:group_id]
+    @task_generator.user_id = view_context.current_user[:id]
+    @task_generator.title = params[:task][:title]
+    @task_generator.description = params[:task][:description]
+    @task_generator.cycle = params[:task][:cycle].to_bool
+    @task_generator.due_date = params[:task][:due_date]
+    @task_generator.finished = params[:task][:finished]
     if params[:task][:repeat_days] == ""
       @task_generator[:repeat_days] = nil
     else
@@ -261,6 +265,7 @@ class TaskGeneratorsController < ApplicationController
       end
     end
     if @task_generator.save
+      @task_generator.users.delete_all
       order = 0
       params[:task][:members].each do |m|
         @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
@@ -277,5 +282,17 @@ class TaskGeneratorsController < ApplicationController
     else
       render :json => {:errors => @task_generator.errors.full_messages}, :status => 400
     end
+  end
+
+  def delete
+    if !view_context.signed_in?
+      redirect_to '/'
+    end
+    @task_generator = TaskGenerator.find(params[:task][:id])
+    if !@task.users.find_by_user_id(view_context.current_user[:id])
+      render :json => {:errors => "Unauthorized action"}, :status => 400
+    end
+    @task_generator.destroy
+    render :json => {:status => "success"}, :status => 200
   end
 end
