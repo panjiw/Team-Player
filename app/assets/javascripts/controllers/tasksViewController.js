@@ -398,7 +398,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-  $scope.myTasks = [];
+  // $scope.myTasks = [];
 
   // function for datepicker to popup
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
@@ -439,8 +439,17 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.createdTasks.push(this);
     }
   });
+
+  // $.each(TaskModel.tasks, function() {
+  //   if (this.creator == UserModel.me) {
+  //     $scope.createdTasks.push(this);
+  //   }
+  // });
+
   $scope.$watch('createdTasks', function(newVal, oldVal){
     console.log('createdTasks in task changed', $scope.createdTasks);
   });
+
+
 
 }]);

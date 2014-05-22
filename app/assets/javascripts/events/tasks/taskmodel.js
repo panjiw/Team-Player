@@ -89,6 +89,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         dueDate: tasks[i].event.dateDue,
         groupName: GroupModel.groups[tasks[i].event.group].name,
         members: memsToString(),
+        creator: tasks[i].event.creator,
         done: tasks[i].done
       });
     }
