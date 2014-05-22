@@ -168,6 +168,12 @@ angular.module('myapp').controller("homeViewController",
                     + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                     + "<strong>Creator:</strong> " + event.members);
         }
+        if (event.backgroundColor == "grey") {
+          $("#calendar-modal-buttons").hide();
+        }
+        else {
+          $("#calendar-modal-buttons").show();
+        }
       }
     });
     
