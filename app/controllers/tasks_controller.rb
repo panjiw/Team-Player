@@ -150,7 +150,7 @@ class TasksController < ApplicationController
                     description: params[:task][:description],
                     due_date: params[:task][:due_date],
                     finished: params[:task][:finished])
-      TaskActor.destroy_all(task_id: @task[:id])
+      @task.users.delete_all
       order = 0
       params[:task][:members].each do |m|
         @task_actor = TaskActor.new(task_id: @task[:id],
