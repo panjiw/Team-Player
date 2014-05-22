@@ -122,7 +122,7 @@
             </select>
             <br>
             <div class="bill-members">
-              <div ng-repeat="mem in currentMembers" style="height:2.2em;">
+              <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                 <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                 ng-click="mem.amount = 0;"/>
                 <span style="float:left;">{{mem.username}}</span>
@@ -171,7 +171,7 @@
             <span>{{editBillGroup.name}}</span>
             <br>
             <div class="bill-members">
-              <div ng-repeat="mem in currentEditMembers" style="height:2.2em;">
+              <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
                 <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                 ng-click="mem.amount = 0;"/>
                 <span style="float:left;">{{mem.username}}</span>
@@ -211,7 +211,7 @@
             <div class="tab-pane active" id="billsOwe">
                 <h3>Bills You Owe</h3>
                     <div class="bill-scroll">
-                        <div ng-repeat="bill in billsYouOweMap">
+                        <div ng-repeat="bill in billsYouOweMap | orderBills">
                             <div class="bill-all">
                                 <div class="bill" ng-click="openPop($event, bill.person, 1)">
                                     <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
@@ -219,7 +219,7 @@
                                 </div>
                                 <div id="{{bill.person}}1" class="bill-pop">
                                     <div class="bills-to-pay">
-                                        <div ng-repeat="b in bill.bills">
+                                        <div ng-repeat="b in bill.bills | orderBills">
                                             <label for="{{b.id}}">
                                                 <div style="">
                                                     <div class="bills-selected" class=""style="margin-bottom: 0px;" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
@@ -241,7 +241,7 @@
             <div class="tab-pane" id="billsDebt">
               <h3>Bills Owed To You</h3>
                 <div class="bill-scroll">
-                    <div ng-repeat="bill in billsOweYouMap">
+                    <div ng-repeat="bill in billsOweYouMap | orderBills">
                     <div class="bill-all">
                         <div class="bill" ng-click="openPop($event, bill.person, 2)" >
                             <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
@@ -249,7 +249,7 @@
                         </div>
                         <div id="{{bill.person}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
-                                <div ng-repeat="b in bill.bills">
+                                <div ng-repeat="b in bill.bills | orderBills">
                                     <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">
                                           <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
@@ -268,7 +268,7 @@
             <div class="tab-pane" id="billsSummary">
               <h3>Bills You've Created</h3>
                 <div class="bill-scroll">
-                    <!-- <div ng-repeat="bill in billsOweYouMap">
+                    <!-- <div ng-repeat="bill in billsOweYouMap | orderBills">
                     <div class="bill-all">
                         <div class="bill" ng-click="openPop($event, bill.person, 2)" >
                             <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
@@ -276,7 +276,7 @@
                         </div>
                         <div id="{{bill.person}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
-                                <div ng-repeat="b in bill.bills">
+                                <div ng-repeat="b in bill.bills | orderBills">
                                     <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">{{b.why}}</h4>
                                         <h4 class="bill-amount">${{b.amt}}</h4>

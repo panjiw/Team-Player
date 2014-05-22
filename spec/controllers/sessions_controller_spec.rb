@@ -19,13 +19,13 @@ context 'logining in the user' do
             @controller = SessionsController.new
             post 'create', :user => {:username => "takenname", :password => "player"}
 
-            (response.body.include? "token").should be_true
+            (response.status == 200).should be_true
         end
 
     # username does not exist
     it 'should not login the user becuase username does not exist' do
     		post 'create', :user => {:username => "takenname", :password => "player"}
-        	(response.body.include? "error").should be_true
+        	(response.status == 400).should be_true
     	end
 
     # password does not match usernamee
@@ -37,7 +37,7 @@ context 'logining in the user' do
             @controller = SessionsController.new
             post 'create', :user => {:username => "takenname", :password => "nottherightpassword"}
 
-            (response.body.include? "error").should be_true
+            (response.status = 400).should be_true
 		end
 
 	end

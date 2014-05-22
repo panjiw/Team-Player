@@ -8,37 +8,44 @@
 var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);
 
 function compareProperties(a, b){
-    if(a == b) {
-    	return 0;
-    } else if(a < b) {
-    	return -1;
-    } else {
-    	return 1;
-    }
+  if(a instanceof Date && b instanceof Date) {
+    return a.compare(b);
+  }
+
+  if(a == b) {
+  	return 0;
+  } else if(a < b) {
+  	return -1;
+  } else {
+  	return 1;
+  }
 }
 
 function sort(input, attributes) {
-    if (!angular.isObject(input)) return input;
-
-    var array = [];
+  var array;
+  if (input instanceof Array) {
+    array = input;
+  } else {
+    array = [];
     for(var objectKey in input) {
-        array.push(input[objectKey]);
+      array.push(input[objectKey]);
     }
+  }
 
-    array.sort(function(a, b) {
-    	var compare = 0;
-    	for(var i = 0; i < attributes.length && compare == 0; i++) {
-    		console.log("Looking at: ", attributes[i]);
-    		if(attributes[i][0] == "!") {
-    			var attrib = attributes[i].substring(1);
-    			compare = compareProperties(b[attrib], a[attrib]);
-    		} else {
-    			compare = compareProperties(a[attributes[i]], b[attributes[i]]);
-    		}
-    	}
-    	return compare;
-    });
-    return array;
+  array.sort(function(a, b) {
+  	var compare = 0;
+  	for(var i = 0; i < attributes.length && compare == 0; i++) {
+  		console.log("Looking at: ", attributes[i]);
+  		if(attributes[i][0] == "!") {
+  			var attrib = attributes[i].substring(1);
+  			compare = compareProperties(b[attrib], a[attrib]);
+  		} else {
+  			compare = compareProperties(a[attributes[i]], b[attributes[i]]);
+  		}
+  	}
+  	return compare;
+  });
+  return array;
  }
 
 myApp.filter('orderUsers', function(){
@@ -53,10 +60,14 @@ myApp.filter('orderGroups', function() {
 	}
 });
 
-myApp.filter('orderEvents', function() {
-	// TODO
+myApp.filter('orderTasks', function() {
 	return function(input) {
-		console.log("Called unimplemented function")
-		return input;
-	}
-})
+    return sort(input, ['dueDate', 'taskName', 'taskDesc', 'taskID']);
+  }
+});
+
+myApp.filter('orderBills', function() {
+  return function(input) {
+    return sort(input, ['due', 'why', 'desc', 'id']);
+  }
+});

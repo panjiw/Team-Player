@@ -433,11 +433,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   $scope.createdTasks = [];
 
-  $.each(TaskModel.tasks, function() {
+
+  $.each($scope.myTasks, function() {
     if (this.creator == UserModel.me) {
       $scope.createdTasks.push(this);
     }
   });
-
+  $scope.$watch('createdTasks', function(newVal, oldVal){
+    console.log('createdTasks in task changed', $scope.createdTasks);
+  });
 
 }]);

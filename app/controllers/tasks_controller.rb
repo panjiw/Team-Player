@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+
   # Creates a new task where the creator is the signed in user
   # Accepts post request with format of:
   # Required:
@@ -30,9 +31,6 @@ class TasksController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     end
-
-    puts params[:task][:group_id]
-
     @task = Task.new(group_id: params[:task][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:task][:title],
@@ -43,7 +41,7 @@ class TasksController < ApplicationController
       order = 0
       params[:task][:members].each do |m|
         @task_actor = TaskActor.new(task_id: @task[:id],
-                                    user_id: m[0],
+                                    user_id: m,
                                     order: order)
         if !@task_actor.save
           @task.destroy
