@@ -42,9 +42,12 @@ Rails.application.routes.draw do
   match '/get_task', to: 'tasks#get_all', via: 'get'
   match '/finish_task', to: 'tasks#mark_finished', via: 'post'
   match '/edit_task', to: 'tasks#edit', via: 'post'
+  match '/delete_task', to: 'tasks#delete', via: 'post'
 
   match '/create_task_special', to: 'task_generators#new', via: 'post'
   match '/get_generators', to: 'task_generators#get_all', via: 'get'
+  match '/edit_special_task', to: 'task_generators#edit', via: 'post'
+  match '/delete_special_task', to: 'task_generators#delete', via: 'post'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
