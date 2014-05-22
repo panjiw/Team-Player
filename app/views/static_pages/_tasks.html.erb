@@ -23,8 +23,9 @@
                             Click on the "My Tasks" tab to see all of your unfinished tasks.<br>
                             Click on the "Task History" tab to see all of your finished tasks.
                           </div>
-                            <hr>
-                          <div class="helpImage"></div>
+                          <hr>
+                          <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                          <hr>
                           <div class="backNext">
                             <div class="col-md-10"></div>
                             <div class="col-md-2">
@@ -41,7 +42,8 @@
                               Select the members you want to assign the task.
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(2)" class="btn btn-default">Back</button>
@@ -58,7 +60,8 @@
                               Click on a task to see a pop up containing more information about it. Here, you can click "Completed" if you're done, or "Edit" if you want to update it.
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(3)" class="btn btn-default">Back</button>
@@ -73,7 +76,8 @@
                           <h3>Page4</h3>
                             <div class="info"></div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(4)" class="btn btn-default">Back</button>
@@ -113,7 +117,7 @@
                         <input type="checkbox" class="large" data-label="Deadline" 
                         ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
                         <span>No Due Date</span>
-                        <input type="text" id="task_datepicker"/>
+                        <input ng-hide="noDue" type="text" id="task_datepicker"/>
                         <br>
 
                         <div ng-hide="noDue" id="repeat_options">
@@ -186,7 +190,7 @@
                         <input type="checkbox" class="large" data-label="Deadline" 
                         ng-model="editNoDue" ng-click="editTaskDateDue='';editTaskRepeat=false;"/>
                         <span>No Due Date</span>
-                        <input type="text" id="task_edit_datepicker"/>
+                        <input ng-hide="editNoDue" type="text" id="task_edit_datepicker"/>
                         <br>
 
                         <div ng-hide="editNoDue" id="repeat_options">
@@ -223,7 +227,7 @@
                       <h5>Members</h5>
                         <div id="members">
                           <ul ui-sortable ng-model="currentEditMembers">
-                            <li ng-repeat="mem in currentEditMembers | orderBy:'mem.username'">
+                            <li ng-repeat="mem in currentEditMembers | orderUsers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}</span>
                               <div style="clear: both;"></div>
@@ -259,7 +263,7 @@
                   <h3>My Tasks (list by urgency)</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in myTasks | orderEvents">
+                        <div ng-repeat="task in myTasks | orderTasks">
                           <div ng-hide="task.done">
                             <button ng-click="openTaskPop($event, 'task' + task.taskID, 1)" class="btn btn-default tasks-panelbutton" >
                               <div class="panel panel-warning">
@@ -296,11 +300,11 @@
                 </div> <!-- mytasks -->
 
                 <div class="tab-pane" id="taskComp">
-                  <div class="col-md-4">
+                
                       <h3>Completed Tasks (list by completion date?)</h3>
                       <div class="task-completed tasks-scroll">
                         <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                          <div ng-repeat="task in myTasks">
+                          <div ng-repeat="task in myTasks | orderTasks">
                             <div ng-show="task.done">
                               <button ng-click="openTaskPop($event, 'task' + task.taskID, 2)" class="btn btn-default tasks-panelbutton" >
                                 <div class="panel panel-gray">
@@ -333,12 +337,15 @@
                           </div>
                         </div>
                       </div>
+                 
                 </div><!--task comp -->
+
+<!-- 
                 <div class="tab-pane active" id="taskCreate">
                   <h3>Tasks I've Created (list by creation order)</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in createdTasks | orderEvents">
+                        <div ng-repeat="task in createdTasks | orderTasks">
                             <button ng-click="openTaskPop($event, 'task' + task.taskID, 3)" class="btn btn-default tasks-panelbutton" ng-hide="task.done">
                               <div class="panel panel-warning">
                                 <div class="panel-heading">
@@ -385,11 +392,14 @@
                           </div>
                         </div>
                       </div>
-                    </div><!-- task create -->
+                    </div> --><!-- task create -->
+
+
+                    
                 </div><!-- tab content -->
               </div><!-- tabble -->
             </div><!-- tasks row -->
-        </div>
+        <!-- </div> -->
 
 
 </div>

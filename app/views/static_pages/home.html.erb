@@ -27,7 +27,7 @@ Displays pages for after successful login:
                       <div id="calendarModal-content"></div>
                         <div class="calendarModal-buttons">
                           <div class="col-md-8"></div>
-                          <div class="col-md-4">
+                          <div class="col-md-4" id="calendar-modal-buttons">
                             <button class="btn btn-warning">Edit</button>
                             <button class="btn btn-success" data-dismiss="modal">Done</button>
                           </div>
@@ -43,7 +43,7 @@ Displays pages for after successful login:
                 <h3>To Do's</h3>
                 <div class="home-todos">
                   <div class="home-dateless">
-                    <div ng-repeat="todo in todos">
+                    <div ng-repeat="todo in todos | orderTasks">
                       <div class="panel-danger home-todo" ng-click="openCalendarModal(todo)">
                         <div class="panel-heading">
                           <div class="task-panel">
@@ -55,7 +55,7 @@ Displays pages for after successful login:
                   </div>
                   <h3>Today's Tasks</h3>
                   <div class="home-todays">
-                    <div ng-repeat="today in todaysTasks | orderEvents">
+                    <div ng-repeat="today in todaysTasks | orderTasks">
                       <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
                         <div class="panel-heading">
                           <div class="task-panel">

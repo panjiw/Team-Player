@@ -25,7 +25,8 @@
                               Click on the "Bill Summary" tab to...
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-10"></div>
                               <div class="col-md-2">
@@ -41,7 +42,8 @@
                               <i>Customize</i> costs for members you've checkmarked.
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(2)" class="btn btn-default">Back</button>
@@ -58,7 +60,8 @@
                               Select to see all bills you owe to specific person...
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(3)" class="btn btn-default">Back</button>
@@ -75,7 +78,8 @@
                               Select a name to see all bills owed to you by selected person. Click the pencil icon to edit a specific bill. 
                             </div>
                             <hr>
-                            <div class="helpImage"></div>
+                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>
@@ -97,7 +101,7 @@
 
 
 
-<!--Add Bill Button-->
+<!--bill add button-->
 <div class="bills-addbutton">
   <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
   <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
@@ -122,7 +126,7 @@
             </select>
             <br>
             <div class="bill-members">
-              <div ng-repeat="mem in currentMembers" style="height:2.2em;">
+              <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                 <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                 ng-click="mem.amount = 0;"/>
                 <span style="float:left;">{{mem.username}}</span>
@@ -171,7 +175,7 @@
             <span>{{editBillGroup.name}}</span>
             <br>
             <div class="bill-members">
-              <div ng-repeat="mem in currentEditMembers" style="height:2.2em;">
+              <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
                 <input type="checkbox" ng-model="mem.chked" style="float:left;" 
                 ng-click="mem.amount = 0;"/>
                 <span style="float:left;">{{mem.username}}</span>
@@ -211,37 +215,61 @@
             <div class="tab-pane active" id="billsOwe">
                 <h3>Bills You Owe</h3>
                     <div class="bill-scroll">
-                        <div ng-repeat="bill in billsYouOweMap">
+                        <div ng-repeat="bill in billsYouOweMap | orderBills">
+                          <!-- Need to make billsOweYou appear to see it in the popup -->
+                          <div ng-repeat="bill2 in billsOweYouMap | orderBills">
+
+
+
                             <div class="bill-all">
                                 <div class="bill" ng-click="openPop($event, bill.person, 1)">
                                     <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
                                     <h4 class="bill-amount">${{bill.amount}}</h4>
+                                    <h4 class="bill-amount">-${{bill2.amount}}&nbsp;&nbsp;&nbsp;</h4>
                                 </div>
                                 <div id="{{bill.person}}1" class="bill-pop">
                                     <div class="bills-to-pay">
-                                        <div ng-repeat="b in bill.bills">
+
+                                     <!--  BILLS YOU OWE -->
+                                        <div ng-repeat="b in bill.bills | orderBills">
                                             <label for="{{b.id}}">
                                                 <div style="">
                                                     <div class="bills-selected" class=""style="margin-bottom: 0px;" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
-                                                        <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
+                                                        <input name="cb1" id="{{b.id}}" type="checkbox" ng-click="updateTotal(1,bill.person)" value="{{b.amt}} {{b.id}}">
                                                         <h4 class="bill-member">{{b.why}}</h4>
                                                         <h4 class="bill-amount">${{b.amt}}</h4>
                                                     </div>
                                                 </div>
                                             </label>
                                         </div>
+
+                                        <!-- BILLS OWE YOU -->
+                                        <div ng-repeat="b in bill2.bills | orderBills">
+                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
+                                              <input name="cb2" id="{{b.id}}" type="checkbox" ng-click="updateTotal(2,bill2.person)" value="{{b.amt}} {{b.id}}">
+                                              <h4 class="bill-member">
+                                                <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
+                                                  <span class="glyphicon glyphicon-pencil"></span>
+                                                </button> {{b.why}}
+                                              </h4>
+                                              <h4 class="bill-amount">-${{b.amt}}</h4>
+                                          </div>
+                                      </div>
+
+
                                     </div>
                                     <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
                                     <h4 class="bill-pop-total">Total: $0</h4>
                                 </div>
                             </div>
+                          </div>
                         </div>
                     </div>
             </div>
             <div class="tab-pane" id="billsDebt">
               <h3>Bills Owed To You</h3>
                 <div class="bill-scroll">
-                    <div ng-repeat="bill in billsOweYouMap">
+                    <div ng-repeat="bill in billsOweYouMap | orderBills">
                     <div class="bill-all">
                         <div class="bill" ng-click="openPop($event, bill.person, 2)" >
                             <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
@@ -249,7 +277,7 @@
                         </div>
                         <div id="{{bill.person}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
-                                <div ng-repeat="b in bill.bills">
+                                <div ng-repeat="b in bill.bills | orderBills">
                                     <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">
                                           <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
@@ -268,7 +296,7 @@
             <div class="tab-pane" id="billsSummary">
               <h3>Bills You've Created</h3>
                 <div class="bill-scroll">
-                    <!-- <div ng-repeat="bill in billsOweYouMap">
+                    <!-- <div ng-repeat="bill in billsOweYouMap | orderBills">
                     <div class="bill-all">
                         <div class="bill" ng-click="openPop($event, bill.person, 2)" >
                             <h4 class="bill-member bill-member-long">{{bill.person}}</h4>
@@ -276,7 +304,7 @@
                         </div>
                         <div id="{{bill.person}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
-                                <div ng-repeat="b in bill.bills">
+                                <div ng-repeat="b in bill.bills | orderBills">
                                     <div class="bills-selected" data-trigger="hover" data-toggle="popover" data-content="{{b.desc}}" data-placement="right">
                                         <h4 class="bill-member">{{b.why}}</h4>
                                         <h4 class="bill-amount">${{b.amt}}</h4>

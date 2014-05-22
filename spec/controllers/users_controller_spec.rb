@@ -73,7 +73,7 @@ describe "CREATE new" do
         it 'should create user ' do
             post 'create', :user => {:username => "newusername", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "player", :password_confirmation => "player"}
-            
+
             (response.body.include? "token").should be_true
             (response.status == 200).should be_true
         end
@@ -499,10 +499,11 @@ describe "finduseremail" do
 describe 'EDIT tests' do
     
     before(:each) do
-            @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                              :password => "player", :password_confirmation => "player"
-            @user = User.create! :username => "taken", :firstname => "Team", :lastname => "Player", :email => "taken@player.com",
-                            :password => "player", :password_confirmation => "player"
+            @controller = UsersController.new
+            post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                              :password => "player", :password_confirmation => "player"}
+            post 'create', :user => {:username => "taken", :firstname => "Team", :lastname => "Player", :email => "taken@player.com",
+                            :password => "player", :password_confirmation => "player"}
             @controller = SessionsController.new
             post 'create',  :user => {:username => "teamplayer", :password => "player"}
             @controller = UsersController.new

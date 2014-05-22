@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+
   # Creates a new task where the creator is the signed in user
   # Accepts post request with format of:
   # Required:
@@ -39,7 +40,6 @@ class TasksController < ApplicationController
     if @task.save
       order = 0
       params[:task][:members].each do |m|
-        puts "here"
         @task_actor = TaskActor.new(task_id: @task[:id],
                                     user_id: m,
                                     order: order)

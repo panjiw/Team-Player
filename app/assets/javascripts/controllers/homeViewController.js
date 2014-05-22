@@ -5,8 +5,8 @@
  *  the controller for the main (home) page
  */
 angular.module('myapp').controller("homeViewController", 
-	["$scope", "UserModel", "GroupModel", "TaskModel", "BillModel", 
-	function($scope, UserModel, GroupModel, TaskModel, BillModel) {
+  ["$scope", "UserModel", "GroupModel", "TaskModel", "BillModel", 
+  function($scope, UserModel, GroupModel, TaskModel, BillModel) {
 
   // $scope.groupsList = {};
   $scope.currentUser = {};
@@ -71,6 +71,8 @@ angular.module('myapp').controller("homeViewController",
   $scope.$watchCollection('[myTasks,myBills]', function(newVal, oldVal){
     console.log('myTasks in home changed', $scope.myTasks);
     $('#calendar-display').empty();
+    $scope.todos = [];
+    $scope.todaysTasks = [];
     dataReady();
   });
 
@@ -92,11 +94,11 @@ angular.module('myapp').controller("homeViewController",
   // });
 
   $('#addTaskBut').click(function(){
-  	$('#taskModal').modal({show:true})
+    $('#taskModal').modal({show:true})
   });
   
   $('#addBillBut').click(function(){
-  	$('#billModal').modal({show:true})
+    $('#billModal').modal({show:true})
   });
 
   $scope.openModal = function(e){
@@ -121,13 +123,13 @@ angular.module('myapp').controller("homeViewController",
         var dueDate = this.dueDate.split("-");
         if (this.done == null) {
           events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#fcf8e3", textColor: "black", desc: this.taskDesc, members: this.members,
+            dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.taskDesc, members: this.members,
             group: this.groupName});
         }
         else
         {
           events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "grey", textColor: "black", desc: this.taskDesc, members: this.members,
+            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.taskDesc, members: this.members,
             group: this.groupName});
         }
         if (this.dueDate == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
@@ -145,10 +147,11 @@ angular.module('myapp').controller("homeViewController",
       if (this.event.dateDue != null) {
         var dueDate = this.event.dateDue.split("-");
         events.push({type: "Bill", title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-          dueDate[2]), backgroundColor: "#dff0d8", textColor: "black", 
+          dueDate[2]), backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
           desc: this.event.description, members: UserModel.users[this.event.creator].username, group: GroupModel.groups[this.event.group].name});
       }
     })
+
     
     $('#calendar-display').fullCalendar({
       // editable:true,
@@ -165,6 +168,12 @@ angular.module('myapp').controller("homeViewController",
           $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
                     + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                     + "<strong>Creator:</strong> " + event.members);
+        }
+        if (event.backgroundColor == "grey") {
+          $("#calendar-modal-buttons").hide();
+        }
+        else {
+          $("#calendar-modal-buttons").show();
         }
       }
     });
