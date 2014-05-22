@@ -71,6 +71,8 @@ angular.module('myapp').controller("homeViewController",
   $scope.$watchCollection('[myTasks,myBills]', function(newVal, oldVal){
     console.log('myTasks in home changed', $scope.myTasks);
     $('#calendar-display').empty();
+    $scope.todos = [];
+    $scope.todaysTasks = [];
     dataReady();
   });
 
