@@ -177,30 +177,30 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
   };
 
   TaskModel.editTask = function(taskID, groupID, name, description, dateDue, finished, members, callback) {
-    toastr.warning("edit task is called. change 'editTask' function in Taskmodel.js to implement");
+    // toastr.warning("edit task is called. change 'editTask' function in Taskmodel.js to implement");
 
     /*** The following block of code should be used when "edit_task" is done ***/
 
-    // $.post("/edit_task", 
-    // {
-    //   "task[id]": taskID,
-    //   "task[group_id]": groupID,
-    //   "task[title]": name,
-    //   "task[description]": description,
-    //   "task[due_date]": dateDue,
-    //   "task[finished]": finished,
-    //   "task[members]": members
-    // })
-    // .success(function(data, status) { // on success, there will be message to console
-    //   console.log("task edit Success: " , data);
-    //   // updateTask(data);
-    //   callback();
+    $.post("/edit_task", 
+    {
+      "task[id]": taskID,
+      "task[group_id]": groupID,
+      "task[title]": name,
+      "task[description]": description,
+      "task[due_date]": dateDue,
+      "task[finished]": finished,
+      "task[members]": members
+    })
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task edit Success: " , data);
+      updateTask(data);
+      callback();
       
-    // })
-    // .fail(function(xhr, textStatus, error) {
-    //   console.log("task edit error: ",error);
-    //   callback(JSON.parse(xhr.responseText));
-    // });
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task edit error: ",error);
+      callback(error);
+    });
   };
 
   // Create a task that might be cycling or repeating
