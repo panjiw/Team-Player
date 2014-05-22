@@ -139,4 +139,39 @@ class TasksController < ApplicationController
       redirect_to '/'
     end
   end
+  def edit
+    if !view_context.signed_in?
+      redirect_to '/'
+    end
+    @task = Task.find(params[:task][:id])
+    if @task.update(group_id: params[:task][:group_id],
+                    user_id: view_context.current_user[:id],
+                    title: params[:task][:title],
+                    description: params[:task][:description],
+                    due_date: params[:task][:due_date],
+                    finished: params[:task][:finished])
+      TaskActor.destroy_all(task_id: @task[:id])
+      order = 0
+      params[:task][:members].each do |m|
+        @task_actor = TaskActor.new(task_id: @task[:id],
+                                    user_id: m,
+                                    order: order)
+        if !@task_actor.save
+          @task.destroy
+          render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
+          return
+        end
+        order = order + 1
+      end
+      task = {}
+      task[:details] = @task
+      task[:members] = {}
+      @task.task_actors.each do |a|
+        task[:members][a[:user_id]] = a[:order]
+      end
+      render :json => task.to_json, :status => 200
+    else
+      render :json => {:errors => @task.errors.full_messages}, :status => 400
+    end
+  end
 end
