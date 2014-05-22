@@ -69,6 +69,7 @@ angular.module("myapp").factory('BillModel', function() {
   BillModel.editBill = function(billID, groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
     
     toastr.warning("editBill called in billmodel.js. modify function 'editBill' to implement.");
+    
 
     /******* the following block of code should be modified and used when backend "edit_bill" is ready ****/
 

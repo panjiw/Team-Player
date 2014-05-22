@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 20140522011504) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pending"
   end
 
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id"

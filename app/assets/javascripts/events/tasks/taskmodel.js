@@ -183,7 +183,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
     // $.post("/edit_task", 
     // {
-    //   "task[task_id]": taskID,
+    //   "task[id]": taskID,
     //   "task[group_id]": groupID,
     //   "task[title]": name,
     //   "task[description]": description,
@@ -235,7 +235,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
     // $.post("/edit_task_special", 
     // {
-    //   "task[task_id]": taskID,
+    //   "task[id]": taskID,
     //   "task[group_id]": groupID,
     //   "task[title]": name,
     //   "task[description]": description,
