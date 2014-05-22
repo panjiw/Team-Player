@@ -38,7 +38,7 @@ class GroupsController < ApplicationController
         members = params[:add][:members]
         members.each do |id|
           if(User.exists?(id) && id != current_user.id.to_s)
-	    group.users << User.find(id)
+	    group.pending_users << User.find(id)
       puts "id " + id + "exists!"
           else
 	    merror << " " + id << " "
@@ -170,12 +170,23 @@ class GroupsController < ApplicationController
       if flag
         render :json => {:errors => error}, :status => 400
       else
-        group.users << user
+        group.pending_users << user
         render :json => group.users.to_json(:except => [:created_at, :updated_at, 
         :password_digest, :remember_token]), :status => 200
       end
     else
       render :json => ["Missing Params"], :status => 400
+    end
+  end
+
+  def acceptgroup
+    if(params[:accept] && params[:accept][:id])    
+      group = Group.find(params[:accept][:id])
+      current_user.pending_groups.delete(group)
+      current_user.groups << group
+      render :nothing => true, :status => 200
+    else
+      render :json => ["Missing Params"], :status => 400      
     end
   end
 

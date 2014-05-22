@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   # All routes are manual because of the heavy use of Angular to view the correct
   # pages to the user
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
   match '/view_groups', to: 'users#viewgroup', 	   via: 'get'
   match '/add_to_group', to: 'groups#invitetogroup', via: 'post'
   match '/edit_group', to: 'groups#editgroup', via: 'post'
+  match '/view_pending_groups', to: 'users#viewpendinggroups', via: 'get'
+  match '/accept_group', to: 'groups#acceptgroup', via: 'post'
   match '/leave_group', to: 'groups#leavegroup', via: 'post'
 
   match '/create_bill', to: 'bills#new', via: 'post'
