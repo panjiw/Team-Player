@@ -43,7 +43,7 @@ Displays pages for after successful login:
                 <h3>To Do's</h3>
                 <div class="home-todos">
                   <div class="home-dateless">
-                    <div ng-repeat="todo in todos">
+                    <div ng-repeat="todo in todos | orderTasks">
                       <div class="panel-danger home-todo" ng-click="openCalendarModal(todo)">
                         <div class="panel-heading">
                           <div class="task-panel">
@@ -55,7 +55,7 @@ Displays pages for after successful login:
                   </div>
                   <h3>Today's Tasks</h3>
                   <div class="home-todays">
-                    <div ng-repeat="today in todaysTasks | orderEvents">
+                    <div ng-repeat="today in todaysTasks | orderTasks">
                       <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
                         <div class="panel-heading">
                           <div class="task-panel">
