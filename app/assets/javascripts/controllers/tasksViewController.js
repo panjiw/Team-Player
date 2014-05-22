@@ -39,13 +39,18 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
           {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
           weirdly with indexing **/
       var dateObj = $.extend(true, {}, task.event.dateDue);
-      
-      var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
-      var month = parseInt(""+dateObj[5] + dateObj[6]);
-      month -=1;
-      var day = parseInt(""+dateObj[8] + dateObj[9]);
+      if (dateObj){
+        var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
+        var month = parseInt(""+dateObj[5] + dateObj[6]);
+        month -=1;
+        var day = parseInt(""+dateObj[8] + dateObj[9]);
 
-      $scope.editTaskDateDue = new Date(year,month,day);
+        console.log("dateobj, ", dateObj);
+        $scope.editTaskDateDue = new Date(year,month,day);
+      } else {
+        $scope.editTaskDateDue = "";
+      }
+      
 
       console.log("date due",$scope.editTaskDateDue);
       if ($scope.editTaskDateDue == ""){

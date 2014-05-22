@@ -117,7 +117,7 @@
                         <input type="checkbox" class="large" data-label="Deadline" 
                         ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
                         <span>No Due Date</span>
-                        <input type="text" id="task_datepicker"/>
+                        <input ng-hide="noDue" type="text" id="task_datepicker"/>
                         <br>
 
                         <div ng-hide="noDue" id="repeat_options">
@@ -190,7 +190,7 @@
                         <input type="checkbox" class="large" data-label="Deadline" 
                         ng-model="editNoDue" ng-click="editTaskDateDue='';editTaskRepeat=false;"/>
                         <span>No Due Date</span>
-                        <input type="text" id="task_edit_datepicker"/>
+                        <input ng-hide="editNoDue" type="text" id="task_edit_datepicker"/>
                         <br>
 
                         <div ng-hide="editNoDue" id="repeat_options">
