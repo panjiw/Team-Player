@@ -223,7 +223,7 @@
                       <h5>Members</h5>
                         <div id="members">
                           <ul ui-sortable ng-model="currentEditMembers">
-                            <li ng-repeat="mem in currentEditMembers | orderBy:'mem.username'">
+                            <li ng-repeat="mem in currentEditMembers | orderUsers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}</span>
                               <div style="clear: both;"></div>
@@ -259,7 +259,7 @@
                   <h3>My Tasks (list by urgency)</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in myTasks | orderEvents">
+                        <div ng-repeat="task in myTasks | orderTasks">
                           <div ng-hide="task.done">
                             <button ng-click="openTaskPop($event, 'task' + task.taskID, 1)" class="btn btn-default tasks-panelbutton" >
                               <div class="panel panel-warning">
@@ -300,7 +300,7 @@
                       <h3>Completed Tasks (list by completion date?)</h3>
                       <div class="task-completed tasks-scroll">
                         <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                          <div ng-repeat="task in myTasks">
+                          <div ng-repeat="task in myTasks | orderTasks">
                             <div ng-show="task.done">
                               <button ng-click="openTaskPop($event, 'task' + task.taskID, 2)" class="btn btn-default tasks-panelbutton" >
                                 <div class="panel panel-gray">
@@ -338,7 +338,7 @@
                   <h3>Tasks I've Created (list by creation order)</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in createdTasks | orderEvents">
+                        <div ng-repeat="task in createdTasks | orderTasks">
                             <button ng-click="openTaskPop($event, 'task' + task.taskID, 3)" class="btn btn-default tasks-panelbutton" ng-hide="task.done">
                               <div class="panel panel-warning">
                                 <div class="panel-heading">
