@@ -201,6 +201,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     return true;
   }
 
+  function fillRepostArray(repostArray){
+    for(var i = 0; i < 7; i++){
+      if(!repostArray[i]){
+        repostArray[i] = false;
+      }
+    }
+  }
+
   $scope.myTasks = TaskModel.tasks;
 
   $scope.$watch('myTasks', function(newVal, oldVal){
@@ -258,11 +266,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     };
 
     // if normal task
-    if(!$scope.newTaskCycle && !$scope.taskRepeat && noRepeat($scope.newTaskRepostArray)){
+    if(!$scope.newTaskCycle && (!$scope.taskRepeat || noRepeat($scope.newTaskRepostArray))){
       TaskModel.createTask($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
       $scope.newTaskDateDue, createTaskMembers, callback);
       // if special task
     } else{
+      fillRepostArray($scope.newTaskRepostArray);
       TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
       $scope.newTaskDateDue, createTaskMembers,$scope.newTaskCycle, $scope.newTaskRepostArray, callback);
     }
@@ -270,6 +279,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   };
 
   $scope.editTask = function(e) {
+
+    var generatorID = null;
+    // if there is a generator, which means active task was speical before edit
+    if(TaskModel.generators[activeEditTask]){
+      generatorID = TaskModel.generators[activeEditTask].details.id;
+    }
 
     var editTaskMembers = buildMemberIdArray($scope.currentEditMembers);
 
@@ -317,14 +332,15 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     };
 
     // if normal task
-    if(!$scope.editTaskCycle && !$scope.editTaskRepeat && noRepeat($scope.editTaskRepostArray)){
+    if(!$scope.editTaskCycle && (!$scope.editTaskRepeat || noRepeat($scope.editTaskRepostArray))){
       TaskModel.editTask(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
-      $scope.editTaskDateDue, false, editTaskMembers, callback);
+      $scope.editTaskDateDue, false, editTaskMembers, callback, generatorID);
 
       // if special task
     } else{
+      fillRepostArray($scope.editTaskRepostArray);
       TaskModel.editTaskSpecial(activeEditTask, $scope.editTaskGroup.id, $scope.editTaskTitle, $scope.editTaskDescription, 
-      $scope.editTaskDateDue, false, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback);
+      $scope.editTaskDateDue, false, editTaskMembers,$scope.editTaskCycle, $scope.editTaskRepostArray, callback, generatorID);
     }
 
   };

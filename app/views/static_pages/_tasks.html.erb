@@ -121,7 +121,7 @@
                         <br>
 
                         <div ng-hide="noDue" id="repeat_options">
-                          <input type="checkbox" class="large" ng-model="taskRepeat"/>
+                          <input type="checkbox" class="large" ng-model="taskRepeat" ng-click="newTaskRepostArray = [];"/>
                           <span>Repeat Weekly</span><br>
                           <div ng-show="taskRepeat">
                             <input type="checkbox" ng-model="newTaskRepostArray[0]"/>
@@ -195,7 +195,7 @@
                         <br>
 
                         <div ng-hide="editNoDue" id="repeat_options">
-                          <input type="checkbox" class="large" ng-model="editTaskRepeat"/>
+                          <input type="checkbox" class="large" ng-model="editTaskRepeat" ng-click="editTaskRepostArray = [];"/>
                           <span>Repeat Weekly</span><br>
                           <div ng-show="editTaskRepeat">
                             <input type="checkbox" ng-model="editTaskRepostArray[0]"/>

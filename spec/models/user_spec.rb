@@ -21,7 +21,9 @@ describe User do
   # do we need these? membership?
   it { should respond_to(:groups) }
   it { should respond_to(:memberships) }
-  it { should respond_to(:groups) }
+  it { should respond_to(:pending_groups) }
+  it { should respond_to(:acceptmemberships) }
+  
   it { should respond_to(:member!) }
 
 

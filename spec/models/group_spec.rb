@@ -13,7 +13,10 @@ describe Group do
   # do we need these? membership?
   it { should respond_to(:users) }
   it { should respond_to(:memberships) }
-
+  it { should respond_to(:pending_users) }
+  it { should respond_to(:acceptmemberships) }
+  
+  
   # Name
   describe "when Name is not present" do
     before { @group.name = " " }
