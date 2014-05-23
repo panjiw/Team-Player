@@ -278,7 +278,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task special create Success: " , data);
-      TaskModel.refresh(function(){});
+      updateTask(data.task);
+      updateGenerator(data.generator);
       callback();
       
     })
