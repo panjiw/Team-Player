@@ -1,11 +1,11 @@
 <div class="container">
     <div class="header-row">
-          <div class= "tasks-header">
+          <div class= "bills-header">
             <div class="col-md-11">
               <h1>My Bills</h1>
             </div>
             <div class="col-md-1">
-              <button class="btn btn-default" id="taskBtn" ng-click="openBillHelpModal($event)">
+              <button class="btn btn-default" ng-click="openBillHelpModal($event)">
                 <span class="glyphicon glyphicon-question-sign"></span>
               </button>
                 <div id="billHelpModal" class="modal fade" tabindex="-1" role="dialog">
@@ -18,14 +18,13 @@
                     <div class="modal-body help-body">
                       <div class="instruction-row">
                         <div id="billHelp1">
-                          <h4>Navigated Through Bills</h4>
-                            <div class="info">
-                              Click on the "Bills You Owe" tab to...<br>
-                              Click on the "Bills Owed To You" tab to...<br>
-                              Click on the "Bill Summary" tab to...
+                          <h4>Navigating Through Bills</h4>
+                            <div class="help-info">
+                              Click on the "Bills You Owe" tab to see a list of people you owe money to.<br>
+                              Click on the "Bills Owed To You" tab to see a list of people who owe you money.<br>
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-10"></div>
@@ -36,13 +35,14 @@
                         </div>
                         <div style="display:none" id="billHelp2">
                           <h4>Adding a Bill</h4>
-                            <div class="info">
-                              Click on "Add Bill" to form debts...<br>
-                              <i>Split Evenly</i> to automatically divide costs amongst members that have been checkmarked.
-                              <i>Customize</i> costs for members you've checkmarked.
+                            <div class="help-info">
+                              Click on "Add Bill" to keep track of money others owe to you.<br>
+                              You can choose to split a bill evenly, or customize each member's debt.
+                              <br><i>Split Evenly</i> automatically divides costs amongst members that have been checkmarked.
+                              <br><i>Customize</i> costs for members you've checkmarked.
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "bills-page2.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -55,12 +55,14 @@
                             </div>
                         </div>
                         <div style="display:none" id="billHelp3">
-                          <h4>Bills You Owe</h4>
-                            <div class="info">
-                              Select to see all bills you owe to specific person...
+                          <h4>Inside the Bills You Owe Tab</h4>
+                            <div class="help-info">
+                              Click on a panel to see a list of bills you have not paid to that person. Select checkmarks
+                              to calculate combinations of bills and totals you would owe them. Click "Paid" after
+                              you have paid them that amount.
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "bills-page3.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -73,18 +75,22 @@
                             </div>
                         </div>
                         <div style="display:none"  id="billHelp4">
-                          <h4>Bills Owed To You</h4>
-                            <div class="info">
-                              Select a name to see all bills owed to you by selected person. Click the pencil icon to edit a specific bill. 
+                          <h4>Inside the Bills Owed To You Tab</h4>
+                            <div class="help-info">
+                              Select a panel to see all bills owed to you by the selected person. <br>
+                              Hover over a bill to see more information about it.<br>Click the pencil icon to edit a specific bill. 
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "bills-page4.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>
                               </div>
-                              <div class="col-md-10"></div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
                             </div>
                         </div>
                       </div>

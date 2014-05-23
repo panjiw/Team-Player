@@ -175,8 +175,21 @@ angular.module('myapp').controller("homeViewController",
           $("#calendar-modal-buttons").show();
         }
       }
-    });
-    
-  }; // });
+    });  
+  };
+
+  $scope.openHomeHelpModal = function(e){
+    $('#homeHelpModal').modal({show:true})
+  };
+
+  $scope.homeNext = function(pageNum) {
+    $('#'+'homeHelp'+pageNum).hide();
+    $('#'+'homeHelp'+(parseInt(pageNum)+1)).show();
+  }
+
+  $scope.homeBack = function(pageNum) {
+    $('#'+'homeHelp'+pageNum).hide();
+    $('#'+'homeHelp'+(parseInt(pageNum)-1)).show();
+  }
 
 }]);

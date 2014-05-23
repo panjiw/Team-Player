@@ -9,11 +9,153 @@ Displays pages for after successful login:
 <div id="content" ng-switch on="activeTab">
   <div ng-controller="homeViewController" ng-switch-when="selected_home">
     <div class="container">
+        <div class="header-row">
+          <div class= "home-header">
+            <div class="col-md-11">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-default" ng-click="openHomeHelpModal($event)">
+                <span class="glyphicon glyphicon-question-sign"></span>
+              </button>
+                <div id="homeHelpModal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                          <h3>Help Guide</h3>
+                      </div>
+                    <div class="modal-body help-body">
+                      <div class="instruction-row">
+                        <div id="homeHelp1">
+                          <h4>Using The Calendar</h4>
+                            <div class="help-info">
+                              All of your tasks/bills as well as those of your groups' appear on the calendar.<br>
+                              Tasks appear in yellow, bills appear in green, and completed tasks/bills appear gray.<br>
+                              Select one to view more info or edit.
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-10"></div>
+                              <div class="col-md-2">
+                                <button ng-click="homeNext(1)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="homeHelp2">
+                          <h4>Using The To Do List</h4>
+                            <div class="help-info">
+                              Dateless tasks appear under this list for you to keep track of things you need to do,
+                              but have no deadline for. Click it to edit or complete.
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="homeBack(2)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="homeNext(2)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="homeHelp3">
+                          <h4>BLAH</h4>
+                            <div class="help-info">
+                              BLAH
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="homeBack(3)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="homeNext(3)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none"  id="homeHelp4">
+                          <h4>BLAH</h4>
+                            <div class="help-info">
+                              BLAH
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="homeBack(4)" class="btn btn-default" id="btn-task1">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="col-md-3">
             <div class="home-buttons" style="visibility: hidden">
                 <button type="button" class="btn btn-default" id="addTaskBut">Add Task</button>
                 <button type="button" class="btn btn-default" id="addBillBut">Add Bill</button>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- calendar modal -->
               <div id="calendarModal" class="modal fade" tabindex="-1" role="dialog">

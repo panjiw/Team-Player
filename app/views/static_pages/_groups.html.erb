@@ -21,7 +21,7 @@
                           <h4>Adding A Group</h4>
                             <div class="help-info">
                               Click on "Add Group" and simply input a name and description for your group.
-                              You'll be able to add members by email. Note: members won't display until they have created an account.
+                              You'll be able to add members by email. <br>Note: members won't display until they have created an account.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "groups-page1.png" %></div>
@@ -36,7 +36,7 @@
                         <div style="display:none" id="groupHelp2">
                           <h4>Adding a Member to an Existing Group</h4>
                             <div class="help-info">
-                              Click on the existing group - it will turn blue. <br> Then enter the new member's email address and click "Add Member".
+                              Click on the existing group - it will turn blue. <br> Then, enter the new member's email address and click "+" to add that member.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "groups-page2.png" %></div>
@@ -81,7 +81,10 @@
                               <div class="col-md-2">
                                 <button ng-click="groupBack(4)" class="btn btn-default">Back</button>
                               </div>
-                              <div class="col-md-10"></div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
                             </div>
                         </div>
                       </div>

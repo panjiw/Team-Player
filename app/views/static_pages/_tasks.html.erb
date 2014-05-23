@@ -19,12 +19,12 @@
                       <div class="instruction-row">
                         <div id="taskHelp1">
                           <h4>Navigating Through Task Tabs</h4>
-                          <div class="info">
+                          <div class="help-info">
                             Click on the "My Tasks" tab to see all of your unfinished tasks.<br>
-                            Click on the "Task History" tab to see all of your finished tasks.
+                            Click on the "Task History" tab to see a history of your finished tasks.
                           </div>
                           <hr>
-                          <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                          <div class="help-image"><%= image_tag "tasks-page1.png" %></div>
                           <hr>
                           <div class="backNext">
                             <div class="col-md-10"></div>
@@ -35,14 +35,14 @@
                         </div> <!-- taskhelp1 -->
                         <div style="display:none" id="taskHelp2">
                           <h4>Adding Tasks</h4>
-                            <div class="info">
-                              Click on "Add Task" to create a task!<br>
-                              <i>Cyclic Tasks</i> mean that tasks can be rotated between members - given to the next when another has finished. <br>
-                              <i>Repeat Weekly</i> ...<br>
-                              Select the members you want to assign the task.
+                            <div class="help-info">
+                              Click on "Add Task" to create a task.<br>
+                              Tasks can be cyclic, repeating, both, or neither. <br>
+                              <i>Cyclic Tasks</i> mean that tasks can be rotated between checkmarked members - given to the next when one has finished. <br>
+                              <i>Repeat Weekly</i> will automatically create bills each week due on your selected date.
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "tasks-page2.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -56,11 +56,11 @@
                         </div> <!-- adding tasks -->
                         <div style="display:none" id="taskHelp3">
                           <h4>Editing/Completing Tasks</h4>
-                            <div class="info">
+                            <div class="help-info">
                               Click on a task to see a pop up containing more information about it. Here, you can click "Completed" if you're done, or "Edit" if you want to update it.
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -68,23 +68,26 @@
                               </div>
                               <div class="col-md-8"></div>
                               <div class="col-md-2">
-                                <button ng-click="taskNext(3)" class="btn btn-default">Next</button>
+                                <button class="btn btn-default" data-dismiss="modal">Close</button>
                               </div>
                             </div>
                         </div>
-                        <div style="display:none"  id="taskHelp4">
+<!--                         <div style="display:none"  id="taskHelp4">
                           <h3>Page4</h3>
-                            <div class="info"></div>
+                            <div class="help-info"></div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="taskBack(4)" class="btn btn-default">Back</button>
                               </div>
-                              <div class="col-md-10"></div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
                             </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     </div>
@@ -102,9 +105,6 @@
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">×</button>
                         <h3>Create Task</h3>
-                        <button class="btn btn-default" id="taskBtn" ng-click="openTaskHelpModal($event)">
-                          <span class="glyphicon glyphicon-info-sign"></span>
-                        </button>
                     </div>
                   <div class="modal-body tasks-add-body">
                     <div class="col-md-5">
