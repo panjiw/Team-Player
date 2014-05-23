@@ -48,6 +48,10 @@ angular.module("myapp").factory('BillModel', function() {
     });
   }
 
+  function toCents(AmountMap, total){
+    
+  }
+
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
   BillModel.createBill = function(groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID

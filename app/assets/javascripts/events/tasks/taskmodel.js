@@ -335,7 +335,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task edit special Success: " , data);
-        updateTask(data);
+        updateTask(data.task);
+        updateGenerator(data.generator);
         callback();
         
       })
