@@ -212,7 +212,6 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task delete Success: " );
-        updateTask(data);
         callback();
         
       })
@@ -228,10 +227,15 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     // if task was originally special
     if (generatorID) {
       // first remove the original task
-      TaskModel.deleteTaskSpecial(generatorID, function(){});
-
-      // then create a normal task
-      TaskModel.createTask(groupID, name, description, dateDue, members, callback);
+      TaskModel.deleteTaskSpecial(generatorID, function(error){
+        if (error){
+          callback(error);
+        } else {
+          // then create a normal task
+          TaskModel.createTask(groupID, name, description, dateDue, members, callback);
+        }
+      });
+    
 
     } else {
       $.post("/edit_task", 
@@ -274,7 +278,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("task special create Success: " , data);
-      TaskModel.refresh();
+      updateTask(data.task);
+      updateGenerator(data.generator);
       callback();
       
     })
@@ -291,7 +296,6 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task special delete Success: " );
-        updateTask(data);
         callback();
         
       })
@@ -306,9 +310,16 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
     // if originally normal task
     if (!generatorID){
-      TaskModel.deleteTask(taskID, function(){});
+      TaskModel.deleteTask(taskID, function(error){
+        if (error){
+          callback(error);
+        } else {
+          // then create a normal task
+          TaskModel.createTaskSpecial(groupID, name, description, dateDue, members, cycle, repostArray, callback);
+        }
+      });
 
-      TaskModel.createTaskSpecial(groupID, name, description, dateDue, members, cycle, repostArray, callback);
+      
     } else {
       $.post("/edit_special_task", 
       {
@@ -324,7 +335,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task edit special Success: " , data);
-        updateTask(data);
+        updateTask(data.task);
+        updateGenerator(data.generator);
         callback();
         
       })

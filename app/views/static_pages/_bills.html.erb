@@ -225,22 +225,22 @@
                                     <h4 class="bill-amount">${{bill.amount}}</h4>
                                 </div>
                                 <div id="{{bill.person}}1" class="bill-pop">
-                                    <div class="bills-to-pay">
-                                        <div ng-repeat="b in bill.bills | orderBills">
-                                            <label for="{{b.id}}">
-                                                <div style="">
-                                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.due}}" data-content="<p>{{b.desc}}</p>" data-placement="right">
-                                                        <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
-                                                        <h4 class="bill-member">{{b.why}}</h4>
-                                                        <h4 class="bill-amount">${{b.amt}}</h4>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                  <div class="bills-to-pay">
+                                    <div ng-repeat="b in bill.bills | orderBills">
+                                      <label for="{{b.id}}">
+                                        <div style="">
+                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.due}}" data-content="<p>{{b.desc}}</p>" data-placement="right">
+                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
+                                            <h4 class="bill-member">{{b.why}}</h4>
+                                            <h4 class="bill-amount">${{b.amt}}</h4>
+                                          </div>
                                         </div>
+                                      </label>
                                     </div>
-                                    <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
-                                    <h4 class="bill-pop-total">Total: $0</h4>
-                                </div>
+                                  </div>
+                                  <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
+                                  <h4 class="bill-pop-total">Total: $0</h4>
+                                </div> <!-- class="bill-pop" -->
                             </div>
                         </div>
                     </div>
