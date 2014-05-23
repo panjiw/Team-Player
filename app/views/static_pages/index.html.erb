@@ -11,13 +11,8 @@ as well as displays basic information about our app.
 <div class="login-body" ng-controller="loginViewController">
     <div class ="login-panel col-md-9" ng-hide="activeTab!='selected_home'">
       <div class="col-md-6 login-left">
-        <h1>Welcome to TeamPlayer!</h1><br>
-        TeamPlayer is a group-centered web application that allows you to organize the mess of sharing duties and bills between groups of people in your life. With our calendar-centered interface, each member can stay up to date with individual and group tasks, as well as the amount of money they owe one another.<!--  With TeamPlayer, you can: -->
-<!--         <ul><br>
-          <li>Better organize team tasks</li>
-          <li>Keep track of money you owe</li>
-          <li>Manage multiple groups at once</li>
-          <li>Make sure you're never late again!</li></ul> -->
+        <br><br><%= image_tag "login.png" %><br><br>
+        <div text-align:"center">Organize the mess of sharing duties and bills between groups of people<br> in your life with our calendar-centered interface.</div>
           <br/>
           <br/>
           <h3>Here are some great features to TeamPlayer:</h3>
@@ -25,9 +20,9 @@ as well as displays basic information about our app.
             <li><b>Group Management</b></li>
               <ul>Create a TeamPlayer group for every group in your life, and all tasks/bills will be centered around these groups.</ul>
             <li><b>Cycling Task Creation</b></li>
-              <ul>In addition to setting deadlines, you have the choice to <i>cycle</i> your tasks. This means that when one person has finished it, the task will automatically be given to the next person.</ul>
+              <ul>Take turns and share responsibilities by not only setting deadlines, but also <i>cycling</i> them.</ul>
             <li><b>Bill Memory and Bill Splitting</b></li>
-              <ul>TeamPlayer compiles expenses paid by and needed to be paid by users. You can see a summary of what people owe you, and what you owe to others.</ul>
+              <ul>See quick summaries of your expenses - what people owe you and what you owe to others.</ul>
           </ul>
           <br/>
           <h4>Developers can visit these links for more information:</h4>
@@ -35,6 +30,7 @@ as well as displays basic information about our app.
               <a href="http://keithyeung.com/teamplayer/">
                   Developer's Website
               </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;
               <a href="https://github.com/panjiw/Team-Player">
                   Source Code on GitHub
               </a>
