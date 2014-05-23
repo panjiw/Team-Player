@@ -18,7 +18,6 @@ context 'logining in the user' do
             
             @controller = SessionsController.new
             post 'create', :user => {:username => "takenname", :password => "player"}
-
             (response.status == 200).should be_true
         end
 
@@ -45,8 +44,10 @@ context 'logining in the user' do
 context 'presenting user data' do
 
 	# it should present the correct user data because the user is logged in
-	it 'should present user information' do
-			@controller = UsersController.new
+	context 'the user is logged in' do
+			
+        before(:each) do
+            @controller = UsersController.new
 			post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             	 :password => "player", :password_confirmation => "player"}
             
@@ -54,10 +55,16 @@ context 'presenting user data' do
             post 'create', :user => {:username => "takenname", :password => "player"}
 
             get 'user'
-            (response.body.include? "takenname").should be_true
-            (response.body.include? "1").should be_true
-            (response.body.include? "Player").should be_true
-            (response.body.include? "Team").should be_true
+        end
+
+        it 'should return a 200 status' do
+            (response.status == 200).should be_true
+            end
+
+        it 'should return the correct information' do
+            userinfo = "{\"username\":\"takenname\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"id\":1"
+            (response.body.include? userinfo).should be_true
+        end
 		end
 
 	# it should not present user data because the user is not logged in
