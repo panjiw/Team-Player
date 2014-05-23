@@ -8,6 +8,7 @@
 
 //Define a bil object as an event with additional fields:
 //  --membersAmountMap: the members associated with the bill, and how much each owes, and whether or not it's paid
+//    --{userid : {due: int, paid: bool, paid_date: date}}
 //  --total: is not explicitly a field, but it is a derived field.
 var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
   this.id = id;
@@ -20,14 +21,86 @@ var Bill = function(id,  groupID, title, description, creatorID, dateCreated, da
   this.membersAmountMap = membersAmountMap;
 };
 
-angular.module("myapp").factory('BillModel', function() {
+var SummaryEntry = function(username) {
+  this.person_username = username;
+  this.total = 0;
+  this.billsArray = [];
+    
+  this.addBill = function(bill, amountForEntry) {
+    this.billsArray.push(bill);
+    this.total += amountForEntry;
+  };
+};
+
+angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   var BillModel = {};
   BillModel.bills = {};   //ID to bills.css
+  BillModel.summary = {};
 
+  BillModel.deriveTotal = function(bill){
+    var total = 0;
+    for (var index in bill.membersAmountMap){
+      total += bill.membersAmountMap[index].due;
+    }
+    return total;
+  };
+
+
+// $scope.billsYouOweMap.push(
+
+//   {  person: bill.person,
+//      amount: bill.amount,
+//       bills: [
+//                 { id: bill.id, 
+//                   amt: bill.amount, 
+//                   why: bill.why, 
+//                   desc: bill.desc, 
+//                   due: "No Date"
+//                 }
+//               ]
+//   }
+// );  
+  function makeSummary() {
+    BillModel.summary = {youOwe: {}, oweYou: {}};
+    for (var i in BillModel.bills){
+      // creator is me, people owe me
+      if (BillModel.bills[i].creator == UserModel.me){
+
+        // for each person involved in the bill
+        for(var j in BillModel.bills[i].membersAmountMap){
+          // if this person is not me, it is one of the people that owes me
+          if (j != UserModel.me){
+            // if the person is not in summary, add an entry
+            if(!BillModel.summary.oweYou[j]){
+              BillModel.summary.oweYou[j] = new SummaryEntry(UserModel.users[j].username);
+            } 
+
+            // add the bill in
+            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
+          }
+        }
+
+        // creator is not me, I owe him
+      } else {
+        var bill_creator_id = BillModel.bills[i].creator;
+        var bill_creator_username = UserModel.users[BillModel.bills[i].creator].username;
+
+        // if this person is not in summary that i owe him, add an entry
+        if(!BillModel.summary.youOwe[bill_creator_id]){
+          BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
+        }
+        BillModel.summary.youOwe[bill_creator_id].addBill
+          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
+      }
+    }
+  }
   // update a bill to the BillModel.bills map
   BillModel.updateBill = function(bill){
     BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
      bill.details.user_id, bill.details.created_at, bill.details.due_date, bill.due);
+    makeSummary();
+
+    console.log("bill summary made: ", BillModel.summary);
   }
 
   // get bills from server to bill model
@@ -49,7 +122,7 @@ angular.module("myapp").factory('BillModel', function() {
   }
 
   function toCents(AmountMap, total){
-    
+
   }
 
   //Create and return a Bill with the given parameters. This updates to the database, or returns
@@ -119,4 +192,4 @@ angular.module("myapp").factory('BillModel', function() {
   // }
 
   return BillModel;
-});
+}]);

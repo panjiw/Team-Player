@@ -54,7 +54,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       
       $scope.editBillGroup = $.extend(true, {}, GroupModel.groups[bill.group]);
 
-      $scope.editBillTotal = deriveTotal(bill.membersAmountMap);
+      $scope.editBillTotal = BillModel.deriveTotal(bill);
       
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.group].members);
 
@@ -72,14 +72,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
 
   };
-
-  function deriveTotal(amountMap){
-    var total = 0;
-    for (var index in amountMap){
-      total += amountMap[index].due;
-    }
-    return total;
-  }
 
   $scope.activeBillTab='bill_selected_you_owe';
   
