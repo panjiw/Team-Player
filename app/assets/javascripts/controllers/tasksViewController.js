@@ -28,17 +28,17 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       return;
     }
     console.log("initedit");
-    if (activeEditTask != task.event.id){
-      $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.event.group]);
-      activeEditTask = task.event.id;
+    if (activeEditTask != task.id){
+      $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.group]);
+      activeEditTask = task.id;
 
-      $scope.editTaskTitle = task.event.title;
-      $scope.editTaskDescription = task.event.description;
+      $scope.editTaskTitle = task.title;
+      $scope.editTaskDescription = task.description;
 
-      /** set the date; somehow bill.event.dateDue is returning and object like 
+      /** set the date; somehow bill.dateDue is returning and object like 
           {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
           weirdly with indexing **/
-      var dateObj = $.extend(true, {}, task.event.dateDue);
+      var dateObj = $.extend(true, {}, task.dateDue);
       if (dateObj){
         var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
         var month = parseInt(""+dateObj[5] + dateObj[6]);
@@ -63,9 +63,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 
       /********** start rearange member according to task list *******/
-      // $scope.currentEditMembers = GroupModel.groups[task.event.group].members;
-      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.event.group].members);
-      console.log("currentEditMembers from ", GroupModel.groups[task.event.group].members);
+      // $scope.currentEditMembers = GroupModel.groups[task.group].members;
+      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.group].members);
+      console.log("currentEditMembers from ", GroupModel.groups[task.group].members);
       console.log("currentEditMembers", $scope.currentEditMembers);
       console.log("taskmem", task.members);
 
@@ -112,7 +112,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.editTaskRepeat = false;
       }
       
-      if (task.event.dateDue)
+      if (task.dateDue)
         $scope.editNoDue = false;
       else $scope.editNoDue = true;
 
@@ -191,18 +191,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.currentMembers = {};
     }
   });
-
-  // $scope.$watch('editTaskGroup', function(newVal, oldVal){ 
-  //   if(activeEditTask != -1){
-  //     if($scope.editTaskGroup){
-  //       console.log('edit group selected', $scope.editTaskGroup );
-  //       $scope.currentEditMembers = $scope.editTaskGroup.members;
-  //       console.log("currentEditMembers, ", $scope.currentEditMembers);
-  //     } else {
-  //       $scope.currentEditMembers = {};
-  //     }
-  //   }
-  // });
  
   $scope.openModal = function(e){
     $('#taskModal').modal({show:true});
@@ -213,15 +201,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     initEditTaskData(TaskModel.tasks[taskID],TaskModel.generators[taskID]);
     $('#taskEditModal').modal({show:true});
   };
-
-  // $scope.addMember = function(e) {
-  //   if(e.which != 13) {   // If they didn't press enter, we don't care
-  //     return;
-  //   }
-
-  //   $scope.addTask_members.push($scope.newMember);
-  //   $scope.newMember = "";
-  // }
 
 
   // check whether or not the user actually checked the checkboxes
@@ -234,41 +213,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   $scope.myTasks = TaskModel.tasks;
-
-  // build the tasks from variables to the view
-  // function buildTasks(){
-  //   $scope.myTasks = [];
-  //   var tasks = TaskModel.tasks;
-
-  //   for(var i in tasks){
-  //     // turn members in this task into a string to display
-  //     function memsToString(){
-  //       var str = "";
-  //       var first = true;
-  //       for(var j in tasks[i].members){
-  //         if(first){
-  //           str+= UserModel.users[j].uname;
-  //           first = false;
-  //         } else {
-  //           str+= ", "+UserModel.users[j].uname;
-  //         }
-  //       }
-  //       return str;
-  //     }
-
-  //     $scope.myTasks.push({
-  //       taskID: tasks[i].event.id,
-  //       taskName: tasks[i].event.title,
-  //       taskDesc: tasks[i].event.description,
-  //       dueDate: tasks[i].event.dateDue,
-  //       groupName: $scope.groupsList[tasks[i].event.group].name,
-  //       members: memsToString(),
-  //       done: tasks[i].done
-  //     });
-  //   }
-  //   console.log("built tasks: ",$scope.myTasks);
-  // }
-
 
   $scope.$watch('myTasks', function(newVal, oldVal){
     console.log('myTasks changed');
@@ -409,7 +353,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function() {
           $scope.myTasks = TaskModel.tasks;
-          toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
+          toastr.success("Task '" + TaskModel.tasks[id].title + "' completed!");
         });
       }
     });
@@ -451,16 +395,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 
   $.each($scope.myTasks, function() {
-    if (this.event.creator == UserModel.me) {
+    if (this.creator == UserModel.me) {
       $scope.createdTasks.push(this);
     }
   });
-
-  // $.each(TaskModel.tasks, function() {
-  //   if (this.creator == UserModel.me) {
-  //     $scope.createdTasks.push(this);
-  //   }
-  // });
 
   $scope.$watch('createdTasks', function(newVal, oldVal){
     console.log('createdTasks in task changed', $scope.createdTasks);

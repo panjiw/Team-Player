@@ -10,11 +10,16 @@
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
 var Task = function(id, groupID, groupName, title, description, creatorID, dateCreated, dateDue, members, done) {
-  this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
+  this.id = id;
+  this.group = groupID;
+  this.title = title;
+  this.description = description;
+  this.creator = creatorID;
+  this.dateCreated = dateCreated;
+  this.dateDue = dateDue;
   this.members = members;
   this.groupName = groupName;
   this.done = done;
-  this.creator = creatorID;
 };
 
 angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function(GroupModel, UserModel) {

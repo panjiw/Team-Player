@@ -62,7 +62,7 @@ myApp.filter('orderGroups', function() {
 
 myApp.filter('orderTasks', function() {
 	return function(input) {
-    return sort(input, ['dueDate', 'taskName', 'taskDesc', 'taskID']);
+    return sort(input, ['dateDue', 'title', 'description', 'id']);
   }
 });
 
