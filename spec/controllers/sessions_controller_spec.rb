@@ -29,8 +29,12 @@ context 'logining in the user' do
 
     # username does not exist
     context 'username does not exist' do
-    		post 'create', :user => {:username => "takenname", :password => "player"}
-        	it 'should return a 400 status' do
+    		
+            before(:each) do
+            post 'create', :user => {:username => "takenname", :password => "player"}
+        	end
+
+            it 'should return a 400 status' do
                 (response.status == 400).should be_true
     	   end
         end
