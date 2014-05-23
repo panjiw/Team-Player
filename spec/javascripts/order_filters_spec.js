@@ -105,16 +105,16 @@ beforeEach(function() {
         expect(taskFilter).toBeDefined();
       });
 
-      today = {dueDate: new Date(), taskName: "name", taskDesc: "description", taskID: 1};
+      today = {dateDue: new Date(), title: "name", description: "description", id: 1};
 
       tomorrow = today;
-      tomorrow.dueDate.setDate(tomorrow.dueDate.getDate() + 1);
+      tomorrow.dateDue.setDate(tomorrow.dateDue.getDate() + 1);
 
       nextDayAfter = today;
-      nextDayAfter.dueDate.setDate(nextDayAfter.dueDate.getDate() + 2);
+      nextDayAfter.dateDue.setDate(nextDayAfter.dateDue.getDate() + 2);
 
       dateless = today;
-      dateless.dueDate = "";
+      dateless.dateDue = "";
     });
 
     it("Empty object returns empty", function() {
@@ -132,13 +132,13 @@ beforeEach(function() {
 
     it("then orders by name, then description, then id", function() {
       var base = today;
-      base.taskName = today.taskName += "longer";
+      base.title = today.title += "longer";
 
       var sameName = base;
-      sameName.taskDesc = base.taskDesc += "longer";
+      sameName.description = base.description += "longer";
 
       var sameDescription = base;
-      sameDescription.taskID = today.taskID += 1;
+      sameDescription.id = today.id += 1;
 
       // order by name if dates are equal
       expect(taskFilter([base, today])).toEqual([today, base]);

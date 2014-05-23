@@ -27,7 +27,7 @@ angular.module('myapp').controller("homeViewController",
   $scope.myTasks = {};
   $scope.myBills = [];
   function getTaskFromModel(){
-    TaskModel.getTasksFromServer(
+    TaskModel.refresh(
       function(error){
       if(error){
         //TODO

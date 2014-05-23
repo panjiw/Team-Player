@@ -29,6 +29,16 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     }
   }
 
+  GroupModel.refreshAll = function(model) {
+    if(model instanceof Array) {
+      for(i in model) {
+        model[i].refresh(function() {});
+      }
+    } else {
+      model.refresh(function() {});
+    }
+  }
+
   GroupModel.checkByEmail = function(email, callback) {
     UserModel.getUserByEmail(email, function(user, error) {
       if(error) {
@@ -167,7 +177,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
 
   // Remove the current user from a group. On error, calls callback with error;
   // otherwise just calls callback with no params.
-  GroupModel.leaveGroup = function(groupID, callback) {
+  GroupModel.leaveGroup = function(groupID, callback, TaskModel, BillModel) {
     if(!groupID) {
       callback("No group selected");
       return;
@@ -179,6 +189,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .success(function(data, status) {
       delete GroupModel.groups[groupID];
+      GroupModel.refreshAll([TaskModel]);   // BillModel when updated
       callback();
     })
     .fail(function(xhr, textStatus, error) {

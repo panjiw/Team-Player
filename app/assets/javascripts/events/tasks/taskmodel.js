@@ -29,11 +29,12 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
   TaskModel.fetchedTasks = false;
 
   // get Tasks from server to Task model.
-  TaskModel.getTasksFromServer = function(callback) {
+  TaskModel.refresh = function(callback) {
     $.get("/get_task") // <-- url can be changed!
     .success(function(data, status) { // on success, there will be message to console
       console.log("task get Success: " , data);
-      // update task
+      // update tasks
+      TaskModel.tasks = {};
       for (var i in data){
         updateTask(data[i]);
       }

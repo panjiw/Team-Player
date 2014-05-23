@@ -5,7 +5,8 @@
 * the controller for the groups page
 */
  angular.module('myapp').controller("groupsViewController",
-     ["$scope", "$timeout", "UserModel", "GroupModel", function($scope, $timeout, UserModel, GroupModel) {
+     ["$scope", "$timeout", "UserModel", "GroupModel", "TaskModel", "BillModel",
+     function($scope, $timeout, UserModel, GroupModel, TaskModel, BillModel) {
 
   // default select group with id -1
   $scope.group_selected = -1;
@@ -169,7 +170,7 @@
       } else {
         updateGroups();
       }
-    });
+    }, TaskModel, BillModel);
   }
 
   $scope.selectGroup = function(id) {

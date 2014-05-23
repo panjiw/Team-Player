@@ -16,7 +16,6 @@
 //= require angular
 //= require main
 //= require users/usermodel
-//= require events/eventmodel
 //= require groups/groupmodel
 //= require events/tasks/taskmodel
 //= require events/bills/billmodel

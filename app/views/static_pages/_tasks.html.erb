@@ -151,8 +151,9 @@
                           </select>
                         </span>
                       <h5>Members</h5>
-                        <div id="members">
-                          <ul ui-sortable ng-model="currentMembers">
+                        <div class="task_modal_members">
+                          <!-- <ul ui-sortable ng-model="currentMembers"> -->
+                          <ul ng-model="currentMembers">
                             <li ng-repeat="mem in currentMembers | orderUsers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}&nbsp;</span>
@@ -225,8 +226,9 @@
                         </span> -->
                       <span>{{editTaskGroup.name}}</span>
                       <h5>Members</h5>
-                        <div id="members">
-                          <ul ui-sortable ng-model="currentEditMembers">
+                        <div class="task_modal_members">
+                          <!-- <ul ui-sortable ng-model="currentEditMembers"> -->
+                          <ul ng-model="currentEditMembers">
                             <li ng-repeat="mem in currentEditMembers | orderUsers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}&nbsp;</span>
