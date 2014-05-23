@@ -294,6 +294,8 @@ class TaskGeneratorsController < ApplicationController
       if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) && @task_generator.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
+        @task = Task.find(@task_generator[:current_task_id])
+        @task.destroy
         @task_generator.destroy
         render :json => {:status => "success"}, :status => 200
       end
