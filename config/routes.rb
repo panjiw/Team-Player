@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_all',   via: 'get'
   match '/finish_bill', to: 'bills#mark_finished', via: 'post'
+  match '/edit_bill', to: 'bills#edit', via: 'post'
+  match '/delete_bill', to: 'bills#delete', via: 'post'
 
   match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
 

@@ -161,4 +161,79 @@ class BillsController < ApplicationController
       redirect_to '/'
     end
   end
+
+  def edit
+    if view_context.signed_in?
+      @bill = Bill.find(params[:bill][:id])
+      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && @bill.user != view_context.current_user[:id]
+        render :json => {:errors => "Unauthorized action"}, :status => 400
+      else
+        @bill.group_id = params[:bill][:group_id]
+        @bill.user_id = view_context.current_user[:id]
+        @bill.title = params[:bill][:title]
+        @bill.description = params[:bill][:description]
+        @bill.due_date = params[:bill][:due_date]
+        @bill.total_due = params[:bill][:total_due]
+        total_count = 0
+        # check correct division
+        params[:bill][:members].each do |m|
+          total_count = total_count + m[1].to_f
+        end
+        if total_count != @bill[:total_due]
+          render :json => {:errors => "Total due is not divided correctly"}, :status => 400
+        else
+          if @bill.save
+            @bill.users.delete_all
+            params[:bill][:members].each do |m|
+              @bill_actor = BillActor.new(bill_id: @bill[:id],
+                                          user_id: m[0],
+                                          due: m[1],
+                                          paid: false)
+              if !@bill_actor.save
+                @bill.destroy
+                render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
+                return
+              end
+            end
+            if !@bill.bill_actors.find_by_user_id(current_user[:id])
+              @bill_actor = BillActor.new(bill_id: @bill[:id],
+                                          user_id: current_user[:id],
+                                          due: 0,
+                                          paid: true)
+              if !@bill_actor.save
+                @bill.destroy
+                render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
+                return
+              end
+            end
+            bill = {}
+            bill[:details] = @bill
+            bill[:due] = {}
+            @bill.bill_actors.each do |a|
+              # don't know why just giving a doesn't work
+              bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
+            end
+            render :json => bill.to_json, :status => 200
+          else
+            render :json => {:errors => @bill.errors.full_messages}, :status => 400
+          end
+        end
+      end
+    else
+      redirect_to '/'
+    end
+  end
+  def delete
+    if view_context.signed_in?
+      @bill = Bill.find(params[:bill][:id])
+      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && !@bill.user != view_context.current_user[:id]
+        render :json => {:errors => "Unauthorized action"}, :status => 400
+      else
+        @bill.destroy
+        render :json => {:status => "success"}, :status => 200
+      end
+    else
+      redirect_to '/'
+    end
+  end
 end
