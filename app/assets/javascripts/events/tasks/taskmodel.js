@@ -199,7 +199,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     })
     .fail(function(xhr, textStatus, error) {
       console.log("task edit error: ",error);
-      callback(error);
+      callback(JSON.parse(xhr.responseText));
     });
   };
 
@@ -229,32 +229,32 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
   };
 
   TaskModel.editTaskSpecial = function(taskID, groupID, name, description, dateDue, members, cycle, finished, repostArray, callback) {
-    toastr.warning("edit task special is called. change 'editTaskSpecial' function in Taskmodel.js to implement");
+    //toastr.warning("edit task special is called. change 'editTaskSpecial' function in Taskmodel.js to implement");
 
     /*** The following block of code should be used when "edit_task" is done ***/
 
-    // $.post("/edit_task_special", 
-    // {
-    //   "task[id]": taskID,
-    //   "task[group_id]": groupID,
-    //   "task[title]": name,
-    //   "task[description]": description,
-    //   "task[due_date]": dateDue,
-    //   "task[members]": members,
-    //   "task[cycle]": cycle,
-    //   "task[finished]": finished,
-    //   "task[repeat_days]": repostArray
-    // })
-    // .success(function(data, status) { // on success, there will be message to console
-    //   console.log("task edit special Success: " , data);
-    //   // updateTask(data);
-    //   callback();
+    $.post("/edit_task_special", 
+    {
+      "task[id]": taskID,
+      "task[group_id]": groupID,
+      "task[title]": name,
+      "task[description]": description,
+      "task[due_date]": dateDue,
+      "task[members]": members,
+      "task[cycle]": cycle,
+      "task[finished]": finished,
+      "task[repeat_days]": repostArray
+    })
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task edit special Success: " , data);
+      updateTask(data);
+      callback();
       
-    // })
-    // .fail(function(xhr, textStatus, error) {
-    //   console.log("task edit special error: ",error);
-    //   callback(JSON.parse(xhr.responseText));
-    // });
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task edit special error: ",error);
+      callback(JSON.parse(xhr.responseText));
+    });
   };
 
   //Set the given task as finished, and update to the database

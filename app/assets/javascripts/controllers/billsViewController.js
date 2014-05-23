@@ -295,7 +295,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           buildBills();
           initEditBillData();
         });
-        //toastr.success("Bill Edited!");
+        toastr.success("Bill Edited!");
         $('#billEditModal').modal('hide');
       }
 
@@ -397,31 +397,15 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   }
   
   // Function when checkbox is clicked. Updates displayed total
-  $scope.updateTotal = function(b, p) {
+  $scope.updateTotal = function(p) {
     var total = 0;
       $('#' + p + 1 + " input:checkbox").each(function () {
-        if (b == 1) {
-          var str = $(this).val();
-          var value = str.substr(0,str.indexOf(' '));
-          total += (this.checked ? parseInt(value) : 0);
-        } else {
-          var str = $(this).val();
-          var value = str.substr(0,str.indexOf(' '));
-          total -= (this.checked ? parseInt(value) : 0);
-        }
+        var str = $(this).val();
+        var value = str.substr(0,str.indexOf(' '));
+        total += (this.checked ? parseInt(value) : 0);
       });
     $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
   }
-
-  // $scope.updateTotal = function(p) {
-  //   var total = 0;
-  //     $('#' + p + 1 + " input:checkbox").each(function () {
-  //       var str = $(this).val();
-  //       var value = str.substr(0,str.indexOf(' '));
-  //       total += (this.checked ? parseInt(value) : 0);
-  //     });
-  //   $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
-  // }
 
   
   // Function called when anything is clicked in bills page that should close popover
