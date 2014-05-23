@@ -8,33 +8,21 @@
      ["$scope", "$timeout", "UserModel", "GroupModel", "TaskModel", "BillModel",
      function($scope, $timeout, UserModel, GroupModel, TaskModel, BillModel) {
 
-  // default select group with id -1
+  // Set $scope variables to defaults 
   $scope.group_selected = -1;
   $scope.member_selected = -1
   $scope.currentMembers = {};
   $scope.groupsList = GroupModel.groups;
   $scope.currentUser = UserModel.get(UserModel.me);
-
-  $scope.$watch('groupsList', function(newVal, oldVal) {});
-
-  function buildMemberMap(memberArray){
-    var map = {};
-    memberArray.forEach(function(mem){
-        map[mem.id] = mem;
-      });
-    return map;
-  }
-
-  $scope.user = {};
-
   $scope.newMemberList = [$scope.currentUser];
 
-  $scope.showAddGroup = function(e){
-    $('#groupModal').modal({show:true});
-    $('.modal-content').css('height',$( window ).height()*0.8);
-  }
+  // synchronize the group list and current user
+  // with those of the appropriate models
+  $scope.$watch('groupsList', function(newVal, oldVal) {});
+  $scope.$watch('currentUser', function(newVal, oldVal) {});
 
   $scope.createGroup = function(e) {
+    // basic error checking
     if(!$scope.groupCreateName || !$scope.groupCreateDescription) {
       e.preventDefault();
 
@@ -43,54 +31,45 @@
       
       if (!$scope.groupCreateDescription)
         toastr.error("Group Description Required");
-
-      // if member is not added 
-      // toastr.error("Members Required");
       return;
     }
-
-
-    console.log("Trying to create a group...");
 
     GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.newMemberList,
     function(error) {
       if (error){
         toastr.error(error);
       } else {
+        // clear input boxes and hide the modals
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [$scope.currentUser];
           toastr.success("Group created!");
         });
         $('#groupModal').modal('hide');
-      }
     });
   }
 
+  // try to add the member to the current selected group
   $scope.addMember = function(e) {
+    // we only add on clicking on the add member button or
+    // pressing enter in the input box
     if(e.type != "click" && e.which != 13) {
       return;
     }
 
     var groupid = $scope.group_selected;
-
     GroupModel.addMember(groupid, $scope.addNewMember, function(error) {
       if (error){
         toastr.error(error);
       } else {
+        // clear input boxes and hide the modals
         $scope.$apply(function() {
-          $scope.currentMembers = buildMemberMap($scope.groupsList[groupid].members);
+          $scope.currentMembers = $scope.groupsList[groupid].members;
           $scope.member_selected = -1;
           $scope.addNewMember = "";
         });
       }
     });
-  }
-
-  $scope.showEditGroup = function(e) {
-    $scope.editName = $scope.groupsList[$scope.group_selected].name;
-    $scope.editDescription = $scope.groupsList[$scope.group_selected].description;
-    $('#editModal').modal({show:true});
   }
 
   $scope.editGroup = function(e) {
@@ -117,7 +96,7 @@
 
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
-    $scope.currentMembers = buildMemberMap($scope.groupsList[id].members);
+    $scope.currentMembers = $scope.groupsList[id].members;
     $scope.member_selected = -1;
   }
 
@@ -139,7 +118,6 @@
       if(error) {
         toastr.error(error);
       } else {
-        console.log(user);
         $scope.$apply(function() {
           if(indexOfId($scope.newMemberList, user) == -1) {
             $scope.newMemberList.push(user);
@@ -148,6 +126,21 @@
         });
       }
     });
+  }
+
+  ////////////////////////////////////////////////////////////
+  //  Modal functionality -- open and close modals as needed
+  /////////////////////////////////////////////////////////////
+
+  $scope.showAddGroup = function(e){
+    $('#groupModal').modal({show:true});
+    $('.modal-content').css('height',$( window ).height()*0.8);
+  }
+
+  $scope.showEditGroup = function(e) {
+    $scope.editName = $scope.groupsList[$scope.group_selected].name;
+    $scope.editDescription = $scope.groupsList[$scope.group_selected].description;
+    $('#editModal').modal({show:true});
   }
 
   $scope.openGroupHelpModal = function(e){
