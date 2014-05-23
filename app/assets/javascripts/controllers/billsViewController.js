@@ -22,14 +22,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       activeEditBill = -1;
       return;
     }
-    if (activeEditBill != bill.event.id){
-      $scope.editBillTitle = bill.event.title;
-      $scope.editBillDescription = bill.event.description;
+    if (activeEditBill != bill.id){
+      $scope.editBillTitle = bill.title;
+      $scope.editBillDescription = bill.description;
 
-      /** set the date; somehow bill.event.dateDue is returning and object like 
+      /** set the date; somehow bill.dateDue is returning and object like 
           {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
           weirdly with indexing **/
-      var dateObj = $.extend(true, {}, bill.event.dateDue);
+      var dateObj = $.extend(true, {}, bill.dateDue);
       if (dateObj){
         var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
         var month = parseInt(""+dateObj[5] + dateObj[6]);
@@ -52,11 +52,11 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
       /** end set date **/
       
-      $scope.editBillGroup = $.extend(true, {}, GroupModel.groups[bill.event.group]);
+      $scope.editBillGroup = $.extend(true, {}, GroupModel.groups[bill.group]);
 
       $scope.editBillTotal = deriveTotal(bill.membersAmountMap);
       
-      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.event.group].members);
+      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.group].members);
 
       for (var id in bill.membersAmountMap){
         for (var index in $scope.currentEditMembers){
@@ -68,7 +68,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
 
 
-      activeEditBill = bill.event.id;
+      activeEditBill = bill.id;
     }
 
   };
@@ -156,7 +156,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var bills = BillModel.bills;
     console.log("bills is ", bills);
     for(var i in bills){
-      if(bills[i].event.creator == UserModel.me){
+      if(bills[i].creator == UserModel.me){
         for(var j in bills[i].membersAmountMap){
           console.log("creater is me, bills[i]: ",bills[i]);
           if (j != UserModel.me){
@@ -164,10 +164,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             $scope.billsOweYou.push({
               person: UserModel.users[j].firstname, 
               amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].event.title,
-              id: bills[i].event.id,
-              desc: bills[i].event.description,
-              due: bills[i].event.dateDue
+              why: bills[i].title,
+              id: bills[i].id,
+              desc: bills[i].description,
+              due: bills[i].dateDue
             });
           }
         }
@@ -177,12 +177,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           console.log("creater is not me, bills[i]: ",bills[i]);
           if (j == UserModel.me){
             $scope.billsYouOwe.push({
-              person: UserModel.users[bills[i].event.creator].firstname, 
+              person: UserModel.users[bills[i].creator].firstname, 
               amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].event.title,
-              id: bills[i].event.id,
-              desc: bills[i].event.description,
-              due: bills[i].event.dateDue
+              why: bills[i].title,
+              id: bills[i].id,
+              desc: bills[i].description,
+              due: bills[i].dateDue
             });
           }
         }

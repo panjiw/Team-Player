@@ -10,7 +10,13 @@
 //  --membersAmountMap: the members associated with the bill, and how much each owes, and whether or not it's paid
 //  --total: is not explicitly a field, but it is a derived field.
 var Bill = function(id,  groupID, title, description, creatorID, dateCreated, dateDue, membersAmountMap) {
-  this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
+  this.id = id;
+  this.group = groupID;
+  this.title = title;
+  this.description = description;
+  this.creator = creatorID;
+  this.dateCreated = dateCreated;
+  this.dateDue = dateDue;
   this.membersAmountMap = membersAmountMap;
 };
 
