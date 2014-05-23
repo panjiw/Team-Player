@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-1">
               <button class="btn btn-default" id="taskBtn" ng-click="openTaskHelpModal($event)">
-                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="glyphicon glyphicon-question-sign"></span>
               </button>
                 <div id="taskHelpModal" class="modal fade" tabindex="-1" role="dialog">
                   <div class="modal-dialog">
@@ -95,7 +95,7 @@
       </div>
 <!--   *** Add Task Button    ***-->
           <div class="tasks-addbutton">
-            <a class="btn btn-default" id="openBtn" ng-click="openModal($event)">Add Task</a>
+            <a class="btn btn-danger" id="openBtn" ng-click="openModal($event)">Add Task</a>
               <div id="taskModal" class="modal fade task-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -259,7 +259,7 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="myTasks">
-                  <h3>My Tasks (list by urgency)</h3>
+                  <h3>My Tasks</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
                         <div ng-repeat="task in myTasks | orderTasks">
@@ -281,13 +281,13 @@
                             <div id="task{{task.id}}1" class="tasks-pop">
                               <div class="selected-info">
                                 <span><strong>Task:</strong> {{task.title}}</span><br>
-                                <span><strong>description:</strong> {{task.description}}</span><br/>
+                                <span><strong>Description:</strong> {{task.description}}</span><br/>
                                 <span><strong>Due Date:</strong> {{task.dateDue}}</span><br>
                                 <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                 <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
                                 <div class="selected-buttons">
-                                  <button class="btn btn-default" ng-click="openEditModal($event, task.id)">Edit</button>
-                                  <button ng-click="finish(task.id)" class="btn btn-default">Completed</button>
+                                    <button class="btn edit-btn" ng-click="">Edit</button>
+                                    <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
                                 </div>
                               </div>
                             </div>
@@ -300,7 +300,7 @@
 
                 <div class="tab-pane" id="taskComp">
                 
-                      <h3>Completed Tasks (list by completion date?)</h3>
+                      <h3>Completed Tasks</h3>
                       <div class="task-completed tasks-scroll">
                         <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
                           <div ng-repeat="task in myTasks | orderTasks">
@@ -326,11 +326,6 @@
                                   <span><strong>Due Date:</strong> {{task.dateDue}}</span><br>
                                   <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                   <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
-                                  
-                                  <div class="selected-buttons">
-                                    <button class="btn btn-default" ng-click="">Edit</button>
-                                    <button ng-click="finish(task.id)" class="btn btn-default">Completed</button>
-                                  </div>
                                 </div>
                               </div>
                             </div>

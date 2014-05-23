@@ -101,3 +101,19 @@ textarea {
   height: 300px;
   overflow-y: auto;
 }
+
+.btn-leave {
+  background-color:black;
+  color:white;
+}
+
+.help-image {
+  width:570px;
+  height:225px;
+  text-align:center;
+}
+
+.help-info {
+  width:570px;
+  height:70px;
+}

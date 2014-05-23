@@ -77,6 +77,7 @@
 
   $scope.showAddGroup = function(e){
     $('#groupModal').modal({show:true});
+    $('.modal-content').css('height',$( window ).height()*0.8);
   }
 
   // experimental code; when the second line of

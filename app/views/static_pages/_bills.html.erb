@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-1">
               <button class="btn btn-default" id="taskBtn" ng-click="openBillHelpModal($event)">
-                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="glyphicon glyphicon-question-sign"></span>
               </button>
                 <div id="billHelpModal" class="modal fade" tabindex="-1" role="dialog">
                   <div class="modal-dialog">
@@ -103,7 +103,7 @@
 
 <!--bill add button-->
 <div class="bills-addbutton">
-  <a class="btn btn-default" id="openBtn" ng-click="closePop()">Add Bill</a>
+  <a class="btn btn-danger" id="openBtn" ng-click="closePop()">Add Bill</a>
   <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -223,7 +223,7 @@
                                         <div ng-repeat="b in bill.bills | orderBills">
                                             <label for="{{b.id}}">
                                                 <div style="">
-                                                    <div class="bills-selected" class=""style="margin-bottom: 0px;" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
+                                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
                                                         <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
                                                         <h4 class="bill-member">{{b.why}}</h4>
                                                         <h4 class="bill-amount">${{b.amt}}</h4>
@@ -232,7 +232,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
+                                    <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
                                     <h4 class="bill-pop-total">Total: $0</h4>
                                 </div>
                             </div>

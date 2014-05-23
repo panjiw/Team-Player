@@ -15,7 +15,7 @@ Displays pages for after successful login:
                 <button type="button" class="btn btn-default" id="addBillBut">Add Bill</button>
             </div>
 
-
+<!-- calendar modal -->
               <div id="calendarModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -28,7 +28,7 @@ Displays pages for after successful login:
                         <div class="calendarModal-buttons">
                           <div class="col-md-8"></div>
                           <div class="col-md-4" id="calendar-modal-buttons">
-                            <button class="btn btn-warning">Edit</button>
+                            <button class="btn edit-btn">Edit</button>
                             <button class="btn btn-success" data-dismiss="modal">Done</button>
                           </div>
                         </div>
@@ -38,9 +38,9 @@ Displays pages for after successful login:
               </div>
           
 
-
+<!-- to do's -->
             <div class="home-tasks">
-                <h3>To Do's</h3>
+                <h3>To Do</h3>
                 <div class="home-todos">
                   <div class="home-dateless">
                     <div ng-repeat="todo in todos">
@@ -63,6 +63,7 @@ Displays pages for after successful login:
                           </div>
                         </div>
                       </div>
+                      <br>
                     </div>
                   </div>
                 </div>
@@ -78,6 +79,7 @@ Displays pages for after successful login:
 
 
 
+<!-- navigate through tabs -->
   <div ng-controller="tasksViewController" ng-switch-when="selected_tasks">
     <!-- <div ng-include src="'tasks.html'"></div> -->
 

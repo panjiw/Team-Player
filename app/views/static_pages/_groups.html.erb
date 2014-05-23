@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-1">
               <button class="btn btn-default" ng-click="openGroupHelpModal($event)">
-                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="glyphicon glyphicon-question-sign"></span>
               </button>
                 <div id="groupHelpModal" class="modal fade" tabindex="-1" role="dialog">
                   <div class="modal-dialog">
@@ -19,12 +19,12 @@
                       <div class="instruction-row">
                         <div id="groupHelp1">
                           <h4>Adding A Group</h4>
-                            <div class="info">
+                            <div class="help-info">
                               Click on "Add Group" and simply input a name and description for your group.
                               You'll be able to add members by email. Note: members won't display until they have created an account.
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "groups-page1.png" %></div>
+                            <div class="help-image"><%= image_tag "groups-page1.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-10"></div>
@@ -35,11 +35,11 @@
                         </div>
                         <div style="display:none" id="groupHelp2">
                           <h4>Adding a Member to an Existing Group</h4>
-                            <div class="info">
+                            <div class="help-info">
                               Click on the existing group - it will turn blue. <br> Then enter the new member's email address and click "Add Member".
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "groups-page2.png" %></div>
+                            <div class="help-image"><%= image_tag "groups-page2.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -53,11 +53,11 @@
                         </div>
                         <div style="display:none" id="groupHelp3">
                           <h4>Editing A Group</h4>
-                            <div class="info">
+                            <div class="help-info">
                               You must be the creator of the group to be able to edit it. Select the group and click the edit button next to the group's name. 
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "groups-page3.png" %></div>
+                            <div class="help-image"><%= image_tag "groups-page3.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -70,12 +70,12 @@
                             </div>
                         </div>
                         <div style="display:none"  id="groupHelp4">
-                          <h3>Leaving A Group</h3>
-                            <div class="info">
+                          <h4>Leaving A Group</h4>
+                            <div class="help-info">
                               Simply click "Leave Group" to disconnect from group. All tasks and bills related to this group will be gone. 
                             </div>
                             <hr>
-                            <div class="helpImage"><%= image_tag "groups-page4.png" %></div>
+                            <div class="help-image"><%= image_tag "groups-page4.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -98,7 +98,7 @@
               <div class="col-md-5">
                   <div class="groups">
                     <div class="groups-listtitle">
-                      <button type="button" ng-click="showAddGroup()" class="btn btn-default group-add">Add Group</button>
+                      <button type="button" ng-click="showAddGroup()" class="btn btn-danger group-add">Add Group</button>
                         <h3>Groups</h3>
                     </div>            
                       <div class="group-scroll">
@@ -117,14 +117,14 @@
                   <div class="group-display">
                     <div class="group-titlerow">
                       <div class="group-leavebutton" ng-hide="groupsList[group_selected].isSelfGroup">
-                        <button ng-click="leaveGroup(groupsList[group_selected].id)" type="button" class="btn btn-default">Leave Group</button>
+                        <button ng-click="leaveGroup(groupsList[group_selected].id)" type="button" class="btn btn-leave">Leave Group</button>
                       </div>
                       <div class="group-name">
                         <h3>
+                          <span>{{groupsList[group_selected].name}}<span>
                           <button type="button" ng-hide="groupsList[group_selected].isSelfGroup" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-pencil"></span>
                           </button>
-                          <span>{{groupsList[group_selected].name}}<span>
                         </h3>
                       </div>
                     </div>  
@@ -138,7 +138,7 @@
                         </div>
                           <div ng-hide="groupsList[group_selected].isSelfGroup">
                             <input type="text" ng-model="addNewMember" ng-keypress="addMember($event)" class="form-control group-add" placeholder="new member email" />
-                            <button type="button" ng-click="addMember($event)" class="btn btn-default group-add">Add Member</button>
+                            <button type="button" ng-click="addMember($event)" class="btn btn-default group-add">+</button>
                           </div>
                       </div>
                       <div class="group-description" ng-show="member_selected == -1">

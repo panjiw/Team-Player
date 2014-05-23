@@ -43,8 +43,7 @@ a {
   clear: left;
   float: left;
   padding-left: 0px;
-/*  margin-bottom: 0px;*/
-  padding-top: 5px;
+  margin-bottom: 0px;
 }
 
 .options ul {
@@ -125,4 +124,10 @@ div.tabs.selected_groups button.selected_groups{
 .home-todays {
   height: 100px;
   overflow-y: auto;
+}
+
+.edit-btn {
+  background-color: #f7ecb5;
+  border-width: 2px;
+  border-color: #f5e79e;
 }
