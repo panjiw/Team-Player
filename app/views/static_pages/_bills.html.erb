@@ -229,7 +229,7 @@
                                         <div ng-repeat="b in bill.bills | orderBills">
                                             <label for="{{b.id}}">
                                                 <div style="">
-                                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.due}}<br/>{{b.desc}}" data-placement="right">
+                                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.due}}" data-content="<p>{{b.desc}}</p>" data-placement="right">
                                                         <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
                                                         <h4 class="bill-member">{{b.why}}</h4>
                                                         <h4 class="bill-amount">${{b.amt}}</h4>

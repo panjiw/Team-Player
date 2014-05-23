@@ -174,3 +174,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 .bill-all .popover {
   width: 150px;
 }
+
+.bill-all .popover-content p{
+  line-height: 15px;
+}
