@@ -460,6 +460,23 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#'+'billHelp'+pageNum).hide();
     $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
   }
+  
+  $scope.splitEvenly = function(mem) {
+    if ($("#bill-split-evenly-checkbox").is(":checked")) {
+      var total = $scope.newBillTotal;
+      var list = $(".bill-members-check:checked");
+      var value = total / list.size();
+      value = Math.round(value * 100) / 100;
+      $.each($scope.currentMembers, function() {
+        if (this.chked) {
+          this.amount = value;
+        }
+      });
+      if (mem) {
+        mem.amount = value;
+      }
+    }
+  }
 
 }]);
 

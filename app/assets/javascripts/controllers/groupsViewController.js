@@ -1,94 +1,28 @@
 /*
 * TeamPlayer -- 2014
 *
-* This file is not implemented yet. It will be
-* the controller for the groups page
+* This is the Angular Controller for the viewing groups page.
+* It contains the logic for adding, editing, leaving, and viewing groups
 */
  angular.module('myapp').controller("groupsViewController",
      ["$scope", "$timeout", "UserModel", "GroupModel", "TaskModel", "BillModel",
      function($scope, $timeout, UserModel, GroupModel, TaskModel, BillModel) {
 
-  // default select group with id -1
+  // Set $scope variables to defaults 
   $scope.group_selected = -1;
   $scope.member_selected = -1
   $scope.currentMembers = {};
-  $scope.groupsList = {};
+  $scope.groupsList = GroupModel.groups;
   $scope.currentUser = UserModel.get(UserModel.me);
-
-  function getGroupsFromModel(callback) {
-    GroupModel.getGroups(function(groups, asynch, error) {
-      if (error){
-        console.log("fetch group error:");
-        console.log(error);
-      } else {
-        function groupsToApply() {
-          console.log("Got groups:");
-          console.log(groups);
-          $scope.groupsList = groups;
-        }
-        if(asynch || (!$scope.$$phase && !$scope.$root.$$phase)) {
-          $scope.$apply(groupsToApply);
-        } else {
-          groupsToApply();
-        }
-      }
-      if(callback) {
-        callback();
-      }
-    });
-  }
-
-  function updateGroups() {
-    getGroupsFromModel(function() {
-      function getGroups(){
-        if(Object.getOwnPropertyNames($scope.groupsList).length != 0){
-          $scope.group_selected = Object.keys($scope.groupsList)[0];
-          console.log("$scope.groupsList", $scope.groupsList);
-          console.log("$scope.group_selected", $scope.group_selected);
-          if($scope.group_selected != -1) {
-            console.log("member selected",$scope.member_selected);
-            $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;    
-            $scope.currentMembers = buildMemberMap($scope.currentMembers);
-            console.log("$scope.currentMembers",$scope.currentMembers);
-          }
-        }
-      }
-
-      if(!$scope.$$phase && !$scope.$root.$$phase) {
-        $scope.$apply(getGroups);
-      } else {
-        getGroups();
-      }
-    });
-  }
-  updateGroups();
-
-  function buildMemberMap(memberArray){
-    var map = {};
-    memberArray.forEach(function(mem){
-        map[mem.id] = mem;
-      });
-    return map;
-  }
-
-  $scope.user = {};
-
   $scope.newMemberList = [$scope.currentUser];
 
-  $scope.showAddGroup = function(e){
-    $('#groupModal').modal({show:true});
-    $('.modal-content').css('height',$( window ).height()*0.8);
-  }
-
-  // experimental code; when the second line of
-  // this function gets called, the view will be updated.
-  // the second line is required, since it updates the $scope variable.
-  // $scope.change = function(e) {
-  // GroupModel.groups[3] = new Group(2, false, "geo", "geo post description", 0, new Date(), [0]);
-  // $scope.groupsList= GroupModel.getGroups();
-  // }
+  // synchronize the group list and current user
+  // with those of the appropriate models
+  $scope.$watch('groupsList', function(newVal, oldVal) {});
+  $scope.$watch('currentUser', function(newVal, oldVal) {});
 
   $scope.createGroup = function(e) {
+    // basic error checking
     if(!$scope.groupCreateName || !$scope.groupCreateDescription) {
       e.preventDefault();
 
@@ -97,21 +31,15 @@
       
       if (!$scope.groupCreateDescription)
         toastr.error("Group Description Required");
-
-      // if member is not added 
-      // toastr.error("Members Required");
       return;
     }
-
-
-    console.log("Trying to create a group...");
 
     GroupModel.createGroup($scope.groupCreateName, $scope.groupCreateDescription, $scope.newMemberList,
     function(error) {
       if (error){
         toastr.error(error);
       } else {
-        getGroupsFromModel();
+        // clear input boxes and hide the modals
         $scope.$apply(function() {
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [$scope.currentUser];
@@ -122,48 +50,46 @@
     });
   }
 
+  // try to add the member to the current selected group,
+  // or display an error message if the user was not found
   $scope.addMember = function(e) {
+    // we only add on clicking on the add member button or
+    // pressing enter in the input box
     if(e.type != "click" && e.which != 13) {
       return;
     }
 
     var groupid = $scope.group_selected;
-
     GroupModel.addMember(groupid, $scope.addNewMember, function(error) {
       if (error){
         toastr.error(error);
       } else {
-        getGroupsFromModel(function() {
-          $scope.$apply(function() {
-            $scope.currentMembers = buildMemberMap($scope.groupsList[groupid].members);
-            $scope.member_selected = -1;
-            $scope.addNewMember = "";
-          });
+        // clear input boxes and hide the modals
+        $scope.$apply(function() {
+          $scope.currentMembers = $scope.groupsList[groupid].members;
+          $scope.member_selected = -1;
+          $scope.addNewMember = "";
         });
       }
     });
   }
 
-  $scope.showEditGroup = function(e) {
-    $scope.editName = $scope.groupsList[$scope.group_selected].name;
-    $scope.editDescription = $scope.groupsList[$scope.group_selected].description;
-    $('#editModal').modal({show:true});
-  }
-
+  // edit the title or description of a group.
+  // the members and id's of groups cannot be changed.
   $scope.editGroup = function(e) {
     var id = $scope.groupsList[$scope.group_selected].id;
     GroupModel.editGroup(id, $scope.editName, $scope.editDescription, function(error) {
       if(error) {
         toastr.error(error);
       } else {
-        getGroupsFromModel();
+        $scope.editDescription = $scope.editName = "";
+        $('#editModal').modal('hide');
       }
-      $('#editModal').modal('hide');
     });
-
-    $scope.editDescription = $scope.editName = "";
   }
 
+  // leave the current selected group. This will
+  // clear your tasks and bills from this group
   $scope.leaveGroup = function(id) {
     GroupModel.leaveGroup(id, function(error) {
       if(error) {
@@ -174,17 +100,22 @@
     }, TaskModel, BillModel);
   }
 
+  // called when the user selects a different group on the UI
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
-    $scope.currentMembers = buildMemberMap($scope.groupsList[id].members);
+    $scope.currentMembers = $scope.groupsList[id].members;
     $scope.member_selected = -1;
   }
 
+  // Check to see whether a user with a given email is a valid user
+  // in Team-Player. If so, add them to the list of newMembers
+  // so it shows up in the UI
   $scope.checkByEmail = function(e) {
     if(e.which != 13 && e.type != "click") {   // didn't press enter or click
       return;
     }
 
+    // find an element by id in the array of objects
     function indexOfId(array, el) {
       for(var i = 0; i < array.length; i++) {
         if(array[i].id == el.id) {
@@ -198,8 +129,8 @@
       if(error) {
         toastr.error(error);
       } else {
-        console.log(user);
         $scope.$apply(function() {
+          // cannot add twice
           if(indexOfId($scope.newMemberList, user) == -1) {
             $scope.newMemberList.push(user);
             $scope.newMember = "";
@@ -207,6 +138,21 @@
         });
       }
     });
+  }
+
+  ////////////////////////////////////////////////////////////
+  //  Modal functionality -- open and close modals as needed
+  /////////////////////////////////////////////////////////////
+
+  $scope.showAddGroup = function(e){
+    $('#groupModal').modal({show:true});
+    $('.modal-content').css('height',$( window ).height()*0.8);
+  }
+
+  $scope.showEditGroup = function(e) {
+    $scope.editName = $scope.groupsList[$scope.group_selected].name;
+    $scope.editDescription = $scope.groupsList[$scope.group_selected].description;
+    $('#editModal').modal({show:true});
   }
 
   $scope.openGroupHelpModal = function(e){
@@ -222,6 +168,4 @@
     $('#'+'groupHelp'+pageNum).hide();
     $('#'+'groupHelp'+(parseInt(pageNum)-1)).show();
   }
-
-
 }]);
