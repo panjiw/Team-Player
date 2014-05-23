@@ -70,25 +70,25 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       console.log("taskmem", task.members);
 
 
-      var memArray = [];
+      // var memArray = [];
       var count = 0;
       // set checked for each involved member
       for (var id in task.members){
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            memArray[task.members[id]] = $scope.currentEditMembers[index];
-            delete $scope.currentEditMembers[index];
+            // memArray[task.members[id]] = $scope.currentEditMembers[index];
+            // delete $scope.currentEditMembers[index];
             count++;
           }
             
         }
       }
 
-      for (var index in $scope.currentEditMembers){
-        memArray[count++] = $scope.currentEditMembers[index];
-      }
-      $scope.currentEditMembers = memArray;
+      // for (var index in $scope.currentEditMembers){
+      //   memArray[count++] = $scope.currentEditMembers[index];
+      // }
+      // $scope.currentEditMembers = memArray;
 
       console.log("currentEditMembers after", $scope.currentEditMembers);
 

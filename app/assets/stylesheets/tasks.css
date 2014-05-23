@@ -153,3 +153,7 @@ textarea {
   width: 570px;
   height: 375px;
 }
+
+.task_modal_members ul {
+  list-style-type: none;
+}
