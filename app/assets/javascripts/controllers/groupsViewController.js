@@ -12,31 +12,32 @@
   $scope.group_selected = -1;
   $scope.member_selected = -1
   $scope.currentMembers = {};
-  $scope.groupsList = {};
+  $scope.groupsList = GroupModel.groups;
   $scope.currentUser = UserModel.get(UserModel.me);
 
-  function getGroupsFromModel(callback) {
-    GroupModel.getGroups(function(groups, asynch, error) {
-      if (error){
-        console.log("fetch group error:");
-        console.log(error);
-      } else {
-        function groupsToApply() {
-          console.log("Got groups:");
-          console.log(groups);
-          $scope.groupsList = groups;
-        }
-        if(asynch || (!$scope.$$phase && !$scope.$root.$$phase)) {
-          $scope.$apply(groupsToApply);
-        } else {
-          groupsToApply();
-        }
-      }
-      if(callback) {
-        callback();
-      }
-    });
-  }
+  // function getGroupsFromModel(callback) {
+  //   GroupModel.getGroups(function(groups, asynch, error) {
+  //     if (error){
+  //       console.log("fetch group error:");
+  //       console.log(error);
+  //     } else {
+  //       function groupsToApply() {
+  //         console.log("Got groups:");
+  //         console.log(groups);
+  //         $scope.groupsList = groups;
+  //       }
+  //       if(asynch || (!$scope.$$phase && !$scope.$root.$$phase)) {
+  //         $scope.$apply(groupsToApply);
+  //       } else {
+  //         groupsToApply();
+  //       }
+  //     }
+  //     if(callback) {
+  //       callback();
+  //     }
+  //   });
+  // }
+  $scope.$watch('groupsList', function(newVal, oldVal) {});
 
   function updateGroups() {
     getGroupsFromModel(function() {
