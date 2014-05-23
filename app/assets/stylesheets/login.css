@@ -24,6 +24,10 @@
   margin-right: 10px;
 }
 
+.navbar-collapse {
+  margin-bottom:5px;
+}
+
 .login-right {
   width: 400px;
   padding-left: 60px;
@@ -46,7 +50,8 @@ input {
   clear: left;
   float: left;
   padding-left: 0px;
-  margin-bottom: 14px;
+  margin-top:7px;
+  margin-bottom: 3px;
 }
 
 .options ul {
