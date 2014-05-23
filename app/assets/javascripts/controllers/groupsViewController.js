@@ -1,8 +1,8 @@
 /*
 * TeamPlayer -- 2014
 *
-* This file is not implemented yet. It will be
-* the controller for the groups page
+* This is the Angular Controller for the viewing groups page.
+* It contains the logic for adding, editing, leaving, and viewing groups
 */
  angular.module('myapp').controller("groupsViewController",
      ["$scope", "$timeout", "UserModel", "GroupModel", "TaskModel", "BillModel",
@@ -46,10 +46,12 @@
           toastr.success("Group created!");
         });
         $('#groupModal').modal('hide');
+      }
     });
   }
 
-  // try to add the member to the current selected group
+  // try to add the member to the current selected group,
+  // or display an error message if the user was not found
   $scope.addMember = function(e) {
     // we only add on clicking on the add member button or
     // pressing enter in the input box
@@ -72,18 +74,22 @@
     });
   }
 
+  // edit the title or description of a group.
+  // the members and id's of groups cannot be changed.
   $scope.editGroup = function(e) {
     var id = $scope.groupsList[$scope.group_selected].id;
     GroupModel.editGroup(id, $scope.editName, $scope.editDescription, function(error) {
       if(error) {
         toastr.error(error);
+      } else {
+        $scope.editDescription = $scope.editName = "";
+        $('#editModal').modal('hide');
       }
-      $('#editModal').modal('hide');
     });
-
-    $scope.editDescription = $scope.editName = "";
   }
 
+  // leave the current selected group. This will
+  // clear your tasks and bills from this group
   $scope.leaveGroup = function(id) {
     GroupModel.leaveGroup(id, function(error) {
       if(error) {
@@ -94,17 +100,22 @@
     }, TaskModel, BillModel);
   }
 
+  // called when the user selects a different group on the UI
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
     $scope.currentMembers = $scope.groupsList[id].members;
     $scope.member_selected = -1;
   }
 
+  // Check to see whether a user with a given email is a valid user
+  // in Team-Player. If so, add them to the list of newMembers
+  // so it shows up in the UI
   $scope.checkByEmail = function(e) {
     if(e.which != 13 && e.type != "click") {   // didn't press enter or click
       return;
     }
 
+    // find an element by id in the array of objects
     function indexOfId(array, el) {
       for(var i = 0; i < array.length; i++) {
         if(array[i].id == el.id) {
@@ -119,6 +130,7 @@
         toastr.error(error);
       } else {
         $scope.$apply(function() {
+          // cannot add twice
           if(indexOfId($scope.newMemberList, user) == -1) {
             $scope.newMemberList.push(user);
             $scope.newMember = "";
