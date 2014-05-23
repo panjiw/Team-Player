@@ -121,20 +121,21 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   // getting task from model for the first time, so ask model to get from server
+  $scope.myTasks = TaskModel.tasks;
   function getTaskFromModel(){
-    TaskModel.getTasksFromServer(
-      function(error){
-      if(error){
-        //TODO
-      } else{
-        //TODO
-        console.log("---- task from model!! ---");
-        $scope.$apply(function(){
-          $scope.myTasks = TaskModel.tasks;
+  //   TaskModel.refresh(
+  //     function(error){
+  //     if(error){
+  //       //TODO
+  //     } else{
+  //       //TODO
+  //       console.log("---- task from model!! ---");
+  //       $scope.$apply(function(){
+  //         $scope.myTasks = TaskModel.tasks;
 
-        });
-      }
-    });
+  //       });
+  //     }
+  //   });
 
     TaskModel.getTaskGeneratorsFromServer(
       function(error){
