@@ -169,10 +169,10 @@ angular.module('myapp').controller("homeViewController",
                     + "<strong>Creator:</strong> " + event.members);
         }
         if (event.backgroundColor == "grey") {
-          $("#calendar-modal-buttons").hide();
+          $("#calendarModal-buttons").hide();
         }
         else {
-          $("#calendar-modal-buttons").show();
+          $("#calendarModal-buttons").show();
         }
       }
     });  
