@@ -167,9 +167,13 @@ describe "testing NEW" do
 
 		# two people bills don't add up
 		it 'should throw an exception' do
-			# post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 20}, 
-			# 	 :description => "desc", :due_date => "2014-05-17"}
-			# (response.status = 400).should be_true
+			@controller = SessionsController.new
+			delete 'destroy'
+        	post 'create', :user => {:username => "two", :password => "player"}
+        	@controller = BillsController.new
+			post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"2" => 20, "3" => 15}, 
+				 :description => "desc", :due_date => "2014-05-17"}
+			(response.status = 400).should be_true
 		end
 
 	end
@@ -205,108 +209,154 @@ describe "testing getbill" do
 		#
 
 		# zero bills in database
-		it 'should show ok json query' do
-			get 'get_all'
- 			(response.body.include? "{}").should be_true
-        	(response.status == 200).should be_true
+		context 'zero bills in database' do
+			
+			before(:each) do
+				get 'get_all'
 			end
 
+			it 'should return an empty array' do
+ 				(response.body.include? "{}").should be_true
+ 			end
+
+ 			it 'should return 200 status' do
+        		(response.status == 200).should be_true
+			end
+		end
+
 		# bills in database; no bills for current user
-		it 'should show blank ok json query' do
-			post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
-				 :description => "desc", :due_date => "2014-05-17"}
-
-			@controller = UsersController.new
-			post 'create', :user => {:username => "newuser", :firstname => "New", :lastname => "User", :email => "new@player.com",
-        		 :password => "player", :password_confirmation => "player"}
-            
-        	@controller = SessionsController.new
-        	post 'create', :user => {:username => "newuser", :password => "player"}
-	
-        	@controller = BillsController.new
+		context 'bills in database no bills for current user' do
 			
-			get 'get_all'
+			before(:each) do
+				post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2014-05-17"}
 
- 			(response.body.include? "{}").should be_true
-        	(response.status == 200).should be_true
-			
+				@controller = UsersController.new
+				post 'create', :user => {:username => "newuser", :firstname => "New", :lastname => "User", :email => "new@player.com",
+	        		 :password => "player", :password_confirmation => "player"}
+	            
+	        	@controller = SessionsController.new
+	        	post 'create', :user => {:username => "newuser", :password => "player"}
+		
+	        	@controller = BillsController.new
+				
+				get 'get_all'
+			end
+
+			it 'should return an empty array' do
+ 				(response.body.include? "{}").should be_true
+        		end
+
+        	it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
 			end
 
 		# bills in user's groups but not for user
-		it 'should show blank ok json query' do
-			@controller = UsersController.new
-			post 'create', :user => {:username => "newuser", :firstname => "New", :lastname => "User", :email => "new@player.com",
-        		 :password => "player", :password_confirmation => "player"}
-            
-        	@controller = SessionsController.new
-        	post 'create', :user => {:username => "newuser", :password => "player"}
+		context 'bills in users groups but not for the user' do
+			
+			before(:each) do
+				@controller = UsersController.new
+				post 'create', :user => {:username => "newuser", :firstname => "New", :lastname => "User", :email => "new@player.com",
+	        		 :password => "player", :password_confirmation => "player"}
+	            
+	        	@controller = SessionsController.new
+	        	post 'create', :user => {:username => "newuser", :password => "player"}
 
-        	@controller = GroupsController.new
-			post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1]}
+	        	@controller = GroupsController.new
+				post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1]}
 
-			@controller = BillsController.new
-			post 'new', :bill => {:group_id => 3, :title => "testing title", :total_due => 30, :members => {"2" => 30}, 
-				 :description => "desc", :due_date => "2014-05-17"}
+				@controller = BillsController.new
+				post 'new', :bill => {:group_id => 3, :title => "testing title", :total_due => 30, :members => {"2" => 30}, 
+					 :description => "desc", :due_date => "2014-05-17"}
 
-			@controller = SessionsController.new
-			delete 'destroy'
-        	post 'create', :user => {:username => "takenname", :password => "player"}
+				@controller = SessionsController.new
+				delete 'destroy'
+	        	post 'create', :user => {:username => "takenname", :password => "player"}
 
-        	@controller = BillsController.new
-        	get 'get_all'
+	        	@controller = BillsController.new
+	        	get 'get_all'
+	        	end
 
-        	(response.body.include? "{}").should be_true
-        	(response.status == 200).should be_true
+	        it 'should return an empty array' do
+        		(response.body.include? "{}").should be_true
+        	end
+
+        	it 'should return a 200 status' do
+        		(response.status == 200).should be_true
 			end
-		
+		end
 		#
 		#SELF GROUP TESTS
 		#
 
 		# one self bill correct response
-		it 'should show ok json query' do
-        	post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
-				 :description => "desc", :due_date => "2014-05-17"}
-			get 'get_all'
-			
-			# check return data for user information
-			checker = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
-			(response.body.include? checker).should be_true
-		
-			# check return data for bill information
-			checker = "\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-			(response.body.include? checker).should be_true
+		context 'one self bill created' do
+        	
+	        before(:each) do
+	        	post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2014-05-17"}
+				get 'get_all'
+			end
 
-			(response.status == 200).should be_true
+			it 'should have the correct user information' do
+				checker = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+				(response.body.include? checker).should be_true
+			end
+
+			it 'should have the correct bill information' do
+				# check return data for bill information
+				checker = "\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+				(response.body.include? checker).should be_true
+			end
+			
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
 			end
 
 		# two self bills correct response
-		it 'should show ok json query' do
-        	post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
-				 :description => "desc", :due_date => "2014-05-17"}
-			post 'new', :bill => {:group_id => 1, :title => "SECOND BILL", :total_due => 20, :members => {"1" => 20}, 
-				 :description => "desc", :due_date => "2014-05-17"}
-			get 'get_all'
+		context 'two self bills created' do
+        	
+			before(:each) do
+	        	post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2014-05-17"}
+				post 'new', :bill => {:group_id => 1, :title => "SECOND BILL", :total_due => 20, :members => {"1" => 20}, 
+					 :description => "desc", :due_date => "2014-05-17"}
+				get 'get_all'
+			end
 			
-			# check return data for user information
-			checker = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
-			(response.body.include? checker).should be_true
-		
-			# check return data for bill information
-			checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-			(response.body.include? checker).should be_true
-
-			# check return data for user information
-			checker = "\"1\":{\"due\":20,\"paid\":false,\"paid_date\":null"
-			(response.body.include? checker).should be_true
-		
-			# check return data for bill information
-			checker = "\"1\":{\"details\":{\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"SECOND BILL\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-			(response.body.include? checker).should be_true
-
-			(response.status == 200).should be_true
+			it 'should have the correct user informatino for user one' do
+				# check return data for user information
+				checker = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+				(response.body.include? checker).should be_true
 			end
 
+			it 'should have the correct bill information for bill one' do
+				# check return data for bill information
+				checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+				(response.body.include? checker).should be_true
+			end
+
+			it 'should have the correct user information for user one bill two' do
+				# check return data for user information
+				checker = "\"1\":{\"due\":20,\"paid\":false,\"paid_date\":null"
+				(response.body.include? checker).should be_true
+			end
+
+			it 'should have the correct bill information for bill two' do
+				# check return data for bill information
+				checker = "\"1\":{\"details\":{\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"SECOND BILL\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+				(response.body.include? checker).should be_true
+			end
+
+			it 'should have the correct status' do
+				(response.status == 200).should be_true
+			end
+		end	
+		
 		#
 		# DIFFERENT OWES/OWED FUNCTIONALITY
 		#
@@ -332,138 +382,190 @@ describe "testing getbill" do
 				end
 
 			# user owes one bill; nothing owed to user
-			it 'should return one bill' do
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
-					 :description => "desc", :due_date => "2014-05-17"}
+			context 'user owes one bill; nothing owed to user' do
+				
+				before(:each) do
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
+						 :description => "desc", :due_date => "2014-05-17"}
 
-				@controller = SessionsController.new
-				delete 'destroy'
-				post 'create', :user => {:username => "three", :password => "player"}
+					@controller = SessionsController.new
+					delete 'destroy'
+					post 'create', :user => {:username => "three", :password => "player"}
 
-				@controller = BillsController.new
-				get 'get_all'
+					@controller = BillsController.new
+					get 'get_all'
+					end
 
-				# check return data for user information
-				checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+					end
+				
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+					end
 
-				(response.status == 200).should be_true
-				end
+				it 'should return a 200 status' do
+					(response.status == 200).should be_true
+					end	
+			end
 
 			# user owes two bills; nothing owed to user
-			it 'should return two bills' do
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
-					 :description => "desc", :due_date => "2014-05-17"}
-				post 'new', :bill => {:group_id => 6, :title => "testing two", :total_due => 42, :members => {"3" => 42}, 
-					 :description => "desc", :due_date => "2014-05-17"}
+			context 'user owes two bills/ nothing owed to user' do
+				
+				before(:each) do
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
+						 :description => "desc", :due_date => "2014-05-17"}
+					post 'new', :bill => {:group_id => 6, :title => "testing two", :total_due => 42, :members => {"3" => 42}, 
+						 :description => "desc", :due_date => "2014-05-17"}
 
-				@controller = SessionsController.new
-				delete 'destroy'
-				post 'create', :user => {:username => "three", :password => "player"}
+					@controller = SessionsController.new
+					delete 'destroy'
+					post 'create', :user => {:username => "three", :password => "player"}
 
-				@controller = BillsController.new
-				get 'get_all'
-
-				# check return data for user information
-				checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
-
-				# check return data for user information
-				checker = "\"3\":{\"due\":42,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"1\":{\"details\":{\"id\":2,\"group_id\":6,\"user_id\":2,\"title\":\"testing two\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
-
-				(response.status == 200).should be_true				
+					@controller = BillsController.new
+					get 'get_all'
 				end
+
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+					end
+				
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+					end
+
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"3\":{\"due\":42,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+					end
+
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"1\":{\"details\":{\"id\":2,\"group_id\":6,\"user_id\":2,\"title\":\"testing two\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+				end
+
+				it 'should return a 200 status' do
+					(response.status == 200).should be_true				
+				end
+			end
 
 			# user owed one bill; user owes nothing
-			it 'should return one bill' do
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30, "2" => 0}, 
-					 :description => "desc", :due_date => "2014-05-17"}
+			context 'user owed one bill user owes nothing' do
+				
+				before(:each) do
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30, "2" => 0}, 
+						 :description => "desc", :due_date => "2014-05-17"}
 
-				@controller = BillsController.new
-				get 'get_all'
+					@controller = BillsController.new
+					get 'get_all'
+				end
 
-				# check return data for user information
-				checker = "\"2\":{\"due\":0,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"2\":{\"due\":0,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+				end
 
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+					end
+
+				it 'should reeturn a 200 status' do
 				(response.status == 200).should be_true
 				end
+			end
 
 			# user owed two bills; user owes nothing
-			it 'should return one bill' do
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30,"2" => 0}, 
-					 :description => "desc", :due_date => "2014-05-17"}
+			context 'user owed two bills; user owes nothing' do
+				
+				before(:each) do
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30,"2" => 0}, 
+						 :description => "desc", :due_date => "2014-05-17"}
 
-				@controller = BillsController.new
-				get 'get_all'
+					@controller = BillsController.new
+					get 'get_all'
+				end
 
-				# check return data for user information
-				checker = "\"2\":{\"due\":0,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
+				it 'should return correct user information' do
+					# check return data for user information
+					checker = "\"2\":{\"due\":0,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+					end
 
+				it 'should return correct bill information' do
+					# check return data for bill information
+					checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+					end
+
+				it 'should return a 200 status' do
 				(response.status == 200).should be_true
 				end
+			end
 
 			# user owes one bill; one bill owed to user
-			it 'should return two bills' do
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
-					 :description => "desc", :due_date => "2014-05-17"}
+			context 'user owes one bill; one bill owed to user' do
+				
+				before(:each) do
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing title", :total_due => 30, :members => {"3" => 30}, 
+						 :description => "desc", :due_date => "2014-05-17"}
 
-				@controller = SessionsController.new
-				delete 'destroy'
-				post 'create', :user => {:username => "three", :password => "player"}
+					@controller = SessionsController.new
+					delete 'destroy'
+					post 'create', :user => {:username => "three", :password => "player"}
 
-				@controller = BillsController.new
-				post 'new', :bill => {:group_id => 6, :title => "testing two", :total_due => 30, :members => {"1" => 30,"3" => 0}, 
-					 :description => "desc", :due_date => "2014-05-17"}
-
-				get 'get_all'
-
-				# check return data for user information
-				checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
-
-				# check return data for user information
-				checker = "\"3\":{\"due\":0,\"paid\":false,\"paid_date\":null"
-				(response.body.include? checker).should be_true
-		
-				# check return data for bill information
-				checker = "\"details\":{\"id\":2,\"group_id\":6,\"user_id\":3,\"title\":\"testing two\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
-				(response.body.include? checker).should be_true
-
-				(response.status == 200).should be_true
+					@controller = BillsController.new
+					post 'new', :bill => {:group_id => 6, :title => "testing two", :total_due => 30, :members => {"1" => 30,"3" => 0}, 
+						 :description => "desc", :due_date => "2014-05-17"}
+					get 'get_all'
 				end
 
+				
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"3\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+				end
+
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":2,\"title\":\"testing title\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+					end
+
+				it 'should return the correct user information' do
+					# check return data for user information
+					checker = "\"3\":{\"due\":0,\"paid\":false,\"paid_date\":null"
+					(response.body.include? checker).should be_true
+				end
+
+				it 'should return the correct bill information' do
+					# check return data for bill information
+					checker = "\"details\":{\"id\":2,\"group_id\":6,\"user_id\":3,\"title\":\"testing two\",\"description\":\"desc\",\"due_date\":\"2014-05-17\""
+					(response.body.include? checker).should be_true
+				end
+
+				it 'should return a 200 status' do
+				(response.status == 200).should be_true
+				end
+			end	
 			# zero numbers
 
 			end
