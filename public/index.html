@@ -110,64 +110,66 @@
 
 
 
-We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs, which will be a large factor over our competitors, is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
-</p>
-<ul>
-  <li>HTML/CSS/JavaScript: The backbone of the frontend of any web application. We will obviously be using these heavily.</li>
-  <li>JQuery: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
-</li>
-  <li>Bootstrap: Is a JavaScript and CSS library originally from Twitter. We will be using some of their default styles and boilerplate code to help aid our design of the website. For example, it is not terribly easy to implement a professional looking button or form in HTML/CSS, but Bootstrap’s provided CSS will help us make the site more professional. 
-</li>
-  <li>AngularJS: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend.
-</li>
-  <li>Ruby/Rails: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
-</li>
-  <li>sqlite3/PostgreSQL: Our data will be very relational, our ruby on rails backend will uses these database to store data, sqlite3 for development and PostgreSQL for production. Then we will query it through the ruby functions. The data will solely come from user input, as the application is driven around group task management.
-</li>
-  <li>Git: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. Its bug tracking system is visual and clear.
-</li>
-  <li>Heroku: We will be using Heroku to deploy our app. It has Ruby on Rails already installed, so will simplify the deployment process. 
-</li>
-  <li>Jenkins: Continuous integration system used to deploy automated daily testing on our product, and send emails when builds have failed. 
-</li>
-</ul>
+                We decided to make our project a web-based application, because web is cross-platform (i.e. we do not need to worry about iOS vs Android). We also acknowledged that building well-designed UIs, which will be a large factor over our competitors, is easiest with web languages. Finally, these languages generally match our skillset. Here are the tools and the explanations on why they were chosen:
+                </p>
+                <ul>
+                  <li><b>HTML/CSS/JavaScript</b>: The backbone of the frontend of any web application. We will obviously be using these heavily.</li>
+                  <li><b>JQuery</b>: Is a JavaScript library that will simplify our frontend code—it provides helpful functions on Ajax requests, basic animation, selecting elements in the DOM, etc.
+                </li>
+                  <li><b>Bootstrap</b>: Is a JavaScript and CSS library originally from Twitter. We will be using some of their default styles and boilerplate code to help aid our design of the website. For example, it is not terribly easy to implement a professional looking button or form in HTML/CSS, but Bootstrap’s provided CSS will help us make the site more professional. 
+                </li>
+                  <li><b>AngularJS</b>: Is a MV* framework for frontend heavy applications. We will use it as both a “frontend PHP” (e.g. HTML with control flow), and to easily inject the data from the backend.
+                </li>
+                  <li><b>Ruby/Rails</b>: We will use Ruby on Rails as our backend framework. The backend will provide the overall architecture of the site, as well as handle querying the database, and returning the formatted data to the front end.
+                </li>
+                  <li><b>sqlite3/PostgreSQL</b>: Our data will be very relational, our ruby on rails backend will uses these database to store data, sqlite3 for development and PostgreSQL for production. Then we will query it through the ruby functions. The data will solely come from user input, as the application is driven around group task management.
+                </li>
+                  <li><b>Git</b>: This will function both as our version control and bug tracking system. As noted in lecture, Git is a fairly intuitive and popular version control system. Its bug tracking system is visual and clear.
+                </li>
+                  <li><b>Heroku</b>: We will be using Heroku to deploy our app. It has Ruby on Rails already installed, so will simplify the deployment process. 
+                </li>
+                  <li><b>Jenkins</b>: Continuous integration system used to deploy automated daily testing on our product, and send emails when builds have failed. 
+                </li>
+                </ul>
 
               	<hr>
               
               	<h2 id="sec3">Frameworks / Libraries</h2>
       		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
- <br><br>
-Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
- <br><br>
-From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
+             <br><br>
+            Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
+             <br><br>
+            From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
               
               	<h2 id="sec4">Existing Solutions</h2>
       			
                 Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
-<br><br>Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
+                <br><br>Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
 
               
               	<hr>
             <h2 id="sec5">Our Solution</h2>
 
-Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
-<br><br>
-<h4><b>Major features:</b></h4> 
-<ul>
-  <li><h3>Group Management</h3><blockquote>Create a TeamPlayer group for every group in your life, and all tasks/bills will be centered around these groups. You will no longer have to personally keep everyone up to date with another’s responsibilities. Every member in the group can see what’s going on.</blockquote></li>
-    <li><h3>Cycling Task Creation</h3><blockquote>For the tasks that you seem to always be the only one doing, like cleaning the bathroom or picking up dinner,  you can include your groups in your tasks. In addition to setting deadlines, you have the choice to cycle your tasks. This means that when one person has finished it, the task will automatically be given to the next person.</blockquote></li>
-    <li><h3>Bill Memory and Bill Splitting</h3><blockquote>For the outstanding bills people still owe you, and the need to keep track of things that were paid. TeamPlayer  compiles expenses paid by and needed to be paid by users. You can see a summary of what people owe you, and what you owe to others.</blockquote></li>
-    <li><h3>Organization</h3><blockquote>Filters allow you to visualize events for all your groups or just a few - 
-    you choose. Displayed in list views, calender views, and simple interface with colorcoding allow you to keep track of things important  
-    to you much easier</blockquote></li>
+            Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
+            <br><br>
+            <h4><b>Major features:</b></h4> 
+            <ul>
+              <li><b>Group Management</b>
+                <ul>Create a TeamPlayer group for every group in your life, and all tasks/bills will be centered around these groups. You will no longer have to personally keep everyone up to date with another’s responsibilities. Every member in the group can see what’s going on.</ul>
+              </li>
+                <li><b>Cycling Task Creation</b><ul>For the tasks that you seem to always be the only one doing, like cleaning the bathroom or picking up dinner,  you can include your groups in your tasks. In addition to setting deadlines, you have the choice to cycle your tasks. This means that when one person has finished it, the task will automatically be given to the next person.</ul>
+              </li>
+                <li><b>Bill Memory and Bill Splitting</b><ul>For the outstanding bills people still owe you, and the need to keep track of things that were paid. TeamPlayer  compiles expenses paid by and needed to be paid by users. You can see a summary of what people owe you, and what you owe to others.</ul>
+              </li>
+                <li><b>Organization</b><ul>Filters allow you to visualize events for all your groups or just a few - 
+                you choose. Displayed in list views, calender views, and simple interface with colorcoding allow you to keep track of things important  
+                to you much easier</ul>
+              </li>
 
-
-</ul>
-              
-                <hr>
-
-      		</div> 
-  	</div>
+            </ul>
+            <hr>
+        </div> 
+    </div>
 </div>
 
 
