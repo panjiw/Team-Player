@@ -79,15 +79,17 @@ class TasksController < ApplicationController
     if view_context.signed_in?
       tasks = {}
       count = 0
-      current_user.tasks.each do |t|
-        task = {}
-        task[:details] = t
-        task[:members] = {}
-        t.task_actors.each do |a|
-          task[:members][a[:user_id]] = a[:order]
+      current_user.groups.each do |g|
+        g.tasks.each do |t|
+          task = {}
+          task[:details] = t
+          task[:members] = {}
+          t.task_actors.each do |a|
+            task[:members][a[:user_id]] = a[:order]
+          end
+          tasks[count] = task
+          count += 1
         end
-        tasks[count] = task
-        count += 1
       end
       render :json => tasks.to_json, :status => 200
     else

@@ -68,6 +68,17 @@ class BillsController < ApplicationController
             return
           end
         end
+        if !@bill.bill_actors.find_by_user_id(current_user[:id])
+          @bill_actor = BillActor.new(bill_id: @bill[:id],
+                                      user_id: current_user[:id],
+                                      due: 0,
+                                      paid: true)
+          if !@bill_actor.save
+            @bill.destroy
+            render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
+            return
+          end
+        end
         bill = {}
         bill[:details] = @bill
         bill[:due] = {}
