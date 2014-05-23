@@ -54,7 +54,7 @@ angular.module("myapp").factory('BillModel', function() {
 
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
-  BillModel.createBill = function(groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
+  BillModel.createBill = function(groupID, title, description, dateDue, total, makeMembersAmountMap, callback) { // creator ID
     $.post("/create_bill",
     {
       "bill[group_id]": groupID,
@@ -62,7 +62,7 @@ angular.module("myapp").factory('BillModel', function() {
       "bill[description]": description,
       "bill[due_date]": dateDue,
       "bill[total_due]": total,
-      "bill[members]": membersAmountMap,
+      "bill[members]": makeMembersAmountMap,
     })
     .success(function(data, status) {
       console.log("bill create Success: " , data);
@@ -76,7 +76,7 @@ angular.module("myapp").factory('BillModel', function() {
   };
 
   //Update a bill with all of the fields. If a field is null, it is not updated
-  BillModel.editBill = function(billID, groupID, title, description, dateDue, total, membersAmountMap, callback) { // creator ID
+  BillModel.editBill = function(billID, groupID, title, description, dateDue, total, makeMembersAmountMap, callback) { // creator ID
 
     /******* the following block of code should be modified and used when backend "edit_bill" is ready ****/
 
@@ -88,7 +88,7 @@ angular.module("myapp").factory('BillModel', function() {
       "bill[description]": description,
       "bill[due_date]": dateDue,
       "bill[total_due]": total,
-      "bill[members]": membersAmountMap,
+      "bill[members]": makeMembersAmountMap,
     })
     .success(function(data, status) {
       console.log("bill edit Success: " , data);
