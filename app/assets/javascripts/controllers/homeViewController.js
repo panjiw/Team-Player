@@ -35,7 +35,6 @@ angular.module('myapp').controller("homeViewController",
         //TODO
         console.log("<<<< home view: task from model!!>>>");
         $scope.$apply(function(){
-          //$scope.myTasks = TaskModel.getTasksArray();
           $scope.myTasks = TaskModel.tasks;
         });
       }

@@ -260,7 +260,7 @@
                   <h3>My Tasks (list by urgency)</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in myTasks1">
+                        <div ng-repeat="task in myTasks">
                           <div ng-hide="task.done">
                             <button ng-click="openTaskPop($event, 'task' + task.event.id, 1)" class="btn btn-default tasks-panelbutton" >
                               <div class="panel panel-warning">
@@ -279,10 +279,10 @@
                             <div id="task{{task.event.id}}1" class="tasks-pop">
                               <div class="selected-info">
                                 <span><strong>Task:</strong> {{task.event.title}}</span><br>
+                                <span><strong>description:</strong> {{task.event.description}}</span><br/>
                                 <span><strong>Due Date:</strong> {{task.event.dateDue}}</span><br>
                                 <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                 <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem.username}}&nbsp;</span></span><br>
-                                <span><strong>Done:</strong> {{task.done}}</span><br/>
                                 <div class="selected-buttons">
                                   <button class="btn btn-default" ng-click="openEditModal($event, task.event.id)">Edit</button>
                                   <button ng-click="finish(task.event.id)" class="btn btn-default">Completed</button>
@@ -301,7 +301,7 @@
                       <h3>Completed Tasks (list by completion date?)</h3>
                       <div class="task-completed tasks-scroll">
                         <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                          <div ng-repeat="task in myTasks1">
+                          <div ng-repeat="task in myTasks">
                             <div ng-show="task.done">
                               <button ng-click="openTaskPop($event, 'task' + task.event.id, 2)" class="btn btn-default tasks-panelbutton" >
                                 <div class="panel panel-gray">
@@ -320,10 +320,11 @@
                               <div id="task{{task.event.id}}2" class="tasks-pop-gray">
                                 <div class="selected-info">
                                   <span><strong>Task:</strong> {{task.event.title}}</span><br>
+                                  <span><strong>description:</strong> {{task.event.description}}</span><br/>
                                   <span><strong>Due Date:</strong> {{task.event.dateDue}}</span><br>
                                   <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                   <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem.username}}&nbsp;</span></span><br>
-                                  <span><strong>Done:</strong> {{task.done}}</span><br/>
+                                  
                                   <div class="selected-buttons">
                                     <button class="btn btn-default" ng-click="">Edit</button>
                                     <button ng-click="finish(task.event.id)" class="btn btn-default">Completed</button>

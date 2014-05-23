@@ -130,7 +130,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
         console.log("---- task from model!! ---");
         $scope.$apply(function(){
-          $scope.myTasks1 = TaskModel.tasks;
+          $scope.myTasks = TaskModel.tasks;
 
         });
       }
@@ -233,7 +233,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     return true;
   }
 
-  $scope.myTasks1 = TaskModel.tasks;
+  $scope.myTasks = TaskModel.tasks;
 
   // build the tasks from variables to the view
   // function buildTasks(){
@@ -270,8 +270,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   // }
 
 
-  $scope.$watch('myTasks1', function(newVal, oldVal){
-    console.log('myTasks1 changed');
+  $scope.$watch('myTasks', function(newVal, oldVal){
+    console.log('myTasks changed');
   }, true);
 
   // create a task from user input
@@ -311,7 +311,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function(){
 
-          $scope.myTasks1 = TaskModel.tasks;
+          $scope.myTasks = TaskModel.tasks;
           // clear out data used to create new task
           initNewTaskData();
 
@@ -373,7 +373,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
          $scope.$apply(function(){
 
-          $scope.myTasks1 = TaskModel.tasks;
+          $scope.myTasks = TaskModel.tasks;
           // clear out data used to create new task
           initEditTaskData();
 
@@ -408,7 +408,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         toastr.warning("Task could not be set finished");
       } else {
         $scope.$apply(function() {
-          $scope.myTasks1 = TaskModel.tasks;
+          $scope.myTasks = TaskModel.tasks;
           toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
         });
       }
@@ -450,7 +450,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.createdTasks = [];
 
 
-  $.each($scope.myTasks1, function() {
+  $.each($scope.myTasks, function() {
     if (this.event.creator == UserModel.me) {
       $scope.createdTasks.push(this);
     }
