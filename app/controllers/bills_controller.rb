@@ -63,6 +63,7 @@ class BillsController < ApplicationController
                                       due: m[1],
                                       paid: false)
           if !@bill_actor.save
+            @bill.bill_actors.delete_all
             @bill.destroy
             render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
             return
@@ -74,6 +75,7 @@ class BillsController < ApplicationController
                                       due: 0,
                                       paid: true)
           if !@bill_actor.save
+            @bill.bill_actors.delete_all
             @bill.destroy
             render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
             return
@@ -183,13 +185,14 @@ class BillsController < ApplicationController
           render :json => {:errors => "Total due is not divided correctly"}, :status => 400
         else
           if @bill.save
-            @bill.users.delete_all
+            @bill.bill_actors.delete_all
             params[:bill][:members].each do |m|
               @bill_actor = BillActor.new(bill_id: @bill[:id],
                                           user_id: m[0],
                                           due: m[1],
                                           paid: false)
               if !@bill_actor.save
+                @bill.bill_actors.delete_all
                 @bill.destroy
                 render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
                 return
@@ -201,6 +204,7 @@ class BillsController < ApplicationController
                                           due: 0,
                                           paid: true)
               if !@bill_actor.save
+                @bill.bill_actors.delete_all
                 @bill.destroy
                 render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
                 return
@@ -229,6 +233,7 @@ class BillsController < ApplicationController
       if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && !@bill.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
+        @bill.bill_actors.delete_all
         @bill.destroy
         render :json => {:status => "success"}, :status => 200
       end

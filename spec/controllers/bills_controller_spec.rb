@@ -574,4 +574,20 @@ describe "testing getbill" do
 	end
 
 
+# describe "EDIT tests" do
+
+#   # edit one aspect for each test
+
+#   # edit out description
+
+#   # edit out due date
+
+#   # same functionality tests as new otherwise 
+
+#   # not correct permission
+
+
+# end
+
+
 end

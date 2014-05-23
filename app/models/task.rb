@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
 
   # one (task) - has many relationships
   # task_actor.find_by_order(0) is the user doing the task
-  has_many :task_actors, :dependent => :destroy
+  has_many :task_actors
   has_many :users, :through => :task_actors
 
   # title must be there and at most 255 char
