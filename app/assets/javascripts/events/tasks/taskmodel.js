@@ -9,9 +9,10 @@
 //Define a task object as an event with additional fields:
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
-var Task = function(id, groupID, title, description, creatorID, dateCreated, dateDue, members, done) {
+var Task = function(id, groupID, groupName, title, description, creatorID, dateCreated, dateDue, members, done) {
   this.event = new Event(id, groupID, title, description, creatorID, dateCreated, dateDue);
   this.members = members;
+  this.groupName = groupName;
   this.done = done;
   this.creator = creatorID;
 };
@@ -147,9 +148,13 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
   // update a task into the TaskModel.tasks map
   function updateTask(task){
-    TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, 
+    var members = {};
+    for (var id in task.members){
+      members[id] = UserModel.users[id];
+    }
+    TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
-      task.details.due_date, task.members, task.details.finished_date);
+      task.details.due_date, members, task.details.finished_date);
   }
 
   //Create and return a task with the given parameters. This updates to the database, or returns
