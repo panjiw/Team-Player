@@ -121,7 +121,7 @@
                         <br>
 
                         <div ng-hide="noDue" id="repeat_options">
-                          <input type="checkbox" class="large" ng-model="taskRepeat"/>
+                          <input type="checkbox" class="large" ng-model="taskRepeat" ng-click="newTaskRepostArray = [];"/>
                           <span>Repeat Weekly</span><br>
                           <div ng-show="taskRepeat">
                             <input type="checkbox" ng-model="newTaskRepostArray[0]"/>
@@ -195,7 +195,7 @@
                         <br>
 
                         <div ng-hide="editNoDue" id="repeat_options">
-                          <input type="checkbox" class="large" ng-model="editTaskRepeat"/>
+                          <input type="checkbox" class="large" ng-model="editTaskRepeat" ng-click="editTaskRepostArray = [];"/>
                           <span>Repeat Weekly</span><br>
                           <div ng-show="editTaskRepeat">
                             <input type="checkbox" ng-model="editTaskRepostArray[0]"/>
@@ -286,7 +286,7 @@
                                 <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                 <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
                                 <div class="selected-buttons">
-                                    <button class="btn edit-btn" ng-click="">Edit</button>
+                                    <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
                                     <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
                                 </div>
                               </div>

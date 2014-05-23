@@ -545,26 +545,246 @@ describe "TEST get_task_in_range" do
 
 end
 
-# describe 'EDIT tests' do
+describe "EDIT tests" do
 
-#   context 'testing' do
+  before(:each) do
+    @controller = SessionsController.new
+    post 'create', :user => {:username => "one", :password => "player"}
+    @controller = TasksController.new
+    post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
+    post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [1]}
+    post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [1,2]}
+    post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :description => "desc"}
+    post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2015-05-05"}
+  end
 
-#     it 'should work??' do
-#       @controller = SessionsController.new
-#       post 'create', :user => {:username => "one", :password => "player"}
+  # edit one aspect for each test
+  describe 'only title changed' do
+        before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "1",:group_id => "1", :title => "newtitle", :finished => false, :members => [1]}
+          end
 
-#       @controller = TasksController.new
-#       post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
-#       # post 'edit_task'
-#       post 'edit_task', :edit => {:task_id => 1, :group_id => "1", :title => "title", :finished => false, :members => [1]}
-#     end
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
 
-#   end
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"newtitle\",\"description\":null,\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+
+      end
+
+  describe 'add a member' do
+        before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "2",:group_id => "6", :title => "title", :finished => false, :members => [1,2]}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":2,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0,\"2\":1}"
+            (response.body.include? memberinfo).should be_true
+          end
+
+      end
+
+      describe 'delete a member' do
+        before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [1]}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+
+      end
+
+      describe 'delete the first member' do
+        before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [2]}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"2\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+
+      end
+
+      describe 'add a description' do
+          before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "1",:group_id => "1", :title => "title", :finished => false, :members => [1], :description => "desc"}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+      end
+
+      # ?????
+      describe 'delete a description' do
+          
+          before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "4",:group_id => "1", :title => "title", :finished => false, :members => [1],}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+      end
+
+      describe 'add a duedate' do    
+          before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "1",:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2015-05-05"}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-05-05\""
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+      end
+
+      describe 'delete a duedate' do    
+          before(:each) do
+          @controller = TasksController.new
+          post 'edit', :task => {:id => "5",:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2015-05-05"}
+          end
+
+          it 'should return a 200 status' do
+            (response.status == 200).should be_true
+          end
+
+          it 'should return the correct task information' do
+              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-05-05\""
+              (response.body.include? taskinfo).should be_true
+          end
+
+          it 'should return the correct finished information' do
+            finishedinfo = "\"finished\":false"
+            (response.body.include? finishedinfo).should be_true            
+          end
+
+          it 'should return the correct member information' do
+            memberinfo = "\"members\":{\"1\":0}"
+            (response.body.include? memberinfo).should be_true
+          end
+      end
 
 
 
-# end
+  # edit out description
 
+  # edit out due date
+
+  # same functionality tests as new otherwise 
+
+  # not correct permission
+
+
+end
 
 
 
