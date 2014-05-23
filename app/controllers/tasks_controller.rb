@@ -44,6 +44,7 @@ class TasksController < ApplicationController
                                     user_id: m,
                                     order: order)
         if !@task_actor.save
+          @task.task_actors.delete_all
           @task.destroy
           render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
           return
@@ -153,13 +154,14 @@ class TasksController < ApplicationController
                         description: params[:task][:description],
                         due_date: params[:task][:due_date],
                         finished: params[:task][:finished])
-          @task.users.delete_all
+          @task.task_actors.delete_all
           order = 0
           params[:task][:members].each do |m|
             @task_actor = TaskActor.new(task_id: @task[:id],
                                         user_id: m,
                                         order: order)
             if !@task_actor.save
+              @task.task_actors.delete_all
               @task.destroy
               render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
               return
@@ -188,6 +190,7 @@ class TasksController < ApplicationController
       if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
+        @task.task_actors.delete_all
         @task.destroy
         render :json => {:status => "success"}, :status => 200
       end

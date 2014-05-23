@@ -122,7 +122,7 @@
             <h5>Name:</h5><input type="text" ng-model="newBillTitle" />
             <h5>Description:</h5>
             <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
-            <h5>Total Cost:</h5><input ng-model="newBillTotal" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
+            <h5>Total Cost:</h5><input ng-model="newBillTotal" ng-change="splitEvenly()" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
             <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
           </div>
           <div class="col-md-5">
@@ -133,16 +133,15 @@
             <br>
             <div class="bill-members">
               <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
-                <input type="checkbox" ng-model="mem.chked" style="float:left;" 
-                ng-click="mem.amount = 0;"/>
+                <input class="bill-members-check" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem)" style="float:left;" />
                 <span style="float:left;">{{mem.username}}</span>
-                <input ng-show="mem.chked==true && !split_evenly" ng-model="mem.amount" type="number" 
+                <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
                 min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
                 <div style="clear: both;"></div>
               </div>
                                 <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
                                 ng-options="mem.username for mem in currentMembers"></select> -->
-              <input type="checkbox" class="large" ng-model="split_evenly" data-label="Split Evenly"/>
+              <input type="checkbox" class="large" id="bill-split-evenly-checkbox" ng-click="splitEvenly()"/>
               <span>Split Evenly</span>
             </div>
           </div>
@@ -225,22 +224,22 @@
                                     <h4 class="bill-amount">${{bill.amount}}</h4>
                                 </div>
                                 <div id="{{bill.person}}1" class="bill-pop">
-                                    <div class="bills-to-pay">
-                                        <div ng-repeat="b in bill.bills | orderBills">
-                                            <label for="{{b.id}}">
-                                                <div style="">
-                                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.due}}" data-content="<p>{{b.desc}}</p>" data-placement="right">
-                                                        <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
-                                                        <h4 class="bill-member">{{b.why}}</h4>
-                                                        <h4 class="bill-amount">${{b.amt}}</h4>
-                                                    </div>
-                                                </div>
-                                            </label>
+                                  <div class="bills-to-pay">
+                                    <div ng-repeat="b in bill.bills | orderBills">
+                                      <label for="{{b.id}}">
+                                        <div style="">
+                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.due}}" data-content="<p>{{b.desc}}</p>" data-placement="right">
+                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(bill.person)" value="{{b.amt}} {{b.id}}">
+                                            <h4 class="bill-member">{{b.why}}</h4>
+                                            <h4 class="bill-amount">${{b.amt}}</h4>
+                                          </div>
                                         </div>
+                                      </label>
                                     </div>
-                                    <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
-                                    <h4 class="bill-pop-total">Total: $0</h4>
-                                </div>
+                                  </div>
+                                  <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
+                                  <h4 class="bill-pop-total">Total: $0</h4>
+                                </div> <!-- class="bill-pop" -->
                             </div>
                         </div>
                     </div>
