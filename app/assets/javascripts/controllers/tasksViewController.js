@@ -131,6 +131,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         console.log("---- task from model!! ---");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
+          $scope.myTasks1 = TaskModel.tasks;
 
         });
       }
@@ -234,6 +235,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   $scope.myTasks = TaskModel.getTasksArray();
+  $scope.myTasks1 = TaskModel.tasks;
 
   // build the tasks from variables to the view
   // function buildTasks(){
@@ -273,6 +275,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     console.log('myTasks changed');
   }, true);
 
+  $scope.$watch('myTasks1', function(newVal, oldVal){
+    console.log('myTasks1 changed');
+  }, true);
+
   // create a task from user input
   $scope.createTask = function(e){
     var createTaskMembers = buildMemberIdArray($scope.currentMembers);
@@ -310,6 +316,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
+          $scope.myTasks1 = TaskModel.tasks;
           // clear out data used to create new task
           initNewTaskData();
 
@@ -371,6 +378,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
          $scope.$apply(function(){
           $scope.myTasks = TaskModel.getTasksArray();
+          $scope.myTasks1 = TaskModel.tasks;
           // clear out data used to create new task
           initEditTaskData();
 
@@ -406,6 +414,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function() {
           $scope.myTasks = TaskModel.getTasksArray();
+          $scope.myTasks1 = TaskModel.tasks;
           toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
         });
       }
