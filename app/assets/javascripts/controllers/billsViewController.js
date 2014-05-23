@@ -295,7 +295,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           buildBills();
           initEditBillData();
         });
-        //toastr.success("Bill Edited!");
+        toastr.success("Bill Edited!");
         $('#billEditModal').modal('hide');
       }
 
