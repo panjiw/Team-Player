@@ -254,12 +254,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     
   };
 
-  $scope.editBill = function(e, billID) {
+  $scope.editBill = function(e) {
 
     var groupID = $scope.editBillGroup.id;
     var title = $scope.editBillTitle;
     var description = $scope.editBillDescription;
-    var dateDue = $("#bill_datepicker").datepicker( 'getDate' );
+    var dateDue = $("#bill_edit_datepicker").datepicker( 'getDate' );
     var total = $scope.editBillTotal;
     var membersAmountMap = buildAmountMap($scope.currentEditMembers);
 
@@ -284,7 +284,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       return;
     }
 
-    BillModel.editBill(billID, groupID, title, description, dateDue, total, membersAmountMap,
+    BillModel.editBill(activeEditBill, groupID, title, description, dateDue, total, membersAmountMap,
       function(error){
       if(error){
         for (var index in error){
