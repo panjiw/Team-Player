@@ -236,7 +236,7 @@ class TaskGeneratorsController < ApplicationController
         return
       end
       @task_generator = TaskGenerator.find(params[:task][:id])
-      if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) || @task_generator.user != view_context.current_user[:id]
+      if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) && @task_generator.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         @task_generator.group_id = params[:task][:group_id]
@@ -291,7 +291,7 @@ class TaskGeneratorsController < ApplicationController
   def delete
     if view_context.signed_in?
       @task_generator = TaskGenerator.find(params[:task][:id])
-      if !@task.users.find_by_user_id(view_context.current_user[:id])
+      if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) && @task_generator.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         @task_generator.destroy

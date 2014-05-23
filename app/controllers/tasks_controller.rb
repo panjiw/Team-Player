@@ -142,7 +142,7 @@ class TasksController < ApplicationController
   def edit
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
-      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) || @task.user != view_context.current_user[:id]
+      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         if @task.update(group_id: params[:task][:group_id],
@@ -183,7 +183,7 @@ class TasksController < ApplicationController
   def delete
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
-      if !@task.users.find_by_user_id(view_context.current_user[:id])
+      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user[:id]
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         @task.destroy
