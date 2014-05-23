@@ -11,24 +11,32 @@ describe SessionsController do
 # create
 context 'logining in the user' do
     
-    it 'should login the user' do
-       		@controller = UsersController.new
-			post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-            	 :password => "player", :password_confirmation => "player"}
-            
-            @controller = SessionsController.new
-            post 'create', :user => {:username => "takenname", :password => "player"}
-            (response.status == 200).should be_true
+    context 'correct information is given' do
+       		
+            before(:each) do
+                @controller = UsersController.new
+    			post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+                	 :password => "player", :password_confirmation => "player"}
+                
+                @controller = SessionsController.new
+                post 'create', :user => {:username => "takenname", :password => "player"}
+            end
+
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
         end
 
     # username does not exist
-    it 'should not login the user becuase username does not exist' do
+    context 'username does not exist' do
     		post 'create', :user => {:username => "takenname", :password => "player"}
-        	(response.status == 400).should be_true
-    	end
+        	it 'should return a 400 status' do
+                (response.status == 400).should be_true
+    	   end
+        end
 
     # password does not match usernamee
-    it 'should not login the user because password does not match' do
+    it 'password does not match should sned a 400 status' do
     	    @controller = UsersController.new
 			post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
             	 :password => "player", :password_confirmation => "player"}
