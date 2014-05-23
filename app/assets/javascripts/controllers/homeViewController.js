@@ -24,7 +24,7 @@ angular.module('myapp').controller("homeViewController",
     }
   });
 
-  $scope.myTasks = [];
+  $scope.myTasks = {};
   $scope.myBills = [];
   function getTaskFromModel(){
     TaskModel.getTasksFromServer(
@@ -35,8 +35,8 @@ angular.module('myapp').controller("homeViewController",
         //TODO
         console.log("<<<< home view: task from model!!>>>");
         $scope.$apply(function(){
-          $scope.myTasks = TaskModel.getTasksArray();
-          
+          //$scope.myTasks = TaskModel.getTasksArray();
+          $scope.myTasks = TaskModel.tasks;
         });
       }
     });
@@ -107,10 +107,10 @@ angular.module('myapp').controller("homeViewController",
 
   $scope.openCalendarModal = function(todo) {
     $('#calendarModal').modal({show:true})
-    $("#calendarModal-header").html(todo.taskName);
-    $("#calendarModal-content").html("<strong>Description:</strong> " + todo.taskDesc + "<br/><br/>" 
+    $("#calendarModal-header").html(todo.event.title);
+    $("#calendarModal-content").html("<strong>Description:</strong> " + todo.event.description + "<br/><br/>" 
                       + "<strong>Group:</strong> " + todo.groupName + "<br/><br/>" 
-                      + "<strong>Members:</strong> " + todo.members);
+                      + "<strong>Members:</strong> " + UserModel.usersToUserNamesString(todo.members));
   }
 
   // $(document).ready(function() {
@@ -119,20 +119,20 @@ angular.module('myapp').controller("homeViewController",
     var events = [];
     
     $.each($scope.myTasks, function() {
-      if (this.dueDate != null) {
-        var dueDate = this.dueDate.split("-");
+      if (this.event.dateDue != null) {
+        var dueDate = this.event.dateDue.split("-");
         if (this.done == null) {
-          events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.taskDesc, members: this.members,
+          events.push({type: "Task", title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.event.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName});
         }
         else
         {
-          events.push({type: "Task", title: this.taskName, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.taskDesc, members: this.members,
+          events.push({type: "Task", title: this.event.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.event.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName});
         }
-        if (this.dueDate == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
+        if (this.event.dateDue == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
           $scope.todaysTasks.push(this);
         }
       }

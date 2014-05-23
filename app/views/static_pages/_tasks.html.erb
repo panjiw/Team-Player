@@ -153,7 +153,7 @@
                       <h5>Members</h5>
                         <div id="members">
                           <ul ui-sortable ng-model="currentMembers">
-                            <li ng-repeat="mem in currentMembers | orderUsers">
+                            <li ng-repeat="mem in currentMembers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}&nbsp;</span>
                               <div style="clear: both;"></div>
@@ -227,7 +227,7 @@
                       <h5>Members</h5>
                         <div id="members">
                           <ul ui-sortable ng-model="currentEditMembers">
-                            <li ng-repeat="mem in currentEditMembers | orderUsers">
+                            <li ng-repeat="mem in currentEditMembers">
                               <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                               <span style="float:left;">{{mem.username}}&nbsp;</span>
                               <div style="clear: both;"></div>

@@ -130,7 +130,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         //TODO
         console.log("---- task from model!! ---");
         $scope.$apply(function(){
-          $scope.myTasks = TaskModel.getTasksArray();
           $scope.myTasks1 = TaskModel.tasks;
 
         });
@@ -234,7 +233,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     return true;
   }
 
-  $scope.myTasks = TaskModel.getTasksArray();
   $scope.myTasks1 = TaskModel.tasks;
 
   // build the tasks from variables to the view
@@ -271,9 +269,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   //   console.log("built tasks: ",$scope.myTasks);
   // }
 
-  $scope.$watch('myTasks', function(newVal, oldVal){
-    console.log('myTasks changed');
-  }, true);
 
   $scope.$watch('myTasks1', function(newVal, oldVal){
     console.log('myTasks1 changed');
@@ -315,7 +310,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         }
       } else {
         $scope.$apply(function(){
-          $scope.myTasks = TaskModel.getTasksArray();
+
           $scope.myTasks1 = TaskModel.tasks;
           // clear out data used to create new task
           initNewTaskData();
@@ -377,7 +372,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         }
       } else {
          $scope.$apply(function(){
-          $scope.myTasks = TaskModel.getTasksArray();
+
           $scope.myTasks1 = TaskModel.tasks;
           // clear out data used to create new task
           initEditTaskData();
@@ -413,7 +408,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         toastr.warning("Task could not be set finished");
       } else {
         $scope.$apply(function() {
-          $scope.myTasks = TaskModel.getTasksArray();
           $scope.myTasks1 = TaskModel.tasks;
           toastr.success("Task '" + TaskModel.tasks[id].event.title + "' completed!");
         });
@@ -421,7 +415,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-  // $scope.myTasks = [];
 
   // function for datepicker to popup
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
@@ -457,8 +450,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.createdTasks = [];
 
 
-  $.each($scope.myTasks, function() {
-    if (this.creator == UserModel.me) {
+  $.each($scope.myTasks1, function() {
+    if (this.event.creator == UserModel.me) {
       $scope.createdTasks.push(this);
     }
   });

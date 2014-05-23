@@ -30,6 +30,20 @@ angular.module("myapp").factory('UserModel', function() {
   UserModel.users = {}; // ID to users
   UserModel.fetchedUser = false;
 
+  UserModel.usersToUserNamesString = function(users) {
+    var str = "";
+    var first = true;
+    for (var id in users) {
+      if(!first){
+        str += ", ";
+      } else {
+        first = false;
+      }
+      str += users[id].username;
+    }
+    return str;
+  };
+
 
   UserModel.fetchUserFromServer = function(callback) {
     if(UserModel.fetchedUser) {
