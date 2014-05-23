@@ -8,58 +8,6 @@ require 'spec_helper'
 
 describe UsersController do
 
-# tests if creates a valid user
-describe "GET show" do
-    before(:each) do
-      @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                            :password => "player", :password_confirmation => "player"
-    end
-
-    context 'creating one user' do
-    	it 'should add one user' do
-			@user.should be_valid
-		end
-	end	
-
-end
-	
-# tests than, when attempting to create an invalid user, throws an error
-describe "adding an incorrect user" do
-	
-    context 'creating mismatching passwords user' do
-    	it 'should throw an error' do
-    		lambda { User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                              :password => "player", :password_confirmation => "notworking" }.should raise_error
-		end
-	end	
-
-    context 'creating too short password user' do
-        it 'should throw an error' do
-            lambda { User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                              :password => "no", :password_confirmation => "no" }.should raise_error
-        end
-    end 
-
-    context 'email already in database' do
-        it 'should throw an error' do
-        @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                            :password => "player", :password_confirmation => "player"
-        lambda { User.create! :username => "newname", :firstname => "New", :lastname => "Name", :email => "team@player.com",
-                            :password => "player", :password_confirmation => "player"}.should raise_error
-        end
-    end
-
-    context 'username already in database' do
-        it 'should throw an error' do
-        @user = User.create! :username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-                            :password => "player", :password_confirmation => "player"
-        lambda { User.create! :username => "teamplayer", :firstname => "New", :lastname => "Name", :email => "new@email.com",
-                            :password => "player", :password_confirmation => "player"}.should raise_error
-        end
-    end
-
-end
-
 # tests the controller's create method
 describe "CREATE new" do
 
@@ -73,13 +21,9 @@ describe "CREATE new" do
         it 'should create user ' do
             post 'create', :user => {:username => "newusername", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
                              :password => "player", :password_confirmation => "player"}
-
-            (response.body.include? "token").should be_true
             (response.status == 200).should be_true
         end
     end
-
-    # WRITE NEW CHECKS
 
     # test when username is already in database that create does not work
     context 'username already in database' do
@@ -122,100 +66,9 @@ describe "CREATE new" do
 
 end
 
-# describe "UPDATE user" do
-#     before(:each) do
-#         post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
-#                              :password => "player", :password_confirmation => "player"}
-   
-#         post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#                              :password => "player", :password_confirmation => "player"}
-
-#     end
-
-#     #checks if update runs correctly when username is changed
-#     context 'all input correct username changed' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "newname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 200).should be_true
-#         end
-#     end
-
-#     #checks if update runs correctly when firstname is changed
-#     context 'it should update users firstname' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "newname", :lastname => "Player", :email => "team@player.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 200).should be_true
-#         end
-#     end
-
-#     #checks if update runs correctly when lastname is changed
-#     context 'it should update users lastname' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "newname", :email => "team@player.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 200).should be_true
-#         end
-#     end
-
-#     #checks if update runs correctly when email is changed
-#     context 'it should update users email' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 200).should be_true
-#         end
-#     end
-
-#     #checks if update runs correctly when password is changed
-#     context 'it should update users password' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#             :password => "newplayer", :password_confirmation => "newplayer"}
-#             (response.status == 200).should be_true
-#         end
-#     end
-
-#     #checks if update throws an error when passwords don't match
-#     context 'it should not update users password' do
-#         it 'should not update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#             :password => "players", :password_confirmation => "player"}
-#             (response.status == 400).should be_true
-#         end
-#     end
-
-#     #checks if update throws an error when passwords are too small
-#     context 'it should not update users password' do
-#         it 'should not update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#             :password => "play", :password_confirmation => "play"}
-#             (response.status == 400).should be_true
-#         end
-#     end
-
-#     #checks if update throws an error when username already exists
-#     context 'it should update user' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 400).should be_true
-#         end
-#     end
-
-#     #checks if update throws an error when email already exists
-#    context 'it should update user' do
-#         it 'should update user information' do
-#             post 'update', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "taken@email.com",
-#             :password => "player", :password_confirmation => "player"}
-#             (response.status == 400).should be_true
-#         end
-#     end
-# end
-
 # tests for viewgroup
 describe 'viewgroup' do
+
     before(:each) do
         # user only in self group
         @user = User.create! :username => "one", :firstname => "Team", :lastname => "Player", :email => "one@player.com",
@@ -476,16 +329,20 @@ describe "finduseremail" do
         end
 
     context 'user exists' do
-        it 'should find user' do
+        
+        before(:each) do
             post 'finduseremail', :find => {:email => "team@player.com"}
-            (response.body.include? "Team").should be_true
-            (response.body.include? "Player").should be_true
-            (response.body.include? "1").should be_true
-            (response.body.include? "teamplayer").should be_true
-            (response.body.include? "team@player.com").should be_true
-            (response.status == 200).should be_true
             end
+
+        it 'should return a 200 status' do
+            (response.status == 200).should be_true
         end
+
+        it 'should return the correct information' do
+            userinfo = "{\"id\":1,\"username\":\"teamplayer\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"team@player.com\"}"
+            (response.body.include? userinfo).should be_true
+        end
+    end
 
     context 'user does not exist' do
         it 'should not find user' do
@@ -510,9 +367,22 @@ describe 'EDIT tests' do
         end
 
     context 'change password' do
-        it 'should change the password' do
-            post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "newpass"}
-            (response.status == 200).should be_true
+        context 'all fields are correct' do
+
+            before(:each) do
+                 post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "newpass"}
+                end
+            
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
+
+            it 'should have the correct password' do
+                @controller = SessionsController.new
+                delete 'destroy'
+                post 'create', :user => {:username => "teamplayer", :password => "newpass"}
+                (response.status == 200).should be_true
+            end
         end 
 
         it 'should not change the password because old password doesnt match' do
@@ -532,10 +402,25 @@ describe 'EDIT tests' do
 
     context 'change username' do
 
-        it 'should change the username' do
-            post 'edit_username', :edit => {:password => "player", :username => "newname"}
-            (response.status == 200).should be_true
+        context 'when all information is correct' do
+        
+            before(:each) do
+                post 'edit_username', :edit => {:password => "player", :username => "newname"}
             end
+
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
+
+            it 'should have the correct new username' do
+                @controller = SessionsController.new
+                get 'user'
+
+                userinfo = "{\"username\":\"newname\",\"firstname\":\"Team\",\"lastname\":\"Player\","
+                (response.body.include? userinfo).should be_true
+            end
+
+        end
 
         it 'should not change the username because password doesnt match' do
             post 'edit_username', :edit => {:password => "hahahahah", :username => "newname"}
@@ -551,9 +436,22 @@ describe 'EDIT tests' do
 
     context 'change names' do
 
-        it 'should change the names' do
-            post 'edit_name', :edit => {:password => "player", :firstname => "newname", :lastname => "newlastname"}
-            (response.status == 200).should be_true
+        context 'input information is correct' do
+
+            before(:each) do
+                post 'edit_name', :edit => {:password => "player", :firstname => "newname", :lastname => "newlastname"}
+                end
+
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
+
+            it 'should edit the user information' do
+                 @controller = SessionsController.new
+                 get 'user'
+                 userinfo = "{\"username\":\"teamplayer\",\"firstname\":\"newname\",\"lastname\":\"newlastname\","
+                 (response.body.include? userinfo).should be_true
+            end
         end
 
         it 'should not change the names because password does not match' do
@@ -565,10 +463,23 @@ describe 'EDIT tests' do
 
     context 'change email' do
 
-        it 'should change the email' do
-            post 'edit_email', :edit => {:password => "player", :email => "newname@gmail.com"}
-            (response.status == 200).should be_true
+        context 'when information is correct' do
+
+            before(:each) do
+                post 'edit_email', :edit => {:password => "player", :email => "newname@gmail.com"}
+                end
+
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
             end
+
+            it 'should have the new email' do
+                get 'finduseremail', :find => {:email => "newname@gmail.com"}
+                userinfo = "{\"id\":1,\"username\":\"teamplayer\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"newname@gmail.com\"}"
+                (response.body.include? userinfo).should be_true
+            end
+
+        end
 
         it 'should not change the email because password doesnt match' do
             post 'edit_email', :edit => {:password => "hahahahah", :email => "newname@gmail.com"}
