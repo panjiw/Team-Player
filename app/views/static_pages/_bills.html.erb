@@ -135,13 +135,13 @@
               <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                 <input class="bill-members-check" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem)" style="float:left;" />
                 <span style="float:left;">{{mem.username}}</span>
-                <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
+                <input class="bill-members-amount" ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
                 min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
                 <div style="clear: both;"></div>
               </div>
                                 <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
                                 ng-options="mem.username for mem in currentMembers"></select> -->
-              <input type="checkbox" class="large" id="bill-split-evenly-checkbox" ng-click="splitEvenly()"/>
+              <input type="checkbox" class="large" id="bill-split-evenly-checkbox" ng-click="splitEvenly(); disableBillInputs()"/>
               <span>Split Evenly</span>
             </div>
           </div>
