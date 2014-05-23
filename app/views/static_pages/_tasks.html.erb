@@ -286,7 +286,7 @@
                                 <span><strong>Group:</strong> {{task.groupName}}</span><br>
                                 <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
                                 <div class="selected-buttons">
-                                    <button class="btn edit-btn" ng-click="">Edit</button>
+                                    <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
                                     <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
                                 </div>
                               </div>

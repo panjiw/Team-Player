@@ -33,7 +33,7 @@ angular.module('myapp').controller("homeViewController",
         //TODO
       } else{
         //TODO
-        console.log("<<<< home view: task from model!!>>>");
+        console.log("<<<< home view: task & task gen from model!!>>>");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.tasks;
         });

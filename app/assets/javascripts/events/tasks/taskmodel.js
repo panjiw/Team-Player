@@ -45,7 +45,27 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       console.log("task get error error: ",error);
       callback(error);
     });
+
+     $.get("/get_generators") // <-- url can be changed!
+    .success(function(data, status) { // on success, there will be message to console
+      console.log("task gen get Success: " , data);
+      // update task generator
+      for (var i in data){
+        updateGenerator(data[i]);
+      }
+      callback();
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+      console.log("task gen get error error: ",error);
+      callback(error);
+    });
+
   };
+
+  function updateGenerator(generator){
+    TaskModel.generators[generator.details.current_task_id] = generator;
+  }
 
   // get Tasks from server to Task model.
   TaskModel.getTaskGeneratorsFromServer = function(callback) {
@@ -65,9 +85,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     });
   };
 
-  function updateGenerator(generator){
-    TaskModel.generators[generator.details.current_task_id] = generator;
-  }
+  
 
   // TaskModel.getTasksArray = function(){
   //   var myTasks = [];
