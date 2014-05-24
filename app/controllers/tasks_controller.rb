@@ -79,7 +79,7 @@ class TasksController < ApplicationController
     if view_context.signed_in?
       tasks = {}
       count = 0
-      current_user.groups.each do |g|
+      view_context.current_user.groups.each do |g|
         g.tasks.each do |t|
           task = {}
           task[:details] = t
@@ -123,7 +123,7 @@ class TasksController < ApplicationController
       if task.nil?
         render :json => {:errors => "Invalid task"}, :status => 400
       else
-        task_actor = task.task_actors.find_by_user_id(current_user[:id])
+        task_actor = task.task_actors.find_by_user_id(view_context.current_user[:id])
         if task_actor.nil?
           render :json => {:errors => "Unauthorized action"}, :status => 400
         else
