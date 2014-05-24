@@ -35,18 +35,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="index.html" class="navbar-brand">Team-Player</a>
+      <a href="development.html" class="navbar-brand">TeamPlayer</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li>
-          <a href="getstarted.html">Get Started</a>
+          <a href="info.html">Information</a>
         </li>
         <li>
-          <a href="wiki.html">Product Wiki</a>
+          <a href="getstarted.html">Getting Started</a>
         </li>
         <li>
-          <a href="devteam.html">Dev Team Info</a>
+          <a href="usersdoc.html">User Documentation</a>
+        </li>
+        <li>
+          <a href="srssds.html">Specifications</a>
+        </li>
+        <li>
+          <a href="devteam.html">Developers</a>
         </li>
         <li>
           <a href="contact.html">Contact</a>
@@ -58,25 +64,24 @@
 
 <!-- Begin Body -->
 <div class="container">
-	<div class="row">
-  			<div class="col-md-3" id="leftCol">
-              	
-				<div class="well"> 
-              	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#sec1">Build instructions</a></li>
-                  <li><a href="#sec2">Test instructions</a></li>
-                  <li><a href="#sec3">Daily Build and Test Set Up</a></li>
-                 <!--  <li><a href="#sec4">View/Report Bugs</a></li> -->
-                  <li><a href="#sec4">New Version Releases</a></li>
-                  <li><a href="#sec5">File Structure</a></li>
-            <!--       <li><a href="#sec6">Design Patterns</a></li> -->
-                  <li><a href="#sec7">Publishing to Heroku</a></li>
-              	</ul>
-  				</div>
+  <div class="row">
+        <div class="col-md-3" id="leftCol">
+                
+        <div class="well"> 
+                <ul class="nav nav-stacked" id="sidebar">
+                  <li><a href="#buildInstr">Build Instructions</a></li>
+                  <li><a href="#testInstr">Test Instructions</a></li>
+                  <li><a href="#dailyBuild">Daily Build and Test Set Up</a></li>
+                  <li><a href="#versionRelease">New Version Releases</a></li>
+                  <li><a href="#fileStruct">File Structure</a></li>
+                  <li><a href="#designPattern">Design Patterns</a></li>
+                  <li><a href="#publishHeroku">Publishing to Heroku</a></li>
+                </ul>
+          </div>
 
-      		</div>  
+      		</div> 
       		<div class="col-md-9">
-              	<h2 id="sec0">Contribute To Our Product</h2>
+              	<h2>Contribute To Our Product</h2>
                 “Team Player” is an open source product, so all of our source code and releases are facilitated through Github. We provide source code for the <a href="https://github.com/panjiw/Team-Player/releases">latest stable released version</a>.
                 <br><br>
                 Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found on our <a href="https://github.com/panjiw/Team-Player.git">github page</a>.
@@ -86,10 +91,10 @@
         
               
               
-              	<h2 id="sec1">Getting Started</h2>
+              	<h2 id="buildInstr">Build Instructions</h2>
               	<p>
-                If you are unfamilar with Ruby on Rails, here is a <a href="#sec5">quick guide to the file structure</a>
-                The following installation instructions assume you are using a Linux system.
+                The following instructions assume that you are using a CSE Linux machine.<br><br>
+                If you are unfamilar with Ruby on Rails, here is a <a href="#fileStruct">quick guide to the file structure.</a>
               	</p>
                 <p>
                 <ol><li>First, setup rails environment for your OS<br>
@@ -100,16 +105,6 @@
                 <br>
                 <li>Navigate to the Team-Player folder and run<br>
                 <code>bundle install -- without production</code></li>
-                <br>
-                <li>Note: For security reasons, secrets.yml and database.yml are not shown publicly on github<br>
-                To create your own, navigate into the config folder<br>  -- rename the secrets-example.yml to secrets.yml
-                    <br> -- rename database-example.yml to database.yml
-                </li>
-                <br>
-
-                <li>To generate your secret_token, run <br>
-                <code>rake secret</code><br>  -- copy the key, and open secret.yml<br>  -- replace the "run_rake_seret_and_copy_key_here" message
-                with your copied key<br>     -- you will have to paste it in two places</li>
                 <br>
 
                 <li>To setup the database, run<br>
@@ -122,38 +117,38 @@
                 <br>
 
                 <li>If successful, you can see our application on<br>
-                <code><a href="http://localhost:3000/">http://localhost:3000/</a></code></li>
-                <br>
+                <code><a href="http://localhost:3000/">http://localhost:3000/</a></code><br>Now you can start editing the codes and view the effects on the localhost website!</li><br>
+                
+                <li>For security reasons, you should create your own key of secret.yml for production. To do so, run <code>rake secret</code><br>and copy that key. Go to config/secret.yml and replace your key with the key already there <br> youwill have to paste it in two places. 
 
                 </ol>
-                <p>Now you can start editing the codes and view the effects on the localhost website!</p>
-
-              	<hr>
               
-              	<h2 id="sec2">Test Instruction</h2>
-              	<p>
-                The tests provided for the software are in the spec folder. At the moement, these tests cover our backend implementation, and utilize RSpec. 
-                After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command: <br> 
+
+                <hr>
+
+                <h2 id="testInstr">Test Instruction</h2>
+                <p>
+                The tests provided for the software are in the spec folder. At the moment, these tests cover our backend implementation, and utilize RSpec. 
+                After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command:
                 <code>bundle exec rspec spec/</code><br><br>
-                This will run all the tests and output the results. You can read more information on Rspec on their <a href="http://rubydoc.info/gems/rspec-rails/frames">website</a>.
+                This will run all the tests and output the results. For more information about RSpec, go to: <a href="http://rubydoc.info/gems/rspec-rails/frames">http://rubydoc.info/gems/rspec-rails/frames</a>
 
                 </p>
               
-              	<hr>
+                <hr>
 
-                <h2 id="sec3">Daily Builds and Tests Set Up</h2>
+                <h2 id="dailyBuild">Daily Builds and Tests Set Up</h2>
 
                 <p>
                 To set up an automated daily build and test, developers will need to find a system to run the test suite above in automation. To run automated daily builds and tests, users will need to run “bundle exec rspec spec/” and “rake jasmine” in automation.
                 <p></p>
-                We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins</a>:
+                We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins windows installations</a>.
                 <ol>
-                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins">Jenkins Installation Guide</a> to do this.</li>
+                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
                   <li>Set the product to deploy daily through. We are currently using a local host, which is subjected to change.</li>
                   <li>We set up email notifications when the build fails.</li>
-                  <li> In order to rub our test suite, we built the product with batch command with the test automation command <code>bundle exec rspec spec/ RAILS_ENV=test bundle exec rake spec:javascript</code> </li>
+                  <li> In order to rub our test suite, we built the product with a windows batch command with the test automation command <code>bundle exec rspec spec/</code> </li>
                   <li>For front-end tests, we will use another windows batch command of <code>rake jasmine</code> </li>
-				  <li>Our integration tests are through the commands listed above. </li>
                   <li>And to run ruby through Jenkins, we needed to add ruby’s PATH file to Jenkin’s environment. </li>
                  </ol>
                  <br>
@@ -164,7 +159,7 @@
                 <hr>
 
 
-              	<h2 id="sec4">New Version Releases</h2>
+              	<h2 id="versionRelease">New Version Releases</h2>
       			
                 Releases will be facilitated through <a href="https://help.github.com/articles/creating-releases">GitHub’s release system</a>.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
                 Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
@@ -176,7 +171,7 @@
 
               
               	<hr>
-            <h2 id="sec5">File Structure</h2>
+            <h2 id="fileStruct">File Structure</h2>
               <p>The directory structure uses the standard <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">Ruby on Rails structure</a>. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development.</p>
     <ul>
       <li><b>root folder : </b> contains gems and rake files for Ruby<br><br></li>
@@ -206,24 +201,83 @@
       <li><b>spec/ : </b> contains the testing information for backend and frontend development. Relevant tests for each section will be in its own subfolder, I.E. controller RSpec tests being in the controller subfolder and front-end javascript test being in the javascripts subfolder.</li>
     </ul>
     <br>
-      Documentation for the code can be found from the README in the main directory.
+      Documentation for the code can be found from the README in the <a href="https://github.com/panjiw/Team-Player/">main directory</a> of our repository.
       <br>
 
 
                 <hr>
 
-<!--             <h2 id="sec6">Design Patterns</h2>
+
+       <h2 id="designPattern">Design Patterns</h2>
             <p>
-
-
+              <h4>Front End Design Pattern: Model-View-Controller</h4>
+              We use MVC because it makes designing and coding easier because we are able to split up our project based on the pages or views we are working on. We can then further split it based on the functionality. This is helpful because our product will automatically update based on user input, which naturally implies a MVC design. So, data can be read by the controllers, updated by the models, and displayed on the views.
+              <br><br>
+              Our main models are the ruby files, within \app\models\, that update state:<br>
+              <ul>
+                <li>bill.rb</li>
+                <li>bill_actor.rb</li>
+                <li>group.rb</li>
+                <li>membership.rb</li>
+                <li>task.rb</li>
+                <li>task_actor.rb</li>
+                <li>user.rb</li>
+              </ul>
+              Our main views are html and css files, within \app\views\static_pages\:
+              <ul>
+                <li>_bills.html.erb</li>
+                <li>_groups.html.erb</li>
+                <li>_tasks.html.erb</li>
+                <li>_home.html.erb</li>
+                <li>bills.css</li>
+                <li>groups.css</li>
+                <li>home.css</li>
+                <li>login.css</li>
+                <li>tasks.css</li>
+              </ul>
+              Our controllers are javascript files within \apps\assets\javascripts\:
+              <ul>
+                <li>billsViewController</li>
+                <li>groupsViewController</li>
+                <li>homeViewController</li>
+                <li>loginViewController</li>
+                <li>mainViewController</li>
+                <li>tasksViewController</li>
+              </ul>
+              <h4>Back End Design Pattern: Factory</h4>
+              We use the factory pattern because it allows us to create objects of a same type, given restrictions. The taskGenerator object is a "factory" of tasks that handles the problem of creating new tasks. The front end uses the factory to make a post request to the taskGenerator so it can get the next task from the factory. The factory then provides a task object based on some repeat/cycle logic as well as initialization  parameters stored in the database. For now, we only have part of the repeat/cycle implemented, so the factory abstracts out the "special" classes of tasks from the front end, to allow the front end to display the tasks regardless of what kind they are.
+              <br><br>
+              Here are the files used in the factory design pattern:
+              <ul>
+                <li>\app\models\task_generator.rb</li>
+                <li>\app\models\task_generator_actor.rb</li>
+                <li>\app\controllers\task_generators_controller.rb</li>
+              </ul>
 
             </p>
 
-            <hr> -->
+            <hr>
 
-            <h2 id="sec7">Publishing To Heroku</h2>
+            <h2 id="publishHeroku">Publishing To Heroku</h2>
+              <p>
+              If you plan to put the web app to Heroku, you would need to:
+              <ol>
+                <li>Set up a <a href="https://www.heroku.com/">Heroku account</a></li>
+                <li>Install <a href="https://toolbelt.heroku.com/">Heroku toolbelt</a>. Then follow the simple instructions on the page.</li>
+                <ul>
+                  <li>Be sure to run <code>heroku create</code> in the Team-Player folder to create a Heroku app on your account. You will see "confirmation git@[some_name].git</li>
+                </ul>
+                <li>Verify the configuration <code>git remote -v</code> You'll see a (fetch) and (pull) for the [some_name] above.</li>
+                <ul>
+                  <li>If you already have an app on your account, run <br><code>heroku git:remote -a [some_name]</code></li>
+                </ul>
+                <li>Deploy the code to heroku <br><code>git push heroku master</code></li>
+                <li>Initialize the database <br><code>heroku run rake db:migrate</code></li>
+                <li>You can view the site at <i>https://[some_name].herokuapp.com</i></li>
+                </ol>
 
-Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
+                See <a href="https://devcenter.heroku.com/articles/getting-started-with-rails4">the setting up RoR on Heroku</a> page for more information.
+              </p>
 
                 <hr>
 

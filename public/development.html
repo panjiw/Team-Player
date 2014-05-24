@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-        <title>TeamPlayer - Developement Website</title>
+        <title>TeamPlayer - Development Website</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,18 +34,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="index.html" class="navbar-brand">Team-Player</a>
+      <a href="development.html" class="navbar-brand">TeamPlayer</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li>
-          <a href="getstarted.html">Get Started</a>
+          <a href="info.html">Information</a>
         </li>
         <li>
-          <a href="wiki.html">Product Wiki</a>
+          <a href="getstarted.html">Getting Started</a>
         </li>
         <li>
-          <a href="devteam.html">Dev Team Info</a>
+          <a href="usersdoc.html">User Documentation</a>
+        </li>
+        <li>
+          <a href="srssds.html">Specifications</a>
+        </li>
+        <li>
+          <a href="devteam.html">Developers</a>
         </li>
         <li>
           <a href="contact.html">Contact</a>
@@ -62,24 +68,30 @@
               	
 				<div class="well"> 
               	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#sec1">Product Description</a></li>
-                  <li><a href="#sec2">Tools Set</a></li>
-                  <li><a href="#sec3">Frameworks / Libraries</a></li>
-                  <li><a href="#sec4">Existing solutions</a></li>
-                  <li><a href="#sec5">Our solution</a></li>
+                  <li><a href="#whatis">What is TeamPlayer?</a></li>
+                  <li><a href="#productDesc">Product Description</a></li>
+                  <li><a href="#toolset">Toolset</a></li>
+                  <li><a href="#framelib">Frameworks / Libraries</a></li>
+                  <li><a href="#existSol">Existing Solutions</a></li>
+                  <li><a href="#solution">Our Solution</a></li>
+                  <li><a href="#changeLogSRS">Change Log</a></li>
               	</ul>
   				</div>
 
       		</div>  
       		<div class="col-md-9">
-              	<h2 id="sec0">What is Team-Player?</h2>
+                <p><i>This page acts as our living Software Requirements Specification</i></p>
+                <hr>
+
+
+              	<h2 id="whatis">What is TeamPlayer?</h2>
                 TeamPlayer is a group-centered web application that allows you to organize the mess of sharing duties and bills between groups of people in your life, such as friends, roommates, sports teams, and coworkers. With our calendar-centered interface, each member can stay up to date with their individual tasks and group tasks as well as the amount of money they owe one another. This decreases the need for all members to remember what everyone was responsible for and also decreases the need to remind other group mates to pay you back, saving time from communication and stress from memory.
            
               	<hr class="col-md-12">
         
               
               
-              	<h2 id="sec1">Product Description</h2>
+              	<h2 id="productDesc">Product Description</h2>
               	<p>
                 This page contains information about the initial descriptions, plans and designs.
               	</p>
@@ -105,7 +117,7 @@
               
               	<hr>
               
-              	<h2 id="sec2">Tools Set</h2>
+              	<h2 id="toolset">Toolset</h2>
               	<p>
 
 
@@ -134,21 +146,23 @@
 
               	<hr>
               
-              	<h2 id="sec3">Frameworks / Libraries</h2>
+              	<h2 id="framelib">Frameworks / Libraries</h2>
       		  The main UI challenge will likely be implementing the calendar view. We first discussed Google Calendar, but unfortunately, that would allow users to modify their calendar without going through our system. That would immediately render our backend inconsistent with their view, which is a problem we do not want to have. We then came across a JavaScript calendar implementation that allowed more control over user access. We probably will use this as the base of our calendar, but adding in the variety of features we discussed.
              <br><br>
             Other than that, our frameworks (Angular and Rails) and libraries (JQuery), will help prevent us from needing to reinvent the wheel. After getting past the learning curve, these should dramatically reduce the amount of code we need to write. This will be especially important in synchronizing the backend and frontend.
              <br><br>
             From scratch, we will likely need to design/code the frontend views (login, manage groups, calendar, TODOs, and bills). On the backend, we will need to design the database architecture, and how to query it. 
+
+            <hr>
               
-              	<h2 id="sec4">Existing Solutions</h2>
+              	<h2 id="existSol">Existing Solutions</h2>
       			
                 Alternatives to these problems already exist. A representative application, HomeSlice, manages a social network between roommates to help with communication. HomeSlice seeks to provide incentive for good behavior and transparency in group dynamics. They provide a whiteboard to help with communication between roommates, a supplies manager to help with who needs to buy what and how much is left, and a chores and bills manager to help facilitate tasks and finances. Their app provides a clean interface for a small community, being roommates, to manage basic tasks.  Its advantages are that it provides push notifications to notify community members of tasks they need to do. However, users have complained that the application does not provide the ability to submit one bill for multiple members. Additionally, there’s no way to snooze events. 
                 <br><br>Another cliche alternative is shared calendars, like Google Calendar. It provides an event based approach in a calendar format. Its advantages include already being widely used, and an integration with other Google software like Gmail. You can create a shared calendar, as well as subscribe to multiple calendars (e.g. a personal one). However, it is weak for groups because it is only task based--there is no concept of “bill management”. It also does not allow for tasks that do not have a specific due date.
 
               
               	<hr>
-            <h2 id="sec5">Our Solution</h2>
+            <h2 id="solution">Our Solution</h2>
 
             Our application will differentiate itself by providing a calendar view of events to facilitate time-dependant tasks. While HomeSlice provides a lot of services for roommates to organize their group, it does not provide a calendar view that could make the application difficult for paying bills on time or completing tasks on time. Furthermore, HomeSlice specifically targets roommates as a user base and not just groups who need to organize events. Seeing as our application works with general tasks and bills and not specifics like supplies, we can reach a wider audience. 
             <br><br>
@@ -168,6 +182,13 @@
 
             </ul>
             <hr>
+
+
+            <h2 id="changeLogSRS">Change Log</h2>
+
+
+
+
         </div> 
     </div>
 </div>
