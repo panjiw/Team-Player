@@ -248,13 +248,21 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
       if (!createTaskMembers.length > 0)
         toastr.error("Member not selected");
+
+      if (!$scope.noDue && $scope.newTaskDateDue == null)
+        toastr.error("Date not specified");
+      return;
+    }
+
+    if (!$scope.noDue && $scope.newTaskDateDue == null){
+        toastr.error("Date not specified");
       return;
     }
 
     function callback(error){
       if(error){
       for (var index in error){
-          toastr.error(error[index]);  
+          toastr.error(error[index]);
         }
       } else {
         $scope.$apply(function(){
@@ -317,6 +325,15 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
       if (!editTaskMembers.length > 0)
         toastr.error("Member not selected");
+
+      if (!$scope.editNoDue && $scope.editTaskDateDue == null)
+        toastr.error("Date not specified");
+
+      return;
+    }
+
+    if (!$scope.editNoDue && $scope.editTaskDateDue == null){
+        toastr.error("Date not specified");
       return;
     }
 
