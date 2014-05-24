@@ -137,7 +137,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[description]": description,
       "bill[due_date]": dateDue,
       "bill[total_due]": total*100,
-      "bill[members]": toCents(makeMembersAmountMap),
+      "bill[members]": makeMembersAmountMap
     })
     .success(function(data, status) {
       console.log("bill create Success: " , data);
@@ -152,6 +152,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
 
   //Update a bill with all of the fields. If a field is null, it is not updated
   BillModel.editBill = function(billID, groupID, title, description, dateDue, total, makeMembersAmountMap, callback) { // creator ID
+    toCents(makeMembersAmountMap);
 
     /******* the following block of code should be modified and used when backend "edit_bill" is ready ****/
 
@@ -163,7 +164,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[description]": description,
       "bill[due_date]": dateDue,
       "bill[total_due]": total*100,
-      "bill[members]": toCents(makeMembersAmountMap),
+      "bill[members]": makeMembersAmountMap
     })
     .success(function(data, status) {
       console.log("bill edit Success: " , data);

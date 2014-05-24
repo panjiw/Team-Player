@@ -228,9 +228,9 @@
                                     <div ng-repeat="b in entry.billsArray">
                                       <label for="{{b.id}}">
                                         <div style="">
-                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.title}}</p>" data-placement="right">
+                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
                                             <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.total}} {{b.id}}">
-                                            <h4 class="bill-member">{{b.description}}</h4>
+                                            <h4 class="bill-member">{{b.title}}</h4>
                                             <h4 class="bill-amount">${{b.total}}</h4>
                                           </div>
                                         </div>
@@ -256,11 +256,11 @@
                         <div id="{{entry.person_username}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
                                 <div ng-repeat="b in entry.billsArray">
-                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.dateDue}}<br/>{{b.title}}" data-placement="right">
+                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.dateDue}}<br/>{{b.description}}" data-placement="right">
                                         <h4 class="bill-member">
                                           <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
-                                          </button> {{b.description}}
+                                          </button> {{b.title}}
                                         </h4>
                                         <h4 class="bill-amount">${{b.total}}</h4>
                                     </div>
