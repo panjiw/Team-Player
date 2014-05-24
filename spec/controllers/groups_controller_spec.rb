@@ -269,31 +269,142 @@ describe GroupsController do
         		 :password => "player", :password_confirmation => "player"}
         	
         	@controller = SessionsController.new
-        	post 'create', :user => {:username => "takenname", :password => "player"}
+        	post 'create', :user => {:username => "one", :password => "player"}
 
         	@controller = GroupsController.new
-        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3]}
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
 		end
 
 		describe 'the user is not signed in' do
 
 			before(:each) do
+				@controller = SessionsController.new
+				delete 'destroy'
+				@controller = GroupsController.new
+				post 'invitetogroup', :invite => {:email => "test@player.com",:gid => 4}
+			end
 
-
+			it 'should throw an error' do
+				(response.status == 400).should be_true
 			end
 
 		end
 
-		it 'should invite the member to the group' do
+		#tring to add to self group
+		describe 'should invite the member to the group' do
 
+			before(:each) do
+				@controller = GroupsController.new
+				post 'invitetogroup', :invite => {:email => "test@player.com",:gid => 1}
+			end
+
+			it 'should return status 400' do
+				(response.status == 400).should be_true
+			end
+
+			# check
 
 		end
 
+		describe 'should invite the member to the group' do
+
+			before(:each) do
+				@controller = GroupsController.new
+				post 'invitetogroup', :invite => {:email => "test@player.com",:gid => 4}
+			end
+
+			it 'should return status 200' do
+				(response.status == 200).should be_true
+			end
+
+			# check
+
+		end
+
+		# user is already in group
+		describe 'should invite the member to the group' do
+
+			before(:each) do
+				@controller = GroupsController.new
+				post 'invitetogroup', :invite => {:email => "team@player.com",:gid => 4}
+			end
+
+			it 'should return status 400' do
+				(response.status == 400).should be_true
+			end
+
+			# check
+
+		end
+
+		# user does not exist
+		describe 'should user does not exist' do
+
+			before(:each) do
+				@controller = GroupsController.new
+				post 'invitetogroup', :invite => {:email => "hahahaha@player.com",:gid => 4}
+			end
+
+			it 'should return status 400' do
+				(response.status == 400).should be_true
+			end
+
+			# check
+
+		end
 
 	end
 
 	# accept group
 	describe 'testing ACCEPTGROUP' do
+
+		before(:each) do
+			@controller = UsersController.new
+			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+			post 'create', :user => {:username => "two", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+            post 'create', :user => {:username => "three", :firstname => "Team", :lastname => "Player", :email => "test@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+        	
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "one", :password => "player"}
+
+        	@controller = GroupsController.new
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
+        	post 'invitetogroup', :invite => {:email => "test@player.com",:gid => 4}
+		
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "three", :password => "player"}
+
+        	@controller = GroupsController.new
+        	
+		end
+
+		describe 'missing parameters' do
+
+			before(:each) do
+				post 'acceptgroup'
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
+
+		end
+
+		describe 'accepts to group' do
+
+			before(:each) do
+				post 'acceptgroup', :accept => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+		end
+
 
 	end
 

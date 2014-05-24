@@ -18,7 +18,9 @@
 
   // synchronize the group list and current user
   // with those of the appropriate models
-  $scope.$watch('groupsList', function(newVal, oldVal) {});
+  $scope.$watch('groupsList', function(newVal, oldVal) {
+    $scope.group_selected = Object.keys($scope.groupsList)[0];
+  });
   $scope.$watch('currentUser', function(newVal, oldVal) {});
 
   $scope.createGroup = function(e) {
