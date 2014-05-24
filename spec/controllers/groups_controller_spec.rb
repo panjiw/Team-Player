@@ -234,19 +234,68 @@ describe GroupsController do
 	end
 
 	# # leave group
-	# decsribe 'testing LEAVEGROUP' do
+	describe 'testing LEAVEGROUP' do
 
-	# end
+		before(:each) do
+			@controller = UsersController.new
+			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+			post 'create', :user => {:username => "two", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+            post 'create', :user => {:username => "three", :firstname => "Team", :lastname => "Player", :email => "test@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+        	
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "takenname", :password => "player"}
 
-	# # invitetogroup
-	# describe 'tessting INVITETOGROUP' do
+        	@controller = GroupsController.new
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3]}
 
-	# end
+		end
 
-	# # accept group
-	# describe 'testing ACCEPTGROUP' do
 
-	# end
+	end
+
+	# invitetogroup
+	describe 'testing INVITETOGROUP' do
+
+		before(:each) do
+			@controller = UsersController.new
+			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+			post 'create', :user => {:username => "two", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+            post 'create', :user => {:username => "three", :firstname => "Team", :lastname => "Player", :email => "test@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+        	
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "takenname", :password => "player"}
+
+        	@controller = GroupsController.new
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3]}
+		end
+
+		describe 'the user is not signed in' do
+
+			before(:each) do
+
+
+			end
+
+		end
+
+		it 'should invite the member to the group' do
+
+
+		end
+
+
+	end
+
+	# accept group
+	describe 'testing ACCEPTGROUP' do
+
+	end
 
 # view members is not implemented- it's implemented in a different controller
 
@@ -300,13 +349,6 @@ describe GroupsController do
 # 		end
 
 # 	end
-	
-# invitetogroup is implemented in a differet controller
-
-# invitetogroup
-
-
-# destroy
 
 
 end

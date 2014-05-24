@@ -169,7 +169,7 @@ describe "testing NEW" do
 			@controller = SessionsController.new
         	post 'create', :user => {:username => "takenname", :password => "player"}
         	@controller = BillsController.new
-			post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"9" => 20}, 
+			post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"99" => 20}, 
 				 :description => "desc", :due_date => "2014-05-17"}
 		end
 
@@ -1006,14 +1006,152 @@ describe "EDIT tests" do
 
 end
 
+describe "DELETE tests" do
 
-# mark finished
-describe "MARK FINISHED tests" do
+	before(:each) do
+		@controller = UsersController.new
+		post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        	:password => "player", :password_confirmation => "player"}
+		post 'create', :user => {:username => "two", :firstname => "New", :lastname => "User", :email => "two@player.com",
+        	:password => "player", :password_confirmation => "player"}
 
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "one", :password => "player"}
+
+		@controller = BillsController.new
+		post 'new', :bill => {:group_id => 1, :title => "title", :total_due => 30, :members => {"1" => 30}}
+		
+		@controller = SessionsController.new
+		delete 'destroy'
+		post 'create', :user => {:username => "two", :password => "player"}
+
+		@controller = BillsController.new
+		post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, 
+					 :description => "desc"}
+
+	end
+
+	# user not signed in
+	describe 'user is not signed in' do
+
+		before(:each) do
+			@controller = SessionsController.new
+			delete 'destroy'
+			@controller = BillsController.new
+			post 'delete', :bill => {:id => "1"}
+		end
+
+		it 'should redirect the user' do
+			(response.status == 302).should be_true
+		end
+
+	end
+
+	# bill does not exist
+
+	# user not a part of the bill
+	describe 'user not a part of the bill' do
+
+		before(:each) do
+			@controller = BillsController.new
+			post 'delete', :bill => {:id => "1"}
+		end
+
+		it 'should return a 400 status' do
+			(response.status == 400).should be_true
+		end
+
+		# check information
+
+	end
+
+
+	# correct update
+	describe 'deletes the bill' do
+
+		before(:each) do
+			@controller = BillsController.new
+			post 'delete', :bill => {:id => "2"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		# check information
+
+	end
 
 end
 
-# delete
+describe "MARK FINISHED tests" do 
+
+	before(:each) do
+		@controller = UsersController.new
+		post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        	:password => "player", :password_confirmation => "player"}
+		post 'create', :user => {:username => "two", :firstname => "New", :lastname => "User", :email => "two@player.com",
+        	:password => "player", :password_confirmation => "player"}
+
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "one", :password => "player"}
+
+		@controller = BillsController.new
+		post 'new', :bill => {:group_id => 1, :title => "title", :total_due => 30, :members => {"1" => 30}}
+		
+		@controller = SessionsController.new
+		delete 'destroy'
+		post 'create', :user => {:username => "two", :password => "player"}
+
+		@controller = BillsController.new
+		post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, 
+					 :description => "desc"}
+
+	end
+
+	# user not signed in
+	describe 'user is not signed in' do
+
+		before(:each) do
+			@controller = SessionsController.new
+			delete 'destroy'
+			@controller = BillsController.new
+			post 'mark_finished', :bill => {:id => "1"}
+		end
+
+		it 'should redirect the user' do
+			(response.status == 302).should be_true
+		end
+
+	end
+
+	describe 'the user finishes a single task' do
+
+		before(:each) do
+			post 'mark_finished', :bill => {:id => "2"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		# check if it's been marked finished
+
+	end
+
+	describe 'the user is not assigned to the task' do
+
+		before(:each) do
+			post 'mark_finished', :bill => {:id => "1"}
+		end
+
+		it 'should return a 400 status' do
+			(response.status == 400).should be_true
+		end
+
+	end
+
+end
 
 
 
