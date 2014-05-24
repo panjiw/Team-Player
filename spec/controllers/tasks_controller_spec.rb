@@ -29,7 +29,6 @@ describe TasksController do
         post 'create', :group => {:name => "own group", :description => "desc"}
     end
 
-
 # new
 describe "NEW tests" do
 
@@ -265,7 +264,6 @@ describe "NEW tests" do
 
 
       end
-
 
     # correct with three people on one task
     describe 'creates a task with three people including the creator on one task' do
@@ -550,7 +548,23 @@ describe 'MARK_FINISHED tests' do
       (response.status == 200).should be_true
     end
 
+    it 'should return the correct finished information' do
+      finishedinfo = "\"finished\":true"
+      (response.body.include? finishedinfo).should be_true
+    end
+
+    it 'should return the correct task information' do
+        taskinfo = "\"details\":{\"id\":3,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
+        (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct member information' do
+      memberinfo = "\"members\":{\"2\":0}"
+      (response.body.include? memberinfo).should be_true
+    end
+
   end
+
 
   # adding self task ?
 
@@ -573,33 +587,33 @@ end
   # "created_at":date and time created,
   # "updated_at":date and time updated},
   # "members":{user_id:order, ..., user_id:order}}, ...}
-describe "TEST get_task_in_range" do
+# describe "TEST get_task_in_range" do
 
-	context "tasks within month range" do
+# 	context "tasks within month range" do
 
-		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+# 		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
 
-		# range is not formatted correctly- end is earlier than start
-		it 'should send back a range' do
-			post 'task_in_range', :range => {:start => "6-16-2014", :end => "4-16-2014"}
-			(response.status = 400).should be_true
-		end
+# 		# range is not formatted correctly- end is earlier than start
+# 		it 'should send back a range' do
+# 			post 'task_in_range', :range => {:start => "6-16-2014", :end => "4-16-2014"}
+# 			(response.status = 400).should be_true
+# 		end
 
-		# range is only one date
-		it 'should send back a range' do
-			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
-			(response.status = 400).should be_true
-		end
+# 		# range is only one date
+# 		it 'should send back a range' do
+# 			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
+# 			(response.status = 400).should be_true
+# 		end
 
-		# range is not formatted correctly
-		it 'should send back a range' do
-			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
-			(response.status = 400).should be_true
-		end
+# 		# range is not formatted correctly
+# 		it 'should send back a range' do
+# 			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
+# 			(response.status = 400).should be_true
+# 		end
 
-	end
+# 	end
 
-end
+# end
 
 describe "EDIT tests" do
 
@@ -843,7 +857,7 @@ describe "EDIT tests" do
       end
 
       it 'should return the correct task information' do
-          taskinfo = "{\"details\":{\"id\":3,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
           (response.body.include? taskinfo).should be_true
      end
 
