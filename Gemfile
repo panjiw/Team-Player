@@ -8,6 +8,9 @@ group :development, :test do
   gem 'sqlite3'
 # RSpec testing framework
   gem 'rspec-rails'
+
+# SimpleCov
+  gem 'simplecov', :require => false, :group => :test  
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'

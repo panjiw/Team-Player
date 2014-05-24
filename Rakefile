@@ -19,7 +19,6 @@ task :install do
     bundle config build.nokogiri --use-system-libraries     &&
     sudo gem install nokogiri                               &&
     bundle install --without production                     &&
-    bundle exec rake ENV=RAILS_DEV                          &&
-    bundle exec rake db:migrate
+    bundle exec rake db:migrate RAILS_ENV=development       &&
   }
 end

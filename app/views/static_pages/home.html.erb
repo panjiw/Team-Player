@@ -195,17 +195,16 @@ Displays pages for after successful login:
                       </div>
                     </div>
                   </div>
-                  <h3>Today's Tasks</h3>
-                  <div class="home-todays">
-                    <div ng-repeat="today in todaysTasks">
-                      <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
-                        <div class="panel-heading">
-                          <div class="task-panel">
-                              <h4 class="panel-descr">{{today.title}}</h4>
-                          </div>
+                </div>
+                <h3>Today's Tasks</h3>
+                <div class="home-todays">
+                  <div ng-repeat="today in todaysTasks">
+                    <div class="panel-danger home-todo" ng-click="openCalendarModal(today)">
+                      <div class="panel-heading">
+                        <div class="task-panel">
+                            <h4 class="panel-descr">{{today.title}}</h4>
                         </div>
                       </div>
-                      <br>
                     </div>
                   </div>
                 </div>
