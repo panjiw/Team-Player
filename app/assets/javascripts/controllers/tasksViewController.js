@@ -80,7 +80,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            // memArray[task.members[id].rank] = $scope.currentEditMembers[index];
+            // memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
             // delete $scope.currentEditMembers[index];
             count++;
           }

@@ -175,7 +175,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     var members = {};
     for (var id in task.members){
       members[id] = UserModel.users[id];
-      members[id].rank = task.members[id];
+      if(!members[id].rank) members[id].rank = {};
+      members[id].rank[task.details.id] = task.members[id];
     }
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
