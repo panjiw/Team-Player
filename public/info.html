@@ -40,7 +40,7 @@
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li>
-          <a href="wiki.html">Information</a>
+          <a href="info.html">Design Information</a>
         </li>
         <li>
           <a href="getstarted.html">Getting Started</a>
@@ -52,7 +52,7 @@
           <a href="srssds.html">Releases</a>
         </li>
         <li>
-          <a href="devteam.html">Developers</a>
+          <a href="devteam.html">Developer Team</a>
         </li>
         <li>
           <a href="contact.html">Contact</a>
@@ -71,9 +71,10 @@
               	<ul class="nav nav-stacked" id="sidebar">
                   <li><a href="#designChoices">Design Choices</a></li>
                   <li><a href="#riskAssess">Risks Assessment</a></li>
+                  <li><a href="#dataStorage">Data Storage</a></li>
+                  <li><a href="#diagrams">Class and Sequence Diagrams</a></li>
                   <li><a href="#testPlans">Test Plans</a></li>
                   <li><a href="#codingStyle">Coding Style Guidelines</a></li>
-                  <li><a href="#changeLogSDS">Change Log</a></li>
               	</ul>
   				</div>
 
@@ -84,9 +85,12 @@
 
 
                 <h2 id="designChoices">Design Choices</h2>
-              	<p>A major design decision was around Ruby on Rails. We had to decide between using the full power of Rails—frontend to backend, or, a mix of Rails (backend) and AngularJS on the frontend. We eventually decided on the mixed method because AngularJS has many features that simplify our UI implementation. Here are the main pros and cons of our chosen method:
+
+                <ul>
+                  <li><b>Ruby on Rails</b>
+              	<p>We had to decide between using the full power of Rails—frontend to backend, or, a mix of Rails (backend) and AngularJS on the frontend. We eventually decided on the mixed method because AngularJS has many features that simplify our UI implementation. Here are the main pros and cons of our chosen method:
                 </p>
-                <h4>Pros:</h4>
+                Pros:<br>
 	              <ul>
                  <li> We can better split up the frontend/backend groups, so each can work independently without worrying about the implementation of the other group. This would have been possible in Rails, but we decided it would be easier this way.
                  </li>
@@ -95,29 +99,59 @@
                  <li>Doing a lot more work on the frontend is better because more of us know JavaScript than Ruby. Either way, we felt JavaScript and Angular would be *much* easier to learn than Ruby and Rails.</li> 
                 </ul>
 
-                <h4>Cons:</h4>
+                Cons:<br>
                 <ul>
                   <li> We have two frameworks to learn rather than just one. Since all team members but me (Karthik) are only dealing with frontend *or* backend, they probably would only need to worry about learning one. I would need to learn both because I am connecting the two.</li>
                   <li> We probably increase the amount of code we have to write, because we now have two sets of models—the databases Events, Users, and Groups, and the parallel AngularJS models. We also have two sets of controllers for Events, Users, and Groups. This will not have a lot of redundant code, because they have very different responsibilities, but it will make the system larger than it would have been otherwise. </li>
                 </ul>
+                <br>
 
-              	<hr>
+              </li>
 
-<p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement these, and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. 
+              	 
+                <li><b>To Do's vs Tasks</b>
+                <p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement these, and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. 
                 </p>
-                <h4>Pros:</h4>
+                Pros:<br>
                 <ul>
                  <li> They would be much simpler for the user, you just check it off when you finish and then it becomes someone else’s turn. We could see this being useful so that people don’t have to worry about dates, and just handle the task when needed. 
                  </li>
                 </ul>
 
-                <h4>Cons:</h4>
+                Cons:<br>
                 <ul>
                   <li>It adds a new option to tasks that can be confusing, and we weren’t sure how to fit into the UI both in creating tasks and in the home page.</li>
 
                 </ul>
 
+              </li>
 
+              <br>
+
+              <li><b>Self Groups</b>
+                <p>TeamPlayer revolves around groups, and when a user first signs in, they need to be a part of a group before they can do anything. We realized this flaw during our first customer prototyping test, when the user wanted to add a task, but didn’t have a group to choose. So, every new user already belong to a group with just themselves. This way, they can do things before they have created other groups, or added other users.</p>
+              </li>
+
+              <li><b>Bill Un-cycling</b>
+                <p>When further thinking about bills between roommates, bills are often sent to one respective person, who pays for them. It is rarely cycled to another roommate since that would make it complicated for the electric or water companies. Therefore, bills will no longer cycle between group members. If necessary, new bills can be created individually by each member.</p>
+              </li>
+
+              <li><b>Overdue Task Constraints</b>
+                <p>Since tasks can cycle and members can become irresponsible, it would be unproductive to extend their deadline. The task would remain marked as incomplete, but would cycle to the next member, because it would be useful to notify the next member that something needs to be done.</p>
+              </li>
+
+              <li><b>New Task Generation</b>
+                <p>Individual tasks are marked as cycling or repeating on the back end, but we hadn’t planned out how exactly this would appear to the user. We decided that weekly, there would be an update of each user’s tasks, so a task from a cycle would be a new object.</p>
+              </li>
+
+              <li><b>Un-inheritance of Tasks and Bills</b>
+                <p>Originally, we saw tasks and bills as very similar classes, and therefore made them extend from and Event class. However, with further implementation and better specifications, we realized how different both are, and decided to make them their own individual classes that do not extend from any higher class.</p>
+              </li>
+
+
+
+
+              </ul>
 
                 <hr>
                 <h2 id="riskAssess">Risk Assessment</h2>
@@ -137,10 +171,42 @@
 
                 5. <i>Create variety of options for events to be simple but fit all needs of user</i>
                 <p><ul>This is a pretty big risk for us because we are trying to add enough features to meet the needs of our users, such as tasks or bills that may not always have a date. Or repeating/cycle tasks like taking out the trash or getting milk which may not always have a set date. But depending on how we implement these features, it can be extremely cluttered and difficult for the user to use. The create event feature would be extremely complex with too many options and unfriendly to users. So the impact is high because this is one of our most important features that differentiates our app from other similar ones. So we need to add these features in a way that is easy to use and understandable to the user, but also helpful. To reduce the risk here we need to do a lot of user testing through customer meetings and hallway usability tests specifically for this portion of our app.</ul></p> 
-                <br><br>
+                <br>
                 <p>Our risks are pretty similar to the risks we had from the SRS, except now we have some more specific risks because we know more about our app. Timing and integration between frontend and backend are always going to be risks that can have a huge impact on the project throughout the whole entire process. But now that we have spent more time working on the UI and making design decisions according to feedback from customers, we better understand what will be difficult and is a high risk for the project. We know that the events cycling will be difficult, but necessary, and also understand that creating a simple, usable UI that is pleasing to users is difficult.</p>
 
-              	<hr>
+
+
+
+
+
+                <hr>
+              
+
+                <h2 id="dataStorage">Data Storage</h2>
+                <p>In our system, all the data is provided by users. Data that the system stores include each user’s account information, and information of tasks, bills, and group created by users. The database will store the user’s first name, last name, username, password, and a user ID. For tasks and bills, the database will store the users involved, the user who created the task, if it’s cycled, which dates it’s repeated on, the date due, the date created, a title, a description, and if the event has been completed. Bills will additionally store the total of the bill and the costs for each individual involved. The database will store group’s users, group ID, date created, description and title.</p>
+
+                <p>The <a href="/documentation/LivingDocuments/SDS-DataStorage.htm">SQL schema</a> of the data is provided.</p>
+
+                <p>The user, bill, task, and group information is sent from the website to the database by a JSON query. After validating the information, such as whether the username has been taken, whether the sub prices add up, it is stored in a SQL database. When this information is queried by a user on the front end, it is stored in a model (user model, group model, bill model, or task model). These models store the same information as the backend models but can be easily accessed by the UI and user.</p>
+
+              	
+                <hr>
+              
+
+                <h2 id="diagrams">Class and Sequence Diagrams</h2>
+                <p><b>Back End Database UML Diagram</b></p>
+                <br><br>
+
+                <p><b>Front End UML Diagram</b></p>
+                <br><br>
+
+                <p><b>Sequence Diagram: Logging In</b></p>
+                <br><br>
+
+                <p><b>Sequence Diagram: Adding a Bill</b></p>
+                <br><br>
+
+                <hr>
               
 
                 <h2 id="testPlans">Test Plans</h2>
@@ -189,14 +255,6 @@
                  <li><b>Ruby on Rails</b><br>
                  Ruby on Rails doesn’t have a style guide from google nor other major source, but there is one from the <a href="https://github.com/bbatsov/ruby-style-guide">Ruby on Rails website</a>. There is also a <a href="https://github.com/bbatsov/rubocop">Ruby static code analyzer</a>to help us because our team is unfamiliar with Ruby. Code review here will be helpful because while we check the code, we'll also be learning the language.
                  </li>
-
-              <hr>
-              <h2 id="changeLogSRS">Change Log</h2>
-
-
-
-
-
 
 
                 </ul>
