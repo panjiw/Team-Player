@@ -44,7 +44,6 @@ class TasksController < ApplicationController
                                     user_id: m,
                                     order: order)
         if !@task_actor.save
-          @task.task_actors.delete_all
           @task.destroy
           render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
           return
@@ -145,7 +144,7 @@ class TasksController < ApplicationController
   def edit
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
-      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user[:id]
+      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         if @task.update(group_id: params[:task][:group_id],
@@ -161,7 +160,6 @@ class TasksController < ApplicationController
                                         user_id: m,
                                         order: order)
             if !@task_actor.save
-              @task.task_actors.delete_all
               @task.destroy
               render :json => {:errors => @task_actor.errors.full_messages}, :status => 400
               return
@@ -171,7 +169,8 @@ class TasksController < ApplicationController
           task = {}
           task[:details] = @task
           task[:members] = {}
-          @task.task_actors.each do |a|
+          task_holder = Task.find(@task[:id])
+          task_holder.task_actors.each do |a|
             task[:members][a[:user_id]] = a[:order]
           end
           render :json => task.to_json, :status => 200
@@ -187,10 +186,9 @@ class TasksController < ApplicationController
   def delete
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
-      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user[:id]
+      if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
-        @task.task_actors.delete_all
         @task.destroy
         render :json => {:status => "success"}, :status => 200
       end

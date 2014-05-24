@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522011504) do
+ActiveRecord::Schema.define(version: 20140523232552) do
 
   create_table "acceptmemberships", id: false, force: true do |t|
     t.integer  "group_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140522011504) do
   add_index "acceptmemberships", ["user_id", "group_id"], name: "index_acceptmemberships_on_user_id_and_group_id", unique: true
   add_index "acceptmemberships", ["user_id"], name: "index_acceptmemberships_on_user_id"
 
-  create_table "bill_actors", id: false, force: true do |t|
+  create_table "bill_actors", force: true do |t|
     t.integer  "bill_id"
     t.integer  "user_id"
     t.integer  "due",        limit: 8
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20140522011504) do
   add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id"
 
-  create_table "task_actors", id: false, force: true do |t|
+  create_table "task_actors", force: true do |t|
     t.integer  "task_id"
     t.integer  "user_id"
     t.integer  "order"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140522011504) do
     t.datetime "updated_at"
   end
 
-  create_table "task_generator_actors", id: false, force: true do |t|
+  create_table "task_generator_actors", force: true do |t|
     t.integer  "task_generator_id"
     t.integer  "user_id"
     t.integer  "order"

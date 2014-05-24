@@ -40,7 +40,7 @@ class GroupsController < ApplicationController
           if(User.exists?(id) && id != current_user.id.to_s)
 	    #group.pending_users << User.find(id)
             group.users << User.find(id)
-      puts "id " + id + "exists!"
+      # puts "id " + id + "exists!"
           else
 	    merror << " " + id << " "
           end
