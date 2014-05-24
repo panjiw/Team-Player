@@ -168,7 +168,7 @@ class TasksController < ApplicationController
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         if @task.update(group_id: params[:task][:group_id],
-                        user_id: view_context.current_user[:id],
+                        user_id: @task[:user_id],
                         title: params[:task][:title],
                         description: params[:task][:description],
                         due_date: params[:task][:due_date],
