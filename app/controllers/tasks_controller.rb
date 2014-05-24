@@ -137,11 +137,21 @@ class TasksController < ApplicationController
           end
           result = {}
           if next_task
-            result[:details] = next_task
-            result[:members] = {}
+            task = {}
+            task[:details] = next_task
+            task[:members] = {}
             next_task.task_actors.each do |a|
-              result[:members][a[:user_id]] = a[:order]
+              task[:members][a[:user_id]] = a[:order]
             end
+            generator = {}
+            generator[:details] = task_generator
+            generator[:members] = {}
+            task_generator_holder = TaskGenerator.find(task_generator[:id])
+            task_generator_holder.task_generator_actors.each do |a|
+              generator[:members][a[:user_id]] = a[:order]
+            end
+            result[:generator] = generator
+            result[:task] = task
           end
           render :json => result.to_json, :status => 200
         end
