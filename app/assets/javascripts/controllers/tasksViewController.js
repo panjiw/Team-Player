@@ -7,6 +7,8 @@
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
   function($scope, TaskModel, GroupModel, UserModel) {
 
+
+
   // initialize fields for creating a new task to be empty
   function initNewTaskData(){
     $scope.newTaskGroup = null;
@@ -400,7 +402,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   $scope.createdTasks = [];
-
+  $scope.myID = UserModel.me;
 
   $.each($scope.myTasks, function() {
     if (this.creator == UserModel.me) {

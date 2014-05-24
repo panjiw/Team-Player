@@ -74,8 +74,17 @@ myApp.filter('orderBills', function() {
   }
 });
 
-myApp.filter('myTasks', function(){
- return function(input) {
-  
+myApp.filter('onlyMyTasks', function(){
+ return function(input, currentUserID) {
+    var result = {};
+    for (var taskID in input) {
+
+      for (var userID in input[taskID].members){
+        if(userID == currentUserID){
+          result[taskID] = input[taskID];
+        }
+      }
+    }
+    return result;
  };
 });

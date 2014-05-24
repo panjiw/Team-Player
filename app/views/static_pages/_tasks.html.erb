@@ -262,7 +262,7 @@
                   <h3>My Tasks</h3>
                     <div class="tasks-scroll">
                       <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                        <div ng-repeat="task in myTasks | orderTasks">
+                        <div ng-repeat="task in myTasks | onlyMyTasks:myID | orderTasks">
                           <div ng-hide="task.done">
                             <button ng-click="openTaskPop($event, 'task' + task.id, 1)" class="btn btn-default tasks-panelbutton" >
                               <div class="panel panel-warning">
@@ -303,7 +303,7 @@
                       <h3>Completed Tasks</h3>
                       <div class="task-completed tasks-scroll">
                         <div style="width:700px;height:400px;line-height:3em;overflow:auto;padding:20px;">
-                          <div ng-repeat="task in myTasks | orderTasks">
+                          <div ng-repeat="task in myTasks | onlyMyTasks:myID | orderTasks">
                             <div ng-show="task.done">
                               <button ng-click="openTaskPop($event, 'task' + task.id, 2)" class="btn btn-default tasks-panelbutton" >
                                 <div class="panel panel-gray">
