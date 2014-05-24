@@ -19,6 +19,7 @@ var Bill = function(id,  groupID, title, description, creatorID, dateCreated, da
   this.dateCreated = dateCreated;
   this.dateDue = dateDue;
   this.membersAmountMap = membersAmountMap;
+  this.amountForEntry = {};
 };
 
 var SummaryEntry = function(username) {
@@ -26,9 +27,9 @@ var SummaryEntry = function(username) {
   this.total = 0;
   this.billsArray = [];
     
-  this.addBill = function(bill, amountForEntry, billTotal) {
+  this.addBill = function(bill, amountForEntry) {
     this.billsArray.push(bill);
-    bill.total = billTotal;
+    bill.amountForEntry[this.person_username] = amountForEntry;
     var newTotal = this.total + amountForEntry;
 
     this.total = parseFloat(newTotal.toFixed(2));
@@ -65,7 +66,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
             } 
 
             // add the bill in
-            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due, BillModel.deriveTotal(BillModel.bills[i]));
+            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
           }
         }
 
@@ -79,7 +80,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
           BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
         }
         BillModel.summary.youOwe[bill_creator_id].addBill
-          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due, BillModel.deriveTotal(BillModel.bills[i]));
+          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
       }
     }
   }
@@ -95,12 +96,13 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   }
 
   // get bills from server to bill model
-  BillModel.getBillFromServer = function(callback){
+  BillModel.refresh = function(callback){
     $.get("/get_bills")
     .success(function(data, status) {
       console.log("bill get Success: " , data);
 
       // update every bill
+      BillModel.bills = {};
       for (var i in data){
         BillModel.updateBill(data[i]);
       }

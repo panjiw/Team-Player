@@ -573,6 +573,287 @@ describe "testing getbill" do
 
 	end
 
+describe "EDIT tests" do
+
+	before(:each) do
+		@controller = UsersController.new
+		post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        	:password => "player", :password_confirmation => "player"}
+		post 'create', :user => {:username => "two", :firstname => "New", :lastname => "User", :email => "two@player.com",
+        	:password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "three", :firstname => "New", :lastname => "User", :email => "three@player.com",
+        	 :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "four", :firstname => "New", :lastname => "User", :email => "four@player.com",
+        	 :password => "player", :password_confirmation => "player"}
+        post 'create', :user => {:username => "five", :firstname => "New", :lastname => "User", :email => "five@player.com",
+        	 :password => "player", :password_confirmation => "player"}
+            
+     	@controller = SessionsController.new
+        post 'create', :user => {:username => "one", :password => "player"}
+
+        @controller = GroupsController.new
+		post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [2,3,4]}
+		
+		@controller = BillsController.new
+		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}}
+		
+		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc"}
+
+		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :due_date => "2015-05-05"}
+
+		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2015-05-05"}
+	
+		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"2" => 20}, 
+					 :description => "desc", :due_date => "2015-05-05"}
+		end
+
+	# edit bill but - change nothing
+	describe 'edit bill but change nothing' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 4, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":4,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2015-05-05\",\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# edit title
+	describe 'edit only bill title' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 1, :group_id => 6, :title => "new title", :total_due => 30, :members => {"1" => 30}}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"new title\",\"description\":null,\"due_date\":null,\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# edit description
+	describe 'edit bill description' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 2, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "new desc"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":2,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":\"new desc\",\"due_date\":null,\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# add description
+	describe 'add bill description' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 1, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":null,\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# delete description
+	describe 'edit bill group but change nothing' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 2, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":2,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null,\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# edit total and bill sums
+	describe 'edit total and sum information' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 1, :group_id => 6, :title => "title", :total_due => 10, :members => {"1" => 10}}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":10,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null,\"total_due\":10"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# edit due date
+	describe 'edit bill due date' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 3, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, 
+					 :due_date => "2020-05-05"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-05\",\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# delete due date
+	describe 'edit bill group but change nothing' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 3, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null,\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# add due data
+	describe 'add bill due date' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 1, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}, :due_date => "2015-05-05"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-05-05\",\"total_due\":30"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# edit different user's individual dues
+	describe 'edit bill individual user dues' do
+
+		before(:each) do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 5,"2" => 45}, 
+					 :description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":5,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct user informatin' do
+			userinfo = "\"2\":{\"due\":45,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":5,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2015-05-05\",\"total_due\":50"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+
+
+end
+
 
 # describe "EDIT tests" do
 

@@ -80,7 +80,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.currentMembers = {};
 
   getBillFromModel = function(e) {
-    BillModel.getBillFromServer(
+    BillModel.refresh(
       function(error){
       if(error){
         //TODO
@@ -108,7 +108,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   });
 
   $scope.$watch('billSummary', function(newVal, oldVal){
-
+    
   });
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
@@ -297,13 +297,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     });
   };
-
-
-
-  $scope.showEditBill = function(e, billID){
-    initEditBillData(BillModel.bills[billID]);
-    $('#billEditModal').modal({show:true});
-  };
     
   // Fills in billsYouOweMap from billsYouOwe
   // function buildBillsMapYouOwe() {
@@ -377,6 +370,13 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
   $(function() {$( "#bill_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
+  // Function called to open up edit bill modal
+  $scope.showEditBill = function(e, billID){
+    initEditBillData(BillModel.bills[billID]);
+    $('#billEditModal').modal({show:true});
+    $("#bill-split-evenly-checkbox2").prop("checked", false);
+  };
+  
   // Function called when Select Bills or View Bills is clicked. Toggles popover
   $scope.openPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
@@ -447,8 +447,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('.bill').css("border", "1px solid white");
   }
 
+  // Called to open the add bill modal
   $('#openBtn').click(function(){
     $('#billModal').modal({show:true})
+    $("#bill-split-evenly-checkbox1").prop("checked", false);
   });
 
   $scope.openBillHelpModal = function(e){
@@ -465,17 +467,32 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
   }
   
-  $scope.splitEvenly = function(mem) {
-    if ($("#bill-split-evenly-checkbox").is(":checked")) {
-      var total = $scope.newBillTotal;
-      var list = $(".bill-members-check:checked");
+  // Function called to split bills evenly
+  $scope.splitEvenly = function(mem, n) {
+    if ($("#bill-split-evenly-checkbox" + n).is(":checked")) {
+      if (n == 1) {
+        var total = $scope.newBillTotal;
+      }
+      else {
+        var total = $scope.editBillTotal;
+      }
+      var list = $(".bill-members-check" + n + ":checked");
       var value = total / list.size();
       value = Math.round(value * 100) / 100;
-      $.each($scope.currentMembers, function() {
-        if (this.chked) {
-          this.amount = value;
-        }
-      });
+      if (n == 1) {
+        $.each($scope.currentMembers, function() {
+          if (this.chked) {
+            this.amount = value;
+          }
+        });
+      }
+      else {
+        $.each($scope.currentEditMembers, function() {
+          if (this.chked) {
+            this.amount = value;
+          }
+        });
+      }
       if (mem) {
         mem.amount = value;
       }

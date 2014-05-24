@@ -48,6 +48,8 @@ function sort(input, attributes) {
   return array;
  }
 
+
+
 myApp.filter('orderUsers', function(){
  return function(input) {
  	return sort(input, ['username', 'firstname', 'lastname', 'id']);
@@ -70,4 +72,10 @@ myApp.filter('orderBills', function() {
   return function(input) {
     return sort(input, ['due', 'why', 'desc', 'id']);
   }
+});
+
+myApp.filter('myTasks', function(){
+ return function(input) {
+  
+ };
 });
