@@ -17,6 +17,8 @@ deploy:
 	@echo "Pulling fresh copy from master repo..."
 	git fetch origin master
 	git reset --hard origin/master
+	@echo "Checking that you have the Heroku Toolbelt..."
+	@which heroku > /dev/null
 	@echo "Deploying to Herkoku..."
 	-@heroku git:remote -a team-player
 	git push heroku master
