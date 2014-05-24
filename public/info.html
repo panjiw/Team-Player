@@ -73,7 +73,7 @@
                   <li><a href="#riskAssess">Risks Assessment</a></li>
                   <li><a href="#dataStorage">Data Storage</a></li>
                   <li><a href="#diagrams">Class and Sequence Diagrams</a></li>
-                  <li><a href="#testPlans">Test Plans</a></li>
+                  <li><a href="#testPlans">Test Strategy</a></li>
                   <li><a href="#codingStyle">Coding Style Guidelines</a></li>
               	</ul>
   				</div>
@@ -213,7 +213,7 @@
                 <hr>
               
 
-                <h2 id="testPlans">Test Plans</h2>
+                <h2 id="testPlans">Test Strategy</h2>
                 <ul>
                   <li><h4>Unit Test Strategy</h4>
                     <ul>
@@ -222,6 +222,7 @@
                       <li>AngularJS (frontend) also provides a unit testing system. It is a little more complicated because it deals with simulating certain events, but we plan to follow a similar strategy. The major controller functions and model functions will be tested in parallel with developing them. Here is a good reference tutorial we will use: https://docs.angularjs.org/guide/unit-testing for the specifics on how testing works in Angular.</li>
                       <li>We plan to create test usually while developing a class so testing should be done once a function is done. We will require that before pushing code to the master branch, all of their test code must pass and seen by at least one team member. No automation system seems necessary at the moment--we can just run the tests before pushing. </li>
                       <li>In general, we may not have the backend implemented at the same time as the frontend (and vice versa), so we will likely hardcode dummy JSON objects on both ends to use for testing, and actually connect them during system testing. </li>
+                      <li>Since most frontend code directly calls backend code, we do not test those functions. We focus our testing code on the functions such as ordering users, tasks, bills, groups for the UI, or splitting bills evenly that are solely frontend logic.
                     </ul>
                   </li>
                   <li><h4>System Test Strategy</h4>
@@ -241,6 +242,10 @@
                   <li><h4>Bug Tracking</h4>
                     <p>We will be using GitHub’s issue tracker, any issue not merged yet will be dealt with in pull request but any bug found after merging will be posted on the tracker. We will essentially follow the guidelines from class today and Joel’s blog--find bugs early (testing), fix bugs early (don’t forget about them), and formally keep track of bugs (GitHub). </p>
                   </li>
+                  <li><h4>Code Coverage Statistics</h4>
+                      Most recent code coverage results: <a href="coverage/index.html">See our code coverage here</a>
+                  </li>
+
                 </ul>
 
               <hr>
