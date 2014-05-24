@@ -22,6 +22,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   }
 
+  // function for datepicker to popup
+  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+
   var activeEditTask = -1;
 
   function initEditTaskData(task, generator){
@@ -80,7 +84,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            // memArray[task.members[id].rank] = $scope.currentEditMembers[index];
+            // memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
             // delete $scope.currentEditMembers[index];
             count++;
           }
@@ -102,11 +106,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
-        for (var id in generator.repeat_days){
-          $scope.editTaskRepostArray.push(generator.repeat_days[id]);
+        for (var id in generator.details.repeat_days){
+          $scope.editTaskRepostArray.push(generator.details.repeat_days[id]);
 
           // if it is repeating someday
-          if(generator.repeat_days[id])
+          if(generator.details.repeat_days[id])
             $scope.editTaskRepeat = true;
         }
       } else {
@@ -369,10 +373,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-
-  // function for datepicker to popup
-  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
-  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
