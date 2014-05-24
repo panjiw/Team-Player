@@ -843,6 +843,7 @@ describe "EDIT tests" do
           end
       end
 
+  # CURRENT FUNCTIONALITY: EDIT CHANGEGS THE CREATOR ID TO THE ID OF THE CREATOR
   describe 'user not creator of the task' do
 
       before(:each) do
@@ -857,7 +858,7 @@ describe "EDIT tests" do
       end
 
       it 'should return the correct task information' do
-          taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
           (response.body.include? taskinfo).should be_true
      end
 
