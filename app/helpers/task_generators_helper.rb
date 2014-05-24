@@ -39,6 +39,9 @@ module TaskGeneratorsHelper
         else
           next_due_date = task_generator[:due_date]
         end
+        if next_due_date.nil?
+          next_due_date = Date.today
+        end
         task_generator.update(:due_date => next_due_date)
         next_task.update_attributes(:due_date => next_due_date)
       end
