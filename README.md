@@ -19,29 +19,21 @@
 
 <h3>Current Release</h3>
 <hr>
-Our current release (beta) provides the following functionalities:
-<ul><li>Successful account creation</li>
-<ul><li>the user has a self group so they can create tasks for just
-     themselves. They will not be able to modify this group.</li></ul>
-<li>User sign-in, sessions, sign-out</li>
-<li>New group creation + member addition</li>
-   <ul><li>Users can create new groups and add members to them by email</li></ul>
-<li>Add and view tasks + bills</li>
-   <ul><li>After creation, tasks and bills will appear under user's "tasks" and "bills" tab views,
-     <i>but not on the calendar yet</i></li>
-   <li>When clicking on them, users can view more information about tasks, and calculate bill totals</li></ul>
-</ul>
+The current release is the feature-complete release. You can also view documentation and information from all <a href="http://localhost:3000/srssds.html">other releases</a>.
 
+<h3>Current Release</h3>
+<hr>
+<a href="http://localhost:3000/usersdoc.html#features">Working Features</a> our current release can be found on our developer's site.
 
 
 <h3>User Documentation</h3>
 <hr>
-New and curious users can read more about TeamPlayer through our <a href="http://keithyeung.com/teamplayer/usersdoc.html">user documentation</a>
+New and curious users can read more about TeamPlayer through our <a href="https://team-player.herokuapp.com/usersdoc.html">user documentation</a> or follow our tutorials throughout the app.
 
 
 <h3>Developer Documentation</h3>
 <hr>
-Developers can follows steps to build and test or product through our <a href="http://keithyeung.com/teamplayer/getstarted.html">developer documentation</a>
+Developers can follows steps to build and test or product through our <a href="https://team-player.herokuapp.com/getstarted.html">developer documentation</a>
 
 
 
