@@ -139,7 +139,7 @@ class TaskGeneratorsController < ApplicationController
     if view_context.signed_in?
       task_generators = {}
       count = 0
-      current_user.groups.each do |g|
+      view_context.current_user.groups.each do |g|
         g.task_generators.each do |t|
           task_generator = {}
           task_generator[:details] = t
@@ -163,7 +163,7 @@ class TaskGeneratorsController < ApplicationController
       if task_generator.nil?
         render :json => {:errors => "Invalid task generator"}, :status => 400
       else
-        task_actor = task_generator.task_generator_actors.find_by_user_id(current_user[:id])
+        task_actor = task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id])
         if task_actor.nil?
           render :json => {:errors => "Unauthorized action"}, :status => 400
         else

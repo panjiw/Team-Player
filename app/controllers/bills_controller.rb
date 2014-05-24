@@ -39,7 +39,7 @@ class BillsController < ApplicationController
   def new
     if !view_context.signed_in?
       redirect_to '/'
-    end
+    else
     @bill = Bill.new(group_id: params[:bill][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:bill][:title],
@@ -69,9 +69,9 @@ class BillsController < ApplicationController
             return
           end
         end
-        if !@bill.bill_actors.find_by_user_id(current_user[:id])
+        if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id])
           @bill_actor = BillActor.new(bill_id: @bill[:id],
-                                      user_id: current_user[:id],
+                                      user_id: view_context.current_user[:id],
                                       due: 0,
                                       paid: true)
           if !@bill_actor.save
@@ -92,6 +92,7 @@ class BillsController < ApplicationController
     else
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
     end
+  end
   end
 
   # Returns all the bills of the signed in user
@@ -119,7 +120,7 @@ class BillsController < ApplicationController
     if view_context.signed_in?
       bills = {}
       count = 0
-      current_user.bills.each do |b|
+      view_context.current_user.bills.each do |b|
         bill = {}
         bill[:details] = b
         bill[:due] = {}
@@ -144,11 +145,11 @@ class BillsController < ApplicationController
       if bill.nil?
         render :json => {:errors => "Invalid bill"}, :status => 400
       else
-        bill_actor = bill.bill_actors.find_by_user_id(current_user[:id])
+        bill_actor = bill.bill_actors.find_by_user_id(view_context.current_user[:id])
         if bill_actor.nil?
           render :json => {:errors => "Unauthorized action"}, :status => 400
         else
-          bill_actor.update(finished: true, paid_date: Date.today)
+          bill_actor.update(paid: true, paid_date: Date.today)
           result = {}
           result[:details] = bill
           result[:due] = {}
@@ -196,9 +197,9 @@ class BillsController < ApplicationController
                 return
               end
             end
-            if !@bill.bill_actors.find_by_user_id(current_user[:id])
+            if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id])
               @bill_actor = BillActor.new(bill_id: @bill[:id],
-                                          user_id: current_user[:id],
+                                          user_id: view_context.current_user[:id],
                                           due: 0,
                                           paid: true)
               if !@bill_actor.save

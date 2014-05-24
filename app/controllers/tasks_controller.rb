@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   def new
     if !view_context.signed_in?
       redirect_to '/'
-    end
+    else
     @task = Task.new(group_id: params[:task][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:task][:title],
@@ -61,6 +61,7 @@ class TasksController < ApplicationController
       render :json => {:errors => @task.errors.full_messages}, :status => 400
     end
   end
+  end
 
   # Returns all the tasks of the signed in user
   # {number starting from 0:{"details":{
@@ -79,7 +80,7 @@ class TasksController < ApplicationController
     if view_context.signed_in?
       tasks = {}
       count = 0
-      current_user.groups.each do |g|
+      view_context.current_user.groups.each do |g|
         g.tasks.each do |t|
           task = {}
           task[:details] = t
@@ -123,7 +124,7 @@ class TasksController < ApplicationController
       if task.nil?
         render :json => {:errors => "Invalid task"}, :status => 400
       else
-        task_actor = task.task_actors.find_by_user_id(current_user[:id])
+        task_actor = task.task_actors.find_by_user_id(view_context.current_user[:id])
         if task_actor.nil?
           render :json => {:errors => "Unauthorized action"}, :status => 400
         else
