@@ -18,7 +18,7 @@ deploy:
 	git fetch origin master
 	git reset --hard origin/master
 	echo "Deploying to Herkoku"
-	heroku git:remote -a team-player
+	-heroku git:remote -a team-player
 	git push heroku master
 	heroku run rake db:migrate
 	echo "Success! View it at https://team-player.herokuapp.com"
