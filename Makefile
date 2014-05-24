@@ -11,6 +11,13 @@ install:
 	bundle exec rake db:migrate RAILS_ENV=development
 	@echo "Success! Use 'rails s' to view the app at localhost:3000"
 
+install_heroku:
+	@echo "Getting heroku toolbelt. You should already have an account on Heroku"
+	wget -qO- https://toolbelt.heroku.com/install.sh | sh
+	heroku login
+	heroku keys:clear
+	heroku keys:add
+
 deploy:
 	@echo "Stashing any current changes..."
 	git stash

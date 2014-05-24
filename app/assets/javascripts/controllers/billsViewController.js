@@ -397,7 +397,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var total = 0;
       $('#' + p + 1 + " input:checkbox").each(function () {
         var str = $(this).val();
-        // var value = (parseFloat(str)).toFixed(2);
+        str = str.substr(0, str.indexOf(' '));
         
         total += (this.checked ? parseFloat(str) : 0);
         var roundedTotal = total.toFixed(2);
@@ -416,39 +416,60 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   // Function called when pay button is pressed
   // Removes any checked bills and subtracts from total owed
   // If all bills are paid, removes the whole bill
-  // $scope.pay = function (p) {
-  //   $('#' + p + 1 + " input:checkbox").each(function () {
-  //     var str = $(this).val();
-  //     var value = parseInt(str.substr(0,str.indexOf(' ')));
-  //     var id = str.substr(str.indexOf(' ')+1);
-  //     if (this.checked) {
-  //       $.each($scope.billsYouOweMap, function(member) {
-  //         if (this.person == p) {
-  //           this.amount -= value;
-  //           var list = this.bills
-  //           $.each(list, function(i, bill) {
-  //             if (this.id == id) {
-  //               list.splice(i, 1);
-  //               if (list.length == 0) {
-  //                 $.each($scope.billsYouOweMap, function(i, person) {
-  //                   if (person.person == p) {
-  //                     $scope.billsYouOweMap.splice(i, 1);
-  //                     return false;
-  //                   }
-  //                 });
-  //               }
-  //               return false;
-  //             }
-  //           });
-  //           $('#' + p + 1 + " .bill-pop-total").html('Total: $0');
-  //           return false;
-  //         }
-  //       });
-  //     }
-  //   });
-  //   $('.bill-pop').hide();
-  //   $('.bill').css("border", "1px solid white");
-  // }
+  $scope.pay = function (p) {
+    $('#' + p + 1 + " input:checkbox").each(function () {
+      var str = $(this).val();
+      var billID = parseInt(str.substr(str.indexOf(' ')+1));
+      // var id = str.substr(str.indexOf(' ')+1);
+      if (this.checked) {
+
+        // otherwise, set it to finished
+        BillModel.setPaid(billID, function(error) {
+          var billTitle = BillModel.bills[billID].title;
+          if(error) {
+            toastr.warning("billID could not be set paid");
+            for (var index in error){
+              toastr.error(error[index]);  
+            }
+          } else {
+            $scope.$apply(function() {
+              $scope.billSummary = BillModel.summary;
+              toastr.success("Bill '" + billTitle + "' paid!");
+            });
+          }
+        });
+
+
+
+        // $.each($scope.billsYouOweMap, function(member) {
+        //   if (this.person == p) {
+        //     this.amount -= value;
+        //     var list = this.bills
+        //     $.each(list, function(i, bill) {
+        //       if (this.id == id) {
+        //         list.splice(i, 1);
+        //         if (list.length == 0) {
+        //           $.each($scope.billsYouOweMap, function(i, person) {
+        //             if (person.person == p) {
+        //               $scope.billsYouOweMap.splice(i, 1);
+        //               return false;
+        //             }
+        //           });
+        //         }
+        //         return false;
+        //       }
+        //     });
+        //     $('#' + p + 1 + " .bill-pop-total").html('Total: $0');
+        //     return false;
+        //   }
+        // });
+
+
+      }
+    });
+    $('.bill-pop').hide();
+    $('.bill').css("border", "1px solid white");
+  }
 
   // Called to open the add bill modal
   $('#openBtn').click(function(){
