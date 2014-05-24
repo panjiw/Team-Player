@@ -54,7 +54,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       
       $scope.editBillGroup = $.extend(true, {}, GroupModel.groups[bill.group]);
 
-      $scope.editBillTotal = deriveTotal(bill.membersAmountMap);
+      $scope.editBillTotal = BillModel.deriveTotal(bill);
       
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.group].members);
 
@@ -72,14 +72,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
 
   };
-
-  function deriveTotal(amountMap){
-    var total = 0;
-    for (var index in amountMap){
-      total += amountMap[index].due;
-    }
-    return total;
-  }
 
   $scope.activeBillTab='bill_selected_you_owe';
   
@@ -467,6 +459,32 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.billBack = function(pageNum) {
     $('#'+'billHelp'+pageNum).hide();
     $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
+  }
+  
+  $scope.splitEvenly = function(mem) {
+    if ($("#bill-split-evenly-checkbox").is(":checked")) {
+      var total = $scope.newBillTotal;
+      var list = $(".bill-members-check:checked");
+      var value = total / list.size();
+      value = Math.round(value * 100) / 100;
+      $.each($scope.currentMembers, function() {
+        if (this.chked) {
+          this.amount = value;
+        }
+      });
+      if (mem) {
+        mem.amount = value;
+      }
+    }
+  }
+  
+  $scope.disableBillInputs = function() {
+    if ($("#bill-split-evenly-checkbox").is(":checked")) {
+      $(".bill-members-amount").prop('disabled', true);
+    }
+    else {
+      $(".bill-members-amount").prop('disabled', false);
+    }
   }
 
 }]);

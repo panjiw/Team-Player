@@ -21,6 +21,9 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.groups = {}; //ID to groups
   GroupModel.fetchedGroups = false;
 
+  // update GroupModel.groups with this "group" from the model. Note that the field names
+  // are slightly different between the frontend and backend models,
+  // so always go through this function to update groups.
   GroupModel.updateGroup = function(group) {
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
                                               group.creator, new Date(group.dateCreated), group.users);
@@ -29,6 +32,8 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     }
   }
 
+  // Ask the given models to get their data
+  // from the server again
   GroupModel.refreshAll = function(model) {
     if(model instanceof Array) {
       for(i in model) {
@@ -52,24 +57,18 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.getGroups = function(callback) {
     // We really only need to ask the server for all groups
     // the first time, so get it only if we need to.
-    console.log("Trying to get groups...");
     if(!GroupModel.fetchedGroups) {
       $.get("/view_groups")
       .success(function(data, status) {
-        console.log("Data length is: ", data.length);
         for(var i = 0; i < data.length; i++) {
           GroupModel.updateGroup(data[i]);
-          console.log("update users: ",data[i].users);
         }
         GroupModel.fetchedGroups = true;
-        console.log("model success");
 
         // Return the groups and note that this is an asynchronous callback
         callback(GroupModel.groups, true, null);
       })
       .fail(function(xhr, textStatus, error) {
-        console.log("error:");
-        console.log(xhr.responseText);
         callback(null, null, JSON.parse(xhr.responseText));
       });
     } else {
@@ -91,14 +90,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       });
       return userIds;
     }
-    console.log("mems:");
-    console.log(members);
-    console.log("ids:");
-    console.log(extractIds(members));
 
-    // create a group
-    // current_user will set as creator, no need to send creator
-    // current_user will be added to the group as member
     $.post("/create_group",
     {
       "group[name]": name,
@@ -106,12 +98,10 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "add[members]": extractIds(members)
     })
     .success(function(data, status) {
-      console.log("Success: " , data);
       GroupModel.updateGroup(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("group create error: "+error);
       callback(JSON.parse(xhr.responseText));
     });
   };
@@ -125,15 +115,12 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       callback("Missing fields");
     }
 
-    console.log("Trying to add member " + email + " to group: " + group);
-
     $.post("/add_to_group",
     {
       "invite[gid]" : group,
       "invite[email]": email
     })
     .success(function(data, status) {
-      console.log("Success. New member list", data);
       GroupModel.groups[group].members = data;
       for(var i = 0; i < data.length; i++) {
         UserModel.updateUser(data[i]);

@@ -378,6 +378,10 @@ describe "GETALL tests" do
       (response.status == 200).should be_true
     end
 
+    it 'should return a blank array' do
+      (response.body.include? "{}").should be_true
+    end
+
   end
 
   context 'user has one task they created' do
@@ -385,12 +389,17 @@ describe "GETALL tests" do
       @controller = SessionsController.new
       post 'create', :user => {:username => "one", :password => "player"}
       @controller = TasksController.new
-      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [3,4]}
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
       get 'get_all'
     end
 
     it 'should return a 200 status' do
       (response.status == 200).should be_true
+    end
+
+    it 'should have the correct task information for task one' do
+      taskinfo = "0\":{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+      (response.body.include? taskinfo).should be_true
     end
 
   end
@@ -411,10 +420,57 @@ describe "GETALL tests" do
       (response.status == 200).should be_true
     end
 
+    it 'should return the correct task information for task one' do
+      taskinfo = "0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+      (response.body.include? taskinfo).should be_true
+    end
   end
 
-end
+  context 'the user has more than one task they created' do
 
+    before(:each) do
+      @controller = SessionsController.new
+      post 'create', :user => {:username => "one", :password => "player"}
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "6", :title => "first", :finished => false, :members => [3,4]}
+      post 'new', :task => {:group_id => "6", :title => "second", :finished => false, :members => [4]}
+      get 'get_all'
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return the correct task information for the first task' do
+      taskinfo = "0\":{\"details\":{\"id\":1,\"group_id\":6,\"user_id\":1,\"title\":\"first\",\"description\":null,\"due_date\":null"
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "1\":{\"details\":{\"id\":2,\"group_id\":6,\"user_id\":1,\"title\":\"second\",\"description\":null,\"due_date\":null"
+      (response.body.include? taskinfo).should be_true
+    end
+
+      # "members":{user_id:order, ..., user_id:order}}}, ...}
+
+    it 'should return the correct member information for the first task' do
+      memberinfo = "\"members\":{\"3\":0,\"4\":1}"
+      (response.body.include? memberinfo).should be_true
+    end
+
+    it 'should return the correct member information for the second task' do
+      memberinfo = "\"members\":{\"4\":0}"
+      (response.body.include? memberinfo).should be_true
+    end
+
+  end
+
+  context 'the user has more than one task they did not create themselves' do
+
+  end
+
+
+end
 
 # mark_finished
   # Mark the task with the given id as finished
@@ -698,7 +754,7 @@ describe "EDIT tests" do
           
           before(:each) do
           @controller = TasksController.new
-          post 'edit', :task => {:id => "4",:group_id => "1", :title => "title", :finished => false, :members => [1],}
+          post 'edit', :task => {:id => "4",:group_id => "1", :title => "title", :finished => false, :members => [1]}
           end
 
           it 'should return a 200 status' do
@@ -706,7 +762,7 @@ describe "EDIT tests" do
           end
 
           it 'should return the correct task information' do
-              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+              taskinfo = "{\"details\":{\"id\":4,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
               (response.body.include? taskinfo).should be_true
           end
 
@@ -750,7 +806,7 @@ describe "EDIT tests" do
       describe 'delete a duedate' do    
           before(:each) do
           @controller = TasksController.new
-          post 'edit', :task => {:id => "5",:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2015-05-05"}
+          post 'edit', :task => {:id => "5",:group_id => "1", :title => "title", :finished => false, :members => [1]}
           end
 
           it 'should return a 200 status' do
@@ -758,7 +814,7 @@ describe "EDIT tests" do
           end
 
           it 'should return the correct task information' do
-              taskinfo = "{\"details\":{\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-05-05\""
+              taskinfo = "{\"details\":{\"id\":5,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
               (response.body.include? taskinfo).should be_true
           end
 
@@ -773,15 +829,121 @@ describe "EDIT tests" do
           end
       end
 
+  describe 'user not creator of the task' do
 
+      before(:each) do
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "two", :password => "player"}
+        @controller = TasksController.new
+        post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [1]}
+      end
 
-  # edit out description
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
 
-  # edit out due date
+      it 'should return the correct task information' do
+          taskinfo = "{\"details\":{\"id\":3,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          (response.body.include? taskinfo).should be_true
+     end
 
-  # same functionality tests as new otherwise 
+      it 'should return the correct finished information' do
+         finishedinfo = "\"finished\":false"
+         (response.body.include? finishedinfo).should be_true            
+       end
 
-  # not correct permission
+      it 'should return the correct member information' do
+        memberinfo = "\"members\":{\"1\":0}"
+        (response.body.include? memberinfo).should be_true
+      end
+
+  end
+
+  # user does not have the permission to edit the task
+  describe 'user is not part of the task' do
+
+      before(:each) do
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "three", :password => "player"}
+        @controller = TasksController.new
+        post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [1]}
+      end
+
+      it 'should return a 400 status' do
+        (response.status == 400).should be_true
+      end
+
+      # not change the info
+      context 'altering information' do
+       
+        before(:each) do
+           @controller = SessionsController.new
+           delete 'destroy'
+           post 'create', :user => {:username => "two", :password => "player"}
+           @controller = TasksController.new
+           get 'get_all'
+        end
+
+        it 'should not change the task information' do
+          taskinfo = "\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          (response.body.include? taskinfo).should be_true
+        end
+
+        it 'should return the correct finished information' do
+         finishedinfo = "\"finished\":false"
+         (response.body.include? finishedinfo).should be_true            
+        end
+
+        it 'should not change the member information' do
+           memberinfo = "\"members\":{\"1\":0,\"2\":1}"
+          (response.body.include? memberinfo).should be_true
+        end
+
+      end
+
+  end
+
+  describe 'user is not part of group' do
+
+      before(:each) do
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "five", :password => "player"}
+        @controller = TasksController.new
+        post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [1]}
+      end
+
+     it 'should return a 400 status' do
+        (response.status == 400).should be_true
+      end
+
+      context 'altering information' do
+       
+        before(:each) do
+           @controller = SessionsController.new
+           delete 'destroy'
+           post 'create', :user => {:username => "two", :password => "player"}
+           @controller = TasksController.new
+           get 'get_all'
+        end
+
+        it 'should not change the task information' do
+          taskinfo = "\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          (response.body.include? taskinfo).should be_true
+        end
+
+       it 'should return the correct finished information' do
+         finishedinfo = "\"finished\":false"
+         (response.body.include? finishedinfo).should be_true            
+        end
+        
+        it 'should not change the member information' do
+           memberinfo = "\"members\":{\"1\":0,\"2\":1}"
+          (response.body.include? memberinfo).should be_true
+        end
+
+      end
+
+  end
 
 
 end
