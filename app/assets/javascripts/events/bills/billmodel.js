@@ -26,9 +26,12 @@ var SummaryEntry = function(username) {
   this.total = 0;
   this.billsArray = [];
     
-  this.addBill = function(bill, amountForEntry) {
+  this.addBill = function(bill, amountForEntry, billTotal) {
     this.billsArray.push(bill);
-    this.total += amountForEntry;
+    bill.total = billTotal;
+    var newTotal = this.total + amountForEntry;
+
+    this.total = parseFloat(newTotal.toFixed(2));
   };
 };
 
@@ -42,24 +45,10 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     for (var index in bill.membersAmountMap){
       total += bill.membersAmountMap[index].due;
     }
+    total = parseFloat(total.toFixed(2));
     return total;
   };
 
-
-// $scope.billsYouOweMap.push(
-
-//   {  person: bill.person,
-//      amount: bill.amount,
-//       bills: [
-//                 { id: bill.id, 
-//                   amt: bill.amount, 
-//                   why: bill.why, 
-//                   desc: bill.desc, 
-//                   due: "No Date"
-//                 }
-//               ]
-//   }
-// );  
   function makeSummary() {
     BillModel.summary = {youOwe: {}, oweYou: {}};
     for (var i in BillModel.bills){
@@ -76,7 +65,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
             } 
 
             // add the bill in
-            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
+            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due, BillModel.deriveTotal(BillModel.bills[i]));
           }
         }
 
@@ -90,12 +79,14 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
           BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
         }
         BillModel.summary.youOwe[bill_creator_id].addBill
-          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
+          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due, BillModel.deriveTotal(BillModel.bills[i]));
       }
     }
   }
   // update a bill to the BillModel.bills map
   BillModel.updateBill = function(bill){
+    toDollars(bill.due);
+
     BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
      bill.details.user_id, bill.details.created_at, bill.details.due_date, bill.due);
     makeSummary();
@@ -121,21 +112,32 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     });
   }
 
-  function toCents(AmountMap, total){
+  function toCents(makeAmountMap){
+    for (var userID in makeAmountMap) {
+      makeAmountMap[userID] *= 100;
+    }
+  }
 
+  function toDollars(membersAmountMap){
+    for (var userID in membersAmountMap) {
+      var num = membersAmountMap[userID].due / 100;
+      membersAmountMap[userID].due = parseFloat(num.toFixed(2));
+    }
   }
 
   //Create and return a Bill with the given parameters. This updates to the database, or returns
   //error codes otherwise...
   BillModel.createBill = function(groupID, title, description, dateDue, total, makeMembersAmountMap, callback) { // creator ID
+    toCents(makeMembersAmountMap);
+
     $.post("/create_bill",
     {
       "bill[group_id]": groupID,
       "bill[title]": title,
       "bill[description]": description,
       "bill[due_date]": dateDue,
-      "bill[total_due]": total,
-      "bill[members]": makeMembersAmountMap,
+      "bill[total_due]": total*100,
+      "bill[members]": toCents(makeMembersAmountMap),
     })
     .success(function(data, status) {
       console.log("bill create Success: " , data);
@@ -160,8 +162,8 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[title]": title,
       "bill[description]": description,
       "bill[due_date]": dateDue,
-      "bill[total_due]": total,
-      "bill[members]": makeMembersAmountMap,
+      "bill[total_due]": total*100,
+      "bill[members]": toCents(makeMembersAmountMap),
     })
     .success(function(data, status) {
       console.log("bill edit Success: " , data);

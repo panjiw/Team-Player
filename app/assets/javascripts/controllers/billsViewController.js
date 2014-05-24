@@ -88,6 +88,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         //TODO
         $scope.$apply(function(){
           buildBills();
+          $scope.billSummary = BillModel.summary;
         });
       }
     });
@@ -104,6 +105,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   $scope.$watch('groupsList', function(newVal, oldVal){
     console.log('group list in bill changed');
+  });
+
+  $scope.$watch('billSummary', function(newVal, oldVal){
+    
   });
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
@@ -146,13 +151,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $scope.billsYouOweMap =[];
 
     var bills = BillModel.bills;
-    console.log("bills is ", bills);
     for(var i in bills){
       if(bills[i].creator == UserModel.me){
         for(var j in bills[i].membersAmountMap){
-          console.log("creater is me, bills[i]: ",bills[i]);
           if (j != UserModel.me){
-            console.log("users,",UserModel.users);
             $scope.billsOweYou.push({
               person: UserModel.users[j].firstname, 
               amount: bills[i].membersAmountMap[j].due, 
