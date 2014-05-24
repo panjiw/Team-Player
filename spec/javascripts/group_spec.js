@@ -75,27 +75,5 @@ describe("Group Model Tests", function() {
       expect(groups).toEqual(GroupModel.groups);
     });
   });
-
-  describe("Asynch function specs", function() {
-    var myGroups;
-    beforeEach(function(done) {
-      setTimeout(function() {
-        GroupModel.fetchedGroups = false;   // force send request
-        GroupModel.getGroups(function(groups, asynch, error) {
-          expect(error).toBeFalsy();
-          expect(asynch).toBe(true);
-          expect(groups).toBeDefined();
-          myGroups = groups;
-          done();
-        });
-      }, 500);
-    });
-
-    it("get groups sends request correctly", function(done) {
-      // got called!
-      expect(myGroups).toEqual(GroupModel.groups);
-      done();
-    });
-  });
 });
 
