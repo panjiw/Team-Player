@@ -8,10 +8,6 @@ require 'spec_helper'
 
 describe StaticPagesController do
 
-# match '/',            to: 'static_pages#index',  via: 'get'
-#   match '/index',       to: 'static_pages#index',  via: 'get'
-#   match '/home',        to: 'static_pages#home',   via: 'get'
-
     before(:each) do
         @controller = UsersController.new
 		post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
