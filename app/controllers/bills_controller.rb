@@ -164,6 +164,7 @@ class BillsController < ApplicationController
     end
   end
 
+  # Update the given bill with the given attribute
   def edit
     if view_context.signed_in?
       @bill = Bill.find(params[:bill][:id])
@@ -226,6 +227,8 @@ class BillsController < ApplicationController
       redirect_to '/'
     end
   end
+
+  # Delete the given bill
   def delete
     if view_context.signed_in?
       @bill = Bill.find(params[:bill][:id])

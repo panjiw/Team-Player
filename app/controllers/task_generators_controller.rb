@@ -159,6 +159,7 @@ class TaskGeneratorsController < ApplicationController
     end
   end
 
+  # Mark the given task generator as finished and unusable anymore
   def mark_finished
     if view_context.signed_in?
       task_generator = TaskGenerator.find(params[:task][:id])
@@ -184,6 +185,10 @@ class TaskGeneratorsController < ApplicationController
     end
   end
 
+  # Updates the given task generator with the given attributes
+  # deletes the latest task created using the generator and
+  # creates a new one based on the new attributes.
+  # Returns the same as new.
   def edit
     if view_context.signed_in?
       if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
@@ -246,6 +251,7 @@ class TaskGeneratorsController < ApplicationController
     end
   end
 
+  # Deletes the given task generator and the latest task it created
   def delete
     if view_context.signed_in?
       @task_generator = TaskGenerator.find(params[:task][:id])

@@ -116,8 +116,11 @@ class TasksController < ApplicationController
     render :json => {:errors => "Not implemented yet"}, :status => 400
   end
 
-  # Mark the task with the given id as finished
-  # Returns the info of the task
+  # Mark the task with the given id as finished.
+  # Will create a new task if the given task is the latest task
+  # of an active task generator.
+  # If new task is created returns the same as TaskGenerator::new
+  # else returns nothing
   def mark_finished
     if view_context.signed_in?
       task = Task.find(params[:task][:id])
@@ -161,6 +164,8 @@ class TasksController < ApplicationController
       redirect_to '/'
     end
   end
+
+  # Updates the given task with the given attribute.
   def edit
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
@@ -203,6 +208,7 @@ class TasksController < ApplicationController
     end
   end
 
+  # Deletes the given task
   def delete
     if view_context.signed_in?
       @task = Task.find(params[:task][:id])
