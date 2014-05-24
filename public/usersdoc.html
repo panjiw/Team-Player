@@ -69,43 +69,82 @@
               	
 				<div class="well"> 
               	<ul class="nav nav-stacked" id="sidebar">
-                  <li><a href="#features">Features</a></li>
                   <li><a href="#setUp">How do I use TeamPlayer?</a></li>
+                  <li><a href="#features">Working Features</a></li>
+                  <li><a href="#whyTeamPlayer">Thinking Behind TeamPlayer</a></li>
               	</ul>
   				</div>
 
       		</div>  
       		<div class="col-md-9">
-              	<h2 id="features">Features</h2>
-                <p>
-                There are many great features to TeamPlayer!
-                <ul>
-                  <li>Group Management</li>
-                  <ul>Create a TeamPlayer group for every group in your life, and all tasks/bills will be centered around these groups. You will no longer have to personally keep everyone up to date with another’s responsibilities. Every member in the group can see what’s going on.</ul>
-                  <li>Cycling Task Creation</li>
-                  <ul>For the tasks that you seem to always be the only one doing, like cleaning the bathroom or picking up dinner,  you can include your groups in your tasks. In addition to setting deadlines, you have the choice to cycle your tasks. This means that when one person has finished it, the task will automatically be given to the next person.</ul>
-                  <li>Bill Memory and Bill Splitting</li>
-                  <ul>For the outstanding bills people still owe you, and the need to keep track of things that were paid. TeamPlayer  compiles expenses paid by and needed to be paid by users. You can see a summary of what people owe you, and what you owe to others.</ul>
-                  <li>Organization</li>
-                  <ul>Filters allow you to visualize events for all your groups or just a few - you choose.</ul>
-                </ul>
-                Simplify your groups and all the responsibilites that come with it by using TeamPlayer.
-                </p>
-
-                <hr class="col-md-12">
-
 
                 <h2 id="setUp">How do I use TeamPlayer?</h2>
-                TeamPlayer is an interactive website that can be accessed from: <a href="https://team-player.herokuapp.com">https://team-player.herokuapp.com</a>.
+                TeamPlayer is an interactive website that can be accessed at: <a href="https://team-player.herokuapp.com">https://team-player.herokuapp.com</a>.
                 <p>
                 <ul>
                   <li><i>Navigate</i> to different locations using tabs. From these tabs, you can see lists of all tasks you need to accomplish by date, all bill outstanding payments you owe to other members, all outstanding payments others owe to you, and all groups you are a part of.</li>
-                  <li><i>Click</i> on any task or bill on the calendar or any tab page to <i>see more information</i> about them, <i>edit</i> them, <i>delete<i> them, or <i>mark as done</i>.</li>
+                  <li><i>Click</i> on any task or bill on the calendar or any tab page to <i>see more information</i> about them, <i>edit</i> them, <i>delete</i> them, or <i>mark as done</i>.</li>
                   <li><i>Add</i> tasks from the task page, add bills from the bill page, add groups from the groups page, or add any of these from the home page.</li>
                 </ul><br>
                 Click small questions marks on each tab page to see tutorials on how to use each feature, or click "Help" on the web app for FAQ.
                 </p>
 
+                <hr>
+
+                <h2 id="whyTeamPlayer">Thinking Behind TeamPlayer</h2>
+                <p>TeamPlayer is centralized around a calendar - a group calendar to be exact! It was created with the idea that managing roommates could be easier. Instead of one person being most responsible, assigning chores, making sure items are stocked, paying bills, TeamPlayer can keep everyone accountable, even if it is just knowing that tasks are being done. The calendar displays all group activity. You know what everyone else has to do, but most importantly, you know what you have to do and when everyone expects you to have finished it.</p>
+                <br>
+                <p>TeamPlayer can be divided into three parts: tasks, bills, and groups.</p>
+                <ul>
+                  <li><i>Tasks</i> are any types of duties: chores, grocery lists, bills to pay. They can contain only one person in the group, or multiple people. They can also be dated and dateless (like a to-do list) to know when they need to be done by.</li>
+                  <li><i>Bills</i> are payments that have been done, and can include multiple people, so you can manage how much people owe you.</li>
+                  <li><i>Groups</i> are multiple people who share some commonality.</li>
+                </ul>
+
+                <hr>
+
+                <h2 id="features">Working Features</h2>
+                <p>
+                Simplify your groups and all the responsibilites that come with it by using TeamPlayer!
+                <ul>
+                  <li><b>Successful log in and log out</b></li>
+                    <ul>On account creation, the user has a self group so they can create tasks for just themselves. They will not be able to modify this group.</ul>
+                  <li><b>Create new groups and add members to them</b></li>
+                    <ul>
+                      <li>Users can add new members by email, but they will not be displayed until new user makes an account</li>
+                      <li>When a user is added to a group by another member, they will automatically see this group display on their account.</li>
+                   </ul>
+                  <li><b>Adding, Editing and Completing Tasks</b></li>
+                    <ul>
+                      <li>Users can create tasks for themselves, an entire group, or a small part of an existing group.</li>
+                      <li>Tasks can: have or not have a due date, cycle, and repeat.</li>
+                        <ul>
+                          <li>Due dates</li>
+                            <ul>Tasks with due dates display on your calendar. Tasks without due days display on your todo list.</ul>
+                          <li>Cycling</li>
+                            <ul>Tasks can cycle between members. When one is finished, it will be passed on to another.</ul>
+                          <li>Repeating</li>
+                            <ul>Tasks can be set to occur on a certain day every week.</ul>
+                          <li>Note: A cycling task must also repeat!
+                        </ul>
+                      <li>Users can edit tasks they've created.</li>
+                      <li>Mark tasks and completed and keep track of all your task history.</li>
+                    </ul>
+                  <li><b>Adding and Paying Bills</b></li>
+                    <ul>
+                      <li>Users can create bills only if they were the ones who paid for the bulk of it.</li>
+                      <li>Divide up the cost of bills evenly or split individually.</li>
+                      <li>Users can see a list of people you owe money to, as well as why.</li>
+                      <li>Users can see a list of people who owe them money, as well and see and edit why.</li>
+                      <li>Users can pay bills they choose to pay.</li>
+                    </ul>
+                  <li><b>Calendar and To Do List Display</b></li>
+                    <ul>
+                      <li>Tasks and bills due on a selected day will appear on that day on the home calendar. Users can click these bills to view more information about them, or mark them as completed.</li>
+                      <li>Tasks with no due dates appear on the to do list.</li>
+                    </ul>
+                </ul>
+                </p>
               	
       		</div> 
   	</div>
