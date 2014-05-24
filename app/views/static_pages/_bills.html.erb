@@ -141,8 +141,10 @@
               </div>
                                 <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
                                 ng-options="mem.username for mem in currentMembers"></select> -->
-              <input type="checkbox" class="large" id="bill-split-evenly-checkbox1" ng-click="splitEvenly(false, 1)"/>
-              <span>Split Evenly</span>
+              <label>
+                <input type="checkbox" class="large" id="bill-split-evenly-checkbox1" ng-click="splitEvenly(false, 1)"/>
+                <span>Split Evenly</span>
+              </label>
             </div>
           </div>
         </div>
@@ -187,8 +189,10 @@
                 min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
                 <div style="clear: both;"></div>
               </div>
-              <input type="checkbox" class="large" id="bill-split-evenly-checkbox2" ng-click="splitEvenly(false, 2)"/>
-              <span>Split Evenly</span>
+              <label>
+                <input type="checkbox" class="large" id="bill-split-evenly-checkbox2" ng-click="splitEvenly(false, 2)"/>
+                <span>Split Evenly</span>
+              </label>
             </div>
           </div>
         </div>
@@ -228,9 +232,9 @@
                                       <label for="{{b.id}}">
                                         <div style="">
                                           <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
-                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry}} {{b.id}}">
+                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry[entry.person_username]}}">
                                             <h4 class="bill-member">{{b.title}}</h4>
-                                            <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
+                                            <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}} </h4>
                                           </div>
                                         </div>
                                       </label>
