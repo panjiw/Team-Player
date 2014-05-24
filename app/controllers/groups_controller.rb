@@ -101,7 +101,7 @@ class GroupsController < ApplicationController
   # Require: user to be in group
   # if last user leave group, group id destroy
   # and so are all the dependents (tasks, bills, task generator)
-  def leavegroup
+def leavegroup
     if(params[:leave] && params[:leave][:id])    
       group = Group.find_by_id(params[:leave][:id])
       if group.nil?
@@ -109,14 +109,18 @@ class GroupsController < ApplicationController
       else
         if User.member?(current_user, group)
            # delete all bills related to group of user
-           remove_user_bills(group)
-           remove_user_tasks(group)
-           group.users.delete(current_user)
-           if group.users.empty?
-             # delete group no more user
-             group.destroy
+           if group.self
+             render :json => ["Unable to leave self group"], :status => 400     
+           else
+             remove_user_bills(group)
+             remove_user_tasks(group)
+             group.users.delete(current_user)
+             if group.users.empty?
+               # delete group no more user
+               group.destroy
+             end
+             render :nothing => true, :status => 200
            end
-           render :nothing => true, :status => 200
         else
           render :json => ["Unable to leave group #{group.name}"], :status => 400
         end
