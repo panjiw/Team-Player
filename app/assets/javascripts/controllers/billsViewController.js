@@ -1,12 +1,13 @@
 /*
  *  TeamPlayer -- 2014
  *
- *  This file is not implemented yet. It will be
- *  the controller for the bills page
+ *  This is the Angular Controller for the viewing bills page.
+ *  It contains the logic for adding, editing, paying, and viewing bills
  */
 angular.module('myapp').controller("billsViewController", ["$scope", "BillModel", "UserModel", "GroupModel", 
   function($scope, BillModel, UserModel, GroupModel) {
 
+  // Set $scope variables to default
   function initNewBillData(){
     $scope.newBillTitle = "";
     $scope.newBillDescription = "";
@@ -14,7 +15,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $scope.newBillTotal = "";
     $scope.newBillGroup = "";
   };
-
+  
+  // Edits fields for edit modal when editing bills
   var activeEditBill = -1;
   function initEditBillData(bill){
     // reset if no bill is passed in
@@ -41,9 +43,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.editBillDateDue = "";
       }
       
-      
-
-      console.log("date due",$scope.editBillDateDue);
       if ($scope.editBillDateDue == ""){
         $.datepicker._clearDate('#bill_edit_datepicker');
       } else {
@@ -79,6 +78,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.groupsList = {};
   $scope.currentMembers = {};
 
+  // Refreshes page bill data 
   getBillFromModel = function(e) {
     BillModel.refresh(
       function(error){
@@ -185,6 +185,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   //   }
   // }
 
+  // Creates map from user id to the amount they owe
   var buildAmountMap = function(members){
     var map = {};
 
@@ -227,6 +228,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       return;
     }
 
+    // Passes data to create bill in backend bill model
     BillModel.createBill(groupID, title, description, dateDue, total, makeMembersAmountMap,
       function(error){
       if(error){
@@ -249,6 +251,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     
   };
 
+  // Edits bill with given data
   $scope.editBill = function(e) {
 
     var groupID = $scope.editBillGroup.id;
@@ -279,6 +282,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       return;
     }
 
+    // Passes data to backend to update bill model
     BillModel.editBill(activeEditBill, groupID, title, description, dateDue, total, makeMembersAmountMap,
       function(error){
       if(error){
@@ -477,15 +481,18 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $("#bill-split-evenly-checkbox1").prop("checked", false);
   });
 
+  // Opens the help page for bills
   $scope.openBillHelpModal = function(e){
     $('#billHelpModal').modal({show:true})
   };
 
+  // Goes to next help page
   $scope.billNext = function(pageNum) {
     $('#'+'billHelp'+pageNum).hide();
     $('#'+ 'billHelp'+(parseInt(pageNum)+1)).show();
   }
 
+  // Goes to previous help page
   $scope.billBack = function(pageNum) {
     $('#'+'billHelp'+pageNum).hide();
     $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
