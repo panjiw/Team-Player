@@ -117,7 +117,7 @@ angular.module('myapp').controller("homeViewController",
   }
 
   // $(document).ready(function() {
-    var dataReady = function() {
+  var dataReady = function() {
     
     var events = [];
     
@@ -148,10 +148,18 @@ angular.module('myapp').controller("homeViewController",
     
     $.each($scope.myBills, function() {
       if (this.dateDue != null) {
-        var dueDate = this.dateDue.split("-");
-        events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-          dueDate[2]), backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
-          desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+        if (!this.membersAmountMap[UserModel.me].paid) {
+          var dueDate = this.dateDue.split("-");
+          events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
+            desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+        }
+        else {
+          var dueDate = this.dateDue.split("-");
+          events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
+            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
+            desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+        }
       }
     })
 
@@ -200,7 +208,7 @@ angular.module('myapp').controller("homeViewController",
     $('#'+'homeHelp'+(parseInt(pageNum)-1)).show();
   }
   
-  $scope.finishTask = function() {
+  $scope.finishEvent = function() {
     if ($scope.currentEventType == "task") {
       var id = $scope.currentEvent;
       // if the task is already done, we have nothing to do
@@ -218,6 +226,23 @@ angular.module('myapp').controller("homeViewController",
           $scope.$apply(function() {
             $scope.myTasks = TaskModel.tasks;
             toastr.success("Task '" + oldTaskTitle + "' completed!");
+          });
+        }
+      });
+    }
+    else if ($scope.currentEventType == "bill") {
+      var billID = $scope.currentEvent;
+      BillModel.setPaid(billID, function(error) {
+        var billTitle = BillModel.bills[billID].title;
+        if(error) {
+          toastr.warning("billID could not be set paid");
+          for (var index in error){
+            toastr.error(error[index]);  
+          }
+        } else {
+          $scope.$apply(function() {
+            $scope.billSummary = BillModel.summary;
+            toastr.success("Bill '" + billTitle + "' paid!");
           });
         }
       });
