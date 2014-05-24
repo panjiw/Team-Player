@@ -12,6 +12,8 @@ angular.module('myapp').controller("homeViewController",
   $scope.currentUser = {};
   $scope.todos = [];
   $scope.todaysTasks = [];
+  $scope.currentEventType = "";
+  $scope.currentEvent = "";
 
   UserModel.fetchUserFromServer(function(error){
     if(error){
@@ -110,6 +112,8 @@ angular.module('myapp').controller("homeViewController",
     $("#calendarModal-content").html("<strong>Description:</strong> " + todo.description + "<br/><br/>" 
                       + "<strong>Group:</strong> " + todo.groupName + "<br/><br/>" 
                       + "<strong>Members:</strong> " + UserModel.usersToUserNamesString(todo.members));
+    $scope.currentEventType = "task";
+    $scope.currentEvent = todo.id;
   }
 
   // $(document).ready(function() {
@@ -123,13 +127,13 @@ angular.module('myapp').controller("homeViewController",
         if (this.done == null) {
           events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
             dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
-            group: this.groupName});
+            group: this.groupName, eventid: this.id});
         }
         else
         {
           events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
             dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
-            group: this.groupName});
+            group: this.groupName, eventid: this.id});
         }
         if (this.dateDue == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
           $scope.todaysTasks.push(this);
@@ -147,7 +151,7 @@ angular.module('myapp').controller("homeViewController",
         var dueDate = this.dateDue.split("-");
         events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
           dueDate[2]), backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
-          desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name});
+          desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
       }
     })
 
@@ -159,14 +163,18 @@ angular.module('myapp').controller("homeViewController",
         $('#calendarModal').modal({show:true})
         $("#calendarModal-header").html(event.title);
         if (event.type == "Task") {
-        $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
+          $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
                   + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                   + "<strong>Members:</strong> " + event.members);
+          $scope.currentEventType = "task";
+          $scope.currentEvent = event.eventid;
         }
         else {
           $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
                     + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
                     + "<strong>Creator:</strong> " + event.members);
+          $scope.currentEventType = "bill";
+          $scope.currentEvent = event.eventid;
         }
         if (event.backgroundColor == "#F0F0F0") {
           $("#calendarModal-buttons").hide();
@@ -190,6 +198,30 @@ angular.module('myapp').controller("homeViewController",
   $scope.homeBack = function(pageNum) {
     $('#'+'homeHelp'+pageNum).hide();
     $('#'+'homeHelp'+(parseInt(pageNum)-1)).show();
+  }
+  
+  $scope.finishTask = function() {
+    if ($scope.currentEventType == "task") {
+      var id = $scope.currentEvent;
+      // if the task is already done, we have nothing to do
+      if(TaskModel.tasks[id].done) {
+        return;
+      }
+
+      var oldTaskTitle = TaskModel.tasks[id].title;
+
+      // otherwise, set it to finished
+      TaskModel.setFinished(id, function(error) {
+        if(error) {
+          toastr.warning("Task could not be set finished");
+        } else {
+          $scope.$apply(function() {
+            $scope.myTasks = TaskModel.tasks;
+            toastr.success("Task '" + oldTaskTitle + "' completed!");
+          });
+        }
+      });
+    }
   }
 
 }]);
