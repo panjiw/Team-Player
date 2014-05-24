@@ -63,7 +63,6 @@ class BillsController < ApplicationController
                                       due: m[1],
                                       paid: false)
           if !@bill_actor.save
-            @bill.bill_actors.delete_all
             @bill.destroy
             render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
             return
@@ -75,7 +74,6 @@ class BillsController < ApplicationController
                                       due: 0,
                                       paid: true)
           if !@bill_actor.save
-            @bill.bill_actors.delete_all
             @bill.destroy
             render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
             return
@@ -167,7 +165,7 @@ class BillsController < ApplicationController
   def edit
     if view_context.signed_in?
       @bill = Bill.find(params[:bill][:id])
-      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && @bill.user != view_context.current_user[:id]
+      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && @bill.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         @bill.group_id = params[:bill][:group_id]
@@ -192,7 +190,6 @@ class BillsController < ApplicationController
                                           due: m[1],
                                           paid: false)
               if !@bill_actor.save
-                @bill.bill_actors.delete_all
                 @bill.destroy
                 render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
                 return
@@ -204,7 +201,6 @@ class BillsController < ApplicationController
                                           due: 0,
                                           paid: true)
               if !@bill_actor.save
-                @bill.bill_actors.delete_all
                 @bill.destroy
                 render :json => {:errors => @bill_actor.errors.full_messages}, :status => 400
                 return
@@ -213,7 +209,8 @@ class BillsController < ApplicationController
             bill = {}
             bill[:details] = @bill
             bill[:due] = {}
-            @bill.bill_actors.each do |a|
+            bill_holder = Bill.find(@bill[:id])
+            bill_holder.bill_actors.each do |a|
               # don't know why just giving a doesn't work
               bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
             end
@@ -230,10 +227,9 @@ class BillsController < ApplicationController
   def delete
     if view_context.signed_in?
       @bill = Bill.find(params[:bill][:id])
-      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && !@bill.user != view_context.current_user[:id]
+      if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && !@bill.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
-        @bill.bill_actors.delete_all
         @bill.destroy
         render :json => {:status => "success"}, :status => 200
       end

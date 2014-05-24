@@ -10,7 +10,7 @@ class TaskGenerator < ActiveRecord::Base
   belongs_to :user
 
   # one (task generator) - has many relationships
-  has_many :task_generator_actors
+  has_many :task_generator_actors, :dependent => :destroy
   has_many :users, :through => :task_generator_actors
 
   # save the repeat pattern hash
