@@ -8,9 +8,9 @@ require 'spec_helper'
 
 describe BillsController do
 
-#tests for new
-describe "testing NEW" do
+describe "NEW tests" do
 
+	# populate a database to interact with
 	before(:each) do
 		@controller = UsersController.new
 		post 'create', :user => {:username => "takenname", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
@@ -317,6 +317,7 @@ describe "GETALL tests" do
         		(response.status == 200).should be_true
 			end
 		end
+
 		#
 		#SELF GROUP TESTS
 		#
@@ -1135,7 +1136,7 @@ describe "MARK FINISHED tests" do
 			(response.status == 200).should be_true
 		end
 
-		# check if it's been marked finished
+		#TODO check if it's been marked finished
 
 	end
 

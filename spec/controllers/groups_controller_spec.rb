@@ -30,20 +30,20 @@ describe GroupsController do
         	@controller = GroupsController.new
 			end
 
-		# context 'user is not signed in' do
+		context 'user is not signed in' do
 
-		# 	before(:each) do
-		# 		@controller = SessionsController.new
-		# 		delete 'destroy'
-  #       		@controller = GroupsController.new
-		# 		post 'create', :group => {:name => "group name", :description => "desc"}
-		# 	end
+			before(:each) do
+				@controller = SessionsController.new
+				delete 'destroy'
+        		@controller = GroupsController.new
+				post 'create', :group => {:name => "group name", :description => "desc"}
+			end
 
-		# 	it 'should redirect the user' do
-		# 		(response.status == 302).should be_true
-		# 	end
+			it 'should redirect the user' do
+				(response.status == 302).should be_true
+			end
 
-		# end
+		end
 
 		context 'create a group with one member' do
 			
@@ -105,17 +105,6 @@ describe GroupsController do
 			end
 
 		end
-
-  # edit group, given the following params, this will change the 
-  # require user to be logined, and creator of the group
-  # editgroup[id]: group to be edited
-  # editgroup[name]: new name or same name for this group
-  # editgroup[description]: new description
-  # 
-  # Returns the the group changed info
-  #  
-  # return the new group and all the users in this group
-  # look at (creategroup) above for return details
 
 	# edit group
 	describe 'testing EDIT' do
@@ -246,13 +235,68 @@ describe GroupsController do
         		 :password => "player", :password_confirmation => "player"}
         	
         	@controller = SessionsController.new
-        	post 'create', :user => {:username => "takenname", :password => "player"}
+        	post 'create', :user => {:username => "one", :password => "player"}
 
         	@controller = GroupsController.new
-        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3]}
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
+		end
+
+		context 'params incorrect' do
+			
+			before(:each) do
+				@controller = GroupsController.new
+				post 'leavegroup'
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
 
 		end
 
+		context 'user not in group' do
+
+			before(:each) do
+				@controller = SessionsController.new
+				delete 'destroy'
+        		post 'create', :user => {:username => "three", :password => "player"}
+        		@controller = GroupsController.new
+        		post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
+
+		end
+
+		context 'trying to leave self group' do
+
+			before(:each) do
+        		@controller = GroupsController.new
+        		post 'leavegroup', :leave => {:id => 1}
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
+
+		end
+
+		context 'successfully leaves group' do
+
+			before(:each) do
+        		@controller = GroupsController.new
+        		post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			# check params
+
+		end
 
 	end
 
@@ -378,7 +422,7 @@ describe GroupsController do
         	post 'create', :user => {:username => "three", :password => "player"}
 
         	@controller = GroupsController.new
-        	
+
 		end
 
 		describe 'missing parameters' do

@@ -47,7 +47,7 @@ context 'logining in the user' do
             
             @controller = SessionsController.new
             post 'create', :user => {:username => "takenname", :password => "nottherightpassword"}
-
+            
             (response.status = 400).should be_true
 		end
 

@@ -648,33 +648,35 @@ end
   # "created_at":date and time created,
   # "updated_at":date and time updated},
   # "members":{user_id:order, ..., user_id:order}}, ...}
-# describe "TEST get_task_in_range" do
+describe "TEST get_task_in_range" do
 
-# 	context "tasks within month range" do
+  context 'tasks within month range' do
 
-# 		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+    before(:each) do
+      @controller = TasksController.new
+    end
 
-# 		# range is not formatted correctly- end is earlier than start
-# 		it 'should send back a range' do
-# 			post 'task_in_range', :range => {:start => "6-16-2014", :end => "4-16-2014"}
-# 			(response.status = 400).should be_true
-# 		end
+	   it "should send a 400 status" do
+      get 'get_task_in_range', :range => {:start => "4-12-2015", :end => "7-12"}
+		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+			(response.status = 400).should be_true
+		end
 
-# 		# range is only one date
-# 		it 'should send back a range' do
-# 			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
-# 			(response.status = 400).should be_true
-# 		end
+		# range is only one date
+		it 'should send back a range' do
+			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
+			(response.status = 400).should be_true
+		end
 
-# 		# range is not formatted correctly
-# 		it 'should send back a range' do
-# 			post 'task_in_range', :range => {:start => "5-16-2014", :end => "5/16/2014"}
-# 			(response.status = 400).should be_true
-# 		end
+		# range is not formatted correctly
+		it 'should send back a range' do
+			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
+			(response.status = 400).should be_true
+		end
 
-# 	end
+	end
+end
 
-# end
 
 describe "EDIT tests" do
 
@@ -935,7 +937,7 @@ describe "EDIT tests" do
       end
 
       it 'should return the correct task information' do
-          taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
+          taskinfo = "{\"details\":{\"id\":3,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":null"
           (response.body.include? taskinfo).should be_true
      end
 
