@@ -80,7 +80,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.currentMembers = {};
 
   getBillFromModel = function(e) {
-    BillModel.getBillFromServer(
+    BillModel.refresh(
       function(error){
       if(error){
         //TODO
@@ -108,7 +108,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   });
 
   $scope.$watch('billSummary', function(newVal, oldVal){
-
+    
   });
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 

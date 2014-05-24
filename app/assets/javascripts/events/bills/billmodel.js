@@ -95,12 +95,13 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   }
 
   // get bills from server to bill model
-  BillModel.getBillFromServer = function(callback){
+  BillModel.refresh = function(callback){
     $.get("/get_bills")
     .success(function(data, status) {
       console.log("bill get Success: " , data);
 
       // update every bill
+      BillModel.bills = {};
       for (var i in data){
         BillModel.updateBill(data[i]);
       }

@@ -95,7 +95,8 @@
       if(error) {
         toastr.error(error);
       } else {
-        updateGroups();
+        $scope.groupsList = GroupModel.groups;
+        $scope.group_selected = Object.keys($scope.groupsList)[0];
       }
     }, TaskModel, BillModel);
   }
