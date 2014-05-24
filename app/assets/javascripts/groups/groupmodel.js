@@ -13,7 +13,10 @@ this.id = id;
   this.description = description;
   this.creator = creator;
   this.dateCreated = dateCreated;
-  this.members = members;
+  this.members = {};
+  for (var i in members){
+    this.members[members[i].id] = members[i];
+  }
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
