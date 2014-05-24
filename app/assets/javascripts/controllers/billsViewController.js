@@ -477,15 +477,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     }
   }
-  
-  $scope.disableBillInputs = function() {
-    if ($("#bill-split-evenly-checkbox").is(":checked")) {
-      $(".bill-members-amount").prop('disabled', true);
-    }
-    else {
-      $(".bill-members-amount").prop('disabled', false);
-    }
-  }
 
 }]);
 
