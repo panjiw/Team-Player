@@ -176,7 +176,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .success(function(data, status) {
       delete GroupModel.groups[groupID];
-      GroupModel.refreshAll([TaskModel]);   // BillModel when updated
+      GroupModel.refreshAll([TaskModel, BillModel]);
       callback();
     })
     .fail(function(xhr, textStatus, error) {

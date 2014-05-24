@@ -42,7 +42,7 @@ angular.module('myapp').controller("homeViewController",
   }
 
   getBillFromModel = function(e) {
-    BillModel.getBillFromServer(
+    BillModel.refresh(
       function(error){
       if(error){
         //TODO
