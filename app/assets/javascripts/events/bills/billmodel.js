@@ -187,10 +187,28 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     });
   };
 
-  // Set that a member of the bill has paid
-  BillModel.paidBy = function(billID, userID) {
+  BillModel.setPaid = function(billID, callback) {
+    if(!billID) {
+      callback({1:"no bill id provided"});
+    }
 
-  }
+    $.post("/finish_bill",
+    {
+      "bill[id]": billID
+    })
+    .success(function(data, status) {
+      
+        console.log("finished data", data);
+        // updateTask(data.task);
+        // updateGenerator(data.generator);
+
+        
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  };
 
   // //Return all bills.css for this user as a list of Bill objects
   // BillModel.getBills = function() {
