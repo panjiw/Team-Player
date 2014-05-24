@@ -421,4 +421,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
   }
+
+  // initialize me to a variable for filter
+  $scope.myID = UserModel.me;
 }]);
