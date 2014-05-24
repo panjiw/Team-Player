@@ -1,4 +1,5 @@
 class TaskGeneratorsController < ApplicationController
+  include TaskGeneratorsHelper
   # Creates a new task generator and a single task based on that
   # generator where the signed in user is the creator
   # Required:
@@ -90,7 +91,7 @@ class TaskGeneratorsController < ApplicationController
       render :json => {:errors => "The task generator is dead"}, :status => 400
     end
     next_task = new_task @task_generator
-    if next_task.empty?
+    if next_task.errors.empty?
       generator_and_task = {}
       generator = {}
       generator[:details] = @task_generator

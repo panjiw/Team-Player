@@ -137,9 +137,9 @@ class TasksController < ApplicationController
           end
           result = {}
           if next_task
-            result[:details] = task
+            result[:details] = next_task
             result[:members] = {}
-            task.task_actors.each do |a|
+            next_task.task_actors.each do |a|
               result[:members][a[:user_id]] = a[:order]
             end
           end
