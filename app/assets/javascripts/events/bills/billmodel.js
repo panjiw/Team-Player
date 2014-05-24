@@ -7,6 +7,13 @@
 */
 
 //Define a bil object as an event with additional fields:
+//  --id: the bill's id
+//  --group: the group with which this bill is associated
+//  --title: the title of the bill
+//  --description: a more detailed description of the bill
+//  --creator: the id of the creator of this bill
+//  --dateCreated: the date on which the bill was created
+//  --dateDue: the date on which the bill is due
 //  --membersAmountMap: the members associated with the bill, and how much each owes, and whether or not it's paid
 //    --{userid : {due: int, paid: bool, paid_date: date}}
 //  --total: is not explicitly a field, but it is a derived field.
@@ -22,6 +29,9 @@ var Bill = function(id,  groupID, title, description, creatorID, dateCreated, da
   this.amountForEntry = {};
 };
 
+// A "summary entry" is one person's total bill to you, or you two them.
+// The main field is the billsArray, which is the list of bills
+// that make up the bill for the person.
 var SummaryEntry = function(username) {
   this.person_username = username;
   this.total = 0;
@@ -32,6 +42,7 @@ var SummaryEntry = function(username) {
     bill.amountForEntry[this.person_username] = amountForEntry;
     var newTotal = this.total + amountForEntry;
 
+    // round the total to two decimal places because it is currency
     this.total = parseFloat(newTotal.toFixed(2));
   };
 };
@@ -39,8 +50,9 @@ var SummaryEntry = function(username) {
 angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   var BillModel = {};
   BillModel.bills = {};   //ID to bills.css
-  BillModel.summary = {};
+  BillModel.summary = {}; // the summary for this person
 
+  // return the total for this bill
   BillModel.deriveTotal = function(bill){
     var total = 0;
     for (var index in bill.membersAmountMap){
@@ -50,18 +62,19 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     return total;
   };
 
+  // make a "summary" for the user based on all the bills
+  // in BillModel.Bills. 
+  // This should contain a SummaryEntry for each person
+  // you owe, and everybody who owes you money. 
   function makeSummary() {
     BillModel.summary = {youOwe: {}, oweYou: {}};
     for (var i in BillModel.bills){
       // creator is me, people owe me
       if (BillModel.bills[i].creator == UserModel.me){
-
-        // for each person involved in the bill
         for(var j in BillModel.bills[i].membersAmountMap){
+
           // if this person is not me, it is one of the people that owes me
           if (j != UserModel.me){
-
-            // if he has not pay
             if (!BillModel.bills[i].membersAmountMap[j].paid){
               // if the person is not in summary, add an entry
               if(!BillModel.summary.oweYou[j]){
@@ -73,11 +86,10 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
             }
           }
         }
+      } else {  // creator is not me, I owe him
 
-        // creator is not me, I owe him
-      } else {
-
-        // if I have not paid
+        // if I have not paid, then we need to add it into the summary
+        // otherwise, it is irrelevant for now
         if (!BillModel.bills[i].membersAmountMap[UserModel.me].paid){
           var bill_creator_id = BillModel.bills[i].creator;
           var bill_creator_username = UserModel.users[BillModel.bills[i].creator].username;
@@ -86,6 +98,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
           if(!BillModel.summary.youOwe[bill_creator_id]){
             BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
           }
+
           BillModel.summary.youOwe[bill_creator_id].addBill
             (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
         }
@@ -99,17 +112,13 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
      bill.details.user_id, bill.details.created_at, bill.details.due_date, bill.due);
     makeSummary();
-
-    console.log("bill summary made: ", BillModel.summary);
   }
 
-  // get bills from server to bill model
+  // get all bills from server and clear out any
+  // old data in the BillModel
   BillModel.refresh = function(callback){
     $.get("/get_bills")
     .success(function(data, status) {
-      console.log("bill get Success: " , data);
-
-      // update every bill
       BillModel.bills = {};
       for (var i in data){
         BillModel.updateBill(data[i]);
@@ -117,7 +126,6 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("bill get error: ",error);
       callback(JSON.parse(xhr.responseText));
     });
   }
@@ -128,6 +136,8 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     }
   }
 
+  // figure out the total for each member in the member amount
+  // map, rounding to 2 decimal places
   function toDollars(membersAmountMap){
     for (var userID in membersAmountMap) {
       var num = membersAmountMap[userID].due / 100;
@@ -150,12 +160,10 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[members]": makeMembersAmountMap
     })
     .success(function(data, status) {
-      console.log("bill create Success: " , data);
       BillModel.updateBill(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("bill create error: ",error);
       callback(JSON.parse(xhr.responseText));
     });
   };
@@ -163,8 +171,6 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   //Update a bill with all of the fields. If a field is null, it is not updated
   BillModel.editBill = function(billID, groupID, title, description, dateDue, total, makeMembersAmountMap, callback) { // creator ID
     toCents(makeMembersAmountMap);
-
-    /******* the following block of code should be modified and used when backend "edit_bill" is ready ****/
 
     $.post("/edit_bill",
     {
@@ -177,16 +183,16 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[members]": makeMembersAmountMap
     })
     .success(function(data, status) {
-      console.log("bill edit Success: " , data);
       BillModel.updateBill(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("bill edit error: ",error);
       callback(JSON.parse(xhr.responseText));
     });
   };
 
+  // "Pay" this bill to inform the person you owe
+  // that you paid the bill. Then, get store the updated bill
   BillModel.setPaid = function(billID, callback) {
     if(!billID) {
       callback({1:"no bill id provided"});
@@ -197,7 +203,6 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[id]": billID
     })
     .success(function(data, status) {
-      console.log("paid bill", data);
       BillModel.updateBill(data);
 
       callback();
@@ -206,18 +211,5 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       callback(JSON.parse(xhr.responseText));
     });
   };
-
-  // //Return all bills.css for this user as a list of Bill objects
-  // BillModel.getBills = function() {
-  //   //TODO ajax
-
-  //   //Dummy objects for now
-  //   var sevenFalse = [false, false, false, false, false, false, false];
-  //   var dummyBill = new Bill(0, 0, 0, "Dummy Bill", "Pay me!", new Date(), new Date(), false, sevenFalse, {1: 17});
-  //   var fakeBill = new Bill(0, 0, 0, "Fake Bill", "Pay me some more!", new Date(), new Date("5/23/2014"), false, sevenFalse, {1: 15});    
-
-  //   return [dummyBill, fakeBill];
-  // }
-
   return BillModel;
 }]);

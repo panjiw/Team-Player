@@ -7,6 +7,13 @@
 */
 
 //Define a task object as an event with additional fields:
+//  --id: the task's id
+//  --group: the group with which this task is associated
+//  --title: the title of the task
+//  --description: a more detailed description of the task
+//  --creator: the id of the creator of this task
+//  --dateCreated: the date on which the task was created
+//  --dateDue: the date on which the task is due (can be empty for dateless dask)
 //  --members: the members associated with this task
 //  --done: whether this task has been completed
 var Task = function(id, groupID, groupName, title, description, creatorID, dateCreated, dateDue, members, done) {
@@ -24,31 +31,29 @@ var Task = function(id, groupID, groupName, title, description, creatorID, dateC
 
 angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function(GroupModel, UserModel) {
   var TaskModel = {};
-  TaskModel.tasks = {};   //ID to task
-  TaskModel.generators = {};
-  TaskModel.fetchedTasks = false;
+  TaskModel.tasks = {};             // ID to task
+  TaskModel.generators = {};        // ID to task generator
+  TaskModel.fetchedTasks = false;   // we have not got tasks from model yet
 
   // get Tasks from server to Task model.
   TaskModel.refresh = function(callback) {
-    $.get("/get_task") // <-- url can be changed!
-    .success(function(data, status) { // on success, there will be message to console
-      console.log("task get Success: " , data);
-      // update tasks
+    $.get("/get_task")
+    .success(function(data, status) {
+      // make sure to clear old tasks in case any have been deleted
       TaskModel.tasks = {};
       for (var i in data){
         updateTask(data[i]);
       }
+
       callback();
       
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("task get error error: ",error);
-      callback(error);
+      callback(JSON.parse(xhr.responseText));
     });
 
-     $.get("/get_generators") // <-- url can be changed!
-    .success(function(data, status) { // on success, there will be message to console
-      console.log("task gen get Success: " , data);
+     $.get("/get_generators")
+    .success(function(data, status) {
       // update task generator
       for (var i in data){
         updateGenerator(data[i]);
@@ -57,8 +62,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("task gen get error error: ",error);
-      callback(error);
+      callback(JSON.parse(xhr.responseText));
     });
 
   };
@@ -69,9 +73,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
   // get Tasks from server to Task model.
   TaskModel.getTaskGeneratorsFromServer = function(callback) {
-    $.get("/get_generators") // <-- url can be changed!
-    .success(function(data, status) { // on success, there will be message to console
-      console.log("task gen get Success: " , data);
+    $.get("/get_generators")
+    .success(function(data, status) {
       // update task generator
       for (var i in data){
         updateGenerator(data[i]);
@@ -80,113 +83,27 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("task gen get error error: ",error);
       callback(error);
     });
   };
 
-  
-
-  // TaskModel.getTasksArray = function(){
-  //   var myTasks = [];
-  //   var tasks = TaskModel.tasks;
-
-  //   for(var i in tasks){
-  //     // turn members in this task into a string to display
-  //     function memsToString(){
-  //       var str = "";
-  //       var first = true;
-  //       for(var j in tasks[i].members){
-  //         if(first){
-  //           str+= UserModel.users[j].username;
-  //           first = false;
-  //         } else {
-  //           str+= ", "+UserModel.users[j].username;
-  //         }
-  //       }
-  //       return str;
-  //     }
-
-  //     myTasks.push({
-  //       taskID: tasks[i].event.id,
-  //       taskName: tasks[i].event.title,
-  //       taskDesc: tasks[i].event.description,
-  //       dueDate: tasks[i].event.dateDue,
-  //       groupName: GroupModel.groups[tasks[i].event.group].name,
-  //       members: memsToString(),
-  //       creator: tasks[i].event.creator,
-  //       done: tasks[i].done
-  //     });
-  //   }
-  //   console.log("built tasks: ",myTasks);
-  //   return myTasks;
-  // }
-
-  // TaskModel.fetchTasksFromServer = function(callback) {
-  //   // We really only need to ask the server for all tasks
-  //   // the first time, so return if we already have.
-  //   if(TaskModel.fetchedTasks) {
-  //     return;
-  //   }
-
-  //   // Return the date object as a string in the form
-  //   // mm/dd/yyyy. It pads days and months with 0's
-  //   // to ensure that they are 2 chars.
-  //   function mmddyyyy(date) {
-  //     var year = date.getFullYear();
-
-  //     //JS months are 0 based.
-  //     //Also pad it to be MM if it is month 1-9
-  //     var month = (1 + date.getMonth()).toString();
-  //     month = month.length > 1 ? month : '0' + month;
-
-  //     //Pad it to be DD if it is day 1-9 of the month
-  //     var day = date.getDate().toString();
-  //     day = day.length > 1 ? day : '0' + day;
-  //     return month + "/" + day + "/" + year;
-  //   }
-
-  //   var startDate = new Date();
-  //   startDate.setMonth(startDate.getMonth() - 1);
-
-  //   var endDate = new Date();
-  //   endDate.setMonth(endDate.getMonth() + 1);
-
-  //   // Not changing info, so this is a get request
-  //   $.get("/view_tasks",
-  //   {
-  //     "task[startDate]": mmddyyyy(startDate),
-  //     "task[endDate]": mmddyyyy(endDate)
-  //   })
-  //   .success(function(data, status) {
-  //     for(var i = 0; i < data.length; i++) {
-  //       TaskModel.updateTask(data[i]);
-  //     }
-  //     callback();
-  //     TaskModel.fetchedTasks = true;
-  //   })
-  //   .fail(function(xhr, textStatus, error) {
-  //     callback(JSON.parse(xhr.responseText));
-  //   });
-  // }
-
   // update a task into the TaskModel.tasks map
   function updateTask(task){
     var members = {};
+
+    // grab the entire user objects for each user from the model
     for (var id in task.members){
       members[id] = UserModel.users[id];
-      if(!members[id].rank) members[id].rank = {};
-      members[id].rank[task.details.id] = task.members[id];
     }
+
+    // update or add to our saved tasks
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
       task.details.due_date, members, task.details.finished_date);
   }
 
-  //Create and return a task with the given parameters. This updates to the database, or returns
-  //error codes otherwise...
   TaskModel.createTask = function(groupID, name, description, dateDue, members, callback) {
-    $.post("/create_task", // <<----- url can be changed.
+    $.post("/create_task",
     {
       "task[group_id]": groupID,
       "task[title]": name,
@@ -195,37 +112,32 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       "task[members]": members,
       "task[finished]": false
     })
-    .success(function(data, status) { // on success, there will be message to console
-      console.log("task create Success: " , data);
+    .success(function(data, status) {
       updateTask(data);
       callback();
       
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("task create error: ",error);
       callback(JSON.parse(xhr.responseText));
     });
   };
 
+  // delete a given task. Note: only the creator of a task
+  // can delete it--an error message will be displayed otherwise
   TaskModel.deleteTask = function(taskID, callback) {
     $.post("/delete_task", 
-      {
-        "task[id]": taskID
-      })
-      .success(function(data, status) { // on success, there will be message to console
-        console.log("task delete Success: " );
-        callback();
-        
-      })
-      .fail(function(xhr, textStatus, error) {
-        console.log("task delete error: ");
-        callback(JSON.parse(xhr.responseText));
-      });
+    {
+      "task[id]": taskID
+    })
+    .success(function(data, status) {
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
   }
 
   TaskModel.editTask = function(taskID, groupID, name, description, dateDue, finished, members, callback, generatorID) {
-    // toastr.warning("edit task is called. change 'editTask' function in Taskmodel.js to implement");
-
     // if task was originally special
     if (generatorID) {
       // first remove the original task
@@ -239,8 +151,6 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
           delete TaskModel.tasks[taskID];
         }
       });
-    
-
     } else {
       $.post("/edit_task", 
       {
@@ -253,65 +163,58 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         "task[members]": members
       })
       .success(function(data, status) { // on success, there will be message to console
-        console.log("task edit Success: " , data);
         updateTask(data);
         callback();
         
       })
       .fail(function(xhr, textStatus, error) {
-        console.log("task edit error: ",error);
         callback(JSON.parse(xhr.responseText));
       });
-    }
-
-    
+    }  
   };
 
   // Create a task that might be cycling or repeating
   TaskModel.createTaskSpecial = function(groupID, name, description, dateDue, members, cycle, repostArray, callback) {
-     $.post("/create_special_task", // <<----- url can be changed.
+     $.post("/create_special_task",
     {
       "task[group_id]": groupID,
       "task[title]": name,
       "task[description]": description,
-      "task[due_date]": dateDue,   // <-- repeating tasks should know when to stop repeating as well
+      "task[due_date]": dateDue,   // repeating tasks should know when to stop repeating as well
       "task[members]": members,
       "task[cycle]": cycle,
       "task[repeat_days]": repostArray,
       "task[finished]": false
     })
-    .success(function(data, status) { // on success, there will be message to console
-      console.log("task special create Success: " , data);
+    .success(function(data, status) {
       updateTask(data.task);
       updateGenerator(data.generator);
       callback();
       
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("task special create error: ",error);
       callback(JSON.parse(xhr.responseText));
     });
   };
 
+  // delete a "special" task--i.e. one that either repeats
+  // or cycles based on its task generator.
   TaskModel.deleteTaskSpecial = function(generatorID, callback) {
     $.post("/delete_special_task", 
       {
         "task[id]": generatorID
       })
-      .success(function(data, status) { // on success, there will be message to console
-        console.log("task special delete Success: " );
+      .success(function(data, status) {
         callback();
         
       })
       .fail(function(xhr, textStatus, error) {
-        console.log("task special delete error: ");
         callback(JSON.parse(xhr.responseText));
       });
   }
 
-  TaskModel.editTaskSpecial = function(taskID, groupID, name, description, dateDue, finished, members, cycle, repostArray, callback, generatorID) {
-    //toastr.warning("edit task special is called. change 'editTaskSpecial' function in Taskmodel.js to implement");
-
+  TaskModel.editTaskSpecial = function(taskID, groupID, name, description, dateDue, finished, 
+                                        members, cycle, repostArray, callback, generatorID) {
     // if originally normal task
     if (!generatorID){
       TaskModel.deleteTask(taskID, function(error){
@@ -323,8 +226,6 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
           delete TaskModel.tasks[taskID];
         }
       });
-
-      
     } else {
       $.post("/edit_special_task", 
       {
@@ -338,8 +239,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         "task[finished]": finished,
         "task[repeat_days]": repostArray
       })
-      .success(function(data, status) { // on success, there will be message to console
-        console.log("task edit special Success: " , data);
+      .success(function(data, status) {
         delete TaskModel.tasks[taskID];
         updateTask(data.task);
         updateGenerator(data.generator);
@@ -347,12 +247,9 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         
       })
       .fail(function(xhr, textStatus, error) {
-        console.log("task edit special error: ",error);
         callback(JSON.parse(xhr.responseText));
       });
     }
-
-    
   };
 
   //Set the given task as finished, and update to the database
@@ -366,9 +263,11 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       "task[id]": taskID
     })
     .success(function(data, status) {
+      // delete the given task, or if it is special,
+      // set the appropriate properties inside it
+      // marking that one iteration is finished
       delete TaskModel.tasks[taskID];
       if (data.task){
-        console.log("finished data", data);
         updateTask(data.task);
         updateGenerator(data.generator);
       }
@@ -379,16 +278,5 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       callback(JSON.parse(xhr.responseText));
     });
   };
-
-  //Return all tasks for this user as a list of Task objects
-  // TaskModel.getTasks = function() {
-  //   var taskArray = [];
-  //   for(task in TaskModel.tasks) {
-  //     taskArray.push(TaskModel.tasks[task]);
-  //   }
-
-  //   return taskArray;
-  // };
-
   return TaskModel;
 }]);
