@@ -53,7 +53,8 @@ class BillsController < ApplicationController
       params[:bill][:members].each do |m|
         total_count = total_count + m[1].to_f
       end
-      if total_count != @bill[:total_due]
+      diff = total_count - @bill[:total_due]
+      if diff.abs > 0.01 
         @bill.destroy
         render :json => {:errors => "Total due is not divided correctly"}, :status => 400
       else
