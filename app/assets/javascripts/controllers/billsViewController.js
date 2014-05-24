@@ -397,8 +397,11 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     var total = 0;
       $('#' + p + 1 + " input:checkbox").each(function () {
         var str = $(this).val();
-        var value = str.substr(0,str.indexOf(' '));
-        total += (this.checked ? parseInt(value) : 0);
+        // var value = (parseFloat(str)).toFixed(2);
+        
+        total += (this.checked ? parseFloat(str) : 0);
+        var roundedTotal = total.toFixed(2);
+        total = parseFloat(roundedTotal);
       });
     $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
   }
