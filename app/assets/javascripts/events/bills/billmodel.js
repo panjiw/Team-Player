@@ -197,12 +197,9 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       "bill[id]": billID
     })
     .success(function(data, status) {
-      
-        console.log("finished data", data);
-        // updateTask(data.task);
-        // updateGenerator(data.generator);
+      console.log("paid bill", data);
+      BillModel.updateBill(data);
 
-        
       callback();
     })
     .fail(function(xhr, textStatus, error) {
