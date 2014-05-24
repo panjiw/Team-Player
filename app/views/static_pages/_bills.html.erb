@@ -228,9 +228,9 @@
                                       <label for="{{b.id}}">
                                         <div style="">
                                           <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
-                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.total}} {{b.id}}">
+                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry}} {{b.id}}">
                                             <h4 class="bill-member">{{b.title}}</h4>
-                                            <h4 class="bill-amount">${{b.total}}</h4>
+                                            <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
                                           </div>
                                         </div>
                                       </label>
@@ -261,7 +261,7 @@
                                             <span class="glyphicon glyphicon-pencil"></span>
                                           </button> {{b.title}}
                                         </h4>
-                                        <h4 class="bill-amount">${{b.total}}</h4>
+                                        <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
                                     </div>
                                 </div>
                             </div>

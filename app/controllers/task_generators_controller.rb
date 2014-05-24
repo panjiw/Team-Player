@@ -1,4 +1,5 @@
 class TaskGeneratorsController < ApplicationController
+  include TaskGeneratorsHelper
   # Creates a new task generator and a single task based on that
   # generator where the signed in user is the creator
   # Required:
@@ -41,13 +42,18 @@ class TaskGeneratorsController < ApplicationController
       end
       @task_generator[:repeat_days] = {}
       day = 1
+      false_days = 0
       params[:task][:repeat_days].each do |d|
         if d.to_bool
           @task_generator[:repeat_days][day] = true
         else
           @task_generator[:repeat_days][day] = false
+          false_days += 1
         end
         day += 1
+      end
+      if false_days >= 7
+        @task_generator[:repeat_days] = nil
       end
     end
     if @task_generator.save
@@ -90,7 +96,7 @@ class TaskGeneratorsController < ApplicationController
       render :json => {:errors => "The task generator is dead"}, :status => 400
     end
     next_task = new_task @task_generator
-    if next_task.empty?
+    if next_task.errors.empty?
       generator_and_task = {}
       generator = {}
       generator[:details] = @task_generator

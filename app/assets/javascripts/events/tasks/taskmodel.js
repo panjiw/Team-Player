@@ -233,6 +233,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         } else {
           // then create a normal task
           TaskModel.createTask(groupID, name, description, dateDue, members, callback);
+
+          delete TaskModel.tasks[taskID];
         }
       });
     
@@ -316,6 +318,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         } else {
           // then create a normal task
           TaskModel.createTaskSpecial(groupID, name, description, dateDue, members, cycle, repostArray, callback);
+          delete TaskModel.tasks[taskID];
         }
       });
 
@@ -335,6 +338,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task edit special Success: " , data);
+        delete TaskModel.tasks[taskID];
         updateTask(data.task);
         updateGenerator(data.generator);
         callback();
