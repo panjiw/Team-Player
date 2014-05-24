@@ -141,7 +141,7 @@
               </div>
                                 <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
                                 ng-options="mem.username for mem in currentMembers"></select> -->
-              <input type="checkbox" class="large" id="bill-split-evenly-checkbox" ng-click="splitEvenly(); disableBillInputs()"/>
+              <input type="checkbox" class="large" id="bill-split-evenly-checkbox" ng-click="splitEvenly()"/>
               <span>Split Evenly</span>
             </div>
           </div>
@@ -256,7 +256,7 @@
                         <div id="{{entry.person_username}}2" class="bill-pop">
                             <div class="bills-to-pay-you">
                                 <div ng-repeat="b in entry.billsArray">
-                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-content="Due: {{b.dateDue}}<br/>{{b.description}}" data-placement="right">
+                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
                                         <h4 class="bill-member">
                                           <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
                                             <span class="glyphicon glyphicon-pencil"></span>
