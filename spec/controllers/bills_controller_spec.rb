@@ -32,7 +32,21 @@ describe "testing NEW" do
 		
 		end
 
-	# tests when user does not in do not exist
+	context 'the user is not logged in' do
+
+		before(:each) do
+			@controller = SessionsController.new
+			delete 'destroy'
+			@controller = BillsController.new
+			post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					 :description => "desc", :due_date => "2014-05-17"}
+		end
+
+		it 'should redirect the user' do
+			(response.status == 302).should be_true
+		end
+
+	end
 
 	# test creating a bill functions correctly
 	context 'the user creates a bill with one user' do
@@ -149,6 +163,22 @@ describe "testing NEW" do
 
 	end
 
+	context 'the user creates a bill where a member does not exist' do
+
+		before(:each) do
+			@controller = SessionsController.new
+        	post 'create', :user => {:username => "takenname", :password => "player"}
+        	@controller = BillsController.new
+			post 'new', :bill => {:group_id => 1, :title => "testing title", :total_due => 30, :members => {"9" => 20}, 
+				 :description => "desc", :due_date => "2014-05-17"}
+		end
+
+		it 'should return a 400 status' do
+			(response.status == 400).should be_true
+		end
+
+	end
+
 	# tests creating a bill when prices do not add up
 	context 'the user creates a bill where prices do not add up' do
 		
@@ -181,7 +211,7 @@ describe "testing NEW" do
 end
 
 #tests for getbill
-describe "testing getbill" do	
+describe "GETALL tests" do	
 	# tests what is returned when the user isn't signed in
 	context 'user is not signed in' do
 		it 'should not show bills' do
@@ -850,25 +880,141 @@ describe "EDIT tests" do
 
 	end
 
+	# change total sum but only one user
+	describe 'edit bill individual user dues' do
 
+		before(:each) do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 60, :members => {"1" => 30,"2" => 30}, 
+					 :description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should return a 200 status' do
+			(response.status == 200).should be_true
+		end
+
+		it 'should have the correct user information' do
+			userinfo = "\"1\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct user informatin' do
+			userinfo = "\"2\":{\"due\":30,\"paid\":false,\"paid_date\":null"
+			(response.body.include? userinfo).should be_true
+		end
+
+		it 'should have the correct bill information' do
+			billinfo = "\"details\":{\"id\":5,\"group_id\":6,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2015-05-05\",\"total_due\":60"
+			(response.body.include? billinfo).should be_true
+		end
+
+	end
+
+	# bill should not be editted cases
+	describe 'invalid bill editted' do
+
+		it 'should not edit bill because new user not in group' do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"5" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+		it 'should not edit bill because new user does not exist' do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"9" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end		
+
+		it 'should not edit bill because group does not exist' do
+			post 'edit', :bill => {:id => 5, :group_id => 99, :title => "title", :total_due => 50, :members => {"1" => 30,"5" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+		it 'should not edit bill because multiple prices dont add up' do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 10,"5" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+		it 'should not edit bill because one prices does not add up' do
+			post 'edit', :bill => {:id => 1, :group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 5}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+		it 'should not edit bill because prices are above total' do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 20, :members => {"1" => 30,"5" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+		it 'should not create bill because user does not exist' do
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"99" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+			(response.status == 400).should be_true
+		end
+
+	end
+
+	context 'the user does not have permission to edit the bill' do
+
+		before(:each) do 
+			@controller = SessionsController.new
+			delete 'destroy'
+			post 'create', :user => {:username => "five", :password => "player"}
+			@controller = BillsController.new
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"2" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should return a 400 status' do
+			(response.status == 400).should be_true
+		end
+
+	end
+
+	context "the user is not signed in" do
+
+		before(:each) do 
+			@controller = SessionsController.new
+			delete 'destroy'
+			@controller = BillsController.new
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"2" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should redirect the user' do
+			(response.status == 302).should be_true
+		end
+
+	end
+	# change when user has paid things already - TODO paid
+
+	context 'added user does not exist' do
+
+		before(:each) do 
+			@controller = BillsController.new
+			post 'edit', :bill => {:id => 5, :group_id => 6, :title => "title", :total_due => 50, :members => {"1" => 30,"9" => 20}, 
+				:description => "desc", :due_date => "2015-05-05"}
+		end
+
+		it 'should return status 400' do
+			(response.status == 400).should be_true
+		end
+
+	end
 
 end
 
 
-# describe "EDIT tests" do
-
-#   # edit one aspect for each test
-
-#   # edit out description
-
-#   # edit out due date
-
-#   # same functionality tests as new otherwise 
-
-#   # not correct permission
+# mark finished
+describe "MARK FINISHED tests" do
 
 
-# end
+end
+
+# delete
+
 
 
 end

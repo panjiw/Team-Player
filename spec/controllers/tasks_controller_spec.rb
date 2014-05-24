@@ -32,6 +32,21 @@ describe TasksController do
 # new
 describe "NEW tests" do
 
+    describe 'user is not signed in' do
+
+      before(:each) do
+        @controller = SessionsController.new
+        delete 'destroy'
+        @controller = TasksController.new
+        post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
+      end
+
+      it 'should return a 302 status and redirect the user' do
+        (response.status == 302).should be_true
+      end
+
+    end
+
     # correct with only required fields
     describe 'only required fields inputed' do
 
@@ -463,6 +478,21 @@ describe "GETALL tests" do
 
   end
 
+  context 'the user is not logged in' do
+
+    before(:each) do
+        @controller = SessionsController.new
+        delete 'destroy'
+        @controller = TasksController.new
+        post 'new', :task => {:group_id => "6", :title => "second", :finished => false, :members => [4]}
+    end
+
+    it 'should redirect the user' do
+      (response.status == 302).should be_true
+    end
+
+  end
+
   context 'the user has more than one task they did not create themselves' do
 
   end
@@ -522,6 +552,19 @@ describe 'MARK_FINISHED tests' do
 
   # end
 
+  # context 'the task does not exist' do
+
+  #    before(:each) do
+  #     @controller = TasksController.new
+  #     post 'mark_finished', :task => {:id => "99"}
+  #   end
+
+  #   it 'it should return a 400 status' do
+  #     (response.status == 400).should be_true
+  #   end
+
+  # end
+
   # not a member of the task
   context 'the user is not a member of the task' do
 
@@ -548,23 +591,41 @@ describe 'MARK_FINISHED tests' do
       (response.status == 200).should be_true
     end
 
-    it 'should return the correct finished information' do
-      finishedinfo = "\"finished\":true"
-      (response.body.include? finishedinfo).should be_true
-    end
+    #TODO
+    # it 'should return the correct finished information' do
+    #   finishedinfo = "\"finished\":true"
+    #   (response.body.include? finishedinfo).should be_true
+    # end
 
-    it 'should return the correct task information' do
-        taskinfo = "\"details\":{\"id\":3,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
-        (response.body.include? taskinfo).should be_true
-    end
+    # it 'should return the correct task information' do
+    #     taskinfo = "\"details\":{\"id\":3,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
+    #     (response.body.include? taskinfo).should be_true
+    # end
 
-    it 'should return the correct member information' do
-      memberinfo = "\"members\":{\"2\":0}"
-      (response.body.include? memberinfo).should be_true
-    end
+    # it 'should return the correct member information' do
+    #   memberinfo = "\"members\":{\"2\":0}"
+    #   (response.body.include? memberinfo).should be_true
+    # end
 
   end
 
+  context 'the task is already finished' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => "3"}
+      @controller = SessionsController.new
+      delete 'destroy'
+      post 'create', :user => {:username => "one", :password => "player"}
+      @controller = TasksController.new
+      post 'mark_finished', :task => {:id => "3"}
+    end
+
+    it 'it should return a 400 status' do
+      (response.status == 400).should be_true
+    end
+
+  end
 
   # adding self task ?
 
@@ -627,6 +688,22 @@ describe "EDIT tests" do
     post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :description => "desc"}
     post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2015-05-05"}
   end
+
+
+  describe 'user is not signed in' do
+
+      before(:each) do
+        @controller = SessionsController.new
+        delete 'destroy'
+        @controller = TasksController.new
+        post 'edit', :task => {:id => 1, :group_id => "1", :title => "title", :finished => false, :members => [1]}
+      end
+
+      it 'should return a 302 status and redirect the user' do
+        (response.status == 302).should be_true
+      end
+
+    end
 
   # edit one aspect for each test
   describe 'only title changed' do
@@ -918,6 +995,37 @@ describe "EDIT tests" do
 
   end
 
+  describe 'user attempted to add does not exist' do
+
+      before(:each) do
+        @controller = SessionsController.new
+        post 'create', :user => {:username => "one", :password => "player"}
+        @controller = TasksController.new
+        post 'edit', :task => {:id => "3",:group_id => "6", :title => "title", :finished => false, :members => [9]}
+      end
+
+     it 'should return a 400 status' do
+        (response.status == 400).should be_true
+      end
+
+
+  end
+
+  # describe 'task not a part of the group' do
+
+  #   before(:each) do
+  #       @controller = SessionsController.new
+  #       post 'create', :user => {:username => "one", :password => "player"}
+  #       @controller = TasksController.new
+  #       post 'edit', :task => {:id => "2",:group_id => "1", :title => "title", :finished => false, :members => [1]}
+  #     end
+
+  #    it 'should return a 400 status' do
+  #       (response.status == 400).should be_true
+  #     end
+
+  # end
+
   describe 'user is not part of group' do
 
       before(:each) do
@@ -962,6 +1070,68 @@ describe "EDIT tests" do
 
 
 end
+
+
+# delete
+describe 'DELETE tests' do
+
+  before(:each) do
+    @controller = TasksController.new
+    post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1]}
+  end
+
+  # user not logged in
+  describe 'user is not logged in' do
+
+    before(:each) do
+      @controller = SessionsController.new
+      delete 'destroy'
+      @controller = TasksController.new
+      delete 'delete', :task => {:id => 1}
+    end
+
+    it 'should redirect the user' do
+      (response.status == 302).should be_true
+    end
+
+  end
+
+  # user not authorized
+  describe 'user is not logged in' do
+
+    before(:each) do
+      @controller = SessionsController.new
+      delete 'destroy'
+      post 'create', :user => {:username => "five", :password => "player"}
+      @controller = TasksController.new
+      delete 'delete', :task => {:id => 1}
+    end
+
+    it 'should return a 400 status' do
+      (response.status == 400).should be_true
+    end
+
+  end
+
+  # delete is possible
+  describe 'the delete is authorized' do
+
+    before(:each) do
+      @controller = TasksController.new
+      delete 'delete', :task => {:id => 1}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    # check if it was deleted
+    # check returns
+
+  end
+
+end
+
 
 
 

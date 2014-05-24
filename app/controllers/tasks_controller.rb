@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   def new
     if !view_context.signed_in?
       redirect_to '/'
-    end
+    else
     @task = Task.new(group_id: params[:task][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:task][:title],
@@ -60,6 +60,7 @@ class TasksController < ApplicationController
     else
       render :json => {:errors => @task.errors.full_messages}, :status => 400
     end
+  end
   end
 
   # Returns all the tasks of the signed in user

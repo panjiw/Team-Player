@@ -30,6 +30,21 @@ describe GroupsController do
         	@controller = GroupsController.new
 			end
 
+		# context 'user is not signed in' do
+
+		# 	before(:each) do
+		# 		@controller = SessionsController.new
+		# 		delete 'destroy'
+  #       		@controller = GroupsController.new
+		# 		post 'create', :group => {:name => "group name", :description => "desc"}
+		# 	end
+
+		# 	it 'should redirect the user' do
+		# 		(response.status == 302).should be_true
+		# 	end
+
+		# end
+
 		context 'create a group with one member' do
 			
 			before(:each) do

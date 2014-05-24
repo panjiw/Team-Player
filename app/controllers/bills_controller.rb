@@ -39,7 +39,7 @@ class BillsController < ApplicationController
   def new
     if !view_context.signed_in?
       redirect_to '/'
-    end
+    else
     @bill = Bill.new(group_id: params[:bill][:group_id],
                      user_id: view_context.current_user[:id],
                      title: params[:bill][:title],
@@ -92,6 +92,7 @@ class BillsController < ApplicationController
     else
       render :json => {:errors => @bill.errors.full_messages}, :status => 400
     end
+  end
   end
 
   # Returns all the bills of the signed in user
