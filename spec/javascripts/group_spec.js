@@ -1,7 +1,3 @@
-function string(obj) {
-  return JSON.stringify(obj);
-}
-
 describe("Group Model Tests", function() {
   var  GroupModel, self, other,selfExpected, otherExpected;
   beforeEach(function() { 
@@ -42,10 +38,13 @@ describe("Group Model Tests", function() {
   });
 
   it("Updating groups work", function() {
+    expect(GroupModel.groups).toEqual({});
+
     GroupModel.updateGroup(self);
     GroupModel.updateGroup(other);
 
-    expect(string(GroupModel.groups)).toEqual(string({0: selfExpected, 20: otherExpected}));
+    expect(GroupModel.groups[0]).toBeDefined();
+    expect(GroupModel.groups[20]).toBeDefined();
   });
 
   it("refresh all works", function() {
