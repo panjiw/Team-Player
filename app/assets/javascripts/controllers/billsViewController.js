@@ -87,7 +87,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       } else{
         //TODO
         $scope.$apply(function(){
-          buildBills();
+          // buildBills();
+          $scope.billSummary = BillModel.summary;
         });
       }
     });
@@ -106,6 +107,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     console.log('group list in bill changed');
   });
 
+  $scope.$watch('billSummary', function(newVal, oldVal){
+
+  });
+
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
     console.log('group selected');
     $scope.currentMembers = $scope.newBillGroup.members;
@@ -116,10 +121,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     return user.id != UserModel.me;
   }
   
-  function buildBills(){
-    buildBillsList();
-    buildBillsMap();
-  }
+  // function buildBills(){
+  //   buildBillsList();
+  //   buildBillsMap();
+  // }
 
   $scope.$watch('billsYouOweMap', function(newVal, oldVal){
     console.log('billsYouOweMap changed');
@@ -139,49 +144,46 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   //{person:'Member1', amount: 12, why: 'Bought Lunch'}
 
-  function buildBillsList(){
-    $scope.billsYouOwe = [];
-    $scope.billsOweYou = [];
-    $scope.billsOweYouMap =[];
-    $scope.billsYouOweMap =[];
+  // function buildBillsList(){
+  //   $scope.billsYouOwe = [];
+  //   $scope.billsOweYou = [];
+  //   $scope.billsOweYouMap =[];
+  //   $scope.billsYouOweMap =[];
 
-    var bills = BillModel.bills;
-    console.log("bills is ", bills);
-    for(var i in bills){
-      if(bills[i].creator == UserModel.me){
-        for(var j in bills[i].membersAmountMap){
-          console.log("creater is me, bills[i]: ",bills[i]);
-          if (j != UserModel.me){
-            console.log("users,",UserModel.users);
-            $scope.billsOweYou.push({
-              person: UserModel.users[j].firstname, 
-              amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].title,
-              id: bills[i].id,
-              desc: bills[i].description,
-              due: bills[i].dateDue
-            });
-          }
-        }
+  //   var bills = BillModel.bills;
+  //   for(var i in bills){
+  //     if(bills[i].creator == UserModel.me){
+  //       for(var j in bills[i].membersAmountMap){
+  //         if (j != UserModel.me){
+  //           $scope.billsOweYou.push({
+  //             person: UserModel.users[j].firstname, 
+  //             amount: bills[i].membersAmountMap[j].due, 
+  //             why: bills[i].title,
+  //             id: bills[i].id,
+  //             desc: bills[i].description,
+  //             due: bills[i].dateDue
+  //           });
+  //         }
+  //       }
         
-      } else {
-        for(var j in bills[i].membersAmountMap){
-          console.log("creater is not me, bills[i]: ",bills[i]);
-          if (j == UserModel.me){
-            $scope.billsYouOwe.push({
-              person: UserModel.users[bills[i].creator].firstname, 
-              amount: bills[i].membersAmountMap[j].due, 
-              why: bills[i].title,
-              id: bills[i].id,
-              desc: bills[i].description,
-              due: bills[i].dateDue
-            });
-          }
-        }
+  //     } else {
+  //       for(var j in bills[i].membersAmountMap){
+  //         console.log("creater is not me, bills[i]: ",bills[i]);
+  //         if (j == UserModel.me){
+  //           $scope.billsYouOwe.push({
+  //             person: UserModel.users[bills[i].creator].firstname, 
+  //             amount: bills[i].membersAmountMap[j].due, 
+  //             why: bills[i].title,
+  //             id: bills[i].id,
+  //             desc: bills[i].description,
+  //             due: bills[i].dateDue
+  //           });
+  //         }
+  //       }
 
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
 
   var buildAmountMap = function(members){
     var map = {};
@@ -233,7 +235,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         }
       } else{
         $scope.$apply(function(){
-          buildBills();
+          // buildBills();
+          $scope.billSummary = BillModel.summary;
           initNewBillData();
         });
         toastr.success("Bill Created!");
@@ -284,7 +287,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         }
       } else{
         $scope.$apply(function(){
-          buildBills();
+          // buildBills();
+          $scope.billSummary = BillModel.summary;
           initEditBillData();
         });
         toastr.success("Bill Edited!");
@@ -302,72 +306,72 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   };
     
   // Fills in billsYouOweMap from billsYouOwe
-  function buildBillsMapYouOwe() {
-    $.each($scope.billsYouOwe, function(bill) {
-      var found = false;
-      var bill = this;
-      $.each($scope.billsYouOweMap, function(member) {
-        if (this.person == bill.person) {
-          this.amount += bill.amount;
-          if (bill.due != null) {
-            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
-          }
-          else {
-            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
-          }
-          found = true;
-          return false;
-        }
-      });
-      if (!found) {
-        if (bill.due != null) {
-          $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-            why: bill.why, desc: bill.desc, due: bill.due}]});
-        }
-        else {
-          $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-            why: bill.why, desc: bill.desc, due: "No Date"}]});  
-        }
-      }
-    });
-  }
+  // function buildBillsMapYouOwe() {
+  //   $.each($scope.billsYouOwe, function(bill) {
+  //     var found = false;
+  //     var bill = this;
+  //     $.each($scope.billsYouOweMap, function(member) {
+  //       if (this.person == bill.person) {
+  //         this.amount += bill.amount;
+  //         if (bill.due != null) {
+  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
+  //         }
+  //         else {
+  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
+  //         }
+  //         found = true;
+  //         return false;
+  //       }
+  //     });
+  //     if (!found) {
+  //       if (bill.due != null) {
+  //         $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+  //           why: bill.why, desc: bill.desc, due: bill.due}]});
+  //       }
+  //       else {
+  //         $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+  //           why: bill.why, desc: bill.desc, due: "No Date"}]});  
+  //       }
+  //     }
+  //   });
+  // }
     
   // Fills in billsOweYouMap from billsOweYou
-  function buildBillsMapOweYou() {
-    console.log("building bills map");
-    $.each($scope.billsOweYou, function(bill) {
-      var found = false;
-      var bill = this;
-      $.each($scope.billsOweYouMap, function(member) {
-        if (this.person == bill.person) {
-          this.amount += bill.amount;
-          if (bill.due != null) {
-            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
-          }
-          else {
-            this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
-          }
-          found = true;
-          return false;
-        }
-      });
-      if (!found) {
-        if (bill.due != null) {
-          $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-            why: bill.why, desc: bill.desc, due: bill.due}]});
-        }
-        else {
-          $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-            why: bill.why, desc: bill.desc, due: "No Date"}]});  
-        }
-      }
-    });
-  }
+  // function buildBillsMapOweYou() {
+  //   console.log("building bills map");
+  //   $.each($scope.billsOweYou, function(bill) {
+  //     var found = false;
+  //     var bill = this;
+  //     $.each($scope.billsOweYouMap, function(member) {
+  //       if (this.person == bill.person) {
+  //         this.amount += bill.amount;
+  //         if (bill.due != null) {
+  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
+  //         }
+  //         else {
+  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
+  //         }
+  //         found = true;
+  //         return false;
+  //       }
+  //     });
+  //     if (!found) {
+  //       if (bill.due != null) {
+  //         $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+  //           why: bill.why, desc: bill.desc, due: bill.due}]});
+  //       }
+  //       else {
+  //         $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
+  //           why: bill.why, desc: bill.desc, due: "No Date"}]});  
+  //       }
+  //     }
+  //   });
+  // }
 
-  function buildBillsMap(){
-    buildBillsMapOweYou();
-    buildBillsMapYouOwe();
-  }
+  // function buildBillsMap(){
+  //   buildBillsMapOweYou();
+  //   buildBillsMapYouOwe();
+  // }
 
   // function for datepicker to popup
   $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
