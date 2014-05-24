@@ -122,7 +122,7 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .home-todays {
-  height: 100px;
+  height: 150px;
   overflow-y: auto;
 }
 
