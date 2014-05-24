@@ -2,7 +2,7 @@ desc "This task is called by the Heroku scheduler add-on"
 require "#{Rails.root}/app/helpers/task_generators_helper"
 include TaskGeneratorsHelper
 task :generate_tasks => :environment do
-  yesterday = Date.today
+  yesterday = Date.today - 1
   TaskGenerator.where("finished = ?", false).find_each do |g|
     current_task = Task.find(g[:current_task_id])
     if current_task
