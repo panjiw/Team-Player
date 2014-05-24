@@ -16,10 +16,24 @@
   $scope.currentUser = UserModel.get(UserModel.me);
   $scope.newMemberList = [$scope.currentUser];
 
+  function selectMeGroup() {
+    if(Object.keys($scope.groupsList).length != 0) {
+      console.log("Entered watch");
+      for(var group in $scope.groupsList) {
+        console.log($scope.groupsList[group]);
+        if($scope.groupsList[group].isSelfGroup) {
+          $scope.group_selected = group;
+          $scope.currentMembers = $scope.groupsList[group].members;
+        }
+      }
+    }
+  }
+
   // synchronize the group list and current user
   // with those of the appropriate models
   $scope.$watch('groupsList', function(newVal, oldVal) {
-    $scope.group_selected = Object.keys($scope.groupsList)[0];
+    $scope.groupsList = newVal;
+    selectMeGroup();
   });
   $scope.$watch('currentUser', function(newVal, oldVal) {});
 
