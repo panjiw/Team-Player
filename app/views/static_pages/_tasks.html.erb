@@ -38,8 +38,7 @@
                             <div class="help-info">
                               Click on "Add Task" to create a task.<br>
                               Tasks can be cyclic, repeating, both, or neither. <br>
-                              <i>Cyclic Tasks</i> mean that tasks can be rotated between checkmarked members - given to the next when one has finished. <br>
-                              <i>Repeat Weekly</i> will automatically create bills each week due on your selected date.
+                              See Next Page to read more about these options.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "tasks-page2.png" %></div>
@@ -53,14 +52,17 @@
                                 <button ng-click="taskNext(2)" class="btn btn-default">Next</button>
                               </div>
                             </div>
-                        </div> <!-- adding tasks -->
+                        </div>
                         <div style="display:none" id="taskHelp3">
-                          <h4>Editing/Completing Tasks</h4>
+                          <h4>Due Dates, Cycling, and Repeating</h4>
                             <div class="help-info">
-                              Click on a task to see a pop up containing more information about it. Here, you can click "Completed" if you're done, or "Edit" if you want to update it.
+                              <i>Due Dates</i> set deadlines for tasks.<br>
+                              <i>Cyclic Tasks</i> mean that tasks can be rotated between checkmarked members - given to the next when one has finished. <br>
+                              <i>Repeat Weekly</i> will automatically create bills each week due on your selected date.<br><br>
+                              All cycling tasks must also repeat!
                             </div>
                             <hr>
-                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><br><%= image_tag "tasks-page3.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -68,15 +70,17 @@
                               </div>
                               <div class="col-md-8"></div>
                               <div class="col-md-2">
-                                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button ng-click="taskNext(3)" class="btn btn-default">Next</button>
                               </div>
                             </div>
                         </div>
-<!--                         <div style="display:none"  id="taskHelp4">
-                          <h3>Page4</h3>
-                            <div class="help-info"></div>
+                        <div style="display:none"  id="taskHelp4">
+                          <h4>View A Task</h4>
+                            <div class="help-info">
+                              Click on a task to see a pop up containing more information about it. Here, you can click "Completed" if you're done, or "Edit" if you want to update it.
+                            </div>
                             <hr>
-                            <div class="help-image"><%= image_tag "Untitled.png" %></div>
+                            <div class="help-image"><%= image_tag "tasks-page4.png" %></div>
                             <hr>
                             <div class="backNext">
                               <div class="col-md-2">
@@ -87,7 +91,7 @@
                                 <button class="btn btn-default" data-dismiss="modal">Close</button>
                               </div>
                             </div>
-                        </div> -->
+                        </div>
                       </div>
                     </div>
                     </div>

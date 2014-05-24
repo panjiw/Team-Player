@@ -102,7 +102,8 @@ textarea {
 .tasks-pop {
   position: absolute;
   width: 400px;
-  height: 330px;
+/*  height: 330px;*/
+  overflow-height: hidden;
   right: 80px;
   top: 250px;
   padding: 10px;
@@ -126,9 +127,7 @@ textarea {
 }
 
 .selected-buttons {
-  position: absolute;
   margin-left: 215px;
-  padding-top: 50px;
 }
 
 .panel-gray {
