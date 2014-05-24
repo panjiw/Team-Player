@@ -60,7 +60,7 @@ class TaskGeneratorsController < ApplicationController
       order = 0
       params[:task][:members].each do |m|
         @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
-                                                       user_id: m[0],
+                                                       user_id: m,
                                                        order: order)
         if !@task_generator_actor.save
           @task_generator.destroy
@@ -193,7 +193,7 @@ class TaskGeneratorsController < ApplicationController
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
         @task_generator.group_id = params[:task][:group_id]
-        @task_generator.user_id = view_context.current_user[:id]
+        @task_generator.user_id = @task_generator[:user_id]
         @task_generator.title = params[:task][:title]
         @task_generator.description = params[:task][:description]
         @task_generator.cycle = params[:task][:cycle].to_bool
@@ -222,7 +222,7 @@ class TaskGeneratorsController < ApplicationController
           order = 0
           params[:task][:members].each do |m|
             @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
-                                                           user_id: m[0],
+                                                           user_id: m,
                                                            order: order)
             if !@task_generator_actor.save
               @task_generator.destroy
