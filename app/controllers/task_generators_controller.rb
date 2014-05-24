@@ -42,13 +42,18 @@ class TaskGeneratorsController < ApplicationController
       end
       @task_generator[:repeat_days] = {}
       day = 1
+      false_days = 0
       params[:task][:repeat_days].each do |d|
         if d.to_bool
           @task_generator[:repeat_days][day] = true
         else
           @task_generator[:repeat_days][day] = false
+          false_days += 1
         end
         day += 1
+      end
+      if false_days >= 7
+        @task_generator[:repeat_days] = nil
       end
     end
     if @task_generator.save
