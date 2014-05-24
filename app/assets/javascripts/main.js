@@ -48,6 +48,8 @@ function sort(input, attributes) {
   return array;
  }
 
+
+
 myApp.filter('orderUsers', function(){
  return function(input) {
  	return sort(input, ['username', 'firstname', 'lastname', 'id']);
@@ -70,4 +72,19 @@ myApp.filter('orderBills', function() {
   return function(input) {
     return sort(input, ['due', 'why', 'desc', 'id']);
   }
+});
+
+myApp.filter('onlyMyTasks', function(){
+ return function(input, currentUserID) {
+    var result = {};
+    for (var taskID in input) {
+
+      for (var userID in input[taskID].members){
+        if(userID == currentUserID){
+          result[taskID] = input[taskID];
+        }
+      }
+    }
+    return result;
+ };
 });

@@ -1,10 +1,10 @@
 module TaskGeneratorsHelper
   def new_task(task_generator)
     next_task = Task.new(group_id: task_generator[:group_id],
-                          user_id: task_generator[:user_id],
-                          title: task_generator[:title],
-                          description: task_generator[:description],
-                          finished: false)
+                         user_id: task_generator[:user_id],
+                         title: task_generator[:title],
+                         description: task_generator[:description],
+                         finished: false)
 
     if next_task.save
       if task_generator[:current_task_id]
@@ -39,6 +39,7 @@ module TaskGeneratorsHelper
         else
           next_due_date = task_generator[:due_date]
         end
+        task_generator.update(:due_date => next_due_date)
         next_task.update_attributes(:due_date => next_due_date)
       end
 

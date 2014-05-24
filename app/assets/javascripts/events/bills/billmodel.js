@@ -19,6 +19,7 @@ var Bill = function(id,  groupID, title, description, creatorID, dateCreated, da
   this.dateCreated = dateCreated;
   this.dateDue = dateDue;
   this.membersAmountMap = membersAmountMap;
+  this.amountForEntry = {};
 };
 
 var SummaryEntry = function(username) {
@@ -26,9 +27,9 @@ var SummaryEntry = function(username) {
   this.total = 0;
   this.billsArray = [];
     
-  this.addBill = function(bill, amountForEntry, billTotal) {
+  this.addBill = function(bill, amountForEntry) {
     this.billsArray.push(bill);
-    bill.total = billTotal;
+    bill.amountForEntry[this.person_username] = amountForEntry;
     var newTotal = this.total + amountForEntry;
 
     this.total = parseFloat(newTotal.toFixed(2));
@@ -59,27 +60,35 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
         for(var j in BillModel.bills[i].membersAmountMap){
           // if this person is not me, it is one of the people that owes me
           if (j != UserModel.me){
-            // if the person is not in summary, add an entry
-            if(!BillModel.summary.oweYou[j]){
-              BillModel.summary.oweYou[j] = new SummaryEntry(UserModel.users[j].username);
-            } 
 
-            // add the bill in
-            BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due, BillModel.deriveTotal(BillModel.bills[i]));
+            // if he has not pay
+            if (!BillModel.bills[i].membersAmountMap[j].paid){
+              // if the person is not in summary, add an entry
+              if(!BillModel.summary.oweYou[j]){
+                BillModel.summary.oweYou[j] = new SummaryEntry(UserModel.users[j].username);
+              } 
+
+              // add the bill in
+              BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
+            }
           }
         }
 
         // creator is not me, I owe him
       } else {
-        var bill_creator_id = BillModel.bills[i].creator;
-        var bill_creator_username = UserModel.users[BillModel.bills[i].creator].username;
 
-        // if this person is not in summary that i owe him, add an entry
-        if(!BillModel.summary.youOwe[bill_creator_id]){
-          BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
+        // if I have not paid
+        if (!BillModel.bills[i].membersAmountMap[UserModel.me].paid){
+          var bill_creator_id = BillModel.bills[i].creator;
+          var bill_creator_username = UserModel.users[BillModel.bills[i].creator].username;
+
+          // if this person is not in summary that i owe him, add an entry
+          if(!BillModel.summary.youOwe[bill_creator_id]){
+            BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
+          }
+          BillModel.summary.youOwe[bill_creator_id].addBill
+            (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
         }
-        BillModel.summary.youOwe[bill_creator_id].addBill
-          (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due, BillModel.deriveTotal(BillModel.bills[i]));
       }
     }
   }

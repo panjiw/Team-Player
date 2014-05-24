@@ -175,6 +175,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     var members = {};
     for (var id in task.members){
       members[id] = UserModel.users[id];
+      if(!members[id].rank) members[id].rank = {};
+      members[id].rank[task.details.id] = task.members[id];
     }
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
@@ -233,6 +235,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         } else {
           // then create a normal task
           TaskModel.createTask(groupID, name, description, dateDue, members, callback);
+
+          delete TaskModel.tasks[taskID];
         }
       });
     
@@ -316,6 +320,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
         } else {
           // then create a normal task
           TaskModel.createTaskSpecial(groupID, name, description, dateDue, members, cycle, repostArray, callback);
+          delete TaskModel.tasks[taskID];
         }
       });
 
@@ -335,6 +340,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       })
       .success(function(data, status) { // on success, there will be message to console
         console.log("task edit special Success: " , data);
+        delete TaskModel.tasks[taskID];
         updateTask(data.task);
         updateGenerator(data.generator);
         callback();
@@ -360,7 +366,12 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       "task[id]": taskID
     })
     .success(function(data, status) {
-      updateTask(data);
+      delete TaskModel.tasks[taskID];
+      if (data.members){
+        console.log("finished data", data);
+        updateTask(data);
+      }
+        
       callback();
     })
     .fail(function(xhr, textStatus, error) {

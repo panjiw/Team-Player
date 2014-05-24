@@ -7,6 +7,8 @@
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
   function($scope, TaskModel, GroupModel, UserModel) {
 
+
+
   // initialize fields for creating a new task to be empty
   function initNewTaskData(){
     $scope.newTaskGroup = null;
@@ -16,8 +18,13 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskCycle = false;
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
     $scope.taskRepeat = $scope.noDue = false;
+    $('#task_datepicker').datepicker("setDate", new Date());
 
   }
+
+  // function for datepicker to popup
+  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   var activeEditTask = -1;
 
@@ -77,7 +84,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            // memArray[task.members[id]] = $scope.currentEditMembers[index];
+            // memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
             // delete $scope.currentEditMembers[index];
             count++;
           }
@@ -99,11 +106,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
-        for (var id in generator.repeat_days){
-          $scope.editTaskRepostArray.push(generator.repeat_days[id]);
+        for (var id in generator.details.repeat_days){
+          $scope.editTaskRepostArray.push(generator.details.repeat_days[id]);
 
           // if it is repeating someday
-          if(generator.repeat_days[id])
+          if(generator.details.repeat_days[id])
             $scope.editTaskRepeat = true;
         }
       } else {
@@ -351,6 +358,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       return;
     }
 
+    var oldTaskTitle = TaskModel.tasks[id].title;
+
     // otherwise, set it to finished
     TaskModel.setFinished(id, function(error) {
       if(error) {
@@ -358,16 +367,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function() {
           $scope.myTasks = TaskModel.tasks;
-          toastr.success("Task '" + TaskModel.tasks[id].title + "' completed!");
+          toastr.success("Task '" + oldTaskTitle + "' completed!");
         });
       }
     });
   }
 
-
-  // function for datepicker to popup
-  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
-  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
@@ -397,7 +402,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   }
 
   $scope.createdTasks = [];
-
+  $scope.myID = UserModel.me;
 
   $.each($scope.myTasks, function() {
     if (this.creator == UserModel.me) {
