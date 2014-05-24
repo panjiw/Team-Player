@@ -367,9 +367,10 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     })
     .success(function(data, status) {
       delete TaskModel.tasks[taskID];
-      if (data.members){
+      if (data.task){
         console.log("finished data", data);
-        updateTask(data);
+        updateTask(data.task);
+        updateGenerator(data.generator);
       }
         
       callback();
