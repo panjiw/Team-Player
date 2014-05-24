@@ -78,7 +78,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            // memArray[task.members[id]] = $scope.currentEditMembers[index];
+            // memArray[task.members[id].rank] = $scope.currentEditMembers[index];
             // delete $scope.currentEditMembers[index];
             count++;
           }
@@ -352,6 +352,8 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       return;
     }
 
+    var oldTaskTitle = TaskModel.tasks[id].title;
+
     // otherwise, set it to finished
     TaskModel.setFinished(id, function(error) {
       if(error) {
@@ -359,7 +361,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       } else {
         $scope.$apply(function() {
           $scope.myTasks = TaskModel.tasks;
-          toastr.success("Task '" + TaskModel.tasks[id].title + "' completed!");
+          toastr.success("Task '" + oldTaskTitle + "' completed!");
         });
       }
     });

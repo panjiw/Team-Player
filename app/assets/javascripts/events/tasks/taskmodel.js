@@ -175,6 +175,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     var members = {};
     for (var id in task.members){
       members[id] = UserModel.users[id];
+      members[id].rank = task.members[id];
     }
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, task.details.created_at, 
@@ -364,7 +365,12 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       "task[id]": taskID
     })
     .success(function(data, status) {
-      updateTask(data);
+      delete TaskModel.tasks[taskID];
+      if (data.members){
+        console.log("finished data", data);
+        updateTask(data);
+      }
+        
       callback();
     })
     .fail(function(xhr, textStatus, error) {
