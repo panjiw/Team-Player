@@ -21,6 +21,7 @@ class TaskGeneratorsController < ApplicationController
   def new
     if !view_context.signed_in?
       redirect_to '/'
+      return
     end
     if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
       render :json => {:errors => "No need for generator"}, :status => 400
@@ -85,6 +86,7 @@ class TaskGeneratorsController < ApplicationController
   def create_new_task
     if !view_context.signed_in?
       redirect_to '/'
+      return
     end
     if @task_generator.nil?
       @task_generator = TaskGenerator.find_by_current_task_id(params[:task][:id])
