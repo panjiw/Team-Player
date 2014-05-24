@@ -21,7 +21,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#task_datepicker').datepicker("setDate", new Date());
 
   }
-  
+
   // function for datepicker to popup
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
   $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
@@ -106,11 +106,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
-        for (var id in generator.repeat_days){
-          $scope.editTaskRepostArray.push(generator.repeat_days[id]);
+        for (var id in generator.details.repeat_days){
+          $scope.editTaskRepostArray.push(generator.details.repeat_days[id]);
 
           // if it is repeating someday
-          if(generator.repeat_days[id])
+          if(generator.details.repeat_days[id])
             $scope.editTaskRepeat = true;
         }
       } else {
