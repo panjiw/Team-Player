@@ -21,6 +21,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#task_datepicker').datepicker("setDate", new Date());
 
   }
+  
+  // function for datepicker to popup
+  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
+  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   var activeEditTask = -1;
 
@@ -369,10 +373,6 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-
-  // function for datepicker to popup
-  $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
-  $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
