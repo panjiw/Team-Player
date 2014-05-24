@@ -15,8 +15,11 @@
   $scope.groupsList = GroupModel.groups;
   $scope.currentUser = UserModel.get(UserModel.me);
   $scope.newMemberList = [$scope.currentUser];
-
-  function selectMeGroup() {
+  
+  // synchronize the group list and current user
+  // with those of the appropriate models
+  $scope.$watch('groupsList', function(newVal, oldVal) {
+    $scope.groupsList = newVal;
     if(Object.keys($scope.groupsList).length != 0) {
       console.log("Entered watch");
       for(var group in $scope.groupsList) {
@@ -27,13 +30,6 @@
         }
       }
     }
-  }
-
-  // synchronize the group list and current user
-  // with those of the appropriate models
-  $scope.$watch('groupsList', function(newVal, oldVal) {
-    $scope.groupsList = newVal;
-    selectMeGroup();
   });
   $scope.$watch('currentUser', function(newVal, oldVal) {});
 
@@ -98,8 +94,10 @@
       if(error) {
         toastr.error(error);
       } else {
-        $scope.editDescription = $scope.editName = "";
-        $('#editModal').modal('hide');
+        $scope.$apply(function() {
+          $scope.editDescription = $scope.editName = "";
+          $('#editModal').modal('hide');
+        });
       }
     });
   }
