@@ -31,7 +31,7 @@ context 'logining in the user' do
     context 'username does not exist' do
     		
             before(:each) do
-            post 'create', :user => {:username => "takenname", :password => "player"}
+             post 'create', :user => {:username => "takenname", :password => "player"}
         	end
 
             it 'should return a 400 status' do

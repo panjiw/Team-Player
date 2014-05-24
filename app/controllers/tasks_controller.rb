@@ -128,11 +128,20 @@ class TasksController < ApplicationController
           render :json => {:errors => "Unauthorized action"}, :status => 400
         else
           task.update(finished: true, finished_date: Date.today)
+          task_generator = TaskGenerator.find_by_current_task_id(task[:id])
+          next_task = nil
+          if task_generator
+            if !task_generator[:finished]
+              next_task = view_context.new_task task_generator
+            end
+          end
           result = {}
-          result[:details] = task
-          result[:members] = {}
-          task.task_actors.each do |a|
-            result[:members][a[:user_id]] = a[:order]
+          if next_task
+            result[:details] = task
+            result[:members] = {}
+            task.task_actors.each do |a|
+              result[:members][a[:user_id]] = a[:order]
+            end
           end
           render :json => result.to_json, :status => 200
         end
