@@ -1,13 +1,11 @@
 /**
  *  TeamPlayer -- 2014
  *
- *  This file is not yet implemented.
- *  It will be the controller for the tasks page when implemented
+ * This is the Angular Controller for the viewing tasks page.
+ * It contains the logic for creating, editing, finishing, and viewing tasks
  */
 angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel", "GroupModel", "UserModel", 
   function($scope, TaskModel, GroupModel, UserModel) {
-
-
 
   // initialize fields for creating a new task to be empty
   function initNewTaskData(){
@@ -19,50 +17,57 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
     $scope.taskRepeat = $scope.noDue = false;
     $('#task_datepicker').datepicker("setDate", new Date());
-
   }
 
   // function for datepicker to popup
   $(function() {$( "#task_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
   $(function() {$( "#task_edit_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});
 
+  // the current task being edited is not set, default to -1
   var activeEditTask = -1;
 
+  // initialize fields for editing a task to be the original task's info
   function initEditTaskData(task, generator){
     // reset if task field is null
     if (!task){
       activeEditTask = -1;
       return;
     }
-    console.log("initedit");
+    
+    // if the current task is the same, don't re initialize
     if (activeEditTask != task.id){
+      // clone a map of groups from groupmodel
       $scope.editTaskGroup = $.extend(true, {}, GroupModel.groups[task.group]);
       activeEditTask = task.id;
 
+      // set the title and description
       $scope.editTaskTitle = task.title;
       $scope.editTaskDescription = task.description;
 
-      /** set the date; somehow bill.dateDue is returning and object like 
-          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
-          weirdly with indexing **/
+      /** set the date; bill.dateDue is returning an object in the format of: 
+          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} 
+          for 2014-05-14, so need to parse it with indexing **/
       var dateObj = $.extend(true, {}, task.dateDue);
+
+      // if there is a date in the task
       if (dateObj){
         var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
         var month = parseInt(""+dateObj[5] + dateObj[6]);
         month -=1;
         var day = parseInt(""+dateObj[8] + dateObj[9]);
 
-        console.log("dateobj, ", dateObj);
+        // make it a Date object
         $scope.editTaskDateDue = new Date(year,month,day);
       } else {
+        // if there is no date initially, make date empty
         $scope.editTaskDateDue = "";
       }
       
-
-      console.log("date due",$scope.editTaskDateDue);
+      // clear the date field if no initial date
       if ($scope.editTaskDateDue == ""){
         $.datepicker._clearDate('#task_edit_datepicker');
       } else {
+        // initialize the datepicker input box 
         $('#task_edit_datepicker').datepicker("setDate", $scope.editTaskDateDue);
       }
 
@@ -70,42 +75,26 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 
       /********** start rearange member according to task list *******/
-      // $scope.currentEditMembers = GroupModel.groups[task.group].members;
+      // clone current members from groupmodel
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.group].members);
-      console.log("currentEditMembers from ", GroupModel.groups[task.group].members);
-      console.log("currentEditMembers", $scope.currentEditMembers);
-      console.log("taskmem", task.members);
-
-
-      // var memArray = [];
-      var count = 0;
+      
       // set checked for each involved member
       for (var id in task.members){
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            // memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
-            // delete $scope.currentEditMembers[index];
-            count++;
           }
-            
         }
       }
-
-      // for (var index in $scope.currentEditMembers){
-      //   memArray[count++] = $scope.currentEditMembers[index];
-      // }
-      // $scope.currentEditMembers = memArray;
-
-      console.log("currentEditMembers after", $scope.currentEditMembers);
-
       /*** end ***/
 
-      // if there is a generator, initialize with data in it
+      // if there is a generator, (the task either cycle, repeat, or both), initialize with data in it
       if (generator){
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
+
+        // populate the repost array
         for (var id in generator.details.repeat_days){
           $scope.editTaskRepostArray.push(generator.details.repeat_days[id]);
 
@@ -114,29 +103,31 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
             $scope.editTaskRepeat = true;
         }
       } else {
+        // if the task initially does not cycle or repeat, make the field false
         $scope.editTaskCycle = false;
         $scope.editTaskRepostArray = [false,false,false,false,false,false,false];
         $scope.editTaskRepeat = false;
       }
       
+      // if the task initially has a duedate, set the checkbox to be unchecked
       if (task.dateDue)
         $scope.editNoDue = false;
-      else $scope.editNoDue = true;
-
-      
+      else 
+        $scope.editNoDue = true;
     }
   }
 
   // getting task from model for the first time, so ask model to get from server
-  // $scope.myTasks = TaskModel.tasks;
   function getTaskFromModel(){
   TaskModel.refresh(
       function(error){
       if(error){
-        //TODO
+        // display every error
+        for (var index in error){
+          toastr.error(error[index]);  
+        }
       } else{
-        //TODO
-        console.log("<<<< task view: task & task gen from model!!>>>");
+        // updates mytasks after getting task is done
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.tasks;
         });
@@ -151,9 +142,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   // get groups before loading task so that group and user info are updated
   GroupModel.getGroups(function(groups, asynch, error) {
     if (error){
+      // display every error
+      for (var index in error){
+          toastr.error(error[index]);  
+        }
     } else {
       $scope.groupsList = groups;
-      console.log("$scope.groupsList",$scope.groupsList);
       getTaskFromModel();
     }
   });
@@ -167,22 +161,19 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         taskMembers[count++] = members[index].id;
       }
     }
-
     return taskMembers;
   }
 
+  // initialize new task data when this file is loaded
   initNewTaskData();
 
   // make sure the group list is updated to the view
-  $scope.$watch('groupsList', function(newVal, oldVal){
-    console.log('groupList in task changed', $scope.$groupList);
-  });
+  $scope.$watch('groupsList', function(newVal, oldVal){});
 
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
     if($scope.newTaskGroup){
-      console.log('group selected');
+      // in create task modal, update current members to be selected if group has changed
       $scope.currentMembers = $scope.newTaskGroup.members;
-      console.log("currentMembers, ", $scope.currentMembers);
     } else {
       $scope.currentMembers = {};
     }
@@ -208,6 +199,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     return true;
   }
 
+  // fill repost array with falses for each field that is not true
   function fillRepostArray(repostArray){
     for(var i = 0; i < 7; i++){
       if(!repostArray[i]){
@@ -216,11 +208,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     }
   }
 
+  // get tasks one time when this file is loaded.
   $scope.myTasks = TaskModel.tasks;
 
-  $scope.$watch('myTasks', function(newVal, oldVal){
-    console.log('myTasks changed');
-  }, true);
+  // use watch to update my tasks in view everytime my task has changed
+  $scope.$watch('myTasks', function(newVal, oldVal){}, true);
 
   // create a task from user input
   $scope.createTask = function(e){
@@ -259,6 +251,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       return;
     }
 
+    // called when both special task and normal task are being created
     function callback(error){
       if(error){
       for (var index in error){
@@ -266,11 +259,11 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
         }
       } else {
         $scope.$apply(function(){
-
           $scope.myTasks = TaskModel.tasks;
           // clear out data used to create new task
           initNewTaskData();
 
+          // uncheck people in current members
           for(var index in $scope.currentMembers){
             $scope.currentMembers[index].chked = false;
           }
@@ -280,11 +273,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       }
     };
 
-    // if normal task
+    // if normal task, call createTask from model
     if(!$scope.newTaskCycle && (!$scope.taskRepeat || noRepeat($scope.newTaskRepostArray))){
       TaskModel.createTask($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
       $scope.newTaskDateDue, createTaskMembers, callback);
-      // if special task
+
+      // if special task, call createTaskSpecial
     } else{
       fillRepostArray($scope.newTaskRepostArray);
       TaskModel.createTaskSpecial($scope.newTaskGroup.id, $scope.newTaskTitle, $scope.newTaskDescription, 
@@ -293,14 +287,15 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   };
 
+  // edit a task from user input
   $scope.editTask = function(e) {
-
     var generatorID = null;
     // if there is a generator, which means active task was speical before edit
     if(TaskModel.generators[activeEditTask]){
       generatorID = TaskModel.generators[activeEditTask].details.id;
     }
 
+    // make a user map from user input of array of members
     var editTaskMembers = buildMemberIdArray($scope.currentEditMembers);
 
     // get javascript object from datapicker
@@ -337,6 +332,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       return;
     }
 
+    // called when both special task and normal task are being edited    
     function callback(error){
       if(error){
       for (var index in error){
@@ -369,7 +365,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   };
 
+  // called when user finish a task
   $scope.finish = function(id) {
+    // if there is no id input
+    if(!id){
+      toastr.warning("Invaid task selected");
+      return;
+    }
+
     // if the task is already done, we have nothing to do
     if(TaskModel.tasks[id].done) {
       return;
@@ -390,7 +393,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
-
+  // open or close popup when clicking on task
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
       $('#' + p + n).hide();
@@ -408,6 +411,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#taskHelpModal').modal({show:true})
   };
 
+  // flip page in help modal
   $scope.taskNext = function(pageNum) {
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)+1)).show();
@@ -417,20 +421,4 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
   }
-
-  $scope.createdTasks = [];
-  $scope.myID = UserModel.me;
-
-  $.each($scope.myTasks, function() {
-    if (this.creator == UserModel.me) {
-      $scope.createdTasks.push(this);
-    }
-  });
-
-  $scope.$watch('createdTasks', function(newVal, oldVal){
-    console.log('createdTasks in task changed', $scope.createdTasks);
-  });
-
-
-
 }]);
