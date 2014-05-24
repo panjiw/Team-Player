@@ -16,6 +16,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     $scope.newTaskCycle = false;
     $scope.newTaskRepostArray = [false,false,false,false,false,false,false];
     $scope.taskRepeat = $scope.noDue = false;
+    $('#task_datepicker').datepicker("setDate", new Date());
 
   }
 
