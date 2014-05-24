@@ -15,7 +15,7 @@
         
         <style type="text/css">
             header {
-	margin-bottom:30px;
+  margin-bottom:30px;
 }
 
         </style>
@@ -79,41 +79,29 @@
                 </ul>
           </div>
 
-      		</div> 
-      		<div class="col-md-9">
-              	<h2>Contribute To Our Product</h2>
+          </div> 
+          <div class="col-md-9">
+                <h2>Contribute To Our Product</h2>
                 “Team Player” is an open source product, so all of our source code and releases are facilitated through Github. We provide source code for the <a href="https://github.com/panjiw/Team-Player/releases">latest stable released version</a>.
                 <br><br>
                 Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found on our <a href="https://github.com/panjiw/Team-Player.git">github page</a>.
 </a>
            
-              	<hr class="col-md-12">
+                <hr class="col-md-12">
         
               
               
-              	<h2 id="buildInstr">Build Instructions</h2>
-              	<p>
-                The following instructions assume that you are using a CSE Linux machine.<br><br>
-                If you are unfamilar with Ruby on Rails, here is a <a href="#fileStruct">quick guide to the file structure.</a>
-              	</p>
+                <h2 id="buildInstr">Build Instructions</h2>
                 <p>
-                <ol><li>First, setup rails environment for your OS<br>
-                <code><a href="https://www.ruby-lang.org/en/installation/">https://www.ruby-lang.org/en/installation/</a></code></li>
+                The following instructions assume that you are using a CSE Linux machine (Fedora).<br><br>
+                If you are unfamilar with Ruby on Rails, here is a <a href="#fileStruct">quick guide to the file structure.</a>
+                </p>
+                <p>
+                <ol><li>git clone our repo, and run our make script<br>
+                <code>git clone https://github.com/panjiw/Team-Player <br> cd Team-Player <br> make install</code></li>
                 <br>
-                <li>Install git, then navigate to folder you want to store our code and run<br>
-                <code>git clone https://github.com/panjiw/Team-Player.git</code></li>
-                <br>
-                <li>Navigate to the Team-Player folder and run<br>
-                <code>bundle install -- without production</code></li>
-                <br>
-
-                <li>To setup the database, run<br>
-                <code>bundle exec rake db:migrate</code>
-                </li>
-                <br>
-
-                <li>Finally, you can start the rails server by running<br>
-                <code>rails s</code></li>
+                <li>Once the installation is finish you are ready to launch your rails server<br>
+                <code>rails server</code></li>
                 <br>
 
                 <li>If successful, you can see our application on<br>
@@ -159,8 +147,8 @@
                 <hr>
 
 
-              	<h2 id="versionRelease">New Version Releases</h2>
-      			
+                <h2 id="versionRelease">New Version Releases</h2>
+            
                 Releases will be facilitated through <a href="https://help.github.com/articles/creating-releases">GitHub’s release system</a>.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
                 Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
                 <p><ol>
@@ -170,7 +158,7 @@
                 <li>Be sure to update the requirements, design, user's, and developer's documents on the github after every release.</li></ol></p>
 
               
-              	<hr>
+                <hr>
             <h2 id="fileStruct">File Structure</h2>
               <p>The directory structure uses the standard <a href="http://www.tutorialspoint.com/ruby-on-rails/rails-directory-structure.htm">Ruby on Rails structure</a>. From the root directory, listed below is information for the folders relevant to developers. Other folders contain information necessary for the product, such as bundle and rails files, but not necessary to edit for development.</p>
     <ul>
@@ -259,21 +247,30 @@
             <hr>
 
             <h2 id="publishHeroku">Publishing To Heroku</h2>
-              <p>
+              <p>The following instruction are for CSE Linux Machines (Fedora)
               If you plan to put the web app to Heroku, you would need to:
               <ol>
                 <li>Set up a <a href="https://www.heroku.com/">Heroku account</a></li>
-                <li>Install <a href="https://toolbelt.heroku.com/">Heroku toolbelt</a>. Then follow the simple instructions on the page.</li>
-                <ul>
-                  <li>Be sure to run <code>heroku create</code> in the Team-Player folder to create a Heroku app on your account. You will see "confirmation git@[some_name].git</li>
-                </ul>
-                <li>Verify the configuration <code>git remote -v</code> You'll see a (fetch) and (pull) for the [some_name] above.</li>
-                <ul>
-                  <li>If you already have an app on your account, run <br><code>heroku git:remote -a [some_name]</code></li>
-                </ul>
-                <li>Deploy the code to heroku <br><code>git push heroku master</code></li>
-                <li>Initialize the database <br><code>heroku run rake db:migrate</code></li>
-                <li>You can view the site at <i>https://[some_name].herokuapp.com</i></li>
+                <br><li>Install <a href="https://toolbelt.heroku.com/">Heroku toolbelt</a>. By running <br>
+                <code>make install-heroku</code>
+                </li>
+                <br><li>Deploying to Heroku, two options:<br>
+                <ol>
+                <li>A: If you have permission and want to push to Team-Player heroku account, just run 
+                <br><code>make deploy</code>and you are done, no need to follow other steps</li>
+
+                <br><li>B: If you want to push to your own account, be sure to run <br><code>heroku create</code><br> in the Team-Player folder to create a Heroku app on your account. You will see "confirmation git@[some_name].git</li><br>
+                </ol>
+                <hr>
+                Pushing to your own heroku account:
+                <ol>
+                <br><li>Verify the configuration <br><code>git remote -v</code><br> You'll see a (fetch) and (pull) for the [some_name] above.</li>
+                
+                <br><li>If you already have an app on your account, run <br><code>heroku git:remote -a [some_name]</code></li>
+                
+                <br><li>Deploy the code to heroku <br><code>git push heroku master</code></li>
+                <br><li>Initialize the database <br><code>heroku run rake db:migrate</code></li>
+                <br><li>You can view the site at <i>https://[some_name].herokuapp.com</i></li>
                 </ol>
 
                 See <a href="https://devcenter.heroku.com/articles/getting-started-with-rails4">the setting up RoR on Heroku</a> page for more information.
@@ -281,8 +278,8 @@
 
                 <hr>
 
-      		</div> 
-  	</div>
+          </div> 
+    </div>
 </div>
 
 
