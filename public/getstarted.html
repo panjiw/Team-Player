@@ -263,29 +263,25 @@
                 <code>make install-heroku</code>
                 </li>
                 <br><li>Deploying to Heroku, two options:<br>
-                <ol>
-                <li>A: If you have permission and want to push to Team-Player heroku account, just run 
-                <br><code>make deploy</code>and you are done, no need to follow other steps</li>
-
-                <br><li>B: If you want to push to your own account, be sure to run <br><code>heroku create</code><br> in the Team-Player folder to create a Heroku app on your account. You will see "confirmation git@[some_name].git</li><br>
-                </ol>
-                <hr>
-                Pushing to your own heroku account:
-                <ol>
-                <br><li>Verify the configuration <br><code>git remote -v</code><br> You'll see a (fetch) and (pull) for the [some_name] above.</li>
-                
-                <br><li>If you already have an app on your account, run <br><code>heroku git:remote -a [some_name]</code></li>
-                
-                <br><li>Deploy the code to heroku <br><code>git push heroku master</code></li>
-                <br><li>Initialize the database <br><code>heroku run rake db:migrate</code></li>
-                <br><li>You can view the site at <i>https://[some_name].herokuapp.com</i></li>
-                </ol>
-
+                  <ol>
+                    <li>
+                        If you want to push to Team-Player heroku account (you need to have permission) just run 
+                            <br><code>make deploy</code>and you are done, no need to follow other steps</li><br>
+                    <li>
+                      Pushing to your own heroku account:
+                      <ol>
+                        <br><li>If you want to push to your own account, be sure to run <br><code>heroku create</code><br> in the Team-Player folder to create a Heroku app on your account. You will see "confirmation git@[some_name].git</li>
+                        <br><li>Verify the configuration <br><code>git remote -v</code><br> You'll see a (fetch) and (pull) for the [some_name] above.</li>
+                        <br><li>If you already have an app on your account, run <br><code>heroku git:remote -a [some_name]</code></li>
+                        <br><li>Deploy the code to heroku <br><code>git push heroku master</code></li>
+                        <br><li>Initialize the database <br><code>heroku run rake db:migrate</code></li>
+                        <br><li>You can view the site at <i>https://[some_name].herokuapp.com</i></li>
+                      </ol>
+                    </li>
+                  </ol>
                 See <a href="https://devcenter.heroku.com/articles/getting-started-with-rails4">the setting up RoR on Heroku</a> page for more information.
               </p>
-
-                <hr>
-
+              
           </div> 
     </div>
 </div>
