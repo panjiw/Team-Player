@@ -28,7 +28,7 @@ describe StaticPagesController do
 				delete 'destroy'
 				@controller = StaticPagesController.new
 				get 'home'
-				(response.body.include? "redirected").should be_true
+				(response.status == 302).should be_true
 				end
 			end
 
@@ -57,7 +57,7 @@ describe StaticPagesController do
 		context 'user is signed in' do
 			it 'should reedirct to the home page' do 
 				get 'index'
-				(response.body.include? "redirected").should be_true
+				(response.status == 302).should be_true
 			end
 		end
 

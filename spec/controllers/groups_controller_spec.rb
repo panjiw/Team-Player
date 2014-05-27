@@ -452,58 +452,6 @@ describe GroupsController do
 
 	end
 
-# view members is not implemented- it's implemented in a different controller
-
-# # viewmembers
-# 	describe "testing VIEWMEMBERS" do
-
-# 		before(:each) do
-# 			@controller = UsersController.new
-# 			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "one@player.com",
-#         		 :password => "player", :password_confirmation => "player"}
-#         	post 'create', :user => {:username => "two", :firstname => "Team", :lastname => "Player", :email => "two@player.com",
-#         		 :password => "player", :password_confirmation => "player"}				
-			
-# 			@controller = SessionsController.new
-#         	post 'create', :user => {:username => "one", :password => "player"}
-
-#         	@controller = GroupsController.new
-#         	post 'create', :group => {:name => "group alone", :description => "desc"} 
-# 			post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
-# 		end
-
-# 		# self group
-# 		it 'should return the self group with one member' do
-# 			puts "here"
-# 			get 'viewmembers', :view => {:id => "1"}
-# 			puts "done"
-# 			# check descriptions
-
-# 			(response.status == 200).should be_true
-# 		end
-
-# 		# group with one person not self group
-# 		it 'should return the self group with one member' do
-# 			get 'viewmembers', :view => {:id => "3"}
-		
-# 			(response.status == 200).should be_true
-# 		end
-
-# 		# group with two people
-# 		it 'should return the self group with one member' do
-# 			get 'viewmembers', :view => {:id => "4"}
-		
-# 			(response.status == 200).should be_true
-# 		end
-
-# 		# group does not exist
-# 		it 'should return the self group with one member' do
-# 			get 'viewmembers', :view => {:id => "5"}
-		
-# 			(response.status == 400).should be_true
-# 		end
-
-# 	end
 
 
 end

@@ -216,7 +216,7 @@ describe "GETALL tests" do
 	context 'user is not signed in' do
 		it 'should not show bills' do
 			get 'get_all'
-			(response.body.include? "redirected").should be_true
+			(response.status == 302).should be_true
 		end
 	end
 

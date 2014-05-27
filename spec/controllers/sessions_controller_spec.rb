@@ -82,7 +82,7 @@ context 'presenting user data' do
 	# it should not present user data because the user is not logged in
 	it 'should not present user information because user is not logged in' do
 			get 'user'
-			(response.body.include? "redirected").should be_true
+			(response.status == 302).should be_true
 		end
 
 	end
@@ -100,7 +100,7 @@ context 'loging out the user' do
 
         delete 'destroy'
         get 'user'
-        (response.body.include? "redirected").should be_true
+        (response.status == 302).should be_true
 
 	end
 
