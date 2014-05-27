@@ -1,279 +1,270 @@
 <div class="container">
-    <div class="header-row">
-          <div class= "bills-header">
-            <div class="col-md-11">
-              <h1>My Bills</h1>
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-default" ng-click="openBillHelpModal($event)">
-                <span class="glyphicon glyphicon-question-sign"></span>
-              </button>
-                <div id="billHelpModal" class="modal fade" tabindex="-1" role="dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                          <h3>Help Guide</h3>
-                      </div>
-                    <div class="modal-body help-body">
-                      <div class="instruction-row">
-                        <div id="billHelp1">
-                          <h4>Navigating Through Bills</h4>
-                            <div class="help-info">
-                              Click on the "Bills You Owe" tab to see a list of people you owe money to.<br>
-                              Click on the "Bills Owed To You" tab to see a list of people who owe you money.<br>
-                            </div>
-                            <hr>
-                            <div class="help-image"><%= image_tag "bills-page1.png" %></div>
-                            <hr>
-                            <div class="backNext">
-                              <div class="col-md-10"></div>
-                              <div class="col-md-2">
-                                <button ng-click="billNext(1)" class="btn btn-default">Next</button>
-                              </div>
-                            </div>
+  <div class="header-row">
+    <div class= "bills-header">
+      <div class="col-md-11">
+        <h1>My Bills</h1>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-default" ng-click="openBillHelpModal($event)">
+          <span class="glyphicon glyphicon-question-sign"></span>
+        </button>
+          <div id="billHelpModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Help Guide</h3>
+                </div>
+                <div class="modal-body help-body">
+                  <div class="instruction-row">
+                    <div id="billHelp1">
+                      <h4>Navigating Through Bills</h4>
+                        <div class="help-info">
+                          Click on the "Bills You Owe" tab to see a list of people you owe money to.<br>
+                          Click on the "Bills Owed To You" tab to see a list of people who owe you money.<br>
                         </div>
-                        <div style="display:none" id="billHelp2">
-                          <h4>Adding a Bill</h4>
-                            <div class="help-info">
-                              Click on "Add Bill" to keep track of money others owe to you.<br>
-                              You can choose to split a bill evenly, or customize each member's debt.
-                              <br><i>Split Evenly</i> automatically divides costs amongst members that have been checkmarked.
-                              <br><i>Customize</i> costs for members you've checkmarked.
-                            </div>
-                            <hr>
-                            <div class="help-image"><%= image_tag "bills-page2.png" %></div>
-                            <hr>
-                            <div class="backNext">
-                              <div class="col-md-2">
-                                <button ng-click="billBack(2)" class="btn btn-default">Back</button>
-                              </div>
-                              <div class="col-md-8"></div>
-                              <div class="col-md-2">
-                                <button ng-click="billNext(2)" class="btn btn-default">Next</button>
-                              </div>
-                            </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "bills-page1.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-10"></div>
+                          <div class="col-md-2">
+                            <button ng-click="billNext(1)" class="btn btn-default">Next</button>
+                          </div>
                         </div>
-                        <div style="display:none" id="billHelp3">
-                          <h4>Inside the Bills You Owe Tab</h4>
-                            <div class="help-info">
-                              Click on a panel to see a list of bills you have not paid to that person. Select checkmarks
-                              to calculate combinations of bills and totals you would owe them. Click "Paid" after
-                              you have paid them that amount.
-                            </div>
-                            <hr>
-                            <div class="help-image"><%= image_tag "bills-page3.png" %></div>
-                            <hr>
-                            <div class="backNext">
-                              <div class="col-md-2">
-                                <button ng-click="billBack(3)" class="btn btn-default">Back</button>
-                              </div>
-                              <div class="col-md-8"></div>
-                              <div class="col-md-2">
-                                <button ng-click="billNext(3)" class="btn btn-default">Next</button>
-                              </div>
-                            </div>
-                        </div>
-                        <div style="display:none"  id="billHelp4">
-                          <h4>Inside the Bills Owed To You Tab</h4>
-                            <div class="help-info">
-                              Select a panel to see all bills owed to you by the selected person. <br>
-                              Hover over a bill to see more information about it.<br>Click the pencil icon to edit a specific bill. 
-                            </div>
-                            <hr>
-                            <div class="help-image"><%= image_tag "bills-page4.png" %></div>
-                            <hr>
-                            <div class="backNext">
-                              <div class="col-md-2">
-                                <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>
-                              </div>
-                              <div class="col-md-8"></div>
-                              <div class="col-md-2">
-                                <button class="btn btn-default" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
                     </div>
+                    <div style="display:none" id="billHelp2">
+                      <h4>Adding a Bill</h4>
+                        <div class="help-info">
+                          Click on "Add Bill" to keep track of money others owe to you.<br>
+                          You can choose to split a bill evenly, or customize each member's debt.
+                          <br><i>Split Evenly</i> automatically divides costs amongst members that have been checkmarked.
+                          <br><i>Customize</i> costs for members you've checkmarked.
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "bills-page2.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="billBack(2)" class="btn btn-default">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button ng-click="billNext(2)" class="btn btn-default">Next</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display:none" id="billHelp3">
+                      <h4>Inside the Bills You Owe Tab</h4>
+                        <div class="help-info">
+                          Click on a panel to see a list of bills you have not paid to that person. Select checkmarks
+                          to calculate combinations of bills and totals you would owe them. Click "Paid" after
+                          you have paid them that amount.
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "bills-page3.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="billBack(3)" class="btn btn-default">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button ng-click="billNext(3)" class="btn btn-default">Next</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display:none"  id="billHelp4">
+                      <h4>Inside the Bills Owed To You Tab</h4>
+                        <div class="help-info">
+                          Select a panel to see all bills owed to you by the selected person. <br>
+                          Hover over a bill to see more information about it.<br>Click the pencil icon to edit a specific bill. 
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "bills-page4.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="billBack(4)" class="btn btn-default" id="btn-task1">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
-            </div>
-          </div>
-      </div>
-
-
-
-
-
-
-<!--bill add button-->
-<div class="bills-addbutton">
-  <a class="btn btn-danger" id="openBtn" ng-click="closePop()">Add Bill</a>
-  <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h3>Create Bill</h3>
-        </div>
-        <div class="modal-body tasks-add-body">
-          <div class="col-md-6">
-            <h5>Name:</h5><input type="text" ng-model="newBillTitle" maxlength="20" />
-            <h5>Description:</h5>
-            <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
-            <h5>Total Cost:</h5><input ng-model="newBillTotal" ng-change="splitEvenly(false, 1)" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
-            <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
-          </div>
-          <div class="col-md-5">
-            <h5>Group</h5>
-            <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
-              <option value="">-- choose group --</option>
-            </select>
-            <br>
-            <div class="bill-members">
-              <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
-                <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 1)" style="float:left;" />
-                <span style="float:left;">{{mem.username}}</span>
-                <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
-                min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
-                <div style="clear: both;"></div>
               </div>
-                                <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
-                                ng-options="mem.username for mem in currentMembers"></select> -->
-              <label>
-                <input type="checkbox" class="large" id="bill-split-evenly-checkbox1" ng-click="splitEvenly(false, 1)"/>
-                <span>Split Evenly</span>
-              </label>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal">Cancel</button>
-          <button class="btn" ng-click="createBill($event)">Save</button>
-        </div>
       </div>
     </div>
   </div>
-</div> <!-- bill-addbutton -->
-
-<!-- bill edit button -->
-<div class="bills-editbutton">
-  <div id="billEditModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h3>Edit Bill</h3>
-        </div>
-        <div class="modal-body tasks-add-body">
-          <div class="col-md-6">
-            <h5>Name:</h5><input type="text" ng-model="editBillTitle" maxlength="20" />
-            <h5>Description:</h5>
-            <textarea cols="30" rows="4" ng-model="editBillDescription"></textarea>
-            <h5>Total Cost:</h5><input ng-model="editBillTotal" ng-change="splitEvenly(false, 2)" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
-            <h5>Due Date:</h5><input type="text" id="bill_edit_datepicker"/>
+  <!-- Start Add Bill Button -->
+  <div class="bills-addbutton">
+    <a class="btn btn-danger" id="openBtn" ng-click="closePop()">Add Bill</a>
+    <div id="billModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Create Bill</h3>
           </div>
-          <div class="col-md-5">
-            <h5>Group</h5>
-            <!-- <select ng-model="editBillGroup" ng-options="grp.name for (id, grp) in groupsList">
-              <option value="">-- choose group --</option>
-            </select> -->
-            <span>{{editBillGroup.name}}</span>
-            <br>
-            <div class="bill-members">
-              <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
-                <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 2)" style="float:left;" />
-                <span style="float:left;">{{mem.username}}</span>
-                <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
-                min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
-                <div style="clear: both;"></div>
-              </div>
-              <label>
-                <input type="checkbox" class="large" id="bill-split-evenly-checkbox2" ng-click="splitEvenly(false, 2)"/>
-                <span>Split Evenly</span>
-              </label>
+          <div class="modal-body tasks-add-body">
+            <div class="col-md-6">
+              <h5>Name:</h5><input type="text" ng-model="newBillTitle" maxlength="20" />
+              <h5>Description:</h5>
+              <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
+              <h5>Total Cost:</h5><input ng-model="newBillTotal" ng-change="splitEvenly(false, 1)" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
+              <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
             </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal">Cancel</button>
-          <button class="btn" ng-click="editBill($event)">Edit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> <!-- bill-editbutton -->
-
-
-
-    <div class="tabbable">
-          <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#billsOwe" data-toggle="tab" ng-click="closePop()">Bills You Owe</a>
-            </li>
-            <li>
-                <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="billsOwe">
-                <h3>Bills You Owe</h3>
-                    <div class="bill-scroll">
-                        <div ng-repeat="entry in billSummary.youOwe">
-                            <div class="bill-all">
-                                <div class="bill" ng-click="openPop($event, entry.person_username, 1)">
-                                    <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
-                                    <h4 class="bill-amount">${{entry.total}}</h4>
-                                </div>
-                                <div id="{{entry.person_username}}1" class="bill-pop">
-                                  <div class="bills-to-pay">
-                                    <div ng-repeat="b in entry.billsArray">
-                                      <label for="{{b.id}}">
-                                        <div style="">
-                                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
-                                            <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry[entry.person_username]}} {{b.id}}">
-                                            <h4 class="bill-member">{{b.title}}</h4>
-                                            <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}} </h4>
-                                          </div>
-                                        </div>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <button type="button" class="btn btn-success" ng-click="pay(entry.person_username)">Paid</button>
-                                  <h4 class="bill-pop-total">Total: $0</h4>
-                                </div> <!-- class="bill-pop" -->
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="tab-pane" id="billsDebt">
-              <h3>Bills Owed To You</h3>
-                <div class="bill-scroll">
-                    <div ng-repeat="entry in billSummary.oweYou">
-                    <div class="bill-all">
-                        <div class="bill" ng-click="openPop($event, entry.person_username, 2)" >
-                            <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
-                            <h4 class="bill-amount">${{entry.total}}</h4>
-                        </div>
-                        <div id="{{entry.person_username}}2" class="bill-pop">
-                            <div class="bills-to-pay-you">
-                                <div ng-repeat="b in entry.billsArray">
-                                    <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
-                                        <h4 class="bill-member">
-                                          <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                          </button> {{b.title}}
-                                        </h4>
-                                        <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+            <div class="col-md-5">
+              <h5>Group</h5>
+              <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList">
+                <option value="">-- choose group --</option>
+              </select>
+              <br>
+              <div class="bill-members">
+                <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
+                  <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 1)" style="float:left;" />
+                  <span style="float:left;">{{mem.username}}</span>
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
+                  min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
+                  <div style="clear: both;"></div>
                 </div>
+                <!-- <select multiple ng-model="newBillMembers" style="width: 10em;" 
+                ng-options="mem.username for mem in currentMembers"></select> -->
+                <label>
+                  <input type="checkbox" class="large" id="bill-split-evenly-checkbox1" ng-click="splitEvenly(false, 1)"/>
+                  <span>Split Evenly</span>
+                </label>
+              </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Cancel</button>
+            <button class="btn" ng-click="createBill($event)">Save</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div> <!-- End Add Bill Button -->
+  <!-- Add Edit Bill Button -->
+  <div class="bills-editbutton">
+    <div id="billEditModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Edit Bill</h3>
+          </div>
+          <div class="modal-body tasks-add-body">
+            <div class="col-md-6">
+              <h5>Name:</h5><input type="text" ng-model="editBillTitle" maxlength="20" />
+              <h5>Description:</h5>
+              <textarea cols="30" rows="4" ng-model="editBillDescription"></textarea>
+              <h5>Total Cost:</h5><input ng-model="editBillTotal" ng-change="splitEvenly(false, 2)" type="number" placeholder="0.00" min="0.01" step="0.01" max="5000000" />
+              <h5>Due Date:</h5><input type="text" id="bill_edit_datepicker"/>
+            </div>
+            <div class="col-md-5">
+              <h5>Group</h5>
+              <!-- <select ng-model="editBillGroup" ng-options="grp.name for (id, grp) in groupsList">
+                <option value="">-- choose group --</option>
+              </select> -->
+              <span>{{editBillGroup.name}}</span>
+              <br>
+              <div class="bill-members">
+                <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
+                  <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 2)" style="float:left;" />
+                  <span style="float:left;">{{mem.username}}</span>
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" type="number" 
+                  min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
+                  <div style="clear: both;"></div>
+                </div>
+                <label>
+                  <input type="checkbox" class="large" id="bill-split-evenly-checkbox2" ng-click="splitEvenly(false, 2)"/>
+                  <span>Split Evenly</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal">Cancel</button>
+            <button class="btn" ng-click="editBill($event)">Edit</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div> <!-- End Edit Bill Button -->
+  <!-- Start Bills Display -->
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#billsOwe" data-toggle="tab" ng-click="closePop()">Bills You Owe</a>
+      </li>
+      <li>
+        <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
+      </li>
+    </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="billsOwe">
+          <h3>Bills You Owe</h3>
+            <div class="bill-scroll">
+              <div ng-repeat="entry in billSummary.youOwe">
+                <div class="bill-all">
+                  <div class="bill" ng-click="openPop($event, entry.person_username, 1)">
+                    <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
+                    <h4 class="bill-amount">${{entry.total}}</h4>
+                  </div>
+                  <div id="{{entry.person_username}}1" class="bill-pop">
+                    <div class="bills-to-pay">
+                      <div ng-repeat="b in entry.billsArray">
+                        <label for="{{b.id}}">
+                          <div style="">
+                            <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
+                              <input name="cb" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry[entry.person_username]}} {{b.id}}">
+                              <h4 class="bill-member">{{b.title}}</h4>
+                              <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}} </h4>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-success" ng-click="pay(entry.person_username)">Paid</button>
+                    <h4 class="bill-pop-total">Total: $0</h4>
+                  </div> <!-- class="bill-pop" -->
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="billsDebt">
+          <h3>Bills Owed To You</h3>
+            <div class="bill-scroll">
+              <div ng-repeat="entry in billSummary.oweYou">
+                <div class="bill-all">
+                  <div class="bill" ng-click="openPop($event, entry.person_username, 2)" >
+                    <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
+                    <h4 class="bill-amount">${{entry.total}}</h4>
+                  </div>
+                  <div id="{{entry.person_username}}2" class="bill-pop">
+                    <div class="bills-to-pay-you">
+                      <div ng-repeat="b in entry.billsArray">
+                        <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue}}" data-content="<p>{{b.description}}</p>" data-placement="right">
+                          <h4 class="bill-member">
+                            <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
+                              <span class="glyphicon glyphicon-pencil"></span>
+                            </button> {{b.title}}
+                          </h4>
+                          <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div> <!-- End Bills Display -->
+</div>
