@@ -273,7 +273,7 @@
                       <div class="panel-heading">
                         <div class="task-panel">
                           <h4 class="panel-descr">{{task.title}}</h4>
-                          <h4 class="panel-date">{{task.dateDue}}</h4>
+                          <h4 class="panel-date">{{task.dateDue | date:'shortDate'}}</h4>
                         </div>
                       </div>
                       <div class="panel-body panel-info">
@@ -286,7 +286,7 @@
                     <div class="selected-info">
                       <span><strong>Task:</strong> {{task.title}}</span><br>
                       <span><strong>Description:</strong> {{task.description}}</span><br/>
-                      <span><strong>Due Date:</strong> {{task.dateDue}}</span><br>
+                      <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
                       <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
                       <div class="selected-buttons">
@@ -312,7 +312,7 @@
                       <div class="panel-heading panel-gray-header">
                         <div class="task-panel">
                           <h4 class="panel-descr">{{task.title}}</h4>
-                          <h4 class="panel-date">{{task.dateDue}}</h4>
+                          <h4 class="panel-date">{{task.dateDue | date:'shortDate'}}</h4>
                         </div>
                       </div>
                       <div class="panel-body panel-info">
@@ -325,7 +325,7 @@
                     <div class="selected-info">
                       <span><strong>Task:</strong> {{task.title}}</span><br>
                       <span><strong>description:</strong> {{task.description}}</span><br/>
-                      <span><strong>Due Date:</strong> {{task.dateDue}}</span><br>
+                      <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
                       <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
                     </div>
