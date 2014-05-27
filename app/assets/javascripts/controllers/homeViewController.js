@@ -134,20 +134,17 @@ angular.module('myapp').controller("homeViewController",
       
       // If the task has a due date, put in calendar
       if (this.dateDue != null) {
-        var dueDate = this.dateDue.split("-");
         
         // If task is not finished yet, display normally
         if (this.done == null) {
-          events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
+          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName, eventid: this.id});
         }
         
         // Else task is completed, display as completed
         else
         {
-          events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
+          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName, eventid: this.id});
         }
         
