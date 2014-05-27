@@ -6,7 +6,7 @@
 # as well as a list of reasons for failure if necessary
 #
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:viewgroup, :update]
+  before_action :signed_in_user, only: [:viewgroup, :view_pending_groups, :edit_password, :edit_username, :edit_name, :edit_email, :finduseremail, :update]
 
   # Create a new user and sign user in
   def create
