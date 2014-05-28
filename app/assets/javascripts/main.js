@@ -9,7 +9,7 @@ var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);
 
 function compareProperties(a, b){
   if(a instanceof Date && b instanceof Date) {
-    return a.compare(b);
+    return a.valueOf() - b.valueOf();
   }
 
   if(a == b) {

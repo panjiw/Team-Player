@@ -134,20 +134,17 @@ angular.module('myapp').controller("homeViewController",
       
       // If the task has a due date, put in calendar
       if (this.dateDue != null) {
-        var dueDate = this.dateDue.split("-");
         
         // If task is not finished yet, display normally
         if (this.done == null) {
-          events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
+          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName, eventid: this.id});
         }
         
         // Else task is completed, display as completed
         else
         {
-          events.push({type: "Task", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
+          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
             group: this.groupName, eventid: this.id});
         }
         
@@ -173,21 +170,17 @@ angular.module('myapp').controller("homeViewController",
         
         // If bill is not paid, display on calendar normally
         if (!this.membersAmountMap[UserModel.me].paid) {
-          var dueDate = this.dateDue.split("-");
-          events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
+          events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
             desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
         }
         
         // Else bill is paid, display bill as completed
         else {
-          var dueDate = this.dateDue.split("-");
-          events.push({type: "Bill", title: this.title, start: new Date(dueDate[0], parseInt(dueDate[1]) - 1, 
-            dueDate[2]), backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
+          events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
             desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
         }
       }
-    })
+    });
 
     // Adds given task/bill information to calendar
     $('#calendar-display').fullCalendar({
