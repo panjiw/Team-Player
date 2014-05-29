@@ -200,8 +200,8 @@ def leavegroup
 
   # passing group id to ignore into group
   def ignoregroup
-    if(params[:accept] && params[:accept][:id])    
-      group = Group.find(params[:accept][:id])
+    if(params[:ignore] && params[:ignore][:id])    
+      group = Group.find(params[:ignore][:id])
       current_user.pending_groups.delete(group)
       render :nothing => true, :status => 200
     else
