@@ -1,8 +1,14 @@
 class TaskGeneratorsController < ApplicationController
   include TaskGeneratorsHelper
-  # Creates a new task generator and a single task based on that
-  # generator where the signed in user is the creator
-  # Required:
+
+  # This class create the API for frontend to manipulate special tasks
+  # Special tasks are tasks that repeat or cycles
+
+
+  # Creates a new task generator base on params
+  # Using new generator to create a single task
+  #
+  # Params required:
   # task[group_id]: groupID
   # task[title]: title
   # task[total_due]: total
@@ -37,6 +43,7 @@ class TaskGeneratorsController < ApplicationController
     if params[:task][:repeat_days] == ""
       @task_generator[:repeat_days] = nil
     else
+      # convert params booleans to ruby array
       if params[:task][:repeat_days].length != 7
         render :json => {:errors => "Invalid repeat pattern"}, :status => 400
         return
@@ -53,10 +60,12 @@ class TaskGeneratorsController < ApplicationController
         end
         day += 1
       end
+      # all falses = no repeating
       if false_days >= 7
         @task_generator[:repeat_days] = nil
       end
     end
+    # if params passes model's validation, assign each task members to "act" on tasks
     if @task_generator.save
       order = 0
       params[:task][:members].each do |m|
@@ -88,6 +97,7 @@ class TaskGeneratorsController < ApplicationController
       redirect_to '/'
       return
     end
+    # check if 'new' method calling or frontend requesting new task
     if @task_generator.nil?
       @task_generator = TaskGenerator.find_by_current_task_id(params[:task][:id])
     end
@@ -95,8 +105,9 @@ class TaskGeneratorsController < ApplicationController
       render :json => {:errors => "Invalid task"}, :status => 400
     end
     if @task_generator[:finished]
-      render :json => {:errors => "The task generator is dead"}, :status => 400
+      render :json => {:errors => "The task generator is finished"}, :status => 400
     end
+    # calling helper method's new_task to make next task from generator
     next_task = new_task @task_generator
     if next_task.errors.empty?
       generator_and_task = {}
@@ -122,7 +133,8 @@ class TaskGeneratorsController < ApplicationController
     end
   end
 
-  # Returns all the task geerators of the signed in user
+  # Returns all the task generators of the signed in user
+  # Params give in following format
   # {number starting from 0:{"details":{
   # "id":task id,
   # "group_id":group id of the task,
@@ -160,6 +172,8 @@ class TaskGeneratorsController < ApplicationController
   end
 
   # Mark the given task generator as finished and unusable anymore
+  # Params require:
+  # task[id]: id
   def mark_finished
     if view_context.signed_in?
       task_generator = TaskGenerator.find(params[:task][:id])
@@ -186,15 +200,17 @@ class TaskGeneratorsController < ApplicationController
   end
 
   # Updates the given task generator with the given attributes
-  # deletes the latest task created using the generator and
-  # creates a new one based on the new attributes.
-  # Returns the same as new.
+  # Deletes the latest task created using the generator and
+  # Creates a new one based on the new attributes.
+  # Returns the task generator as new.
+  # Params require, same as 'new' in addition task[id]
   def edit
     if view_context.signed_in?
       if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
         render :json => {:errors => "No need for generator"}, :status => 400
         return
       end
+      # find generator and reassign the attributes
       @task_generator = TaskGenerator.find(params[:task][:id])
       if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) && @task_generator.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
@@ -224,6 +240,7 @@ class TaskGeneratorsController < ApplicationController
             day += 1
           end
         end
+        # reassign members to the tasks and recreate actors
         if @task_generator.save
           @task_generator.task_generator_actors.delete_all
           order = 0
