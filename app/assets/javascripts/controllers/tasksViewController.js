@@ -44,20 +44,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.editTaskTitle = task.title;
       $scope.editTaskDescription = task.description;
 
-      /** set the date; bill.dateDue is returning an object in the format of: 
-          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} 
-          for 2014-05-14, so need to parse it with indexing **/
-      var dateObj = $.extend(true, {}, task.dateDue);
-
-      // if there is a date in the task
-      if (dateObj){
-        var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
-        var month = parseInt(""+dateObj[5] + dateObj[6]);
-        month -=1;
-        var day = parseInt(""+dateObj[8] + dateObj[9]);
-
+      if (task.dateDue){
         // make it a Date object
-        $scope.editTaskDateDue = new Date(year,month,day);
+        $scope.editTaskDateDue = new Date(task.dateDue);
       } else {
         // if there is no date initially, make date empty
         $scope.editTaskDateDue = "";
@@ -89,7 +78,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       /*** end ***/
 
       // if there is a generator, (the task either cycle, repeat, or both), initialize with data in it
-      if (generator){
+      if (generator && !generator.details.finished){
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
@@ -393,11 +382,32 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
+  $scope.stopRepeat = function(taskID){
+    if(!taskID || !TaskModel.generators[taskID]){
+      toastr.warning("Invaid task selected");
+      return;
+    }
+
+    var oldTaskTitle = TaskModel.tasks[taskID].title;
+
+    TaskModel.stopRepeat(taskID,function(error){
+      if(error){
+        toastr.warning("Task could not be set stop repeating");
+      } else {
+        $scope.$apply(function() {
+          $scope.myTasks = TaskModel.tasks;
+          activeEditTask = -1;
+          toastr.success("Task '" + oldTaskTitle + "' stops repeating!");
+        });
+      }
+    });
+  };
+
   $scope.isSpecial = function(taskID){
-    if(TaskModel.generators[taskID])
+    if(TaskModel.generators[taskID] && !TaskModel.generators[taskID].details.finished)
       return true;
     else return false;
-  }
+  };
 
   // open or close popup when clicking on task
   $scope.openTaskPop = function (e, p, n) {

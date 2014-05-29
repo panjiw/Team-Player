@@ -28,18 +28,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $scope.editBillTitle = bill.title;
       $scope.editBillDescription = bill.description;
 
-      /** set the date; somehow bill.dateDue is returning and object like 
-          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
-          weirdly with indexing **/
-      var dateObj = $.extend(true, {}, bill.dateDue);
-      if (dateObj){
-        var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
-        var month = parseInt(""+dateObj[5] + dateObj[6]);
-        month -=1;
-        var day = parseInt(""+dateObj[8] + dateObj[9]);
-
-        $scope.editBillDateDue = new Date(year,month,day);
+      
+      if (bill.dateDue){
+        // make it a Date object
+        $scope.editBillDateDue = new Date(bill.dateDue);
       } else {
+        // if there is no date initially, make date empty
         $scope.editBillDateDue = "";
       }
       
