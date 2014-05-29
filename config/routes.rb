@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   match '/edit_group', to: 'groups#editgroup', via: 'post'
   match '/view_pending_groups', to: 'users#viewpendinggroups', via: 'get'
   match '/accept_group', to: 'groups#acceptgroup', via: 'post'
+  match '/ignore_group', to: 'groups#ignoregroup', via: 'post'
   match '/leave_group', to: 'groups#leavegroup', via: 'post'
 
   match '/create_bill', to: 'bills#new', via: 'post'

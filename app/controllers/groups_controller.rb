@@ -186,6 +186,7 @@ def leavegroup
     end
   end
 
+  # passing group id to accept into group
   def acceptgroup
     if(params[:accept] && params[:accept][:id])    
       group = Group.find(params[:accept][:id])
@@ -196,6 +197,19 @@ def leavegroup
       render :json => ["Missing Params"], :status => 400      
     end
   end
+
+  # passing group id to ignore into group
+  def ignoregroup
+    if(params[:accept] && params[:accept][:id])    
+      group = Group.find(params[:accept][:id])
+      current_user.pending_groups.delete(group)
+      render :nothing => true, :status => 200
+    else
+      render :json => ["Missing Params"], :status => 400      
+    end
+  end
+
+
 
   # do nothing atm
   def destroy
