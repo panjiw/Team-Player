@@ -29,7 +29,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   // are slightly different between the frontend and backend models,
   // so always go through this function to update groups.
   GroupModel.updateGroup = function(group, accepted) {
-    accepted = (typeof accepted === "undefined") ? true : false;
+    accepted = (typeof accepted === "undefined") ? true : accepted;
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
                                       group.creator, new Date(group.dateCreated), group.users, accepted);
     for(var index in group.users) {

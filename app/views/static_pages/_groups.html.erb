@@ -101,7 +101,7 @@
       <div class="groups">
         <div class="groups-listtitle">
           <button type="button" ng-click="showAddGroup()" class="btn btn-danger group-add">Add Group</button>
-          <h3>Groups</h3>
+          <h3 style="text-align: left">Current</h3>
         </div>            
         <div class="group-scroll">
           <div class="list-group">
@@ -115,7 +115,7 @@
         </div>
 
         <div class="groups-listtitle">
-          <h3>Pending</h3>
+          <h3 style="text-align: left">Invited to</h3>
         </div>            
         <div class="group-scroll">
           <div class="list-group">
@@ -137,7 +137,7 @@
           </div>
           <div class="group-name">
             <h3>
-              <span>{{(groupsList[group_selected].accepted ? "Pending: " : "") + groupsList[group_selected].name}}<span>
+              <span>{{(groupsList[group_selected].accepted ? "" : "You have been invited to: ") + groupsList[group_selected].name}}<span>
                 <button type="button" ng-hide="groupsList[group_selected].isSelfGroup || !groupsList[group_selected].accepted" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </button>
