@@ -212,7 +212,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.myTasks = TaskModel.tasks;
 
   // use watch to update my tasks in view everytime my task has changed
-  $scope.$watch('myTasks', function(newVal, oldVal){}, true);
+  $scope.$watch('myTasks', function(){});
 
   // create a task from user input
   $scope.createTask = function(e){

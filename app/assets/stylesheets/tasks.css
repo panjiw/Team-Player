@@ -100,7 +100,7 @@ textarea {
 }
 
 .tasks-pop {
-  position: absolute;
+  position: fixed;
   width: 400px;
 /*  height: 330px;*/
   overflow-height: hidden;
