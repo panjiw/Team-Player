@@ -79,17 +79,26 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 }
 
 .bill-pop {
-  position: absolute;
-  right: 200px;
-  top: 275px;
+  position: fixed;
+/*  overflow-height: auto;*/
+  width: 400px;
+  right: 80px;
+  top: 250px;
+  bottom: 50px;
   padding: 10px;
   background-color: #F0F0F0;
   border: 1px solid gray;
   border-radius: 5px;
   display: none;
+  overflow-height: hidden;
 }
 
 .bill-pop-total {
+  float: right;
+  margin-right: 10px;
+}
+
+.bill-pop-total-comb {
   float: right;
   margin-right: 10px;
 }
@@ -138,7 +147,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   background-color: #dff0d8;
   border-color: #bce8f1;
   border-radius: 5px;
-  width: 250px;
+/*  width: 250px;*/
   overflow: hidden;
   padding: 10px;
   margin-bottom: 20px;

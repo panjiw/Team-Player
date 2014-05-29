@@ -110,6 +110,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
             <h3>Create Bill</h3>
+            <h5><i>Bills should be created by member who paid entire bill</i></h5>
           </div>
           <div class="modal-body tasks-add-body">
             <div class="col-md-6">
@@ -206,6 +207,12 @@
       <li>
         <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
       </li>
+      <li>
+        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
+      </li>
+      <li>
+        <a href="#billsCreated" data-toggle="tab" ng-click="closePop()">Bills I've Created</a>
+      </li>
     </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="billsOwe">
@@ -263,6 +270,77 @@
                   </div>
                 </div>
               </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="billsSummary">
+          <h3>Bill Summary</h3>
+          <div class="bill-scroll">
+            <div ng-repeat="entry in combinedBills">
+              <div class="bill-all">
+                <div class="bill" ng-click="openPop($event, entry.username, 4)">
+                  <h4 class="bill-member bill-member-long">{{entry.username}}</h4>
+                  <h4 class="bill-amount">${{entry.oweYou}}</h4>
+                  <h4 class="bill-amount">${{entry.youOwe}}&nbsp;&nbsp;&nbsp;</h4>
+                </div>
+                <div id="{{entry.username}}4" class="bill-pop">
+                  <div class="bills-to-pay">
+                    <!-- bills you owe -->
+                    <div ng-repeat="UO in entry.youOweBills">
+                      <label for="{{UO.id}}">
+                        <div style="">
+                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
+                            <input name="combAdd" id="UO" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{UO.amountForEntry[entry.username]}} {{UO.id}}">
+                            <h4 class="bill-member">{{UO.title}}</h4>
+                            <h4 class="bill-amount">${{UO.amountForEntry[entry.username]}} </h4>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                    <!-- bills owe you -->
+                    <div ng-repeat="OU in entry.oweYouBills">
+                      <label for="{{OU.id}}">
+                        <div style="">
+                          <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{OU.dateDue | date:'shortDate'}}" data-content="<p>{{OU.description}}</p>" data-placement="right">
+                            <input name="combSub" id="OU" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{OU.amountForEntry[entry.username]}} {{OU.id}}">
+                            <h4 class="bill-member">{{OU.title}}</h4>
+                            <h4 class="bill-amount">-${{OU.amountForEntry[entry.username]}} </h4>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-default" ng-click="pay(bill.person)">Paid</button>
+                  <h4 class="bill-pop-total-comb">Total: $0</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="billsCreated">
+          <h3>Bills I've Created</h3>
+            <div class="bill-scroll">
+<!--               <div ng-repeat="entry in billSummary.oweYou">
+                <div class="bill-all">
+                  <div class="bill" ng-click="openPop($event, entry.person_username, 2)" >
+                    <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
+                    <h4 class="bill-amount">${{entry.total}}</h4>
+                  </div>
+                  <div id="{{entry.person_username}}2" class="bill-pop">
+                    <div class="bills-to-pay-you">
+                      <div ng-repeat="b in entry.billsArray">
+                        <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue | date:'shortDate'}}" data-content="<p>{{b.description}}</p>" data-placement="right">
+                          <h4 class="bill-member">
+                            <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
+                              <span class="glyphicon glyphicon-pencil"></span>
+                            </button> {{b.title}}
+                          </h4>
+                          <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
             </div>
         </div>
       </div>
