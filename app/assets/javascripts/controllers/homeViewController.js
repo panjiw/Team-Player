@@ -137,8 +137,21 @@ angular.module('myapp').controller("homeViewController",
         
         // If task is not finished yet, display normally
         if (this.done == null) {
-          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#faebcc", textColor: "black", borderColor: "#faebcc", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
-            group: this.groupName, eventid: this.id});
+          var newEventObj = 
+          {
+            type: "Task", 
+            title: this.title, 
+            start: this.dateDue,
+            // display a red background if the task is overdue 
+            backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#D00000" : "#faebcc", 
+            textColor: "black", 
+            borderColor: "#faebcc", 
+            desc: this.description, 
+            members: UserModel.usersToUserNamesString(this.members),
+            group: this.groupName, 
+            eventid: this.id
+          };
+          events.push(newEventObj);
         }
         
         // Else task is completed, display as completed
