@@ -393,6 +393,12 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
+  $scope.isSpecial = function(taskID){
+    if(TaskModel.generators[taskID])
+      return true;
+    else return false;
+  }
+
   // open or close popup when clicking on task
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {

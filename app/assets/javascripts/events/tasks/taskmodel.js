@@ -94,6 +94,8 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     // grab the entire user objects for each user from the model
     for (var id in task.members){
       members[id] = UserModel.users[id];
+      if(!members[id].rank) members[id].rank = {};
+      members[id].rank[task.details.id] = task.members[id];
     }
 
     // update or add to our saved tasks

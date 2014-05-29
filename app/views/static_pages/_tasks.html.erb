@@ -278,17 +278,18 @@
                       </div>
                       <div class="panel-body panel-info">
                         <div class="panel-groupname">{{task.groupName}}</div>
-                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></div>
+                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members | orderUsers">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></div>
                       </div>
                     </div>
                   </button>
                   <div id="task{{task.id}}1" class="tasks-pop">
                     <div class="selected-info">
                       <span><strong>Task:</strong> {{task.title}}</span><br>
-                      <span><strong>Description:</strong> {{task.description}}</span><br/>
+                      <span style="white-space:pre"><strong>Description:</strong> {{task.description}}</span><br/>
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
-                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
+                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br>
+                      <button ng-show="isSpecial(task.id)" class="btn" style="float:left">Stop Repeating</button>
                       <div class="selected-buttons">
                           <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
                           <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
