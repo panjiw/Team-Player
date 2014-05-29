@@ -79,19 +79,37 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 }
 
 .bill-pop {
-  position: absolute;
-  right: 200px;
-  top: 275px;
+  position: fixed;
+/*  overflow-height: auto;*/
+  width: 370px;
+  right: 150px;
+  top: 250px;
+  bottom: 50px;
   padding: 10px;
   background-color: #F0F0F0;
   border: 1px solid gray;
   border-radius: 5px;
   display: none;
+  overflow-height: hidden;
 }
 
 .bill-pop-total {
   float: right;
   margin-right: 10px;
+}
+
+.bill-pop-total-comb {
+  float: right;
+  margin-right: 10px;
+}
+
+.bills-checkbox {
+  float:left;
+  margin-right:5px;
+}
+
+.bills-editBtn {
+  float:left;
 }
 
 .bill-member {
@@ -138,14 +156,33 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   background-color: #dff0d8;
   border-color: #bce8f1;
   border-radius: 5px;
-  width: 250px;
   overflow: hidden;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.bills-selected-owe {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #bce8f1;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.bills-selected-debt {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px;
+  margin-bottom: 5px;
 }
 
 .bills-to-pay {
-  height: 300px;
+  height: 280px;
   overflow-y: auto;
 }
 
@@ -154,14 +191,14 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   overflow-y: auto;
 }
 
-.bills-selected input {
+.bills-selected .bills-selected-owe .bills-selected-debt input {
   float: left;
   clear: both;
   margin: 0px;
   padding: 0px;
 }
 
-.bills-selected .bill-amount {
+.bills-selected .bills-selected-owe .bills-selected-debt  .bill-amount {
   float: right;
   margin-left: 0px;
 }
@@ -177,4 +214,37 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 
 .bill-all .popover-content p{
   line-height: 15px;
+}
+
+.bills-panelbutton {
+  padding-top:0px;
+  padding-bottom:0px;
+  padding-left:0px;
+  padding-right:0px;
+  height:95px;
+  width:650px;
+  overflow:hidden;
+  border-color: white;
+  text-align: center;
+  margin-bottom:25px;
+}
+
+.bill-panel {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right:5px;
+  overflow: hidden;
+  color: inherit;
+}
+
+.panel-owesYou {
+  float: left;
+  margin-left: 200px;
+  padding: 0px;
+}
+
+.panel-youOwe {
+  float: right;
+  margin-right: 10px;
+  padding: 0px;
 }
