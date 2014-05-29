@@ -88,3 +88,29 @@ myApp.filter('onlyMyTasks', function(){
     return result;
  };
 });
+
+myApp.filter('accepted', function() {
+  return function(input) {
+    var result = {};
+    for (var id in input) {
+      if (input[id].accepted) {
+        result[id] = input[id];
+      }
+    }
+
+    return result;
+  };
+});
+
+myApp.filter('pending', function() {
+  return function(input) {
+    var result = {};
+    for (var id in input) {
+      if (!input[id].accepted) {
+        result[id] = input[id];
+      }
+    }
+
+    return result;
+  };
+});

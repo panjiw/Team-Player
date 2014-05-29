@@ -159,6 +159,30 @@
     });
   }
 
+  $scope.acceptGroup = function(id) {
+    GroupModel.acceptGroup(function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        $scope.$apply(function() {
+          console.log("accepted group");
+        });
+      }
+    });
+  }
+
+  $scope.ignoreGroup = function(id) {
+    GroupModel.acceptGroup(function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        $scope.$apply(function() {
+          console.log("ignored group");
+        });
+      }
+    });
+  }
+
   ////////////////////////////////////////////////////////////
   //  Modal functionality -- open and close modals as needed
   /////////////////////////////////////////////////////////////

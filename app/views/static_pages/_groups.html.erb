@@ -106,7 +106,21 @@
         <div class="group-scroll">
           <div class="list-group">
               <!-- $parent is required because ng-repeat creates a new scope -->
-              <a ng-repeat="grp in groupsList | orderGroups"
+              <a ng-repeat="grp in groupsList | accepted | orderGroups"
+                 class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
+                 ng-click="$parent.selectGroup(grp.id)">
+                <h4>{{grp.name}}</h4>
+              </a>
+          </div>
+        </div>
+
+        <div class="groups-listtitle">
+          <h3>Pending</h3>
+        </div>            
+        <div class="group-scroll">
+          <div class="list-group">
+              <!-- $parent is required because ng-repeat creates a new scope -->
+              <a ng-repeat="grp in groupsList | pending | orderGroups"
                  class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
                  ng-click="$parent.selectGroup(grp.id)">
                 <h4>{{grp.name}}</h4>
@@ -118,13 +132,13 @@
     <div class="col-md-7">
       <div class="group-display">
         <div class="group-titlerow">
-          <div class="group-leavebutton" ng-hide="groupsList[group_selected].isSelfGroup">
+          <div class="group-leavebutton" ng-hide="groupsList[group_selected].isSelfGroup || !groupsList[group_selected].accepted">
             <button ng-click="leaveGroup(groupsList[group_selected].id)" type="button" class="btn btn-leave">Leave Group</button>
           </div>
           <div class="group-name">
             <h3>
-              <span>{{groupsList[group_selected].name}}<span>
-                <button type="button" ng-hide="groupsList[group_selected].isSelfGroup" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
+              <span>{{(groupsList[group_selected].accepted ? "Pending: " : "") + groupsList[group_selected].name}}<span>
+                <button type="button" ng-hide="groupsList[group_selected].isSelfGroup || !groupsList[group_selected].accepted" ng-click="showEditGroup($event)" class="btn btn-default btn-xs">
                   <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </h3>
@@ -138,7 +152,7 @@
                 <h4>{{mem.firstname}}</h4>
               </a>
           </div>
-          <div ng-hide="groupsList[group_selected].isSelfGroup">
+          <div ng-hide="groupsList[group_selected].isSelfGroup || !groupsList[group_selected].accepted">
             <input type="text" ng-model="addNewMember" ng-keypress="addMember($event)" class="form-control group-add" placeholder="new member email" />
             <button type="button" ng-click="addMember($event)" class="btn btn-default group-add">+</button>
           </div>
@@ -149,6 +163,10 @@
         <div class="group-description" ng-hide="member_selected == -1">
           <h4>Username: {{currentMembers[member_selected].username}}</h4>
           <h4>Full Name: {{currentMembers[member_selected].firstname + " " + currentMembers[member_selected].lastname}}</h4>
+        </div>
+        <div ng-show="!groupsList[group_selected].accepted">
+          <button type="button" ng-click="acceptGroup(group_selected)" class="btn btn-default" style="background-color: green; color: white">Accept</button>
+          <button type="button" ng-click="ignoreGroup(group_selected)" class="btn btn-default" style="background-color: red; color: white">Ignore</button>
         </div>
       </div>
     </div>
