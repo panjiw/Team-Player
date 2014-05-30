@@ -618,11 +618,6 @@ describe UsersController do
                 (response.status == 400).should be_true
             end
 
-            it 'should not change the password because new password confirmation is nil' do
-                post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => nil}
-                (response.status == 400).should be_true
-            end
-
              it 'should not change the password because passed a nil value in password' do
                 post 'edit_password', :edit => {:password => nil, :new_password => "new", :new_password_confirmation => "new"}
                 (response.status == 400).should be_true
