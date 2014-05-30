@@ -11,8 +11,12 @@ Displays pages for after successful login:
     <div class="container">
         <div class="header-row">
           <div class= "home-header">
-            <div class="col-md-11">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <div class="alert alert-info" ng-show="Object.keys($scope.groupsList).length > 1"><b>Oh no! Looks like you don't have any groups. Click on the "Groups" tab to get started!</b>
+              </div>
             </div>
+            <div class="col-md-1"></div>
             <div class="col-md-1">
               <button class="btn btn-default" ng-click="openHomeHelpModal($event)">
                 <span class="glyphicon glyphicon-question-sign"></span>
@@ -75,50 +79,12 @@ Displays pages for after successful login:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <div class="calendar-row">
         <div class="col-md-3">
             <div class="home-buttons" style="visibility: hidden">
                 <button type="button" class="btn btn-default" id="addTaskBut">Add Task</button>
                 <button type="button" class="btn btn-default" id="addBillBut">Add Bill</button>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- calendar modal -->
@@ -174,11 +140,12 @@ Displays pages for after successful login:
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
           <div class="home-calendar" style="position:relative; right: 100px">
             <div id="calendar-display"></div>
           </div>
         </div>
+      </div>
     </div>
 </div>
 
