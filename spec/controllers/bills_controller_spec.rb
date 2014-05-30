@@ -29,7 +29,37 @@ describe "NEW tests" do
 
         @controller = GroupsController.new
 		post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [2,3,4]}
+
+		@controller = SessionsController.new
+		delete 'destroy'
+        post 'create', :user => {:username => "two", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
+
+		@controller = SessionsController.new
+		delete 'destroy'
+        post 'create', :user => {:username => "three", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
+
+		@controller = SessionsController.new
+		delete 'destroy'
+        post 'create', :user => {:username => "four", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
 		
+		@controller = SessionsController.new
+		delete 'destroy'
+        post 'create', :user => {:username => "takenname", :password => "player"}
+
+        @controller = GroupsController.new
+
 		end
 
 	context 'the bill has a negative value' do
@@ -450,7 +480,43 @@ describe "GETALL tests" do
 
         		@controller = GroupsController.new
 				post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3,4,5]}
-				end
+
+				@controller = SessionsController.new
+				delete 'destroy'
+		        post 'create', :user => {:username => "three", :password => "player"}
+		        
+		        @controller = GroupsController.new
+		        post 'acceptgroup', :accept => {:id => "6"}
+
+
+		        @controller = SessionsController.new
+    	    	delete 'destroy'
+    	    	post 'create', :user => {:username => "takenname", :password => "player"}
+	
+    	    	@controller = GroupsController.new
+		        post 'acceptgroup', :accept => {:id => "6"}	
+
+				@controller = SessionsController.new
+				delete 'destroy'
+		        post 'create', :user => {:username => "four", :password => "player"}
+		        
+		        @controller = GroupsController.new
+		        post 'acceptgroup', :accept => {:id => "6"}
+
+				@controller = SessionsController.new
+				delete 'destroy'
+		        post 'create', :user => {:username => "five", :password => "player"}
+		        
+		        @controller = GroupsController.new
+		        post 'acceptgroup', :accept => {:id => "6"}
+
+
+				@controller = SessionsController.new
+				delete 'destroy'
+		        post 'create', :user => {:username => "two", :password => "player"}
+
+		        @controller = GroupsController.new
+			end
 
 			# user owes one bill; nothing owed to user
 			context 'user owes one bill; nothing owed to user' do
@@ -667,6 +733,31 @@ describe "EDIT tests" do
         @controller = GroupsController.new
 		post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [2,3,4]}
 		
+		@controller = SessionsController.new
+		delete 'destroy'
+		post 'create', :user => {:username => "two", :password => "player"}
+		        
+		@controller = GroupsController.new
+		post 'acceptgroup', :accept => {:id => "6"}
+
+		@controller = SessionsController.new
+		delete 'destroy'
+		post 'create', :user => {:username => "three", :password => "player"}
+		        
+		@controller = GroupsController.new
+		post 'acceptgroup', :accept => {:id => "6"}
+
+		@controller = SessionsController.new
+		delete 'destroy'
+		post 'create', :user => {:username => "four", :password => "player"}
+		        
+		@controller = GroupsController.new
+		post 'acceptgroup', :accept => {:id => "6"}
+
+		@controller = SessionsController.new
+		delete 'destroy'
+        post 'create', :user => {:username => "one", :password => "player"}
+
 		@controller = BillsController.new
 		post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => 30}}
 		
