@@ -138,7 +138,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // initialize group and members to display for creating tasks
   $scope.groupsList = {};
-  $scope.currentMembers = {};
+  $scope.currentMembers = [];
 
   // get groups before loading task so that group and user info are updated
   GroupModel.getGroups(function(groups, asynch, error) {
@@ -174,7 +174,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
     if($scope.newTaskGroup){
       // in create task modal, update current members to be selected if group has changed
-      $scope.currentMembers = $scope.newTaskGroup.members;
+      $scope.currentMembers = [];
+      for (var i in $scope.newTaskGroup.members){
+        $scope.currentMembers.push($scope.newTaskGroup.members[i]);
+      }
     } else {
       $scope.currentMembers = {};
     }
