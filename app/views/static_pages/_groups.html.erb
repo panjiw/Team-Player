@@ -176,7 +176,7 @@
           </div>
         </div>
         <div class="group-description" ng-show="member_selected == -1">
-          <h4 style="white-space:pre; word-wrap:break-word">{{groupsList[group_selected].description}}</h4>
+          <h4 class="wrapword">{{groupsList[group_selected].description}}</h4>
         </div>
         <div class="group-description" ng-hide="member_selected == -1">
           <h4>Username: {{currentMembers[member_selected].username || currentPending[member_selected].username}}</h4>
