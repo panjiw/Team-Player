@@ -31,7 +31,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       
       if (bill.dateDue){
         // make it a Date object
-        $scope.editBillDateDue = new Date(bill.dateDue);
+        $scope.editBillDateDue = bill.dateDue;
       } else {
         // if there is no date initially, make date empty
         $scope.editBillDateDue = "";

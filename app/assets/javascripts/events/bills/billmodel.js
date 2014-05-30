@@ -109,8 +109,8 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   BillModel.updateBill = function(bill){
     toDollars(bill.due);
 
-    var created_at = new Date(bill.details.created_at + "PST");
-    var due_date = bill.details.due_date ? new Date(bill.details.due_date + "PST") : null;
+    var created_at = formatDate(bill.details.created_at);
+    var due_date = bill.details.due_date ? formatDate(bill.details.due_date) : null;
     BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
      bill.details.user_id, created_at, due_date, bill.due);
     makeSummary();
