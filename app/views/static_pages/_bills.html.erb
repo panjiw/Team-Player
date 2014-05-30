@@ -109,7 +109,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3>Create Bill</h3>
+            <h3>Add Bill</h3>
             <h5><i>Bills should be created by member who paid entire bill</i></h5>
           </div>
           <div class="modal-body tasks-add-body">
@@ -127,8 +127,9 @@
                 <option value="">-- choose group --</option>
               </select>
               <br>
+              <br>
               <div ng-show="currentMembers.length > 1">
-                <button class="btn" ng-click="selectAll(currentMembers)">select all</button>
+                <button class="btn btn-xs" ng-click="selectAll(currentMembers)">select all</button>
               </div>
               <div class="bill-members">
                 <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
@@ -149,7 +150,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="createBill($event)">Save</button>
+            <button class="btn" ng-click="createBill($event)">Add</button>
           </div>
         </div>
       </div>
@@ -179,8 +180,9 @@
               </select> -->
               <span>{{editBillGroup.name}}</span>
               <br>
+              <br>
               <div ng-show="currentEditMembers.length > 1">
-                <button class="btn" ng-click="selectAll(currentEditMembers)">select all</button>
+                <button class="btn btn-xs" ng-click="selectAll(currentEditMembers)">select all</button>
               </div>
               <div class="bill-members">
                 <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
@@ -199,7 +201,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="editBill($event)">Edit</button>
+            <button class="btn" ng-click="editBill($event)">Save</button>
           </div>
         </div>
       </div>

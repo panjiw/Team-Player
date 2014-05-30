@@ -172,7 +172,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="createTask($event)">Save</button>
+            <button class="btn" ng-click="createTask($event)">Add</button>
           </div>
         </div>
       </div>
@@ -234,8 +234,9 @@
               <span>{{editTaskGroup.name}}</span>
               <h5>Members</h5>
               <div class="task_modal_members" ng-show="currentEditMembers.length > 1">
-                <button class="btn" ng-click="selectAll(currentEditMembers)">select all</button>
+                <button class="btn btn-xs" ng-click="selectAll(currentEditMembers)">select all</button>
               </div>
+              <br>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentEditMembers">
                     <li ng-repeat="mem in currentEditMembers">
@@ -249,7 +250,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="editTask($event)">Edit</button>
+            <button class="btn" ng-click="editTask($event)">Save</button>
           </div>
         </div>
       </div>
