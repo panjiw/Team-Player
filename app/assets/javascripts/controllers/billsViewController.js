@@ -439,10 +439,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         str = str.substr(0, str.indexOf(' '));
         
         total += (this.checked ? parseFloat(str) : 0);
-        var roundedTotal = total.toFixed(2);
-        total = parseFloat(roundedTotal);
       });
-    $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
+    $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total.toFixed(2));
   }
 
   // Function when bill summary checkboxes are clicked. Updates displayed total
@@ -457,11 +455,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         } else {
           total -= (this.checked ? parseFloat(str) : 0);
         }
-        
-        var roundedTotal = total.toFixed(2);
-        total = parseFloat(roundedTotal);
       });
-    $('#' + p + 4 + " .bill-pop-total-comb").html('Total: $' + total);
+    $('#' + p + 4 + " .bill-pop-total-comb").html('Total: $' + total.toFixed(2));
   }
   
   // Function called when anything is clicked in bills page that should close popover
