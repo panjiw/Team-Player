@@ -66,6 +66,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       /********** start rearange member according to task list *******/
       // clone current members from groupmodel
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.group].members);
+      $scope.currentEditPending = $.extend(true, {}, GroupModel.groups[task.group].pending);
       
       var memArray = [];
       var count = 0;
@@ -139,6 +140,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   // initialize group and members to display for creating tasks
   $scope.groupsList = {};
   $scope.currentMembers = [];
+  $scope.currentPending = [];
 
   // get groups before loading task so that group and user info are updated
   GroupModel.getGroups(function(groups, asynch, error) {
@@ -181,9 +183,14 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       if($scope.newTaskGroup.isSelfGroup){
         $scope.currentMembers[0].chked = true;
       }
-      
+
+      $scope.currentPending = [];
+      for (var i in $scope.newTaskGroup.pending){
+        $scope.currentPending.push($scope.newTaskGroup.pending[i]);
+      }     
     } else {
       $scope.currentMembers = {};
+      $scope.currentPending = {};
     }
   });
 

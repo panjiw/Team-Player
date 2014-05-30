@@ -57,6 +57,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.currentEditMembers.push(mems[i]);
       }
 
+      var pending = $.extend(true, {}, GroupModel.groups[bill.group].pending);
+      $scope.currentEditPending = [];
+      for (var i in pending) {
+        $scope.currentEditPending.push(pending[i]);
+      }
+
       for (var id in bill.membersAmountMap){
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
@@ -77,6 +83,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   initNewBillData();
   $scope.groupsList = {};
   $scope.currentMembers = [];
+  $scope.currentPending = [];
 
   // Refreshes page bill data 
   getBillFromModel = function(e) {
@@ -131,9 +138,15 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
     console.log('group selected');
     $scope.currentMembers = [];
-      for (var i in $scope.newBillGroup.members){
-        $scope.currentMembers.push($scope.newBillGroup.members[i]);
-      }
+    for (var i in $scope.newBillGroup.members) {
+      $scope.currentMembers.push($scope.newBillGroup.members[i]);
+    }
+    console.log("Current members: ", $scope.currentMembers);
+
+    $scope.currentPending = [];
+    for (var i in $scope.newBillGroup.pending) {
+      $scope.currentPending.push($scope.newBillGroup.pending[i]);
+    }
   });
   
   $scope.notSelf = function(user){

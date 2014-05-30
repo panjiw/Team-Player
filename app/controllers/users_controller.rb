@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # adding a self group
-      @user.groups.create(name: 'Me', description: 'Assign task/bills to the Me group, if those task/bills are for yourself', 
+      name = 'Me (' + params[:user][:username] + ')'
+      @user.groups.create(name: name, description: 'Assign task/bills to the Me group, if those task/bills are for yourself', 
               creator: @user.id, self: true)
       token = view_context.sign_in @user
       render :json => {:token => token}, :status => 200

@@ -165,7 +165,18 @@
                       <div style="clear: both;"></div>
                     </li>
                   </ul>
-                </div><br>
+                </div>
+                <div class="task_modal_members">
+                  <ul ui-sortable>
+                    <li ng-repeat="mem in currentPending" class="draggable">
+                      <input type="checkbox" disabled="disabled" ng-model="mem.chked" style="float:left;"/>
+                      <span style="float:left; color: gray">{{mem.username}} (invited)&nbsp;</span>
+                      <div style="clear: both;"></div>
+                    </li>
+                  </ul>
+                </div>
+
+                <br>
                 <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
                 <span>Cyclic Task</span>
             </div>
@@ -243,7 +254,17 @@
                       <div style="clear: both;"></div>
                     </li>
                   </ul>
-                </div><br>
+                </div>
+                <div class="task_modal_members">
+                  <ul ui-sortable>
+                    <li ng-repeat="mem in currentEditPending" class="draggable">
+                      <input disabled="disabled" type="checkbox" ng-model="mem.chked" style="float:left;"/>
+                      <span style="float:left; color: gray">{{mem.username}} (invited)&nbsp;</span>
+                      <div style="clear: both;"></div>
+                    </li>
+                  </ul>
+                </div>
+                <br>
                 <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
                 <span>Cyclic Task</span>
             </div>

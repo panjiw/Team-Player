@@ -123,7 +123,7 @@
             </div>
             <div class="col-md-5">
               <h5>* Group</h5>
-              <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList | removeSelfGroup">
+              <select ng-model="newBillGroup" ng-options="grp.name for (id, grp) in groupsList | accepted | removeSelfGroup">
                 <option value="">-- choose group --</option>
               </select>
               <br>
@@ -135,6 +135,13 @@
                 <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 1)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
+                  type="number" min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
+                  <div style="clear: both;"></div>
+                </div>
+                <div ng-repeat="mem in currentPending | orderUsers" style="height:2.2em;">
+                  <input disabled="disabled" class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 1)" style="float:left;" />
+                  <span style="float:left; color: gray">{{mem.username}} (invited)</span>
                   <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
                   type="number" min="0.01" step="0.01" max="5000000" placeholder="0.00" style="float:right;"/>
                   <div style="clear: both;"></div>
@@ -188,6 +195,13 @@
                 <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 2)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
+                  type="number" min="0.01" step="0.01" placeholder="0.00" style="float:right;"/>
+                  <div style="clear: both;"></div>
+                </div>
+                <div ng-repeat="mem in currentEditPending | orderUsers" style="height:2.2em;">
+                  <input disabled="disabled" class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 2)" style="float:left;" />
+                  <span style="float:left; color: gray">{{mem.username}} (invited)</span>
                   <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
                   type="number" min="0.01" step="0.01" placeholder="0.00" style="float:right;"/>
                   <div style="clear: both;"></div>
