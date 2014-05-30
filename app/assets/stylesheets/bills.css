@@ -248,3 +248,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   margin-right: 10px;
   padding: 0px;
 }
+
+.ng-invalid {
+  background: red;
+}

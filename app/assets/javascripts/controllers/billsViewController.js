@@ -238,10 +238,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Group not selected");
       if (!$scope.newBillTitle)
         toastr.error("Bill Name required");
-      if (!($scope.newBillTotal) > 0)
+      if ($scope.newBillTotal <= 0)
         toastr.error("Bill total needs to be more than 0");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
-        toastr.error("Member not selected");
+        toastr.error("No member(s) selected");
 
       return;
     }
@@ -290,10 +290,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Group not selected");
       if (!$scope.editBillTitle)
         toastr.error("Bill Name required");
-      if (!($scope.editBillTotal) > 0)
+      if ($scope.editBillTotal <= 0)
         toastr.error("Bill total needs to be more than 0");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
-        toastr.error("Member not selected");
+        toastr.error("No member(s) selected");
 
       return;
     }
