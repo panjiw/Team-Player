@@ -264,13 +264,16 @@ angular.module('myapp').controller("homeViewController",
                     "</div>";
         })
         $.each(thisDateBills, function() {
+          var paidTag = "";
+          if (this.owe.paid){
+            paidTag = "<div>" + "paid" + "</div>";
+          }
           string += "<div class='panel panel-success'>" + 
                       "<div class='panel-heading'>" + 
                         "<div class='task-panel'>" + 
                           "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
-                          "<h4 class='panel-date'>" + 
-                          "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
-                          "Completed" + "</button>" + "</h4>" +
+                          "<h4 class='panel-date'>" + paidTag +
+                           "</h4>" +
                           // "| date:'shortDate'</h4>" + 
                         "</div>" + 
                       "</div>" + 
