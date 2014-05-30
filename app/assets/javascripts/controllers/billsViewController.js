@@ -28,18 +28,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       $scope.editBillTitle = bill.title;
       $scope.editBillDescription = bill.description;
 
-      /** set the date; somehow bill.dateDue is returning and object like 
-          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} for 2014-05-14, so need to parse it
-          weirdly with indexing **/
-      var dateObj = $.extend(true, {}, bill.dateDue);
-      if (dateObj){
-        var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
-        var month = parseInt(""+dateObj[5] + dateObj[6]);
-        month -=1;
-        var day = parseInt(""+dateObj[8] + dateObj[9]);
-
-        $scope.editBillDateDue = new Date(year,month,day);
+      
+      if (bill.dateDue){
+        // make it a Date object
+        $scope.editBillDateDue = new Date(bill.dateDue);
       } else {
+        // if there is no date initially, make date empty
         $scope.editBillDateDue = "";
       }
       
@@ -89,6 +83,23 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           // buildBills();
           $scope.billSummary = BillModel.summary;
+          $scope.combinedBills = {};
+          $.each($scope.billSummary.oweYou, function(index) {
+            if (!$scope.combinedBills[index]) {
+              $scope.combinedBills[index] = {username: this.person_username, 
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}};
+            }
+            $scope.combinedBills[index].oweYou = this.total;
+            $scope.combinedBills[index].oweYouBills = this.billsArray;
+          });
+          $.each($scope.billSummary.youOwe, function(index) {
+            if (!$scope.combinedBills[index]) {
+              $scope.combinedBills[index] = {username: this.person_username, 
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}};
+            }
+            $scope.combinedBills[index].youOwe = this.total;
+            $scope.combinedBills[index].youOweBills = this.billsArray;
+          });
         });
       }
     });
@@ -394,6 +405,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('.bill-pop').not('#' + p + n).hide();
     $('.bill').not($(e.delegateTarget)).css("border", "1px solid white");
     $(".bills-selected").popover();
+    $(".bills-selected-owe").popover();
+    $(".bills-selected-debt").popover();
   }
   
   // Function when checkbox is clicked. Updates displayed total
@@ -410,6 +423,24 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total);
   }
 
+  // Function when bill summary checkboxes are clicked. Updates displayed total
+  $scope.updateTotalComb = function(p) {
+    var total = 0;
+      $('#' + p + 4 + " input:checkbox").each(function () {
+        var str = $(this).val();
+        str = str.substr(0, str.indexOf(' '));
+
+        if (this.id=="UO") {
+          total += (this.checked ? parseFloat(str) : 0);
+        } else {
+          total -= (this.checked ? parseFloat(str) : 0);
+        }
+        
+        var roundedTotal = total.toFixed(2);
+        total = parseFloat(roundedTotal);
+      });
+    $('#' + p + 4 + " .bill-pop-total-comb").html('Total: $' + total);
+  }
   
   // Function called when anything is clicked in bills page that should close popover
   $scope.closePop = function () {
@@ -529,6 +560,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
     }
   }
+
+
+  
 
 }]);
 

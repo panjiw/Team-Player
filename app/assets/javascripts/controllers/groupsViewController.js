@@ -112,6 +112,8 @@
         $scope.$apply(function() {
           $scope.groupsList = GroupModel.groups;
           $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.member_selected = -1;
         });
       }
     }, TaskModel, BillModel);

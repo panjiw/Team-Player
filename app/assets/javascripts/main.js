@@ -88,3 +88,12 @@ myApp.filter('onlyMyTasks', function(){
     return result;
  };
 });
+
+myApp.filter('userNameInTask', function(){
+ return function(input, taskID, isSpecial) {
+    if(isSpecial && input.rank[taskID] == 0){
+      return "[" + input.username + "]";
+    } else
+      return input.username;
+ };
+});
