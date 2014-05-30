@@ -176,7 +176,10 @@
       } else {
         $scope.$apply(function() {
           $scope.groupsList = GroupModel.groups;
-          console.log($scope.groupsList);
+          $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.currentPending = $scope.groupsList[$scope.group_selected].pending;
+          $scope.member_selected = -1;
         });
       }
     });
@@ -189,7 +192,10 @@
       } else {
         $scope.$apply(function() {
           $scope.groupsList = GroupModel.groups;
-          console.log($scope.groupsList);
+          $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.currentPending = $scope.groupsList[$scope.group_selected].pending;
+          $scope.member_selected = -1;
         });
       }
     });
