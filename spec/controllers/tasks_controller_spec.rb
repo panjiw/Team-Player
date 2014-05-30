@@ -26,6 +26,33 @@ describe TasksController do
 
         @controller = GroupsController.new
         post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2,3,4]}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "two", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "three", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "four", :password => "player"}
+        
+        @controller = GroupsController.new
+        post 'acceptgroup', :accept => {:id => "6"}
+
+        @controller = SessionsController.new
+        delete 'destroy'
+        post 'create', :user => {:username => "one", :password => "player"}
+
+        @controller = GroupsController.new
         post 'create', :group => {:name => "own group", :description => "desc"}
     end
 
@@ -252,10 +279,14 @@ describe "NEW tests" do
     describe 'creates a task with two people on one task' do
 
         before(:each) do
+
           @controller = SessionsController.new
           post 'create', :user => {:username => "one", :password => "player"}
+
           @controller = TasksController.new
           post 'new', :task => {:group_id => "6", :title => "title", :finished => false, :members => [1,2]}
+
+
           end
 
         it 'should return a 200 status' do
@@ -645,49 +676,49 @@ describe 'MARK_FINISHED tests' do
 end
 
 
-# tasks in range
-  # Returns all the tasks of the signed in user within the
-  # given (through get) range: date[start] <= task[:created_at] <= date[end]
-  # {number starting from 0:{"details":{
-  # "id":task id,
-  # "group_id":group id of the task,
-  # "user_id":1,
-  # "title":task title,
-  # "description": task_description,
-  # "due_date":due date,
-  # "finished_date":finished date,
-  # "finished":finished,
-  # "created_at":date and time created,
-  # "updated_at":date and time updated},
-  # "members":{user_id:order, ..., user_id:order}}, ...}
-describe "TEST get_task_in_range" do
+# # tasks in range
+#   # Returns all the tasks of the signed in user within the
+#   # given (through get) range: date[start] <= task[:created_at] <= date[end]
+#   # {number starting from 0:{"details":{
+#   # "id":task id,
+#   # "group_id":group id of the task,
+#   # "user_id":1,
+#   # "title":task title,
+#   # "description": task_description,
+#   # "due_date":due date,
+#   # "finished_date":finished date,
+#   # "finished":finished,
+#   # "created_at":date and time created,
+#   # "updated_at":date and time updated},
+#   # "members":{user_id:order, ..., user_id:order}}, ...}
+# describe "TEST get_task_in_range" do
 
-  context 'tasks within month range' do
+#   context 'tasks within month range' do
 
-    before(:each) do
-      @controller = TasksController.new
-    end
+#     before(:each) do
+#       @controller = TasksController.new
+#     end
 
-	   it "should send a 400 status" do
-      get 'get_task_in_range', :range => {:start => "4-12-2015", :end => "7-12"}
-		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
-			(response.status = 400).should be_true
-		end
+# 	   it "should send a 400 status" do
+#       get 'get_task_in_range', :range => {:start => "4-12-2015", :end => "7-12"}
+# 		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+# 			(response.status = 400).should be_true
+# 		end
 
-		# range is only one date
-		it 'should send back a range' do
-			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
-			(response.status = 400).should be_true
-		end
+# 		# range is only one date
+# 		it 'should send back a range' do
+# 			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
+# 			(response.status = 400).should be_true
+# 		end
 
-		# range is not formatted correctly
-		it 'should send back a range' do
-			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
-			(response.status = 400).should be_true
-		end
+# 		# range is not formatted correctly
+# 		it 'should send back a range' do
+# 			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
+# 			(response.status = 400).should be_true
+# 		end
 
-	end
-end
+# 	end
+# end
 
 
 describe "EDIT tests" do
