@@ -145,8 +145,10 @@ class UsersController < ApplicationController
   # t he users of that group, excluding private infos
   def viewgroup
     groups = current_user.groups
-    render :json => groups.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}]), :status => 200
+    render :json => groups.to_json(:include => {
+      :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+      :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+      }})
   end
  
   def viewpendinggroups
