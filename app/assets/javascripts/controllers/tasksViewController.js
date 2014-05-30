@@ -67,14 +67,26 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       // clone current members from groupmodel
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.group].members);
       
+      var memArray = [];
+      var count = 0;
       // set checked for each involved member
       for (var id in task.members){
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
+            memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
+            delete $scope.currentEditMembers[index];
+            count++;
           }
+            
         }
       }
+
+      for (var index in $scope.currentEditMembers){
+        memArray[count++] = $scope.currentEditMembers[index];
+      }
+      $scope.currentEditMembers = memArray;
+
       /*** end ***/
 
       // if there is a generator, (the task either cycle, repeat, or both), initialize with data in it
@@ -382,6 +394,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
+  // The user can stop 
   $scope.stopRepeat = function(taskID){
     if(!taskID || !TaskModel.generators[taskID]){
       toastr.warning("Invaid task selected");
@@ -431,12 +444,26 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.taskNext = function(pageNum) {
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)+1)).show();
-  }
+  };
 
   $scope.taskBack = function(pageNum) {
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
-  }
+  };
+
+/********* for testing!!!!! ****/
+  $scope.testing = function(){
+    $.post("/url",
+    {
+      "date[start]": new Date("2014-05-02"),
+      "date[end]": new Date("2014-09-10")
+    })
+    .success(function(data, status) {
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+    });
+  };
 
   // initialize me to a variable for filter
   $scope.myID = UserModel.me;

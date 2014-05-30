@@ -102,6 +102,7 @@
   </div> <!-- End Header Row -->
   <!--   Start Add Task Button -->
   <div class="tasks-addbutton">
+    <a class="btn btn-danger" id="openBtn" ng-click="testing($event)">TESTING</a>
     <a class="btn btn-danger" id="openBtn" ng-click="openModal($event)">Add Task</a>
       <div id="taskModal" class="modal fade task-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -156,9 +157,8 @@
                 </span>
               <h5>Members</h5>
                 <div class="task_modal_members">
-                  <!-- <ul ui-sortable ng-model="currentMembers"> -->
-                  <ul ng-model="currentMembers">
-                    <li ng-repeat="mem in currentMembers | orderUsers">
+                  <ul ui-sortable ng-model="currentMembers">
+                    <li ng-repeat="mem in currentMembers">
                       <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                       <span style="float:left;">{{mem.username}}&nbsp;</span>
                       <div style="clear: both;"></div>
@@ -231,9 +231,8 @@
               <span>{{editTaskGroup.name}}</span>
               <h5>Members</h5>
                 <div class="task_modal_members">
-                  <!-- <ul ui-sortable ng-model="currentEditMembers"> -->
-                  <ul ng-model="currentEditMembers">
-                    <li ng-repeat="mem in currentEditMembers | orderUsers">
+                  <ul ui-sortable ng-model="currentEditMembers">
+                    <li ng-repeat="mem in currentEditMembers">
                       <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                       <span style="float:left;">{{mem.username}}&nbsp;</span>
                       <div style="clear: both;"></div>
@@ -278,7 +277,7 @@
                       </div>
                       <div class="panel-body panel-info">
                         <div class="panel-groupname">{{task.groupName}}</div>
-                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members | orderUsers">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></div>
+                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></div>
                       </div>
                     </div>
                   </button>
@@ -288,7 +287,7 @@
                       <span style="white-space:pre; word-wrap:break-word" ><strong>Description:</strong> {{task.description}}</span><br/>
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
-                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br>
+                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br>
                       <button ng-click="stopRepeat(task.id)" ng-show="isSpecial(task.id)" class="btn" style="float:left">Stop Repeat/Cycle</button>
                       <div class="selected-buttons">
                           <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
@@ -318,7 +317,7 @@
                       </div>
                       <div class="panel-body panel-info">
                         <div class="panel-groupname">{{task.groupName}}</div>
-                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></div>
+                        <div class="panel-groupmembers"><span ng-repeat="mem in task.members">{{mem.username}}&nbsp;</span></div>
                       </div>
                     </div>
                   </button>
@@ -328,7 +327,7 @@
                       <span><strong>description:</strong> {{task.description}}</span><br/>
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
-                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem.username}}&nbsp;</span></span><br>
+                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem.username}}&nbsp;</span></span><br>
                     </div>
                   </div>
                 </div>
