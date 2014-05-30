@@ -222,7 +222,81 @@ angular.module('myapp').controller("homeViewController",
         else {
           $("#calendarModal-buttons").show();
         }
-      }
+      },
+      dayClick: function(date, allDay, jsEvent, view) {
+
+        var thisDateTasks = [];
+        var thisDateBills = [];
+
+        // Iterates through all of users tasks
+        $.each($scope.myTasks, function() {
+          if (this.dateDue != null) {
+            if ((this.dateDue.getMonth() == date.getMonth()) && 
+              (this.dateDue.getDate() == date.getDate()) &&
+              (this.dateDue.getFullYear() == date.getFullYear())) {
+                thisDateTasks.push(this);
+            }
+          }
+        });
+
+        // Iterates through all of users bills
+        $.each($scope.myBills, function() {
+          if (this.dateDue != null) {
+            if ((this.dateDue.getMonth() == date.getMonth()) && 
+              (this.dateDue.getDate() == date.getDate()) &&
+              (this.dateDue.getFullYear() == date.getFullYear())) {
+                thisDateBills.push(this);
+            }
+          }
+        });
+
+
+       //create panels in a string
+       var string = "";
+        $.each(thisDateTasks, function() {
+          string += "<div class='panel panel-warning'>" + 
+                      "<div class='panel-heading'>" + 
+                        "<div class='task-panel'>" + 
+                          "<h4 class='panel-descr'>" + this.title + "</h4>" + 
+                          "<h4 class='panel-date'>" + this.dateDue.toLocaleDateString() + "</h4>" +
+                          // "| date:'shortDate'</h4>" + 
+                        "</div>" + 
+                      "</div>" + 
+                       "<div class='panel-body panel-info'>" + 
+                         "<div class='panel-groupname'>" + this.groupName + "</div>" + 
+                       //   "<div class='panel-groupmembers'>" +
+                       //      "<span ng-repeat='mem in this.members'>" + 
+                       //        mem | userNameInTask:task.id:isSpecial(task.id) + "</span></div>" + 
+                       "</div>" + 
+                    "</div>";
+        })
+        $.each(thisDateBills, function() {
+          string += "<div class='panel panel-success'>" + 
+                      "<div class='panel-heading'>" + 
+                        "<div class='task-panel'>" + 
+                          "<h4 class='panel-descr'>" + this.title + "</h4>" + 
+                          "<h4 class='panel-date'>" + this.dateDue.toLocaleDateString() + "</h4>" +
+                          // "| date:'shortDate'</h4>" + 
+                        "</div>" + 
+                      "</div>" + 
+                       "<div class='panel-body panel-info'>" + 
+                         "<div class='panel-groupname'>" + this.person_username + "</div>" + 
+                       //   "<div class='panel-groupmembers'>" +
+                       //      "<span ng-repeat='mem in this.members'>" + 
+                       //        mem | userNameInTask:task.id:isSpecial(task.id) + "</span></div>" + 
+                       "</div>" + 
+                    "</div>";
+        })
+
+        //display modal
+        $('#dateModal').modal({show:true})
+        $("#dateModal-header").html("Tasks and Bills for: " + date.toLocaleDateString());
+        $('#dateModal-content').html(string);
+
+        // change the day's background color just for fun
+        $(this).css('background-color', 'pink');
+
+    }
     });  
   };
 
