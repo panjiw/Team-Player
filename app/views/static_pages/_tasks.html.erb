@@ -117,8 +117,6 @@
               <h5>Description:</h5>
               <textarea cols="30" rows="4" ng-model="newTaskDescription"></textarea>
               <div class="tasks-duedate">
-                <input type="checkbox" class="large" data-label="Cycle" ng-model="newTaskCycle"/>
-                <span>Cyclic Task</span><br>
                 <input type="checkbox" class="large" data-label="Deadline" 
                 ng-model="noDue" ng-click="newTaskDateDue='';taskRepeat=false;"/>
                 <span>No Due Date</span>
@@ -155,7 +153,7 @@
                     <option value="">-- choose group --</option>
                   </select>
                 </span>
-              <h5>Members</h5>
+              <h5>Members:</h5>
               <div class="task_modal_members" ng-show="currentMembers.length > 1">
                 <button class="btn" ng-click="selectAll(currentMembers)">select all</button>
               </div>
@@ -167,12 +165,14 @@
                       <div style="clear: both;"></div>
                     </li>
                   </ul>
-                </div>
+                </div><br>
+                <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
+                <span>Cyclic Task</span>
             </div>
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="createTask($event)">Save</button>
+            <button class="btn" ng-click="createTask($event)">Add</button>
           </div>
         </div>
       </div>
@@ -193,8 +193,6 @@
               <h5>Description:</h5>
               <textarea cols="30" rows="4" ng-model="editTaskDescription"></textarea>
               <div class="tasks-duedate">
-                <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
-                <span>Cyclic Task</span><br>
                 <input type="checkbox" class="large" data-label="Deadline" 
                 ng-model="editNoDue" ng-click="editTaskDateDue='';editTaskRepeat=false;"/>
                 <span>No Due Date</span>
@@ -232,10 +230,11 @@
                   </select>
                 </span> -->
               <span>{{editTaskGroup.name}}</span>
-              <h5>Members</h5>
+              <h5>Members:</h5>
               <div class="task_modal_members" ng-show="currentEditMembers.length > 1">
-                <button class="btn" ng-click="selectAll(currentEditMembers)">select all</button>
+                <button class="btn btn-xs" ng-click="selectAll(currentEditMembers)">select all</button>
               </div>
+              <br>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentEditMembers">
                     <li ng-repeat="mem in currentEditMembers">
@@ -244,12 +243,14 @@
                       <div style="clear: both;"></div>
                     </li>
                   </ul>
-                </div>
+                </div><br>
+                <input type="checkbox" class="large" data-label="Cycle" ng-model="editTaskCycle"/>
+                <span>Cyclic Task</span>
             </div>
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal">Cancel</button>
-            <button class="btn" ng-click="editTask($event)">Edit</button>
+            <button class="btn" ng-click="editTask($event)">Save</button>
           </div>
         </div>
       </div>
@@ -293,8 +294,8 @@
                       <span style="white-space:pre; word-wrap:break-word" ><strong>Description:</strong> {{task.description}}</span><br/>
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
-                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br>
-                      <button ng-click="stopRepeat(task.id)" ng-show="isSpecial(task.id)" class="btn" style="float:left">Stop Repeat/Cycle</button>
+                      <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br><br>
+                      <button ng-click="stopRepeat(task.id)" ng-show="isSpecial(task.id)" class="btn btn-default" style="float:left">Stop Repeat or Cycle</button>
                       <div class="selected-buttons">
                           <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
                           <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
