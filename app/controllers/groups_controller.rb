@@ -183,8 +183,10 @@ def leavegroup
         render :json => {:errors => error}, :status => 400
       else
         group.pending_users << user
-        render :json => group.users.to_json(:except => [:created_at, :updated_at, 
-        :password_digest, :remember_token]), :status => 200
+        render :json => groups.to_json(:include => {
+        :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+        :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+        }}), :status => 200
       end
     else
       render :json => ["Missing Params"], :status => 400
