@@ -161,7 +161,7 @@
               </div>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentMembers">
-                    <li ng-repeat="mem in currentMembers">
+                    <li ng-repeat="mem in currentMembers" class="draggable">
                       <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                       <span style="float:left;">{{mem.username}}&nbsp;</span>
                       <div style="clear: both;"></div>
@@ -238,7 +238,7 @@
               </div>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentEditMembers">
-                    <li ng-repeat="mem in currentEditMembers">
+                    <li ng-repeat="mem in currentEditMembers" class="draggable">
                       <input type="checkbox" ng-model="mem.chked" style="float:left;"/>
                       <span style="float:left;">{{mem.username}}&nbsp;</span>
                       <div style="clear: both;"></div>

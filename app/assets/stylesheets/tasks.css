@@ -152,3 +152,11 @@ textarea {
 .task_modal_members ul {
   list-style-type: none;
 }
+
+.draggable:hover {
+  cursor: url(https://mail.google.com/mail/images/2/openhand.cur), pointer;
+}
+
+.draggable.ui-sortable-helper {
+  cursor: url(https://mail.google.com/mail/images/2/closedhand.cur), move;
+}
