@@ -97,3 +97,18 @@ myApp.filter('userNameInTask', function(){
       return input.username;
  };
 });
+
+// select all members in the array when clicked. If all members are selected, unselect them.
+selectAllInArray = function(membersArray){
+  var notSelected = false;
+  for (var i in membersArray){
+    if (!membersArray[i].chked){
+      notSelected = true;
+      break;
+    }
+  }
+
+  for (var i in membersArray){
+    membersArray[i].chked = notSelected;
+  }
+};

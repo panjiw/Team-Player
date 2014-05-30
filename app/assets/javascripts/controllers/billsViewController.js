@@ -49,7 +49,13 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
       $scope.editBillTotal = BillModel.deriveTotal(bill);
       
-      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.group].members);
+      var mems = $.extend(true, {}, GroupModel.groups[bill.group].members);
+
+      // make the currentEditMembers an array
+      $scope.currentEditMembers = [];
+      for (var i in mems){
+        $scope.currentEditMembers.push(mems[i]);
+      }
 
       for (var id in bill.membersAmountMap){
         for (var index in $scope.currentEditMembers){
@@ -70,7 +76,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   
   initNewBillData();
   $scope.groupsList = {};
-  $scope.currentMembers = {};
+  $scope.currentMembers = [];
 
   // Refreshes page bill data 
   getBillFromModel = function(e) {
@@ -124,7 +130,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
     console.log('group selected');
-    $scope.currentMembers = $scope.newBillGroup.members;
+    $scope.currentMembers = [];
+      for (var i in $scope.newBillGroup.members){
+        $scope.currentMembers.push($scope.newBillGroup.members[i]);
+      }
   });
   
   $scope.notSelf = function(user){
@@ -380,6 +389,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   //   buildBillsMapOweYou();
   //   buildBillsMapYouOwe();
   // }
+
+  // select all members in the array when clicked. If all members are selected, unselect them.
+  $scope.selectAll = selectAllInArray; // selectAllInArray is a function in main.js
 
   // function for datepicker to popup
   $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});

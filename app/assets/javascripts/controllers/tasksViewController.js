@@ -178,25 +178,17 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       for (var i in $scope.newTaskGroup.members){
         $scope.currentMembers.push($scope.newTaskGroup.members[i]);
       }
+      if($scope.newTaskGroup.isSelfGroup){
+        $scope.currentMembers[0].chked = true;
+      }
+      
     } else {
       $scope.currentMembers = {};
     }
   });
 
   // select all members in the array when clicked. If all members are selected, unselect them.
-  $scope.selectAll = function(membersArray){
-    var notSelected = false;
-    for (var i in membersArray){
-      if (!membersArray[i].chked){
-        notSelected = true;
-        break;
-      }
-    }
-
-    for (var i in membersArray){
-      membersArray[i].chked = notSelected;
-    }
-  };
+  $scope.selectAll = selectAllInArray; // selectAllInArray is a function in main.js
  
   $scope.openModal = function(e){
     $('#taskModal').modal({show:true});

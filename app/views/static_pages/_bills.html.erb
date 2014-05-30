@@ -126,6 +126,9 @@
                 <option value="">-- choose group --</option>
               </select>
               <br>
+              <div ng-show="currentMembers.length > 1">
+                <button class="btn" ng-click="selectAll(currentMembers)">select all</button>
+              </div>
               <div class="bill-members">
                 <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 1)" style="float:left;" />
@@ -175,6 +178,9 @@
               </select> -->
               <span>{{editBillGroup.name}}</span>
               <br>
+              <div ng-show="currentEditMembers.length > 1">
+                <button class="btn" ng-click="selectAll(currentEditMembers)">select all</button>
+              </div>
               <div class="bill-members">
                 <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0; splitEvenly(mem, 2)" style="float:left;" />
