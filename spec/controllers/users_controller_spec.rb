@@ -276,11 +276,49 @@ describe UsersController do
 
             @controller = SessionsController.new
             delete 'destroy'
+            post 'create', :user => {:username => "four", :password => "player"}
+        
+            @controller = GroupsController.new
+            post 'acceptgroup', :accept => {:id => "9"}
+
+            @controller = SessionsController.new
+            delete 'destroy'
             post 'create', :user => {:username => "five", :password => "player"}
 
             @controller = GroupsController.new
             post 'create', :group => {:name => "567 group", :description => "567 desc"}, :add => {:members => [6,7]}
             post 'create', :group => {:name => "567 new group", :description => "567 desc"}, :add => {:members => [6,7]}        
+
+            @controller = SessionsController.new
+            delete 'destroy'
+            post 'create', :user => {:username => "six", :password => "player"}
+        
+            @controller = GroupsController.new
+            post 'acceptgroup', :accept => {:id => "10"}
+
+            @controller = SessionsController.new
+            delete 'destroy'
+            post 'create', :user => {:username => "three", :password => "player"}
+        
+            @controller = GroupsController.new
+            post 'acceptgroup', :accept => {:id => "10"}
+
+
+            @controller = SessionsController.new
+            delete 'destroy'
+            post 'create', :user => {:username => "six", :password => "player"}
+        
+            @controller = GroupsController.new
+            post 'acceptgroup', :accept => {:id => "11"}
+
+            @controller = SessionsController.new
+            delete 'destroy'
+            post 'create', :user => {:username => "three", :password => "player"}
+        
+            @controller = GroupsController.new
+            post 'acceptgroup', :accept => {:id => "11"}
+
+
 
             @controller = SessionsController.new
             delete 'destroy'
