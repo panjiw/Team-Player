@@ -289,7 +289,7 @@
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
                       <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members | orderUsers">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br>
-                      <button ng-show="isSpecial(task.id)" class="btn" style="float:left">Stop Repeat/Cycle</button>
+                      <button ng-click="stopRepeat(task.id)" ng-show="isSpecial(task.id)" class="btn" style="float:left">Stop Repeat/Cycle</button>
                       <div class="selected-buttons">
                           <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
                           <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>

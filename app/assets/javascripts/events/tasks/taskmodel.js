@@ -54,9 +54,11 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
      $.get("/get_generators")
     .success(function(data, status) {
+      console.log("gen",data);
       // update task generator
       for (var i in data){
         updateGenerator(data[i]);
+
       }
       callback();
       
@@ -282,5 +284,28 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       callback(JSON.parse(xhr.responseText));
     });
   };
+
+  // Stop a special task from repeating, which means set the given task generator as finished
+  TaskModel.stopRepeat = function(taskID, callback) {
+    if(!taskID) {
+      callback("no task id provided");
+    }
+
+    $.post("/finish_special_task",
+    {
+      "task[id]": TaskModel.generators[taskID].details.id
+    })
+    .success(function(data, status) {
+
+      // delete TaskModel.tasks[taskID];
+      updateGenerator(data);
+        
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  };
+
   return TaskModel;
 }]);
