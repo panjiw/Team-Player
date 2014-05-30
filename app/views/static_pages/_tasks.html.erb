@@ -149,7 +149,7 @@
             <div class="col-md-6">
               <h5>Group:</h5>
                 <span class="nullable">
-                  <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList | orderGroups">
+                  <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList | accepted | orderGroups">
                     <option value="">-- choose group --</option>
                   </select>
                 </span>
