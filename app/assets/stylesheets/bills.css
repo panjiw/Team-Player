@@ -252,3 +252,15 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 .ng-invalid {
   background: red;
 }
+
+.bill-panelbutton:hover {
+  cursor: pointer;
+}
+
+.bill-panelbutton:hover .panel-heading {
+  background-color: #c2e2b6;
+}
+
+.bill-panelbutton:hover .panel-body {
+  background-color: #eeecec;
+}
