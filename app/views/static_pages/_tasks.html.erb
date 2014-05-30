@@ -156,6 +156,9 @@
                   </select>
                 </span>
               <h5>Members</h5>
+              <div class="task_modal_members" ng-show="currentMembers.length > 1">
+                <button class="btn" ng-click="selectAll(currentMembers)">select all</button>
+              </div>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentMembers">
                     <li ng-repeat="mem in currentMembers">
@@ -230,6 +233,9 @@
                 </span> -->
               <span>{{editTaskGroup.name}}</span>
               <h5>Members</h5>
+              <div class="task_modal_members" ng-show="currentEditMembers.length > 1">
+                <button class="btn" ng-click="selectAll(currentEditMembers)">select all</button>
+              </div>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentEditMembers">
                     <li ng-repeat="mem in currentEditMembers">
