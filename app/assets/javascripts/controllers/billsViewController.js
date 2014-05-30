@@ -31,7 +31,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       
       if (bill.dateDue){
         // make it a Date object
-        $scope.editBillDateDue = new Date(bill.dateDue);
+        $scope.editBillDateDue = bill.dateDue;
       } else {
         // if there is no date initially, make date empty
         $scope.editBillDateDue = "";
@@ -49,7 +49,13 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
       $scope.editBillTotal = BillModel.deriveTotal(bill);
       
-      $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[bill.group].members);
+      var mems = $.extend(true, {}, GroupModel.groups[bill.group].members);
+
+      // make the currentEditMembers an array
+      $scope.currentEditMembers = [];
+      for (var i in mems){
+        $scope.currentEditMembers.push(mems[i]);
+      }
 
       for (var id in bill.membersAmountMap){
         for (var index in $scope.currentEditMembers){
@@ -70,7 +76,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   
   initNewBillData();
   $scope.groupsList = {};
-  $scope.currentMembers = {};
+  $scope.currentMembers = [];
 
   // Refreshes page bill data 
   getBillFromModel = function(e) {
@@ -124,7 +130,10 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
     console.log('group selected');
-    $scope.currentMembers = $scope.newBillGroup.members;
+    $scope.currentMembers = [];
+      for (var i in $scope.newBillGroup.members){
+        $scope.currentMembers.push($scope.newBillGroup.members[i]);
+      }
   });
   
   $scope.notSelf = function(user){
@@ -222,7 +231,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     // first perform an empty field check
     if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
-      && $scope.newBillDescription && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
+      && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
       e.preventDefault();
 
       if (!$scope.newBillGroup)
@@ -231,8 +240,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Bill Name required");
       if (!($scope.newBillTotal) > 0)
         toastr.error("Bill total needs to be more than 0");
-      if (!$scope.newBillDescription)
-        toastr.error("Bill Description required");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
         toastr.error("Member not selected");
 
@@ -276,7 +283,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     // first perform an empty field check
     if(!($scope.editBillGroup && $scope.editBillTitle && $scope.editBillTotal > 0
-      && $scope.editBillDescription && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
+      && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
       e.preventDefault();
 
       if (!$scope.editBillGroup)
@@ -285,8 +292,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Bill Name required");
       if (!($scope.editBillTotal) > 0)
         toastr.error("Bill total needs to be more than 0");
-      if (!$scope.editBillDescription)
-        toastr.error("Bill Description required");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
         toastr.error("Member not selected");
 
@@ -380,6 +385,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   //   buildBillsMapOweYou();
   //   buildBillsMapYouOwe();
   // }
+
+  // select all members in the array when clicked. If all members are selected, unselect them.
+  $scope.selectAll = selectAllInArray; // selectAllInArray is a function in main.js
 
   // function for datepicker to popup
   $(function() {$( "#bill_datepicker" ).datepicker({ minDate: 0, maxDate: "+10Y" });});

@@ -101,9 +101,9 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     }
 
     // update or add to our saved tasks
-    var created_at = new Date(task.details.created_at + "PST");
-    var due_date = task.details.due_date ? new Date(task.details.due_date + "PST") : null;
-    var finished_date = task.details.finished_date ? new Date(task.details.finished_date + "PST") : null;
+    var created_at = formatDate(task.details.created_at);
+    var due_date = formatDate(task.details.due_date);
+    var finished_date = formatDate(task.details.finished_date);
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, created_at, due_date, members, finished_date);
   }
