@@ -49,11 +49,15 @@ class GroupsController < ApplicationController
 
       # if one of the user is not found shows who (merror) and status 206 otherwise 200
       if (merror.empty?)
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}]), :status => 200
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+                }}), :status => 200
       else
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}], :memberError => merror), :status => 206
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]}
+                }, :memberError => merror), :status => 206
       end
     else
       render :json => {:errors => group.errors.full_messages}, :status => 400
@@ -82,8 +86,10 @@ class GroupsController < ApplicationController
                 :self => group.self}
 
       if group.update_attributes(gpinfo)
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-	  		  :password_digest, :remember_token]}]), :status => 200
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+                }}), :status => 200
       else
         render :json => group.errors.full_messages, :status => 400
       end
@@ -177,8 +183,10 @@ def leavegroup
         render :json => {:errors => error}, :status => 400
       else
         group.pending_users << user
-        render :json => group.users.to_json(:except => [:created_at, :updated_at, 
-        :password_digest, :remember_token]), :status => 200
+        render :json => groups.to_json(:include => {
+        :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+        :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+        }}), :status => 200
       end
     else
       render :json => ["Missing Params"], :status => 400
@@ -191,7 +199,10 @@ def leavegroup
       group = Group.find(params[:accept][:id])
       current_user.pending_groups.delete(group)
       current_user.groups << group
-      render :json => group.to_json, :status => 200
+      render :json => groups.to_json(:include => {
+      :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+      :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+      }}), :status => 200
     else
       render :json => ["Missing Params"], :status => 400      
     end
