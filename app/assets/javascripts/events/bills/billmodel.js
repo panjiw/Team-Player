@@ -62,6 +62,35 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     return total;
   };
 
+  // return all the bills on a specific date, used by calendar
+  BillModel.getBillsOnDay = function(date){
+    var thisDayBill = {};
+
+    // for each bill
+    for (var i in BillModel.bills) {
+      // if it is dateless, move on
+      if(!BillModel.bills[i].dateDue)
+        continue;
+
+      // if the date matches
+      if ((BillModel.bills[i].dateDue.getMonth() == date.getMonth()) && 
+          (BillModel.bills[i].dateDue.getDate() == date.getDate()) &&
+          (BillModel.bills[i].dateDue.getFullYear() == date.getFullYear())) {
+        // if I am not the owner of the bill; so the calendar day popup only display 
+        // bills that I owe someone else
+        if (BillModel.bills[i].creator != UserModel.me){
+          var amtMap = BillModel.bills[i].membersAmountMap;
+          thisDayBill[i] = {
+            bill: BillModel.bills[i], // bill object
+            owe : amtMap[UserModel.me], //{due: int, paid: bool, paid_date: date}
+            ownerUsername : UserModel.users[BillModel.bills[i].creator].username // string
+          }
+        }
+      }
+    }
+    return thisDayBill;
+  };
+
   // make a "summary" for the user based on all the bills
   // in BillModel.Bills. 
   // This should contain a SummaryEntry for each person

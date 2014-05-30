@@ -40,6 +40,8 @@ angular.module('myapp').controller("homeViewController",
         console.log("<<<< home view: task & task gen from model!!>>>");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.tasks;
+          // initialize me to a variable for filter
+          $scope.myID = UserModel.me;
         });
       }
     });
@@ -55,7 +57,8 @@ angular.module('myapp').controller("homeViewController",
       } else{
         //TODO
         $scope.$apply(function(){
-          $scope.myBills = BillModel.bills;          
+          $scope.myBills = BillModel.bills;    
+          $scope.billSummary = BillModel.summary;
         });
       }
     });
@@ -226,7 +229,7 @@ angular.module('myapp').controller("homeViewController",
       dayClick: function(date, allDay, jsEvent, view) {
 
         var thisDateTasks = [];
-        var thisDateBills = [];
+        var thisDateBills = {};
 
         // Iterates through all of users tasks
         $.each($scope.myTasks, function() {
@@ -239,17 +242,9 @@ angular.module('myapp').controller("homeViewController",
           }
         });
 
-        // Iterates through all of users bills
-        $.each($scope.myBills, function() {
-          if (this.dateDue != null) {
-            if ((this.dateDue.getMonth() == date.getMonth()) && 
-              (this.dateDue.getDate() == date.getDate()) &&
-              (this.dateDue.getFullYear() == date.getFullYear())) {
-                thisDateBills.push(this);
-            }
-          }
-        });
+        thisDateBills = BillModel.getBillsOnDay(date);
 
+        console.log("thisDateBills",thisDateBills);
 
        //create panels in a string
        var string = "";
@@ -271,19 +266,29 @@ angular.module('myapp').controller("homeViewController",
                     "</div>";
         })
         $.each(thisDateBills, function() {
+          var paidTag = "";
+          if (this.owe.paid){
+            paidTag = "<div>" + "paid" + "</div>";
+          } else {
+            paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
+            "pay" + "</button>";
+          }
           string += "<div class='panel panel-success'>" + 
                       "<div class='panel-heading'>" + 
                         "<div class='task-panel'>" + 
-                          "<h4 class='panel-descr'>" + this.title + "</h4>" + 
-                          "<h4 class='panel-date'>" + this.dateDue.toLocaleDateString() + "</h4>" +
+                          "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
+                          "<h4 class='panel-date'>" + paidTag +
+                           "</h4>" +
                           // "| date:'shortDate'</h4>" + 
                         "</div>" + 
                       "</div>" + 
                        "<div class='panel-body panel-info'>" + 
-                         "<div class='panel-groupname'>" + this.person_username + "</div>" + 
-                       //   "<div class='panel-groupmembers'>" +
-                       //      "<span ng-repeat='mem in this.members'>" + 
-                       //        mem | userNameInTask:task.id:isSpecial(task.id) + "</span></div>" + 
+                         "<div class='panel-groupname'>" +
+                         "Created By: " + this.ownerUsername +
+                         "</div>" + 
+                         "<div class='panel-groupmembers'>" +
+                            "$" + this.owe.due +
+                         "</div>" +
                        "</div>" + 
                     "</div>";
         })
