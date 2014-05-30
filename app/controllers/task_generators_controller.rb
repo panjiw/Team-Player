@@ -46,6 +46,7 @@ class TaskGeneratorsController < ApplicationController
         render :json => {:errors => "Invalid repeat pattern"}, :status => 400
         return
       end
+      # reformat the frontend provided 7 boolean list to ruby arrays
       @task_generator[:repeat_days] = {}
       day = 1
       false_days = 0
@@ -105,6 +106,8 @@ class TaskGeneratorsController < ApplicationController
     # calling helper method's new_task to make next task from generator
     next_task = new_task @task_generator
     if next_task.errors.empty?
+      # if successful, prepare the generator for the next task + bring up the next
+      # user who will be responsible for that next task
       generator_and_task = {}
       generator = {}
       generator[:details] = @task_generator
@@ -216,6 +219,7 @@ class TaskGeneratorsController < ApplicationController
           render :json => {:errors => "Invalid repeat pattern"}, :status => 400
           return
         end
+        # reformat the frontend provided 7 boolean list to ruby arrays
         @task_generator[:repeat_days] = {}
         day = 1
         false_days = 0
