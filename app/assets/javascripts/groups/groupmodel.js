@@ -143,10 +143,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "invite[email]": email
     })
     .success(function(data, status) {
-      GroupModel.groups[group].members = data;
-      for(var i = 0; i < data.length; i++) {
-        UserModel.updateUser(data[i]);
-      }
+      GroupModel.updateGroup(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
