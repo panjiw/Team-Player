@@ -11,7 +11,7 @@
   // Set $scope variables to defaults 
   $scope.group_selected = -1;
   $scope.member_selected = -1
-  $scope.currentMembers = {};
+  $scope.currentMembers = $scope.currentPending = {};
   $scope.groupsList = GroupModel.groups;
   $scope.currentUser = UserModel.get(UserModel.me);
   $scope.newMemberList = [$scope.currentUser];
@@ -27,6 +27,7 @@
         if($scope.groupsList[group].isSelfGroup) {
           $scope.group_selected = group;
           $scope.currentMembers = $scope.groupsList[group].members;
+          $scope.currentPending = $scope.groupsList[group].pending;
         }
       }
     }
@@ -56,6 +57,9 @@
           $scope.groupCreateName = $scope.groupCreateDescription = $scope.newMember = "";
           $scope.newMemberList = [$scope.currentUser];
           toastr.success("Group created!");
+
+          $scope.groupsList = GroupModel.groups;
+          console.log($scope.groupsList);
         });
         $('#groupModal').modal('hide');
       }
@@ -79,8 +83,12 @@
         // clear input boxes and hide the modals
         $scope.$apply(function() {
           $scope.currentMembers = $scope.groupsList[groupid].members;
+          $scope.currentPending = $scope.groupsList[groupid].pending;
           $scope.member_selected = -1;
           $scope.addNewMember = "";
+
+          $scope.groupsList = GroupModel.groups;
+          console.log($scope.groupsList);
         });
       }
     });
@@ -112,6 +120,9 @@
         $scope.$apply(function() {
           $scope.groupsList = GroupModel.groups;
           $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.currentPending = $scope.groupsList[$scope.group_selected].pending;
+          $scope.member_selected = -1;
         });
       }
     }, TaskModel, BillModel);
@@ -121,6 +132,7 @@
   $scope.selectGroup = function(id) {
     $scope.group_selected = id;
     $scope.currentMembers = $scope.groupsList[id].members;
+    $scope.currentPending = $scope.groupsList[id].pending;
     $scope.member_selected = -1;
   }
 
@@ -152,6 +164,38 @@
             $scope.newMemberList.push(user);
             $scope.newMember = "";
           }
+        });
+      }
+    });
+  }
+
+  $scope.acceptGroup = function(id) {
+    GroupModel.acceptGroup(id, function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        $scope.$apply(function() {
+          $scope.groupsList = GroupModel.groups;
+          $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.currentPending = $scope.groupsList[$scope.group_selected].pending;
+          $scope.member_selected = -1;
+        });
+      }
+    });
+  }
+
+  $scope.ignoreGroup = function(id) {
+    GroupModel.ignoreGroup(id, function(error) {
+      if(error) {
+        toastr.error(error);
+      } else {
+        $scope.$apply(function() {
+          $scope.groupsList = GroupModel.groups;
+          $scope.group_selected = Object.keys($scope.groupsList)[0];
+          $scope.currentMembers = $scope.groupsList[$scope.group_selected].members;
+          $scope.currentPending = $scope.groupsList[$scope.group_selected].pending;
+          $scope.member_selected = -1;
         });
       }
     });

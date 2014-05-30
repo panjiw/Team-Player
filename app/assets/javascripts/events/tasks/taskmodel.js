@@ -54,9 +54,11 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
      $.get("/get_generators")
     .success(function(data, status) {
+      console.log("gen",data);
       // update task generator
       for (var i in data){
         updateGenerator(data[i]);
+
       }
       callback();
       
@@ -94,12 +96,14 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     // grab the entire user objects for each user from the model
     for (var id in task.members){
       members[id] = UserModel.users[id];
+      if(!members[id].rank) members[id].rank = {};
+      members[id].rank[task.details.id] = task.members[id];
     }
 
     // update or add to our saved tasks
-    var created_at = new Date(task.details.created_at + "PST");
-    var due_date = task.details.due_date ? new Date(task.details.due_date + "PST") : null;
-    var finished_date = task.details.finished_date ? new Date(task.details.finished_date + "PST") : null;
+    var created_at = formatDate(task.details.created_at);
+    var due_date = formatDate(task.details.due_date);
+    var finished_date = formatDate(task.details.finished_date);
     TaskModel.tasks[task.details.id] = new Task(task.details.id, task.details.group_id, GroupModel.groups[task.details.group_id].name, 
       task.details.title, task.details.description, task.details.user_id, created_at, due_date, members, finished_date);
   }
@@ -280,5 +284,28 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       callback(JSON.parse(xhr.responseText));
     });
   };
+
+  // Stop a special task from repeating, which means set the given task generator as finished
+  TaskModel.stopRepeat = function(taskID, callback) {
+    if(!taskID) {
+      callback("no task id provided");
+    }
+
+    $.post("/finish_special_task",
+    {
+      "task[id]": TaskModel.generators[taskID].details.id
+    })
+    .success(function(data, status) {
+
+      // delete TaskModel.tasks[taskID];
+      updateGenerator(data);
+        
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText));
+    });
+  };
+
   return TaskModel;
 }]);
