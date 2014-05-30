@@ -117,13 +117,13 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .home-dateless {
-  height: 125px;
-  overflow-y: auto;
+/*  height: 125px;
+  overflow-y: auto;*/
 }
 
 .home-todays {
-  height: 150px;
-  overflow-y: auto;
+/*  height: 150px;
+  overflow-y: auto;*/
 }
 
 .edit-btn {
