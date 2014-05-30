@@ -98,6 +98,19 @@ myApp.filter('userNameInTask', function(){
  };
 });
 
+myApp.filter('removeSelfGroup', function(){
+ return function(allGroups) {
+  var groups = $.extend(true, {}, allGroups);
+    for (var i in groups){
+      if(groups[i].isSelfGroup){
+        delete groups[i];
+        break;
+      }
+    }
+    return groups;
+ };
+});
+
 // select all members in the array when clicked. If all members are selected, unselect them.
 selectAllInArray = function(membersArray){
   var notSelected = false;

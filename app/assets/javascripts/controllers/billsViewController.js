@@ -231,7 +231,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     // first perform an empty field check
     if(!($scope.newBillGroup && $scope.newBillTitle && $scope.newBillTotal > 0
-      && $scope.newBillDescription && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
+      && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
       e.preventDefault();
 
       if (!$scope.newBillGroup)
@@ -240,8 +240,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Bill Name required");
       if (!($scope.newBillTotal) > 0)
         toastr.error("Bill total needs to be more than 0");
-      if (!$scope.newBillDescription)
-        toastr.error("Bill Description required");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
         toastr.error("Member not selected");
 
@@ -285,7 +283,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     // first perform an empty field check
     if(!($scope.editBillGroup && $scope.editBillTitle && $scope.editBillTotal > 0
-      && $scope.editBillDescription && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
+      && Object.getOwnPropertyNames(makeMembersAmountMap).length > 0)) {
       e.preventDefault();
 
       if (!$scope.editBillGroup)
@@ -294,8 +292,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         toastr.error("Bill Name required");
       if (!($scope.editBillTotal) > 0)
         toastr.error("Bill total needs to be more than 0");
-      if (!$scope.editBillDescription)
-        toastr.error("Bill Description required");
       if (!(Object.getOwnPropertyNames(makeMembersAmountMap).length > 0))
         toastr.error("Member not selected");
 
