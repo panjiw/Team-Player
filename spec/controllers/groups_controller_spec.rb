@@ -478,11 +478,11 @@ describe GroupsController do
 		describe 'accepts to group' do
 
 			before(:each) do
-				#post 'acceptgroup', :accept => {:id => 4}
+				post 'acceptgroup', :accept => {:id => 4}
 			end
 
 			it 'should return a 200 status' do
-				#(response.status == 200).should be_true
+				(response.status == 200).should be_true
 			end
 
 		end
@@ -490,6 +490,56 @@ describe GroupsController do
 
 	end
 
+	describe 'IGNOREGROUP tests' do
+
+		before(:each) do
+			@controller = UsersController.new
+			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+			post 'create', :user => {:username => "two", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+            post 'create', :user => {:username => "three", :firstname => "Team", :lastname => "Player", :email => "test@player.com",
+        		 :password => "player", :password_confirmation => "player"}
+        	
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "one", :password => "player"}
+
+        	@controller = GroupsController.new
+        	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
+        	post 'invitetogroup', :invite => {:email => "test@player.com",:gid => 4}
+		
+        	@controller = SessionsController.new
+        	post 'create', :user => {:username => "three", :password => "player"}
+
+        	@controller = GroupsController.new
+		end
+
+
+		describe 'missing parameters' do
+
+			before(:each) do
+				post 'ignoregroup'
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
+
+		end
+
+		describe 'ignores group' do
+
+			before(:each) do
+				post 'ignoregroup', :ignore => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+		end
+
+	end
 
 
 end
