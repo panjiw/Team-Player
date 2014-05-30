@@ -49,11 +49,15 @@ class GroupsController < ApplicationController
 
       # if one of the user is not found shows who (merror) and status 206 otherwise 200
       if (merror.empty?)
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}]), :status => 200
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+                }}), :status => 200
       else
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-			:password_digest, :remember_token]}], :memberError => merror), :status => 206
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]}
+                }, :memberError => merror), :status => 206
       end
     else
       render :json => {:errors => group.errors.full_messages}, :status => 400
@@ -82,8 +86,10 @@ class GroupsController < ApplicationController
                 :self => group.self}
 
       if group.update_attributes(gpinfo)
-        render :json => group.to_json(:include => [:users => {:except => [:created_at, :updated_at, 
-	  		  :password_digest, :remember_token]}]), :status => 200
+      render :json => groups.to_json(:include => {
+                :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+                :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+                }}), :status => 200
       else
         render :json => group.errors.full_messages, :status => 400
       end
