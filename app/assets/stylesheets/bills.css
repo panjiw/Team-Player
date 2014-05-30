@@ -161,7 +161,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   margin-bottom: 10px;
 }
 
-.bills-selected-owe {
+.bills-selected-debt {
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #bce8f1;
@@ -171,7 +171,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   margin-bottom: 5px;
 }
 
-.bills-selected-debt {
+.bills-selected-owe {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
@@ -251,4 +251,8 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 
 .ng-invalid {
   background: red;
+}
+
+.bill-buttons {
+  padding:5px;
 }

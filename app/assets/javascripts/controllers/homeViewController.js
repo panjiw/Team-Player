@@ -135,32 +135,51 @@ angular.module('myapp').controller("homeViewController",
       
       // If the task has a due date, put in calendar
       if (this.dateDue != null) {
-        
+        var newEventObj = {
+          type: "Task", 
+          title: this.title, 
+          start: this.dateDue,
+          desc: this.description, 
+          textColor: "black",
+          backgroundColor: "white",
+          borderColor: "white",
+          members: UserModel.usersToUserNamesString(this.members),
+          group: this.groupName, 
+          eventid: this.id
+        };
+
+
+// // display a red background if the task is overdue 
+//               backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#D00000" : "#faebcc", 
+//               borderColor: "#faebcc",
+// events.push(newEventObj);
+
         // If task is not finished yet, display normally
         if (this.done == null) {
-          var newEventObj = 
-          {
-            type: "Task", 
-            title: this.title, 
-            start: this.dateDue,
-            // display a red background if the task is overdue 
-            backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#D00000" : "#faebcc", 
-            textColor: "black", 
-            borderColor: "#faebcc", 
-            desc: this.description, 
-            members: UserModel.usersToUserNamesString(this.members),
-            group: this.groupName, 
-            eventid: this.id
-          };
-          events.push(newEventObj);
+
+          //If task is mine, display with box
+          if (TaskModel.isInvolved(this.id)) {
+              newEventObj["backgroundColor"] = "#faebcc"; //yellow
+              newEventObj["borderColor"] = "#faebcc";
+          } else {
+            newEventObj["textColor"] = "#FBB117";
+          }
         }
-        
+        // finished 
+        else {
+          if (TaskModel.isInvolved(this.id)) {
+              newEventObj["backgroundColor"] = "#F0F0F0"; //gray
+          } else {
+            newEventObj["textColor"] = "gray";
+          }
+        }
+        events.push(newEventObj);
         // Else task is completed, display as completed
-        else
-        {
-          events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
-            group: this.groupName, eventid: this.id});
-        }
+        // else
+        // {
+        //   events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
+        //     group: this.groupName, eventid: this.id});
+        // }
         
         // If task is not finished and is due today, put in todays tasks
         if (this.dateDue == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
@@ -178,21 +197,61 @@ angular.module('myapp').controller("homeViewController",
     
     // Iterates through all of users bills
     $.each($scope.myBills, function() {
+      var newEventObj = {
+          type: "Bill", 
+          title: this.title, 
+          start: this.dateDue, 
+          backgroundColor: "white", 
+          textColor: "black", 
+          borderColor: "white",
+          desc: this.description, 
+          members: UserModel.users[this.creator].username, 
+          group: GroupModel.groups[this.group].name, 
+          eventid: this.id
+        };
       
       // If bill has a date, put in calendar
       if (this.dateDue != null) {
-        
+
         // If bill is not paid, display on calendar normally
         if (!this.membersAmountMap[UserModel.me].paid) {
-          events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
-            desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+
+          //If I have to pay bill, display with box
+          if (this.creator != UserModel.me) {
+              newEventObj["backgroundColor"] = "#d6e9c6"; //yellow
+              newEventObj["borderColor"] = "#d6e9c6";
+          }
+          // Otherwise, I had created the bill
+          else {
+            newEventObj["textColor"] = "green";
+          }
         }
-        
         // Else bill is paid, display bill as completed
         else {
-          events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
-            desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+          //If it was one I had to pay
+          if (this.creator != UserModel.me) {
+              newEventObj["backgroundColor"] = "#F0F0F0"; //yellow
+              newEventObj["borderColor"] = "#F0F0F0";
+          }
+          // Otherwise, I had created the bill
+          else {
+            newEventObj["textColor"] = "gray";
+          }
         }
+        events.push(newEventObj);
+
+        
+        // // If bill is not paid, display on calendar normally
+        // if (!this.membersAmountMap[UserModel.me].paid) {
+        //   events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
+        //     desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+        // }
+        
+        // // Else bill is paid, display bill as completed
+        // else {
+        //   events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
+        //     desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
+        // }
       }
     });
 
