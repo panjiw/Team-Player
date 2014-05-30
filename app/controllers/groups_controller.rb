@@ -191,7 +191,10 @@ def leavegroup
       group = Group.find(params[:accept][:id])
       current_user.pending_groups.delete(group)
       current_user.groups << group
-      render :json => group.to_json, :status => 200
+      render :json => groups.to_json(:include => {
+      :users => {:except => [:created_at, :updated_at, :password_digest, :remember_token]},
+      :pending_users => {:except => [:created_at, :updated_at,:password_digest, :remember_token]
+      }}), :status => 200
     else
       render :json => ["Missing Params"], :status => 400      
     end
