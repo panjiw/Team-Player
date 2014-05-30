@@ -425,6 +425,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
     $('.bill-pop').not('#' + p + n).hide();
     $('.bill').not($(e.delegateTarget)).css("border", "1px solid white");
+    $('.tasks-panelbutton').not($(e.delegateTarget)).css("border", "1px solid white");
     $(".bills-selected").popover();
     $(".bills-selected-owe").popover();
     $(".bills-selected-debt").popover();
