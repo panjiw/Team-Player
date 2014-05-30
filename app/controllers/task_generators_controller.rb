@@ -26,29 +26,30 @@ class TaskGeneratorsController < ApplicationController
   # {"generator":{generator info (see get_all for format)},
   #  "task":{task info (see task_controller for format)}}
   def new
-    if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
+    task = params[:task]
+    if task[:repeat_days] == "" && !task[:cycle].nil? && !task[:cycle].to_bool
       render :json => {:errors => "No need for generator"}, :status => 400
       return
     end
-    @task_generator = TaskGenerator.new(group_id: params[:task][:group_id],
+    @task_generator = TaskGenerator.new(group_id: task[:group_id],
                                         user_id: view_context.current_user[:id],
-                                        title: params[:task][:title],
-                                        description: params[:task][:description],
-                                        cycle: params[:task][:cycle].to_bool,
-                                        due_date: params[:task][:due_date],
+                                        title: task[:title],
+                                        description: task[:description],
+                                        cycle: task[:cycle].to_bool,
+                                        due_date: task[:due_date],
                                         finished: false)
-    if params[:task][:repeat_days] == ""
+    if task[:repeat_days] == ""
       @task_generator[:repeat_days] = nil
     else
       # convert params booleans to ruby array
-      if params[:task][:repeat_days].length != 7
+      if task[:repeat_days].length != 7
         render :json => {:errors => "Invalid repeat pattern"}, :status => 400
         return
       end
       @task_generator[:repeat_days] = {}
       day = 1
       false_days = 0
-      params[:task][:repeat_days].each do |d|
+      task[:repeat_days].each do |d|
         if d.to_bool
           @task_generator[:repeat_days][day] = true
         else
@@ -57,7 +58,7 @@ class TaskGeneratorsController < ApplicationController
         end
         day += 1
       end
-      # all falses = no repeating
+      # all false = no repeating
       if false_days >= 7
         @task_generator[:repeat_days] = nil
       end
@@ -65,7 +66,7 @@ class TaskGeneratorsController < ApplicationController
     # if params passes model's validation, assign each task members to "act" on tasks
     if @task_generator.save
       order = 0
-      params[:task][:members].each do |m|
+      task[:members].each do |m|
         @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
                                                        user_id: m,
                                                        order: order)
@@ -191,45 +192,52 @@ class TaskGeneratorsController < ApplicationController
   # Returns the task generator as new.
   # Params require, same as 'new' in addition task[id]
   def edit
-    if params[:task][:repeat_days] == "" && !params[:task][:cycle].nil? && !params[:task][:cycle].to_bool
+    task = params[:task]
+    if task[:repeat_days] == "" && !task[:cycle].nil? && !task[:cycle].to_bool
       render :json => {:errors => "No need for generator"}, :status => 400
       return
     end
     # find generator and reassign the attributes
-    @task_generator = TaskGenerator.find(params[:task][:id])
+    @task_generator = TaskGenerator.find(task[:id])
     if !@task_generator.task_generator_actors.find_by_user_id(view_context.current_user[:id]) && @task_generator.user != view_context.current_user
       render :json => {:errors => "Unauthorized action"}, :status => 400
     else
-      @task_generator.group_id = params[:task][:group_id]
+      @task_generator.group_id = task[:group_id]
       @task_generator.user_id = @task_generator[:user_id]
-      @task_generator.title = params[:task][:title]
-      @task_generator.description = params[:task][:description]
-      @task_generator.cycle = params[:task][:cycle].to_bool
-      @task_generator.due_date = params[:task][:due_date]
-      @task_generator.finished = params[:task][:finished]
-      if params[:task][:repeat_days] == ""
+      @task_generator.title = task[:title]
+      @task_generator.description = task[:description]
+      @task_generator.cycle = task[:cycle].to_bool
+      @task_generator.due_date = task[:due_date]
+      @task_generator.finished = false
+      if task[:repeat_days] == ""
         @task_generator[:repeat_days] = nil
      else
-        if params[:task][:repeat_days].length != 7
+        if task[:repeat_days].length != 7
           render :json => {:errors => "Invalid repeat pattern"}, :status => 400
           return
         end
         @task_generator[:repeat_days] = {}
         day = 1
-        params[:task][:repeat_days].each do |d|
+        false_days = 0
+        task[:repeat_days].each do |d|
           if d.to_bool
             @task_generator[:repeat_days][day] = true
           else
             @task_generator[:repeat_days][day] = false
+            false_days += 1
           end
           day += 1
+        end
+        # all falses = no repeating
+        if false_days >= 7
+          @task_generator[:repeat_days] = nil
         end
       end
       # reassign members to the tasks and recreate actors
       if @task_generator.save
         @task_generator.task_generator_actors.delete_all
         order = 0
-        params[:task][:members].each do |m|
+        task[:members].each do |m|
           @task_generator_actor = TaskGeneratorActor.new(task_generator_id: @task_generator[:id],
                                                          user_id: m,
                                                          order: order)

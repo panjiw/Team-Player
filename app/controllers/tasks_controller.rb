@@ -31,15 +31,16 @@ class TasksController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     else
-    @task = Task.new(group_id: params[:task][:group_id],
+    task = params[:task]
+    @task = Task.new(group_id: task[:group_id],
                      user_id: view_context.current_user[:id],
-                     title: params[:task][:title],
-                     description: params[:task][:description],
-                     due_date: params[:task][:due_date],
+                     title: task[:title],
+                     description: task[:description],
+                     due_date: task[:due_date],
                      finished: false)
     if @task.save
       order = 0
-      params[:task][:members].each do |m|
+      task[:members].each do |m|
         @task_actor = TaskActor.new(task_id: @task[:id],
                                     user_id: m,
                                     order: order)
@@ -168,19 +169,20 @@ class TasksController < ApplicationController
   # Updates the given task with the given attribute.
   def edit
     if view_context.signed_in?
-      @task = Task.find(params[:task][:id])
+      task = params[:task]
+      @task = Task.find(task[:id])
       if !@task.task_actors.find_by_user_id(view_context.current_user[:id]) && @task.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
-        if @task.update(group_id: params[:task][:group_id],
+        if @task.update(group_id: task[:group_id],
                         user_id: @task[:user_id],
-                        title: params[:task][:title],
-                        description: params[:task][:description],
-                        due_date: params[:task][:due_date],
-                        finished: params[:task][:finished])
+                        title: task[:title],
+                        description: task[:description],
+                        due_date: task[:due_date],
+                        finished: task[:finished])
           @task.task_actors.delete_all
           order = 0
-          params[:task][:members].each do |m|
+          task[:members].each do |m|
             @task_actor = TaskActor.new(task_id: @task[:id],
                                         user_id: m,
                                         order: order)

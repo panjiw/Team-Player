@@ -40,17 +40,18 @@ class BillsController < ApplicationController
     if !view_context.signed_in?
       redirect_to '/'
     else
-    @bill = Bill.new(group_id: params[:bill][:group_id],
+    bill = params[:bill]
+    @bill = Bill.new(group_id: bill[:group_id],
                      user_id: view_context.current_user[:id],
-                     title: params[:bill][:title],
-                     description: params[:bill][:description],
-                     due_date: params[:bill][:due_date],
-                     total_due: params[:bill][:total_due])
+                     title: bill[:title],
+                     description: bill[:description],
+                     due_date: bill[:due_date],
+                     total_due: bill[:total_due])
     if @bill.save
       total_count = 0
 
       # check correct division
-      params[:bill][:members].each do |m|
+      bill[:members].each do |m|
         total_count = total_count + m[1].to_f
       end
       diff = total_count - @bill[:total_due]
@@ -58,7 +59,7 @@ class BillsController < ApplicationController
         @bill.destroy
         render :json => {:errors => "Total due is not divided correctly"}, :status => 400
       else
-        params[:bill][:members].each do |m|
+        bill[:members].each do |m|
           @bill_actor = BillActor.new(bill_id: @bill[:id],
                                       user_id: m[0],
                                       due: m[1],
@@ -167,19 +168,20 @@ class BillsController < ApplicationController
   # Update the given bill with the given attribute
   def edit
     if view_context.signed_in?
-      @bill = Bill.find(params[:bill][:id])
+      bill = params[:bill]
+      @bill = Bill.find(bill[:id])
       if !@bill.bill_actors.find_by_user_id(view_context.current_user[:id]) && @bill.user != view_context.current_user
         render :json => {:errors => "Unauthorized action"}, :status => 400
       else
-        @bill.group_id = params[:bill][:group_id]
+        @bill.group_id = bill[:group_id]
         @bill.user_id = view_context.current_user[:id]
-        @bill.title = params[:bill][:title]
-        @bill.description = params[:bill][:description]
-        @bill.due_date = params[:bill][:due_date]
-        @bill.total_due = params[:bill][:total_due]
+        @bill.title = bill[:title]
+        @bill.description = bill[:description]
+        @bill.due_date = bill[:due_date]
+        @bill.total_due = bill[:total_due]
         total_count = 0
         # check correct division
-        params[:bill][:members].each do |m|
+        bill[:members].each do |m|
           total_count = total_count + m[1].to_f
         end
         if total_count != @bill[:total_due]
@@ -187,7 +189,7 @@ class BillsController < ApplicationController
         else
           if @bill.save
             @bill.bill_actors.delete_all
-            params[:bill][:members].each do |m|
+            bill[:members].each do |m|
               @bill_actor = BillActor.new(bill_id: @bill[:id],
                                           user_id: m[0],
                                           due: m[1],

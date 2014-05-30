@@ -7,6 +7,23 @@
 
 var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);
 
+/////////////////////////////////////
+///////   Global Functions   ////////
+/////////////////////////////////////
+
+//
+function formatDate(dateString) {
+  if (dateString) {
+    return new Date(dateString.split("-").join("/") + " PST");
+  } else {
+    return null;
+  }
+}
+
+/////////////////////////////////////
+////////   Global Filters   /////////
+/////////////////////////////////////
+
 function compareProperties(a, b){
   if(a instanceof Date && b instanceof Date) {
     return a.valueOf() - b.valueOf();
@@ -114,3 +131,40 @@ myApp.filter('pending', function() {
     return result;
   };
 });
+
+myApp.filter('userNameInTask', function(){
+ return function(input, taskID, isSpecial) {
+    if(isSpecial && input.rank[taskID] == 0){
+      return "[" + input.username + "]";
+    } else
+      return input.username;
+ };
+});
+
+myApp.filter('removeSelfGroup', function(){
+ return function(allGroups) {
+  var groups = $.extend(true, {}, allGroups);
+    for (var i in groups){
+      if(groups[i].isSelfGroup){
+        delete groups[i];
+        break;
+      }
+    }
+    return groups;
+ };
+});
+
+// select all members in the array when clicked. If all members are selected, unselect them.
+selectAllInArray = function(membersArray){
+  var notSelected = false;
+  for (var i in membersArray){
+    if (!membersArray[i].chked){
+      notSelected = true;
+      break;
+    }
+  }
+
+  for (var i in membersArray){
+    membersArray[i].chked = notSelected;
+  }
+};

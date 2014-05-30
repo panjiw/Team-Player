@@ -44,20 +44,9 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       $scope.editTaskTitle = task.title;
       $scope.editTaskDescription = task.description;
 
-      /** set the date; bill.dateDue is returning an object in the format of: 
-          {0:2, 1:0, 2:1,3:4,5:-,6:0,7:5,8:-,9:1,10:4} 
-          for 2014-05-14, so need to parse it with indexing **/
-      var dateObj = $.extend(true, {}, task.dateDue);
-
-      // if there is a date in the task
-      if (dateObj){
-        var year = parseInt(""+dateObj[0] + dateObj[1] + dateObj[2] + dateObj[3]);
-        var month = parseInt(""+dateObj[5] + dateObj[6]);
-        month -=1;
-        var day = parseInt(""+dateObj[8] + dateObj[9]);
-
+      if (task.dateDue){
         // make it a Date object
-        $scope.editTaskDateDue = new Date(year,month,day);
+        $scope.editTaskDateDue = task.dateDue;
       } else {
         // if there is no date initially, make date empty
         $scope.editTaskDateDue = "";
@@ -78,18 +67,30 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
       // clone current members from groupmodel
       $scope.currentEditMembers = $.extend(true, {}, GroupModel.groups[task.group].members);
       
+      var memArray = [];
+      var count = 0;
       // set checked for each involved member
       for (var id in task.members){
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
+            memArray[task.members[id].rank[activeEditTask]] = $scope.currentEditMembers[index];
+            delete $scope.currentEditMembers[index];
+            count++;
           }
+            
         }
       }
+
+      for (var index in $scope.currentEditMembers){
+        memArray[count++] = $scope.currentEditMembers[index];
+      }
+      $scope.currentEditMembers = memArray;
+
       /*** end ***/
 
       // if there is a generator, (the task either cycle, repeat, or both), initialize with data in it
-      if (generator){
+      if (generator && !generator.details.finished){
         $scope.editTaskCycle = generator.details.cycle;
         $scope.editTaskRepostArray = [];
         $scope.editTaskRepeat = false;
@@ -137,7 +138,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
   // initialize group and members to display for creating tasks
   $scope.groupsList = {};
-  $scope.currentMembers = {};
+  $scope.currentMembers = [];
 
   // get groups before loading task so that group and user info are updated
   GroupModel.getGroups(function(groups, asynch, error) {
@@ -173,11 +174,21 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.$watch('newTaskGroup', function(newVal, oldVal){ 
     if($scope.newTaskGroup){
       // in create task modal, update current members to be selected if group has changed
-      $scope.currentMembers = $scope.newTaskGroup.members;
+      $scope.currentMembers = [];
+      for (var i in $scope.newTaskGroup.members){
+        $scope.currentMembers.push($scope.newTaskGroup.members[i]);
+      }
+      if($scope.newTaskGroup.isSelfGroup){
+        $scope.currentMembers[0].chked = true;
+      }
+      
     } else {
       $scope.currentMembers = {};
     }
   });
+
+  // select all members in the array when clicked. If all members are selected, unselect them.
+  $scope.selectAll = selectAllInArray; // selectAllInArray is a function in main.js
  
   $scope.openModal = function(e){
     $('#taskModal').modal({show:true});
@@ -393,6 +404,34 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
     });
   }
 
+  // The user can stop 
+  $scope.stopRepeat = function(taskID){
+    if(!taskID || !TaskModel.generators[taskID]){
+      toastr.warning("Invaid task selected");
+      return;
+    }
+
+    var oldTaskTitle = TaskModel.tasks[taskID].title;
+
+    TaskModel.stopRepeat(taskID,function(error){
+      if(error){
+        toastr.warning("Task could not be set stop repeating");
+      } else {
+        $scope.$apply(function() {
+          $scope.myTasks = TaskModel.tasks;
+          activeEditTask = -1;
+          toastr.success("Task '" + oldTaskTitle + "' stops repeating!");
+        });
+      }
+    });
+  };
+
+  $scope.isSpecial = function(taskID){
+    if(TaskModel.generators[taskID] && !TaskModel.generators[taskID].details.finished)
+      return true;
+    else return false;
+  };
+
   // open or close popup when clicking on task
   $scope.openTaskPop = function (e, p, n) {
     if ($('#' + p + n).is(':visible')) {
@@ -415,12 +454,26 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
   $scope.taskNext = function(pageNum) {
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)+1)).show();
-  }
+  };
 
   $scope.taskBack = function(pageNum) {
     $('#'+'taskHelp'+pageNum).hide();
     $('#'+'taskHelp'+(parseInt(pageNum)-1)).show();
-  }
+  };
+
+/********* for testing!!!!! ****/
+  $scope.testing = function(){
+    $.post("/url",
+    {
+      "date[start]": new Date("2014-05-02"),
+      "date[end]": new Date("2014-09-10")
+    })
+    .success(function(data, status) {
+      
+    })
+    .fail(function(xhr, textStatus, error) {
+    });
+  };
 
   // initialize me to a variable for filter
   $scope.myID = UserModel.me;
