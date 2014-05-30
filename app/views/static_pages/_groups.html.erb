@@ -99,32 +99,36 @@
   <div class="group-body">
     <div class="col-md-5">
       <div class="groups">
-        <div class="groups-listtitle">
-          <button type="button" ng-click="showAddGroup()" class="btn btn-danger group-add">Add Group</button>
-          <h3 style="text-align: left">Current</h3>
-        </div>            
-        <div class="group-scroll">
-          <div class="list-group">
-              <!-- $parent is required because ng-repeat creates a new scope -->
-              <a ng-repeat="grp in groupsList | accepted | orderGroups"
-                 class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
-                 ng-click="$parent.selectGroup(grp.id)">
-                <h4>{{grp.name}}</h4>
-              </a>
+        <div>
+          <div class="groups-listtitle">
+            <button type="button" ng-click="showAddGroup()" class="btn btn-danger group-add">Add Group</button>
+            <h3 style="text-align: left">Current</h3>
+          </div>            
+          <div class="group-scroll">
+            <div class="list-group">
+                <!-- $parent is required because ng-repeat creates a new scope -->
+                <a ng-repeat="grp in groupsList | accepted | orderGroups"
+                   class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
+                   ng-click="$parent.selectGroup(grp.id)">
+                  <h4>{{grp.name}}</h4>
+                </a>
+            </div>
           </div>
         </div>
 
-        <div class="groups-listtitle">
-          <h3 style="text-align: left">Invited to</h3>
-        </div>            
-        <div class="group-scroll">
-          <div class="list-group">
-              <!-- $parent is required because ng-repeat creates a new scope -->
-              <a ng-repeat="grp in groupsList | pending | orderGroups"
-                 class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
-                 ng-click="$parent.selectGroup(grp.id)">
-                <h4>{{grp.name}}</h4>
-              </a>
+        <div ng-show="(groupsList | pending).length > 0">
+          <div class="groups-listtitle">
+            <h3 style="text-align: left">Invited to</h3>
+          </div>            
+          <div class="group-scroll">
+            <div class="list-group">
+                <!-- $parent is required because ng-repeat creates a new scope -->
+                <a ng-repeat="grp in groupsList | pending | orderGroups"
+                   class="list-group-item" ng-class="{grp_active :$parent.group_selected == grp.id}"
+                   ng-click="$parent.selectGroup(grp.id)">
+                  <h4>{{grp.name}}</h4>
+                </a>
+            </div>
           </div>
         </div>
       </div>
@@ -146,11 +150,25 @@
         </div>  
         <div class="group-members">
           <div class="group-members-scroll">
-            <a class="list-group-item" ng-class="{mem_active :$parent.member_selected == mem.id}"
-                 ng-repeat="mem in currentMembers | orderUsers"
-                 ng-click="$parent.member_selected=mem.id">
+            <div>
+              <h3 style="text-align: left">Current</h3>
+              <a class="list-group-item" ng-class="{mem_active :$parent.member_selected == mem.id}"
+                   ng-repeat="mem in currentMembers | orderUsers"
+                   ng-click="$parent.member_selected=mem.id">
                 <h4>{{mem.firstname}}</h4>
               </a>
+            </div>
+
+            <br>
+
+            <div ng-show="(currentPending | orderUsers).length > 0">
+              <h3 style="text-align: left">Invited</h3>
+              <a class="list-group-item" ng-class="{mem_active :$parent.member_selected == mem.id}"
+                   ng-repeat="mem in currentPending | orderUsers"
+                   ng-click="$parent.member_selected=mem.id">
+                <h4>{{mem.firstname}}</h4>
+              </a>
+            </div>
           </div>
           <div ng-hide="groupsList[group_selected].isSelfGroup || !groupsList[group_selected].accepted">
             <input type="text" ng-model="addNewMember" ng-keypress="addMember($event)" class="form-control group-add" placeholder="new member email" />

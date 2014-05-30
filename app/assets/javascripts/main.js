@@ -108,10 +108,10 @@ myApp.filter('onlyMyTasks', function(){
 
 myApp.filter('accepted', function() {
   return function(input) {
-    var result = {};
+    var result = [];
     for (var id in input) {
       if (input[id].accepted) {
-        result[id] = input[id];
+        result.push(input[id]);
       }
     }
 
@@ -121,10 +121,10 @@ myApp.filter('accepted', function() {
 
 myApp.filter('pending', function() {
   return function(input) {
-    var result = {};
+    var result = [];
     for (var id in input) {
       if (!input[id].accepted) {
-        result[id] = input[id];
+        result.push(input[id]);
       }
     }
 

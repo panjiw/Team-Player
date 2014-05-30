@@ -6,7 +6,7 @@ This file holds the model for all tasks the user is part of.
 It's main functionality is to get, create, and edit tasks.
 */
 
-var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members, accepted) {
+var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members, pending, accepted) {
 this.id = id;
   this.isSelfGroup = isSelfGroup;
   this.name = name;
@@ -16,6 +16,10 @@ this.id = id;
   this.members = {};
   for (var i in members){
     this.members[members[i].id] = members[i];
+  }
+  this.pending = {};
+  for (var i in pending){
+    this.pending[pending[i].id] = pending[i];
   }
   this.accepted = accepted;
 }
@@ -31,7 +35,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   GroupModel.updateGroup = function(group, accepted) {
     accepted = (typeof accepted === "undefined") ? true : accepted;
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
-                                      group.creator, new Date(group.dateCreated), group.users, accepted);
+                                      group.creator, new Date(group.dateCreated), group.users, group.pending_users, accepted);
     for(var index in group.users) {
       UserModel.updateUser(group.users[index]);
     }
