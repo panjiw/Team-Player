@@ -183,7 +183,7 @@
   }
 
   $scope.ignoreGroup = function(id) {
-    GroupModel.acceptGroup(id, function(error) {
+    GroupModel.ignoreGroup(id, function(error) {
       if(error) {
         toastr.error(error);
       } else {
