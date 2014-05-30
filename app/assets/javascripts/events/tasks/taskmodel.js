@@ -307,5 +307,20 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     });
   };
 
+  // check to see if a user is involved in a task. if no userID given, check 'me'.
+  TaskModel.isInvolved = function(taskID, userID){
+    // if no userID specified, check 'me' instead
+    if(!userID){
+      userID = UserModel.me;
+    }
+
+    // loop through each members in the task. if 'userID' is one of them, return true.
+    for (var id in TaskModel.tasks[taskID].members) {
+      if (id == userID) return true;
+    }
+
+    return false;
+  };
+
   return TaskModel;
 }]);
