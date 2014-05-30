@@ -6,8 +6,6 @@
 
 require 'spec_helper'
 
-#TODO: param checks
-
 describe GroupsController do
 
 # create
@@ -246,7 +244,7 @@ describe GroupsController do
 
 	end
 
-	# # leave group
+	# leave group
 	describe 'testing LEAVEGROUP' do
 
 		before(:each) do
@@ -277,6 +275,12 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
+			it 'should return the correct error' do
+				errormessage = "Group Not Selected"
+				(response.body.include? errormessage).should be_true
+			end
+
+
 		end
 
 		context 'user not in group' do
@@ -293,6 +297,11 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
+			it 'should return the correct error' do
+				errormessage = "Unable to leave group group name"
+				(response.body.include? errormessage).should be_true
+			end
+
 		end
 
 		context 'trying to leave self group' do
@@ -304,6 +313,11 @@ describe GroupsController do
 
 			it 'should return a 400 status' do
 				(response.status == 400).should be_true
+			end
+
+			it 'should return the correct error' do
+				errormessage = "Unable to leave the 'Me' group"
+				(response.body.include? errormessage).should be_true
 			end
 
 		end
@@ -331,8 +345,6 @@ describe GroupsController do
 			it 'should return a 200 status' do
 				(response.status == 200).should be_true
 			end
-
-			# check params
 
 		end
 
@@ -384,7 +396,10 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
-			# check
+			it 'should return the correct error' do
+				errormessage = "Can not add to self group"
+				(response.body.include? errormessage).should be_true
+			end
 
 		end
 
@@ -398,8 +413,6 @@ describe GroupsController do
 			it 'should return status 200' do
 				(response.status == 200).should be_true
 			end
-
-			# check
 
 		end
 
@@ -415,7 +428,10 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
-			# check
+			it 'should return the correct error' do
+				errormessage = "User already in group"
+				(response.body.include? errormessage).should be_true
+			end
 
 		end
 
@@ -431,7 +447,10 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
-			# check
+			it 'should return the correct error' do
+				errormessage = "User not found"
+				(response.body.include? errormessage).should be_true
+			end
 
 		end
 
@@ -473,6 +492,11 @@ describe GroupsController do
 				(response.status == 400).should be_true
 			end
 
+			it 'should return the correct error' do
+				errormessage = "Missing Params"
+				(response.body.include? errormessage).should be_true
+			end
+
 		end
 
 		describe 'accepts to group' do
@@ -486,7 +510,6 @@ describe GroupsController do
 			end
 
 		end
-
 
 	end
 
@@ -524,6 +547,12 @@ describe GroupsController do
 			it 'should return a 400 status' do
 				(response.status == 400).should be_true
 			end
+
+			it 'should return the correct error' do
+				errormessage = "Missing Params"
+				(response.body.include? errormessage).should be_true
+			end
+
 
 		end
 
