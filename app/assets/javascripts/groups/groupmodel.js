@@ -147,7 +147,7 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      callback("User not found: " + email);
+      callback(JSON.parse(xhr.responseText).errors + ": " + email);
     });
   };
 
