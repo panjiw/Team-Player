@@ -106,6 +106,32 @@ myApp.filter('onlyMyTasks', function(){
  };
 });
 
+myApp.filter('accepted', function() {
+  return function(input) {
+    var result = [];
+    for (var id in input) {
+      if (input[id].accepted) {
+        result.push(input[id]);
+      }
+    }
+
+    return result;
+  };
+});
+
+myApp.filter('pending', function() {
+  return function(input) {
+    var result = [];
+    for (var id in input) {
+      if (!input[id].accepted) {
+        result.push(input[id]);
+      }
+    }
+
+    return result;
+  };
+});
+
 myApp.filter('userNameInTask', function(){
  return function(input, taskID, isSpecial) {
     if(isSpecial && input.rank[taskID] == 0){

@@ -6,7 +6,7 @@ This file holds the model for all tasks the user is part of.
 It's main functionality is to get, create, and edit tasks.
 */
 
-var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members) {
+var Group = function(id, isSelfGroup, name, description, creator, dateCreated, members, pending, accepted) {
 this.id = id;
   this.isSelfGroup = isSelfGroup;
   this.name = name;
@@ -17,6 +17,11 @@ this.id = id;
   for (var i in members){
     this.members[members[i].id] = members[i];
   }
+  this.pending = {};
+  for (var i in pending){
+    this.pending[pending[i].id] = pending[i];
+  }
+  this.accepted = accepted;
 }
 
 angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) {
@@ -27,10 +32,10 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
   // update GroupModel.groups with this "group" from the model. Note that the field names
   // are slightly different between the frontend and backend models,
   // so always go through this function to update groups.
-  GroupModel.updateGroup = function(group) {
-    console.log(group.dateCreated, formatDate(group.dateCreated));
+  GroupModel.updateGroup = function(group, accepted) {
+    accepted = (typeof accepted === "undefined") ? true : accepted;
     GroupModel.groups[group.id] = new Group(group.id, group.self, group.name, group.description, 
-                                              group.creator, formatDate(group.dateCreated), group.users);
+                                      group.creator, new Date(group.dateCreated), group.users, group.pending_users, accepted);
     for(var index in group.users) {
       UserModel.updateUser(group.users[index]);
     }
@@ -68,12 +73,25 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
           GroupModel.updateGroup(data[i]);
         }
         GroupModel.fetchedGroups = true;
-
         // Return the groups and note that this is an asynchronous callback
         callback(GroupModel.groups, true, null);
       })
       .fail(function(xhr, textStatus, error) {
         callback(null, null, JSON.parse(xhr.responseText));
+        return;
+      });
+
+      $.get("/view_pending_groups")
+      .success(function(data, status) {
+        for(var i = 0; i < data.length; i++) {
+          GroupModel.updateGroup(data[i], false);
+        }
+        // Return the groups and note that this is an asynchronous callback
+        callback(GroupModel.groups, true, null);
+      })
+      .fail(function(xhr, textStatus, error) {
+        callback(null, null, JSON.parse(xhr.responseText));
+        return;
       });
     } else {
       // Otherwise, just return all the groups, 
@@ -125,14 +143,11 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
       "invite[email]": email
     })
     .success(function(data, status) {
-      GroupModel.groups[group].members = data;
-      for(var i = 0; i < data.length; i++) {
-        UserModel.updateUser(data[i]);
-      }
+      GroupModel.updateGroup(data);
       callback();
     })
     .fail(function(xhr, textStatus, error) {
-      callback("User not found: " + email);
+      callback(JSON.parse(xhr.responseText).errors + ": " + email);
     });
   };
 
@@ -185,6 +200,34 @@ angular.module("myapp").factory('GroupModel', ['UserModel', function(UserModel) 
     })
     .fail(function(xhr, textStatus, error) {
       callback(JSON.parse(xhr.responseText));
+    });
+  }
+
+  GroupModel.acceptGroup = function(groupID, callback) {
+    $.post("/accept_group",
+    {
+      "accept[id]": groupID
+    })
+    .success(function(data, status) {
+      GroupModel.updateGroup(data);
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText()));
+    });
+  }
+
+  GroupModel.ignoreGroup = function(groupID, callback) {
+    $.post("/ignore_group",
+    {
+      "ignore[id]": groupID
+    })
+    .success(function(data, status) {
+      delete GroupModel.groups[groupID];
+      callback();
+    })
+    .fail(function(xhr, textStatus, error) {
+      callback(JSON.parse(xhr.responseText()));
     });
   }
 
