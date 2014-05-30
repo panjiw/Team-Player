@@ -7,6 +7,24 @@
 
 var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);
 
+/////////////////////////////////////
+///////   Global Functions   ////////
+/////////////////////////////////////
+
+//
+function formatDate(dateString) {
+  if (dateString) {
+    console.log("New date string: ", dateString.split("-").join("/") + " PST");
+    return new Date(dateString.split("-").join("/") + " PST");
+  } else {
+    return null;
+  }
+}
+
+/////////////////////////////////////
+////////   Global Filters   /////////
+/////////////////////////////////////
+
 function compareProperties(a, b){
   if(a instanceof Date && b instanceof Date) {
     return a.valueOf() - b.valueOf();
