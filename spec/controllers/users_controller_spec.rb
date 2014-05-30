@@ -810,26 +810,10 @@ describe UsersController do
             post 'create', :user => {:username => "two", :password => "player"}
             @controller = GroupsController.new
             post 'create', :group => {:name => "group one", :description => "desc"}
-            post 'create', :group => {:name => "group two", :description => "desc", :add => {:members => [3]}}
+            post 'create', :group => {:name => "group two", :description => "desc"}
+            post 'invitetogroup', :invite => {:gid => 4, :email => "three@player.com"}
             @controller = UsersController.new
         end
-
-        # # not logged in
-        # context 'the user is not logged in' do
-
-        #     before(:each) do
-        #         @controller = SessionsController.new
-        #         delete 'destroy'
-        #         @controller = UsersController.new
-        #         get 'viewpendinggroups'
-        #     end
-
-        #     it 'should return a 302 status' do
-        #         (response.status == 302).should be_true
-        #     end
-
-        # end
-
 
         # not in any pending groups
         context 'the user is not in any pending groups or groups' do
@@ -879,16 +863,56 @@ describe UsersController do
                 get 'viewpendinggroups'
             end
 
-            it 'should return the correct information' do
-                (response.body.include? "[]").should be_true
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
+
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":4,\"name\":\"group one\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
+
+            it 'should have the correct member information' do
+                userinfo = "\"users\":[{\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
+                (response.body.include? userinfo).should be_true
+            end
+
+        end
+
+        context 'the user is in two pending groups' do
+
+            before(:each) do
+                @controller = GroupsController.new
+                post 'invitetogroup', :invite => {:gid => 5, :email => "three@player.com"}
+                @controller = SessionsController.new
+                delete 'destroy'
+                post 'create', :user => {:username => "three", :password => "player"}
+                @controller = UsersController.new
+                get 'viewpendinggroups'
             end
 
             it 'should return a 200 status' do
                 (response.status == 200).should be_true
             end
 
-        end
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":4,\"name\":\"group one\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
 
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":5,\"name\":\"group two\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
+
+
+            it 'should have the correct member information' do
+                userinfo = "\"users\":[{\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
+                (response.body.include? userinfo).should be_true
+            end
+
+
+        end
 
     end
 
