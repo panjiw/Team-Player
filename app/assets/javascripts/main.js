@@ -14,7 +14,6 @@ var myApp = angular.module('myapp', ['ui.calendar', 'ui.sortable']);
 //
 function formatDate(dateString) {
   if (dateString) {
-    console.log("New date string: ", dateString.split("-").join("/") + " PST");
     return new Date(dateString.split("-").join("/") + " PST");
   } else {
     return null;

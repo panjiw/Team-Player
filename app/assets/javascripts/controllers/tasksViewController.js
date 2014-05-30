@@ -46,7 +46,7 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
       if (task.dateDue){
         // make it a Date object
-        $scope.editTaskDateDue = new Date(task.dateDue);
+        $scope.editTaskDateDue = task.dateDue;
       } else {
         // if there is no date initially, make date empty
         $scope.editTaskDateDue = "";
