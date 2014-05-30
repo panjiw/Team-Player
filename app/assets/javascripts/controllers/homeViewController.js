@@ -267,6 +267,9 @@ angular.module('myapp').controller("homeViewController",
           var paidTag = "";
           if (this.owe.paid){
             paidTag = "<div>" + "paid" + "</div>";
+          } else {
+            paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
+            "pay" + "</button>";
           }
           string += "<div class='panel panel-success'>" + 
                       "<div class='panel-heading'>" + 
