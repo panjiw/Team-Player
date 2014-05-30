@@ -255,14 +255,14 @@
                             <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue | date:'shortDate'}}" data-content="<p>{{b.description}}</p>" data-placement="right">
                               <input class="bills-checkbox" id="{{b.id}}" type="checkbox" ng-click="updateTotal(entry.person_username)" value="{{b.amountForEntry[entry.person_username]}} {{b.id}}">
                               <h4 class="bill-member">{{b.title}}</h4>
-                              <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}} </h4>
+                              <h4 class="bill-amount">{{b.amountForEntry[entry.person_username] | currency}} </h4>
                             </div>
                           </div>
                         </label>
                       </div>
                     </div>
                     <button type="button" class="btn btn-success" ng-click="pay(entry.person_username)">Paid</button>
-                    <h4 class="bill-pop-total">Total: $0</h4>
+                    <h4 class="bill-pop-total">Total: $0.00</h4>
                   </div> <!-- class="bill-pop" -->
                 </div>
               </div>
@@ -286,7 +286,7 @@
                               <span class="glyphicon glyphicon-pencil"></span>
                             </button> {{b.title}}
                           </h4>
-                          <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
+                          <h4 class="bill-amount">{{b.amountForEntry[entry.person_username] | currency}}</h4>
                         </div>
                       </div>
                     </div>
@@ -326,7 +326,7 @@
                           <div class="bills-selected-owe" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
                             <input class="bills-checkbox" id="UO" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{UO.amountForEntry[entry.username]}} {{UO.id}}">
                             <h4 class="bill-member">{{UO.title}}</h4>
-                            <h4 class="bill-amount">${{UO.amountForEntry[entry.username]}} </h4>
+                            <h4 class="bill-amount">{{UO.amountForEntry[entry.username] | currency}} </h4>
                           </div>
                         </div>
                       </label>
@@ -341,14 +341,14 @@
                               <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                             <h4 class="bill-member">{{OU.title}}</h4>
-                            <h4 class="bill-amount">-${{OU.amountForEntry[entry.username]}} </h4>
+                            <h4 class="bill-amount">-{{OU.amountForEntry[entry.username] | currency}} </h4>
                           </div>
                         </div>
                       </label>
                     </div>
                   </div>
                   <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
-                  <h4 class="bill-pop-total-comb">Total: $0</h4>
+                  <h4 class="bill-pop-total-comb">Total: $0.00</h4>
                 </div>
               </div>
             </div>
