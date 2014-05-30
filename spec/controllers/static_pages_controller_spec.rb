@@ -19,52 +19,59 @@ describe StaticPagesController do
         @controller = StaticPagesController.new
     end
 
-# home
+	# home
 	describe "testing HOME" do
 		
 		context 'user is not signed in' do
+	
 			it 'should redirect the user' do
 				@controller = SessionsController.new
 				delete 'destroy'
 				@controller = StaticPagesController.new
 				get 'home'
 				(response.status == 302).should be_true
-				end
 			end
+		
+		end
 
 		context 'user is signed in' do
+		
 			it 'should go to the home page' do
 				get 'home'
 				(response.status == 200).should be_true
-				end
 			end
+		
+		end
 
 	end
 
-# index
+	# index
 	describe "testing INDEX" do
 		
 		context 'user is not signed in' do
+		
 			it 'should go to the index page' do
 				@controller = SessionsController.new
 				delete 'destroy'
 				@controller = StaticPagesController.new
 				get 'index'
 				(response.status == 200).should be_true
-				end
 			end
+		
+		end
 
 		context 'user is signed in' do
+		
 			it 'should reedirct to the home page' do 
 				get 'index'
 				(response.status == 302).should be_true
 			end
+		
 		end
 
 	end
 
 # help
 # no functionality provided; no need to test
-
 
 end

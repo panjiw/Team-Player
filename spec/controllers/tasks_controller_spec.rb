@@ -397,6 +397,18 @@ describe "GETALL tests" do
 
   end
 
+  context 'the user is not signed in' do
+
+    it 'should return a 302 status' do
+      @controller = SessionsController.new
+      delete 'destroy'
+      @controller = TasksController.new
+      get 'get_all'
+      (response.status == 302).should be_true
+    end
+
+  end
+
   context 'user has one task they created' do
     before(:each) do
       @controller = SessionsController.new

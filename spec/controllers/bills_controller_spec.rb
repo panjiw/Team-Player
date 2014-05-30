@@ -32,6 +32,20 @@ describe "NEW tests" do
 		
 		end
 
+	context 'the bill has a negative value' do
+
+		before(:each) do
+			@controller = BillsController.new
+			post 'new', :bill => {:group_id => 6, :title => "title", :total_due => 30, :members => {"1" => -1, "2" => 31}, 
+					 :description => "desc", :due_date => "2014-05-17"}
+		end
+
+		it 'should have a 400 status' do
+			(response.status == 400).should be_true
+		end
+
+	end
+
 	context 'the user is not logged in' do
 
 		before(:each) do
@@ -207,6 +221,32 @@ describe "NEW tests" do
 		end
 
 	end
+
+	# bill creator is not in group, but other members are
+	context 'bill creator is not in group but ohter members are' do
+
+		before(:each) do
+			@controller = SessionsController.new
+        	delete 'destroy'
+        	post 'create', :user => {:username => "five", :password => "player"}
+        	@controller = BillsController.new
+        	post 'new', :bill => {:group_id => 6, :title => "test", :total_due => 42, :members => {"3" => 42}, 
+				 :description => "desc", :due_date => "2014-05-17"}
+		end
+
+		it 'should return a 400 status' do
+			(response.status == 400).should be_true
+		end	
+
+		#check specific error message
+		it 'should return the correct error message' do
+			errormessage = "[\"User five isn't in the group\"]"
+			(response.body.include? errormessage)
+		end
+
+	end
+
+
 
 end
 
@@ -601,6 +641,8 @@ describe "GETALL tests" do
 
 			end
 		end
+
+
 
 	end
 

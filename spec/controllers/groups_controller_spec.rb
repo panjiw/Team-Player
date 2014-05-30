@@ -45,6 +45,18 @@ describe GroupsController do
 
 		end
 
+		context 'name is null' do
+
+			before(:each) do
+				post 'create', :group => {:name => nil, :description => "desc"}
+			end
+
+			it 'should return a 400s tatus' do
+				(response.status == 400).should be_true
+			end
+
+		end
+
 		context 'create a group with one member' do
 			
 			before(:each) do
@@ -124,6 +136,18 @@ describe GroupsController do
         	@controller = GroupsController.new
         	post 'create', :group => {:name => "group name", :description => "desc"}
 			end
+
+		context 'trying to edit name to null' do
+
+			before(:each) do
+				post 'editgroup', :editgroup => {:id => 1, :name => nil, :description => "desc"}
+			end
+
+			it 'should return a 400 status' do
+				(response.status == 400).should be_true
+			end
+
+		end
 
 		# edit name
 		context 'editting the group name' do
@@ -239,6 +263,7 @@ describe GroupsController do
 
         	@controller = GroupsController.new
         	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
+        	post 'create', :group => {:name => "name", :description => "desc"}, :add => {:members => [1]}
 		end
 
 		context 'params incorrect' do
@@ -279,6 +304,19 @@ describe GroupsController do
 
 			it 'should return a 400 status' do
 				(response.status == 400).should be_true
+			end
+
+		end
+
+		context 'leaves group and destroys group' do
+
+			before(:each) do
+				@controller = GroupsController.new
+        		post 'leavegroup', :leave => {:id => 5}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
 			end
 
 		end
@@ -329,7 +367,7 @@ describe GroupsController do
 			end
 
 			it 'should throw an error' do
-				(response.status == 400).should be_true
+				(response.status == 302).should be_true
 			end
 
 		end
