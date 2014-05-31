@@ -55,9 +55,11 @@
                         </div>
                     </div>
                     <div style="display:none" id="billHelp3">
-                      <h4>Inside the "Bills You Owe" Tab</h4>
+                      <h4>Inside the Bills You Owe Tab</h4>
                         <div class="help-info">
-                          The people listed are <i>people you owe money to</i>. Click on one to see a list of bills you owe them, and select checkmarks to mark that you have paid.
+                          Click on a panel to see a list of bills you have not paid to that person. Select checkmarks
+                          to calculate combinations of bills and totals you would owe them. Click "Paid" after
+                          you have paid them that amount.
                         </div>
                         <hr>
                         <div class="help-image"><%= image_tag "bills-page3.png" %></div>
@@ -65,24 +67,6 @@
                         <div class="backNext">
                           <div class="col-md-2">
                             <button ng-click="billBack(3)" class="btn btn-default">Back</button>
-                          </div>
-                          <div class="col-md-8"></div>
-                          <div class="col-md-2">
-                            <button ng-click="billNext(3)" class="btn btn-default">Next</button>
-                          </div>
-                        </div>
-                    </div>
-                    <div style="display:none" id="billHelp4">
-                      <h4>Inside the "Bills Owed To You" Tab</h4>
-                        <div class="help-info">
-                          The people listed are <i>people who owe you money</i>. Click on one to see bills they owe you. You are able to edit these bills by clicking on the pencil icon.
-                        </div>
-                        <hr>
-                        <div class="help-image"><%= image_tag "bills-page4.png" %></div>
-                        <hr>
-                        <div class="backNext">
-                          <div class="col-md-2">
-                            <button ng-click="billBack(4)" class="btn btn-default">Back</button>
                           </div>
                           <div class="col-md-8"></div>
                           <div class="col-md-2">
@@ -221,21 +205,21 @@
   <!-- Start Bills Display -->
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <li class="active">
+<!--       <li class="active">
         <a href="#billsOwe" data-toggle="tab" ng-click="closePop()">Bills You Owe</a>
       </li>
       <li>
         <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
-      </li>
-<!--       <li class="active">
-        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
       </li> -->
+      <li class="active">
+        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
+      </li>
       <li>
         <a href="#billsHistory" data-toggle="tab" ng-click="closePop(); openHistory()">Bill History</a>
       </li>
     </ul>
       <div class="tab-content">
-        <div class="tab-pane active" id="billsOwe">
+<!--         <div class="tab-pane active" id="billsOwe">
           <h3>Bills You Owe</h3>
             <div class="bill-scroll">
               <div ng-repeat="entry in billSummary.youOwe">
@@ -265,8 +249,8 @@
                 </div>
               </div>
             </div>
-        </div>
-        <div class="tab-pane" id="billsDebt">
+        </div> -->
+<!--         <div class="tab-pane" id="billsDebt">
           <h3>Bills Owed To You</h3>
             <div class="bill-scroll">
               <div ng-repeat="entry in billSummary.oweYou">
@@ -292,8 +276,8 @@
                 </div>
               </div>
             </div>
-        </div>
-<!--         <div class="tab-pane" id="billsSummary">
+        </div> -->
+        <div class="tab-pane" id="billsSummary">
           <h3>Bill Summary</h3>
             <div ng-repeat="entry in combinedBills">
                 <div ng-click="openPop($event, entry.username, 4)" class="tasks-panelbutton bill-panelbutton" >
@@ -310,9 +294,9 @@
                     </div>
                 </div>
                 <div id="{{entry.username}}4" class="bill-pop">
-                  <div class="bills-to-pay"> -->
+                  <div class="bills-to-pay">
                     <!-- bills you owe -->
-<!--                     <div class="UO-title">
+                    <div class="UO-title">
                       <h4>Bills You Owe:</h4>
                     </div>
                     <div ng-repeat="UO in entry.youOweBills">
@@ -325,9 +309,9 @@
                           </div>
                         </div>
                       </label>
-                    </div> -->
+                    </div>
                     <!-- bills owe you -->
-<!--                     <div class="OU-title">
+                    <div class="OU-title">
                       <h4>Bills Owed To You:</h4>
                     </div>
                     <div ng-repeat="OU in entry.oweYouBills">
@@ -351,7 +335,7 @@
                   </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="tab-pane" id="billsHistory">
           <h3>Bill History</h3>
 <!--               <div ng-repeat="entry in billSummary.oweYou">
