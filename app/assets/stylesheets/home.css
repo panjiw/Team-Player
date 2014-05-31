@@ -138,14 +138,14 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .btn-myTask {
-  background-color: #eee24f;
-  border-color: #eee24f;
+  background-color: #ffef00;
+  border-color: #ffef00;
   color: black;
 }
 
 .btn-yourTask {
-  background-color: #faebcc;
-  border-color: #faebcc;
+  background-color: #ffffb3;
+  border-color: #ffffb3;
   color: black;
 }
 
@@ -162,14 +162,14 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .btn-myOverdue {
-  background-color: #ff1f1f;
-  border-color: #ff1f1f;
+  background-color: #ff8282;
+  border-color: #ff8282;
   color: black;
 }
 
 .btn-yourOverdue {
-  background-color: #ff8282;
-  border-color: #ff8282;
+  background-color: #ffcfcf;
+  border-color: #ffcfcf;
   color: black;
 }
 

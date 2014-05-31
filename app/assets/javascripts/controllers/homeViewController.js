@@ -139,8 +139,8 @@ angular.module('myapp').controller("homeViewController",
           start: this.dateDue,
           desc: this.description, 
           textColor: "black",
-          backgroundColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#faebcc", 
-          borderColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#faebcc", 
+          backgroundColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ffcfcf" : "#ffffb3", 
+          borderColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ffcfcf" : "#ffffb3", 
           members: UserModel.usersToUserNamesString(this.members),
           group: this.groupName, 
           eventid: this.id
@@ -151,8 +151,8 @@ angular.module('myapp').controller("homeViewController",
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-            newEventObj["backgroundColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff1f1f" : "#eee24f"; //yellow
-            newEventObj["borderColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff1f1f" : "#eee24f";
+            newEventObj["backgroundColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#ffef00"; //yellow
+            newEventObj["borderColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#ffef00";
           }
         }
         // finished 
@@ -180,7 +180,10 @@ angular.module('myapp').controller("homeViewController",
     
     // Iterates through all of users bills
     $.each($scope.myBills, function() {
-      var newEventObj = {
+      
+      // If bill has a date, put in calendar
+      if (this.dateDue != null) {
+        var newEventObj = {
           type: "Bill", 
           title: this.title, 
           start: this.dateDue, 
@@ -192,9 +195,6 @@ angular.module('myapp').controller("homeViewController",
           group: GroupModel.groups[this.group].name, 
           eventid: this.id
         };
-      
-      // If bill has a date, put in calendar
-      if (this.dateDue != null) {
 
         // If bill is not paid, display on calendar normally
         if (!this.membersAmountMap[UserModel.me].paid) {
@@ -260,16 +260,6 @@ angular.module('myapp').controller("homeViewController",
 
         thisDateBills = BillModel.getBillsOnDay(date);
 
-        // $.each($scope.myBills, function() {
-        //   if (this.dateDue != null) {
-        //     if ((this.dateDue.getMonth() == date.getMonth()) && 
-        //       (this.dateDue.getDate() == date.getDate()) &&
-        //       (this.dateDue.getFullYear() == date.getFullYear())) {
-        //         thisDateBills.push(this);
-        //     }
-        //   }
-        // });
-
         console.log("thisDateBills",thisDateBills);
 
        //create panels in a string
@@ -277,16 +267,23 @@ angular.module('myapp').controller("homeViewController",
         $.each(thisDateTasks, function() {
            var taskPanel = "";
            var completeBtn = "";
-            if (this.done == null){
+
+            //task not done
+            if (this.done == null) {
               taskPanel = "<div class='panel panel-warning'>" + 
                       "<div class='panel-heading'>" + 
                         "<div class='task-panel'>";
+              //a task I'm responsible for
               if (TaskModel.isInvolved(this.id)) {
                 completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
-              } else {
+              } 
+              //a task I'm not responsible for
+              else {
                 completeBtn = "Not Your Task";
               }
-            } else {
+            } 
+            // task done
+            else {
               taskPanel = "<div class='panel panel-gray'>" + 
                       "<div class='panel-heading panel-gray-header'>" +
                         "<div class='task-panel'>";
@@ -304,17 +301,54 @@ angular.module('myapp').controller("homeViewController",
                        "</div>" + 
                     "</div>";
         })
+
         $.each(thisDateBills, function() {
+          //created by you...need to say owed to who?
+            //paid: pink (no words)
+            //unpaid: gray (no words)
+          //not created by you...
+            //paid: gray (say paid)
+            //unpaid: green (pay button)
+
+          var billColor = "";
           var paidTag = "";
-          if (this.owe.paid){
-            paidTag = "<div>" + "paid" + "</div>";
-          } else {
-            paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
-            "pay" + "</button>";
-          }
-          string += "<div class='panel panel-success'>" + 
+
+          //You created the bill
+          if (this.bill.creator == UserModel.me) {
+            //the bill has been paid, gray
+            if (this.owe.paid){
+              billColor = "<div class='panel panel-gray'>" + 
+                      "<div class='panel-heading panel-gray-header'>" +
+                        "<div class='task-panel'>";
+              paidTag = "<div>" + "paid" + "</div>";
+            } 
+            //the bill has not been paid, pink
+            else {
+              billColor = "<div class='panel panel-danger'>" + 
                       "<div class='panel-heading'>" + 
-                        "<div class='task-panel'>" + 
+                        "<div class='task-panel'>";
+            }
+          } 
+          //you need to pay the bill
+          else {
+            //the bill has been paid, gray with Paid note
+            if (this.owe.paid){
+              billColor = "<div class='panel panel-gray'>" + 
+                      "<div class='panel-heading panel-gray-header'>" +
+                        "<div class='task-panel'>";
+              paidTag = "<div>" + "paid by you" + "</div>";
+            } 
+            //the bill has not been paid, green with pay button
+            else {
+              billColor = "<div class='panel panel-success'>" + 
+                      "<div class='panel-heading'>" + 
+                        "<div class='task-panel'>";
+              paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
+                      "pay" + "</button>";
+            }
+          }
+
+          string += billColor + 
                           "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
                           "<h4 class='panel-date'>" + paidTag +
                            "</h4>" +
