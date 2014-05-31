@@ -215,7 +215,7 @@
         <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
       </li>
       <li>
-        <a href="#billsHistory" data-toggle="tab" ng-click="closePop()">Bill History</a>
+        <a href="#billsHistory" data-toggle="tab" ng-click="closePop(); openHistory()">Bill History</a>
       </li>
     </ul>
       <div class="tab-content">
@@ -359,8 +359,43 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+              <div class="col-md-6">
+                <h4>Bills you have paid</h4>
+                <div class="bill-scroll">
+                  <div ng-repeat="entry in combinedBills">
+                    <div ng-repeat="UO in entry.youOweHistory">
+                      <label for="{{UO.id}}">
+                        <div style="">
+                          <div class="bills-selected-owe" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
+                            <h4 class="bill-member">{{UO.title}}</h4>
+                            <h4 class="bill-amount">{{UO.amountForEntry[entry.username] | currency}} </h4>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-              </div> -->
+              </div>
+              <div class="col-md-6">
+                <h4>Bills paid to you</h4>
+                <div class="bill-scroll">
+                  <div ng-repeat="OU in entry.oweYouHistory">
+                    <label for="{{OU.id}}">
+                      <div style="">
+                        <div class="bills-selected-debt" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{OU.dateDue | date:'shortDate'}}" data-content="<p>{{OU.description}}</p>" data-placement="right">
+                          <button type="button" ng-click="showEditBill($event,OU.id)" class="btn btn-default btn-xs bills-editBtn">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                          </button>
+                          <h4 class="bill-member">{{OU.title}}</h4>
+                          <h4 class="bill-amount">-{{OU.amountForEntry[entry.username] | currency}} </h4>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              </div> 
             </div>
         </div>
       </div>

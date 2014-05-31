@@ -99,7 +99,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   // This should contain a SummaryEntry for each person
   // you owe, and everybody who owes you money. 
   function makeSummary() {
-    BillModel.summary = {youOwe: {}, oweYou: {}};
+    BillModel.summary = {youOwe: {}, oweYou: {}, youOweHistory: {}, oweYouHistory: {}};
     for (var i in BillModel.bills){
       // creator is me, people owe me
       if (BillModel.bills[i].creator == UserModel.me){
@@ -115,6 +115,14 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
 
               // add the bill in
               BillModel.summary.oweYou[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
+            }
+            else {
+              if(!BillModel.summary.oweYouHistory[j]){
+                BillModel.summary.oweYouHistory[j] = new SummaryEntry(UserModel.users[j].username);
+              } 
+
+              // add the bill in
+              BillModel.summary.oweYouHistory[j].addBill(BillModel.bills[i], BillModel.bills[i].membersAmountMap[j].due);
             }
           }
         }
@@ -132,6 +140,18 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
           }
 
           BillModel.summary.youOwe[bill_creator_id].addBill
+            (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
+        }
+        else {
+          var bill_creator_id = BillModel.bills[i].creator;
+          var bill_creator_username = UserModel.users[BillModel.bills[i].creator].username;
+
+          // if this person is not in summary that i owe him, add an entry
+          if(!BillModel.summary.youOweHistory[bill_creator_id]){
+            BillModel.summary.youOweHistory[bill_creator_id] = new SummaryEntry(bill_creator_username);
+          }
+
+          BillModel.summary.youOweHistory[bill_creator_id].addBill
             (BillModel.bills[i], BillModel.bills[i].membersAmountMap[UserModel.me].due);
         }
       }

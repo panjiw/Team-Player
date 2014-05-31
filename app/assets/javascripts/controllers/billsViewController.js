@@ -96,11 +96,12 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           // buildBills();
           $scope.billSummary = BillModel.summary;
+          var a = $scope.billSummary;
           $scope.combinedBills = {};
           $.each($scope.billSummary.oweYou, function(index) {
             if (!$scope.combinedBills[index]) {
               $scope.combinedBills[index] = {username: this.person_username, 
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}};
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].oweYou = this.total;
             $scope.combinedBills[index].oweYouBills = this.billsArray;
@@ -108,10 +109,24 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           $.each($scope.billSummary.youOwe, function(index) {
             if (!$scope.combinedBills[index]) {
               $scope.combinedBills[index] = {username: this.person_username, 
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}};
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].youOwe = this.total;
             $scope.combinedBills[index].youOweBills = this.billsArray;
+          });
+          $.each($scope.billSummary.youOweHistory, function(index) {
+            if (!$scope.combinedBills[index]) {
+              $scope.combinedBills[index] = {username: this.person_username, 
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+            }
+            $scope.combinedBills[index].youOweHistory = this.billsArray;
+          });
+          $.each($scope.billSummary.oweYouHistory, function(index) {
+            if (!$scope.combinedBills[index]) {
+              $scope.combinedBills[index] = {username: this.person_username, 
+                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+            }
+            $scope.combinedBills[index].oweYouHistory = this.billsArray;
           });
         });
       }
@@ -582,6 +597,11 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     }
   }
 
+  // Called when history is opened to activate popovers
+  $scope.openHistory = function() {
+    $("#billsHistory .bills-selected-owe").popover();
+    $("#billsHistory .bills-selected-debt").popover();
+  }
 
   
 
