@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   match '/create_bill', to: 'bills#new', via: 'post'
   match '/get_bills', to: 'bills#get_all',   via: 'get'
+  match '/get_bills_in_range', to: 'bills#get_in_range',   via: 'post'
   match '/finish_bill', to: 'bills#mark_finished', via: 'post'
   match '/edit_bill', to: 'bills#edit', via: 'post'
   match '/delete_bill', to: 'bills#delete', via: 'post'
@@ -42,14 +43,15 @@ Rails.application.routes.draw do
   match '/run_generator', to: 'task_generators#create_new_task', via: 'post'
 
   match '/create_task', to: 'tasks#new', via: 'post'
-  match '/get_task', to: 'tasks#get_all', via: 'get'
-  match '/get_task_in_range',   to: 'tasks#get_task_in_range', via: 'get' 
+  match '/get_tasks', to: 'tasks#get_all', via: 'get'
+  match '/get_tasks_in_range',   to: 'tasks#get_in_range', via: 'post'
   match '/finish_task', to: 'tasks#mark_finished', via: 'post'
   match '/edit_task', to: 'tasks#edit', via: 'post'
   match '/delete_task', to: 'tasks#delete', via: 'post'
 
   match '/create_special_task', to: 'task_generators#new', via: 'post'
   match '/get_generators', to: 'task_generators#get_all', via: 'get'
+  match '/get_generators_in_range', to: 'task_generators#get_in_range', via: 'get'
   match '/finish_special_task', to: 'task_generators#mark_finished', via: 'post'
   match '/edit_special_task', to: 'task_generators#edit', via: 'post'
   match '/delete_special_task', to: 'task_generators#delete', via: 'post'
