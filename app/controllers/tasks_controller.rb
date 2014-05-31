@@ -123,7 +123,7 @@ class TasksController < ApplicationController
         tasks[count] = task
         count += 1
       end
-      g.task_generators.where.not(repeat_days: nil).where(finished: false).each do |tg|
+      g.task_generators.where("repeat_days IS NOT NULL AND finished = ? AND due_date < ?", false, end_date).each do |tg|
         old_task = Task.find(tg[:current_task_id])
         old_task_actors = []
         old_task.task_actors.each do |a|
