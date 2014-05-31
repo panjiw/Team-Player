@@ -213,7 +213,7 @@
         <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
       </li> -->
       <li class="active">
-        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()" active="active">Bill Summary</a>
+        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
       </li>
       <li>
         <a href="#billsHistory" data-toggle="tab" ng-click="closePop(); openHistory()">Bill History</a>
@@ -278,7 +278,7 @@
               </div>
             </div>
         </div> -->
-        <div class="tab-pane" id="billsSummary">
+        <div class="tab-pane active" id="billsSummary" >
           <h3>Bill Summary</h3>
             <div ng-repeat="entry in combinedBills">
                 <div ng-click="openPop($event, entry.username, 4)" class="tasks-panelbutton bill-panelbutton" >

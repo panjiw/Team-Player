@@ -95,41 +95,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         //TODO
         $scope.$apply(function(){
           // buildBills();
-          $scope.billSummary = BillModel.summary;
-          var a = $scope.billSummary;
-          $scope.combinedBills = {};
-          $.each($scope.billSummary.oweYou, function(index) {
-            if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
-            }
-            $scope.combinedBills[index].oweYou = this.total;
-            $scope.combinedBills[index].oweYouBills = this.billsArray;
-          });
-          $.each($scope.billSummary.youOwe, function(index) {
-            if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
-            }
-            $scope.combinedBills[index].youOwe = this.total;
-            $scope.combinedBills[index].youOweBills = this.billsArray;
-          });
-          $.each($scope.billSummary.youOweHistory, function(index) {
-            if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
-            }
-            $scope.combinedBills[index].youOweHistory = this.billsArray;
-          });
-          $.each($scope.billSummary.oweYouHistory, function(index) {
-            if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
-                oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
-            }
-            $scope.combinedBills[index].oweYouHistory = this.billsArray;
-          });
-          var b = $scope.combinedBills;
-          var a = hi;
+          $scope.combinedBills = BillModel.combinedSummary;
         });
       }
     });
@@ -148,13 +114,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     console.log('group list in bill changed');
   });
 
-  $scope.$watch('billSummary', function(newVal, oldVal){
-    
+  $scope.$watchCollection('combinedBills', function(newVal, oldVal){
+    console.log("combined",$scope.combinedBills);
   });
-
-  $scope.$watch('combinedBills', function(newVal, oldVal){
-    
-  },true);
 
   $scope.$watch('newBillGroup', function(newVal, oldVal){ 
     console.log('group selected');
@@ -290,7 +252,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       } else{
         $scope.$apply(function(){
           // buildBills();
-          $scope.billSummary = BillModel.summary;
+          $scope.combinedBills = BillModel.combinedSummary;
           initNewBillData();
         });
         toastr.success("Bill Created!");
@@ -342,7 +304,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       } else{
         $scope.$apply(function(){
           // buildBills();
-          $scope.billSummary = BillModel.summary;
+          $scope.combinedBills = BillModel.combinedSummary;
           initEditBillData();
         });
         toastr.success("Bill Edited!");
@@ -508,7 +470,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             }
           } else {
             $scope.$apply(function() {
-              $scope.billSummary = BillModel.summary;
+              $scope.combinedBills = BillModel.combinedSummary;
               toastr.success("Bill '" + billTitle + "' paid!");
             });
           }

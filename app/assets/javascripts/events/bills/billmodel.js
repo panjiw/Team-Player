@@ -52,6 +52,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
   var BillModel = {};
   BillModel.bills = {};   //ID to bills.css
   BillModel.summary = {}; // the summary for this person
+  BillModel.combinedSummary = {};
 
   // return the total for this bill
   BillModel.deriveTotal = function(bill){
@@ -94,6 +95,42 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     }
     return thisDayBill;
   };
+
+
+  function buildCombinedSummary() {
+    var tempCombinedBills = {};
+    $.each(BillModel.summary.oweYou, function(index) {
+      if (!tempCombinedBills[index]) {
+        tempCombinedBills[index] = {username: this.person_username, person_id: this.person_id,
+          oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+      }
+      tempCombinedBills[index].oweYou = this.total;
+      tempCombinedBills[index].oweYouBills = this.billsArray;
+    });
+    $.each(BillModel.summary.youOwe, function(index) {
+      if (!tempCombinedBills[index]) {
+        tempCombinedBills[index] = {username: this.person_username, person_id: this.person_id,
+          oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+      }
+      tempCombinedBills[index].youOwe = this.total;
+      tempCombinedBills[index].youOweBills = this.billsArray;
+    });
+    $.each(BillModel.summary.youOweHistory, function(index) {
+      if (!tempCombinedBills[index]) {
+        tempCombinedBills[index] = {username: this.person_username, person_id: this.person_id,
+          oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+      }
+      tempCombinedBills[index].youOweHistory = this.billsArray;
+    });
+    $.each(BillModel.summary.oweYouHistory, function(index) {
+      if (!tempCombinedBills[index]) {
+        tempCombinedBills[index] = {username: this.person_username, person_id: this.person_id,
+          oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
+      }
+      tempCombinedBills[index].oweYouHistory = this.billsArray;
+    });
+    BillModel.combinedSummary = tempCombinedBills;
+  }
 
   // make a "summary" for the user based on all the bills
   // in BillModel.Bills. 
@@ -167,6 +204,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
     BillModel.bills[bill.details.id] = new Bill(bill.details.id, bill.details.group_id, bill.details.title, bill.details.description,
      bill.details.user_id, created_at, due_date, bill.due);
     makeSummary();
+    buildCombinedSummary();
   }
 
   // get all bills from server and clear out any
