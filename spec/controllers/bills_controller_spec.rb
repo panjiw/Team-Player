@@ -1129,7 +1129,6 @@ describe BillsController do
 			end
 
 		end
-		# change when user has paid things already - TODO paid
 
 		context 'added user does not exist' do
 

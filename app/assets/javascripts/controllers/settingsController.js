@@ -1,4 +1,5 @@
-angular.module('myapp').controller("settingsController", ["$scope", function($scope) {
+angular.module('myapp').controller("settingsController", ["$scope", "UserModel", 
+  function($scope, UserModel) {
   
   $(".settings-btn").click(function(b) {
     $("#" + $(this).attr("value")).show();
@@ -15,13 +16,15 @@ angular.module('myapp').controller("settingsController", ["$scope", function($sc
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("user edit Success: " , data);
-      updateTask(data);
-      callback();
-      
+      toastr.success("User name changed!");
+      location.reload();
     })
     .fail(function(xhr, textStatus, error) {
-      console.log("user edit error: ",error);
-      callback(JSON.parse(xhr.responseText));
+      console.log("user edit error: ",error);      
+      var messages = JSON.parse(xhr.responseText);
+      for (var i in messages){
+        toastr.error(messages[i]);
+      }
     });
   }
   
@@ -37,13 +40,16 @@ angular.module('myapp').controller("settingsController", ["$scope", function($sc
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("user edit Success: " , data);
-      updateTask(data);
-      callback();
+      toastr.success("password changed!");
+      location.reload();
     
     })
     .fail(function(xhr, textStatus, error) {
       console.log("user edit error: ",error);
-      callback(JSON.parse(xhr.responseText));
+      var messages = JSON.parse(xhr.responseText);
+      for (var i in messages){
+        toastr.error(messages[i]);
+      }
     });
   }
   
@@ -57,13 +63,15 @@ angular.module('myapp').controller("settingsController", ["$scope", function($sc
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("user edit Success: " , data);
-      updateTask(data);
-      callback();
-      
+      toastr.success("email changed!");
+      location.reload();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("user edit error: ",error);
-      callback(JSON.parse(xhr.responseText));
+      var messages = JSON.parse(xhr.responseText);
+      for (var i in messages){
+        toastr.error(messages[i]);
+      }
     });
   }
   
@@ -79,13 +87,15 @@ angular.module('myapp').controller("settingsController", ["$scope", function($sc
     })
     .success(function(data, status) { // on success, there will be message to console
       console.log("user edit Success: " , data);
-      updateTask(data);
-      callback();
-    
+      toastr.success("name changed!");
+      location.reload();
     })
     .fail(function(xhr, textStatus, error) {
       console.log("user edit error: ",error);
-      callback(JSON.parse(xhr.responseText));
+      var messages = JSON.parse(xhr.responseText);
+      for (var i in messages){
+        toastr.error(messages[i]);
+      }
     });
   }
   
