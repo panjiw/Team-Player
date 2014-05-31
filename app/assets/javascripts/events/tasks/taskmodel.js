@@ -273,10 +273,12 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
       // delete the given task, or if it is special,
       // set the appropriate properties inside it
       // marking that one iteration is finished
-      delete TaskModel.tasks[taskID];
       if (data.task){
+        delete TaskModel.tasks[taskID];
         updateTask(data.task);
         updateGenerator(data.generator);
+      } else {
+        TaskModel.tasks[taskID].done = true;
       }
         
       callback();
