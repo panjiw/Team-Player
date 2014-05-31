@@ -620,22 +620,6 @@ describe 'MARK_FINISHED tests' do
       (response.status == 200).should be_true
     end
 
-    #TODO
-    # it 'should return the correct finished information' do
-    #   finishedinfo = "\"finished\":true"
-    #   (response.body.include? finishedinfo).should be_true
-    # end
-
-    # it 'should return the correct task information' do
-    #     taskinfo = "\"details\":{\"id\":3,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":null"
-    #     (response.body.include? taskinfo).should be_true
-    # end
-
-    # it 'should return the correct member information' do
-    #   memberinfo = "\"members\":{\"2\":0}"
-    #   (response.body.include? memberinfo).should be_true
-    # end
-
   end
 
   context 'the task is already finished' do

@@ -262,6 +262,17 @@ describe GroupsController do
         	@controller = GroupsController.new
         	post 'create', :group => {:name => "group name", :description => "desc"}, :add => {:members => [1,2]}
         	post 'create', :group => {:name => "name", :description => "desc"}, :add => {:members => [1]}
+	
+        	@controller = SessionsController.new
+        	delete 'destroy'
+        	post 'create', :user => {:username => "two", :password => "player"}
+
+        	@controller = GroupsController.new
+        	post 'acceptgroup', :accept => {:id => 4}
+
+        	@controller = SessionsController.new
+        	delete 'destroy'
+        	post 'create', :user => {:username => "one", :password => "player"}
 		end
 
 		context 'params incorrect' do
@@ -279,7 +290,6 @@ describe GroupsController do
 				errormessage = "Group Not Selected"
 				(response.body.include? errormessage).should be_true
 			end
-
 
 		end
 
@@ -347,6 +357,98 @@ describe GroupsController do
 			end
 
 		end
+
+		# leave group removes bill entirely
+		context 'deleting bill information when leaving the group' do
+
+			before(:each) do
+				@controller = BillsController.new
+				post 'new', :bill => {:group_id => 4, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					:description => "desc", :due_date => "2014-05-17"}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = BillsController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		# leave group removes bill information
+		context 'deleting bill information when leaving the group' do
+
+			before(:each) do
+				@controller = BillsController.new
+				post 'new', :bill => {:group_id => 4, :title => "testing title", :total_due => 30, :members => {"1" => 10, "2" => 20}, 
+					:description => "desc", :due_date => "2014-05-17"}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = BillsController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		# leave group removes task information
+		context 'deleting task information when leaving the group' do
+
+			before(:each) do
+				@controller = TasksController.new
+          		post 'new', :task => {:group_id => "4", :title => "title", :finished => false, :members => [1,2]}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = TasksController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+
+		# leave group removes task entirely
+		context 'deleting task information when leaving the group' do
+
+			before(:each) do
+				@controller = TasksController.new
+          		post 'new', :task => {:group_id => "4", :title => "title", :finished => false, :members => [1]}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = TasksController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
 
 	end
 

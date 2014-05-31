@@ -514,8 +514,6 @@ describe UsersController do
     # tests for finduseremail 
     describe "finduseremail" do
         
-        #TODO: user is not signed in
-
         before(:each) do
             @controller = UsersController.new
             post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
@@ -853,7 +851,7 @@ describe UsersController do
     end
     end
 
-    #TODO: VIEWPENDINGGROUPS
+    #VIEWPENDINGGROUPS
     describe 'VIEWPENDINGGROUPS tests' do
 
         before(:each) do
@@ -961,7 +959,6 @@ describe UsersController do
                 groupinfo = "{\"id\":5,\"name\":\"group two\",\"description\":\"desc\",\"creator\":2"
                 (response.body.include? groupinfo).should be_true
             end
-
 
             it 'should have the correct member information' do
                 userinfo = "\"users\":[{\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
