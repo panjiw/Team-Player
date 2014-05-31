@@ -742,5 +742,218 @@ describe TaskGeneratorsController do
   end
 
 
+  describe 'GET_IN_RANGE tests' do
+
+    context 'the user does not have any task geerators' do
+
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an empty array' do
+        (response.body.include? "{}").should be_true
+      end
+
+    end
+
+    context 'the user has one task generator above range' do
+
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2030-05-05", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an empty array' do
+        (response.body.include? "{}").should be_true
+      end
+
+    end
+
+    context 'the user has one task generator above range by one' do
+
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-16", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an empty array' do
+        (response.body.include? "{}").should be_true
+      end
+
+    end
+
+    context 'the user has one task generator below range' do
+      
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2010-07-16", :members => [1], 
+          :repeat_days => ["false","false","false","false","false","false","false"], :cycle => "true"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an empty array' do
+        (response.body.include? "{}").should be_true
+      end
+
+    end
+
+    context 'the user has one task generator below range by one' do
+     
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-01", :members => [1], 
+          :repeat_days => ["false","false","false","false","false","false","false"], :cycle => "true"}
+        get 'get_in_range', :date => {:start => "2020-07-02", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an empty array' do
+        (response.body.include? "{}").should be_true
+      end
+    
+    end
+
+    context 'the user has one task generator in range' do
+      
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-10", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+    
+    end
+
+    context 'the user has one task generator on bottom edge of the range' do
+     
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-01", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+    
+    end
+
+    context 'the user has one task generator on the top edge of the range' do
+      
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-15", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
+    end
+
+    context 'the user has one task generator in range one task generator out of range' do
+      
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-10", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        post 'new', :task => {:group_id => 1, :title => "title two", :total_due => 20, :due_date => "2021-07-10", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
+      it 'should not return an the second task info' do
+        taskinfo = "\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"title two\""
+        (response.body.include? taskinfo).should be_false
+      end
+
+    end
+
+    context 'the user has two task generators in range' do
+      
+      before(:each) do
+        @controller = TaskGeneratorsController.new
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-10", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-11", :members => [1], 
+          :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
+        get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+      end
+
+      it 'should return a 200 status' do
+        (response.status == 200).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
+    end
+
+
+
+  end
+
 
 end

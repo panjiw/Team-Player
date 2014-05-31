@@ -522,11 +522,6 @@ describe "GETALL tests" do
 
   end
 
-  context 'the user has more than one task they did not create themselves' do
-
-  end
-
-
 end
 
 # mark_finished
@@ -566,33 +561,6 @@ describe 'MARK_FINISHED tests' do
     end
 
   end
-
-  # # task does not exist
-  # context 'the task does not exist' do
-
-  #   before(:each) do
-  #     @controller = TasksController.new
-  #     post 'mark_finished', :task => {:id => "3"}
-  #   end
-
-  #   it 'it should return a 400 status' do
-  #     (response.status == 400).should be_true
-  #   end
-
-  # end
-
-  # context 'the task does not exist' do
-
-  #    before(:each) do
-  #     @controller = TasksController.new
-  #     post 'mark_finished', :task => {:id => "99"}
-  #   end
-
-  #   it 'it should return a 400 status' do
-  #     (response.status == 400).should be_true
-  #   end
-
-  # end
 
   # not a member of the task
   context 'the user is not a member of the task' do
@@ -720,33 +688,246 @@ end
 #   # "created_at":date and time created,
 #   # "updated_at":date and time updated},
 #   # "members":{user_id:order, ..., user_id:order}}, ...}
-describe "TEST get_task_in_range" do
+describe "TEST get_in_range" do
 
-  context 'tasks within month range' do
+  describe 'user has a repeating task in range' do
+
+    before(:each) do
+      @controller = TaskGeneratorsController.new
+      post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => nil, :members => [1], 
+          :repeat_days => ["true","false","true","false","false","true","false"], :cycle => "false", :description => "desc"}
+      @controller = TasksController.new
+      get 'get_in_range', :date => {:start => "2014-07-01", :end => "2014-07-15"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-07-02\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-07-05\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-07-07\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-07-09\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-07-12\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return the correct task information for the second task' do
+      taskinfo = "\"id\":null,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":\"desc\",\"due_date\":\"2014-06-14\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
+  describe 'user has no tasks' do
 
     before(:each) do
       @controller = TasksController.new
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
     end
 
-	   it "should send a 400 status" do
-      get 'get_task_in_range', :range => {:start => "4-12-2015", :end => "7-12"}
-		  # given (through get) range: date[start] <= task[:created_at] <= date[end]
-			(response.status = 400).should be_true
-		end
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
 
-		# range is only one date
-		it 'should send back a range' do
-			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
-			(response.status = 400).should be_true
-		end
+    it 'should return no tasks' do
+      (response.body.include? "{}").should be_true
+    end
 
-		# range is not formatted correctly
-		it 'should send back a range' do
-			get 'get_task_in_range', :range => {:start => "5-16-2014", :end => "5-16-2014"}
-			(response.status = 400).should be_true
-		end
+  end
 
-	end
+  describe 'user has one task above the given range' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-07-05"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return no tasks' do
+      (response.body.include? "{}").should be_true
+    end
+
+  end
+
+  describe 'user has one task below the given range' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-04-04"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return no tasks' do
+      (response.body.include? "{}").should be_true
+    end
+
+  end
+
+  describe 'user has one task one outside the upper borded' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-06-02"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      (response.body.include? "{}").should be_true
+    end
+
+  end
+
+  describe 'user has one task one outside the lower borded' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-04-30"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      (response.body.include? "{}").should be_true
+    end
+
+  end
+
+  describe 'user has one task on the lower borded' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-05-05"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-05\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
+
+  describe 'user has one task on the upper borded' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-06-01"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-06-01\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
+  describe 'user has one task between the two dates' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-05-15"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-15\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
+  describe 'user has one task outside the border one task inside the border' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-05-15"}
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-07-01"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return one task' do
+      taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-15\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
+  describe 'user has two tasks inside the border' do
+
+    before(:each) do
+      @controller = TasksController.new
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-05-15"}
+      post 'new', :task => {:group_id => "1", :title => "title", :finished => false, :members => [1], :due_date => "2020-05-20"}
+      get 'get_in_range', :date => {:start => "2020-05-01", :end => "2020-06-01"}
+    end
+
+    it 'should return a 200 status' do
+      (response.status == 200).should be_true
+    end
+
+    it 'should return correct task info' do
+      taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-15\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+    it 'should return correct task info' do
+      taskinfo = "\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-05-20\""
+      (response.body.include? taskinfo).should be_true
+    end
+
+  end
+
 end
 
 
