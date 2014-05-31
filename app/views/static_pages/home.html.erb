@@ -104,8 +104,6 @@ Displays pages for after successful login:
 
 
 
-
-
       <div class="calendar-row">
         <div class="col-md-3">
             <div class="home-buttons" style="visibility: hidden">
@@ -127,7 +125,7 @@ Displays pages for after successful login:
                         <div id="calendarModal-buttons">
                           <div class="col-md-8"></div>
                           <div class="col-md-4" id="calendar-modal-buttons">
-                            <button class="btn edit-btn">Edit</button>
+                            <!-- <button class="btn edit-btn">Edit</button> -->
                             <button class="btn btn-success" ng-click="finishEvent()" data-dismiss="modal">Completed</button>
                           </div>
                         </div>
@@ -187,15 +185,6 @@ Displays pages for after successful login:
             </div>
         </div>
         <div class="col-md-9">
-<!--           <div class="legend" style="position:center">Legend:
-            <div class="btn btn-xs btn-myTask">Your Incomplete Task</div>
-            <div class="btn btn-xs btn-yourTask">Another's Incomplete Task</div>
-            <div class="btn btn-xs btn-myBill">A Bill You Owe</div>
-            <div class="btn btn-xs btn-yourBill">A Bill Owed To You</div><br><br>
-            <div class="btn btn-xs btn-myOverdue">Your Overdue</div>
-            <div class="btn btn-xs btn-yourOverdue">Another's Overdue</div>
-            <div class="btn btn-xs btn-completed">Completed Tasks/Bills</div>
-          </div> -->
           <div class="home-calendar" style="position:relative; right: 100px">
             <div id="calendar-display"></div>
           </div>

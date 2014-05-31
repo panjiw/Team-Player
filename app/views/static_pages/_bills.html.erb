@@ -299,12 +299,6 @@
         <div class="tab-pane" id="billsSummary">
           <h3>Bill Summary</h3>
             <div ng-repeat="entry in combinedBills">
-              <div class="temporary">
-                <!-- <div class="bill" ng-click="openPop($event, entry.username, 4)">
-                  <h4 class="bill-member bill-member-long">{{entry.username}}</h4>
-                  <h4 class="bill-amount">${{entry.oweYou}}</h4>
-                  <h4 class="bill-amount">${{entry.youOwe}}&nbsp;&nbsp;&nbsp;</h4>
-                </div> -->
                 <div ng-click="openPop($event, entry.username, 4)" class="tasks-panelbutton bill-panelbutton" >
                     <div class="panel panel-success">
                       <div class="panel-heading">
@@ -359,7 +353,6 @@
                     <h4 class="bill-pop-total-comb">Net Total: $0</h4>
                   </div>
                 </div>
-              </div>
             </div>
         </div>
         <div class="tab-pane" id="billsHistory">

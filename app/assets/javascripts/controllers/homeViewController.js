@@ -111,10 +111,6 @@ angular.module('myapp').controller("homeViewController",
     $('#billModal').modal({show:true})
   });
 
-  /* 
-  $scope.openModal = function(e){
-    $('#manualModal').modal({show:true})
-  }; */
 
   // Opens up modal for bills/tasks inside calendar
   $scope.openCalendarModal = function(todo) {
@@ -143,26 +139,20 @@ angular.module('myapp').controller("homeViewController",
           start: this.dateDue,
           desc: this.description, 
           textColor: "black",
-          backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#ff8282" : "#faebcc", 
-          borderColor: this.dateDue.valueOf() > new Date().valueOf() ? "#ff8282" : "#faebcc", 
+          backgroundColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#faebcc", 
+          borderColor: this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#faebcc", 
           members: UserModel.usersToUserNamesString(this.members),
           group: this.groupName, 
           eventid: this.id
         };
-
-
-// // display a red background if the task is overdue 
-//               backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#D00000" : "#faebcc", 
-//               borderColor: "#faebcc",
-// events.push(newEventObj);
 
         // If task is not finished yet, display normally
         if (this.done == null) {
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-            newEventObj["backgroundColor"] = this.dateDue.valueOf() > new Date().valueOf() ? "#ff1f1f" : "#eee24f"; //yellow
-            newEventObj["borderColor"] = this.dateDue.valueOf() > new Date().valueOf() ? "#ff1f1f" : "#eee24f";
+            newEventObj["backgroundColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff1f1f" : "#eee24f"; //yellow
+            newEventObj["borderColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff1f1f" : "#eee24f";
           }
         }
         // finished 
@@ -173,12 +163,6 @@ angular.module('myapp').controller("homeViewController",
           // }
         }
         events.push(newEventObj);
-        // Else task is completed, display as completed
-        // else
-        // {
-        //   events.push({type: "Task", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#ddd", desc: this.description, members: UserModel.usersToUserNamesString(this.members),
-        //     group: this.groupName, eventid: this.id});
-        // }
         
         // If task is not finished and is due today, put in todays tasks
         if (this.dateDue == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
@@ -217,37 +201,16 @@ angular.module('myapp').controller("homeViewController",
 
           //If I have to pay bill, display with box
           if (this.creator != UserModel.me) {
-              newEventObj["backgroundColor"] = "#7ab847"; //green
+              newEventObj["backgroundColor"] = "#7ab847";
               newEventObj["borderColor"] = "#7ab847";
           }
         }
         // Else bill is paid, display bill as completed
         else {
-          //If it is a bill I have to pay
-          // if (this.creator != UserModel.me) {
-          //     newEventObj["backgroundColor"] = "#4CC417"; //gray
-          //     newEventObj["borderColor"] = "#4CC417";
-          // }
-          // // Otherwise, I had created the bill
-          // else {
-            newEventObj["backgroundColor"] = "white"; //gray
+            newEventObj["backgroundColor"] = "white";
             newEventObj["borderColor"] = "white";
-          // }
         }
         events.push(newEventObj);
-
-        
-        // // If bill is not paid, display on calendar normally
-        // if (!this.membersAmountMap[UserModel.me].paid) {
-        //   events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#d6e9c6", textColor: "black", borderColor: "#d6e9c6",
-        //     desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
-        // }
-        
-        // // Else bill is paid, display bill as completed
-        // else {
-        //   events.push({type: "Bill", title: this.title, start: this.dateDue, backgroundColor: "#F0F0F0", textColor: "black", borderColor: "#d6e9c6",
-        //     desc: this.description, members: UserModel.users[this.creator].username, group: GroupModel.groups[this.group].name, eventid: this.id});
-        // }
       }
     });
 
@@ -255,30 +218,30 @@ angular.module('myapp').controller("homeViewController",
     $('#calendar-display').fullCalendar({
       // editable:true,
       events: events,
-      eventClick: function(event) { // Function for when calendar event is clicked
-        $('#calendarModal').modal({show:true})
-        $("#calendarModal-header").html(event.title);
-        if (event.type == "Task") {
-          $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
-                  + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
-                  + "<strong>Members:</strong> " + event.members);
-          $scope.currentEventType = "task";
-          $scope.currentEvent = event.eventid;
-        }
-        else {
-          $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
-                    + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
-                    + "<strong>Creator:</strong> " + event.members);
-          $scope.currentEventType = "bill";
-          $scope.currentEvent = event.eventid;
-        }
-        if (event.backgroundColor == "#F0F0F0") {
-          $("#calendarModal-buttons").hide();
-        }
-        else {
-          $("#calendarModal-buttons").show();
-        }
-      },
+      // eventClick: function(event) { // Function for when calendar event is clicked
+      //   $('#calendarModal').modal({show:true})
+      //   $("#calendarModal-header").html(event.title);
+      //   if (event.type == "Task") {
+      //     $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
+      //             + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
+      //             + "<strong>Members:</strong> " + event.members);
+      //     $scope.currentEventType = "task";
+      //     $scope.currentEvent = event.eventid;
+      //   }
+      //   else {
+      //     $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
+      //               + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
+      //               + "<strong>Creator:</strong> " + event.members);
+      //     $scope.currentEventType = "bill";
+      //     $scope.currentEvent = event.eventid;
+      //   }
+      //   if (event.backgroundColor == "#F0F0F0") {
+      //     $("#calendarModal-buttons").hide();
+      //   }
+      //   else {
+      //     $("#calendarModal-buttons").show();
+      //   }
+      // },
       dayClick: function(date, allDay, jsEvent, view) {
 
         var thisDateTasks = [];
@@ -297,24 +260,47 @@ angular.module('myapp').controller("homeViewController",
 
         thisDateBills = BillModel.getBillsOnDay(date);
 
+        // $.each($scope.myBills, function() {
+        //   if (this.dateDue != null) {
+        //     if ((this.dateDue.getMonth() == date.getMonth()) && 
+        //       (this.dateDue.getDate() == date.getDate()) &&
+        //       (this.dateDue.getFullYear() == date.getFullYear())) {
+        //         thisDateBills.push(this);
+        //     }
+        //   }
+        // });
+
         console.log("thisDateBills",thisDateBills);
 
        //create panels in a string
        var string = "";
         $.each(thisDateTasks, function() {
-          string += "<div class='panel panel-warning'>" + 
+           var taskPanel = "";
+           var completeBtn = "";
+            if (this.done == null){
+              taskPanel = "<div class='panel panel-warning'>" + 
                       "<div class='panel-heading'>" + 
-                        "<div class='task-panel'>" + 
+                        "<div class='task-panel'>";
+              if (TaskModel.isInvolved(this.id)) {
+                completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
+              } else {
+                completeBtn = "Not Your Task";
+              }
+            } else {
+              taskPanel = "<div class='panel panel-gray'>" + 
+                      "<div class='panel-heading panel-gray-header'>" +
+                        "<div class='task-panel'>";
+            }
+
+          string += taskPanel + 
                           "<h4 class='panel-descr'>" + this.title + "</h4>" + 
-                          "<h4 class='panel-date'>" + this.dateDue.toLocaleDateString() + "</h4>" +
-                          // "| date:'shortDate'</h4>" + 
+                          "<h4 class='panel-date'>" + 
+                            completeBtn +
+                          "</h4>" +
                         "</div>" + 
                       "</div>" + 
                        "<div class='panel-body panel-info'>" + 
                          "<div class='panel-groupname'>" + this.groupName + "</div>" + 
-                       //   "<div class='panel-groupmembers'>" +
-                       //      "<span ng-repeat='mem in this.members'>" + 
-                       //        mem | userNameInTask:task.id:isSpecial(task.id) + "</span></div>" + 
                        "</div>" + 
                     "</div>";
         })
@@ -332,7 +318,6 @@ angular.module('myapp').controller("homeViewController",
                           "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
                           "<h4 class='panel-date'>" + paidTag +
                            "</h4>" +
-                          // "| date:'shortDate'</h4>" + 
                         "</div>" + 
                       "</div>" + 
                        "<div class='panel-body panel-info'>" + 
