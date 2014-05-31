@@ -90,6 +90,7 @@ div.tabs.selected_groups button.selected_groups{
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
+  overflow-height:hidden;
 }
 
 .home-tasks ul {
@@ -117,8 +118,8 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .home-dateless {
-/*  height: 125px;
-  overflow-y: auto;*/
+/*  height: 125px;*/
+  overflow-height: hidden;
 }
 
 .home-todays {
@@ -130,4 +131,50 @@ div.tabs.selected_groups button.selected_groups{
   background-color: #f7ecb5;
   border-width: 2px;
   border-color: #f5e79e;
+}
+
+.legend {
+  text-align: center;
+}
+
+.btn-myTask {
+  background-color: #eee24f;
+  border-color: #eee24f;
+  color: black;
+}
+
+.btn-yourTask {
+  background-color: #faebcc;
+  border-color: #faebcc;
+  color: black;
+}
+
+.btn-myBill {
+  background-color: #7ab847;
+  border-color: #7ab847;
+  color: black;
+}
+
+.btn-yourBill {
+  background-color: #d6e9c6;
+  border-color: #d6e9c6;
+  color: black;
+}
+
+.btn-myOverdue {
+  background-color: #ff1f1f;
+  border-color: #ff1f1f;
+  color: black;
+}
+
+.btn-yourOverdue {
+  background-color: #ff8282;
+  border-color: #ff8282;
+  color: black;
+}
+
+.btn-completed {
+  background-color: white;
+  border-color: black;
+  color: black;
 }

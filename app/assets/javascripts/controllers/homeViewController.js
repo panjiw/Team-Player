@@ -143,8 +143,8 @@ angular.module('myapp').controller("homeViewController",
           start: this.dateDue,
           desc: this.description, 
           textColor: "black",
-          backgroundColor: "white",
-          borderColor: "white",
+          backgroundColor: this.dateDue.valueOf() > new Date().valueOf() ? "#ff8282" : "#faebcc", 
+          borderColor: this.dateDue.valueOf() > new Date().valueOf() ? "#ff8282" : "#faebcc", 
           members: UserModel.usersToUserNamesString(this.members),
           group: this.groupName, 
           eventid: this.id
@@ -161,19 +161,16 @@ angular.module('myapp').controller("homeViewController",
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-              newEventObj["backgroundColor"] = "#faebcc"; //yellow
-              newEventObj["borderColor"] = "#faebcc";
-          } else {
-            newEventObj["textColor"] = "#FBB117";
+            newEventObj["backgroundColor"] = this.dateDue.valueOf() > new Date().valueOf() ? "#ff1f1f" : "#eee24f"; //yellow
+            newEventObj["borderColor"] = this.dateDue.valueOf() > new Date().valueOf() ? "#ff1f1f" : "#eee24f";
           }
         }
         // finished 
         else {
-          if (TaskModel.isInvolved(this.id)) {
-              newEventObj["backgroundColor"] = "#F0F0F0"; //gray
-          } else {
-            newEventObj["textColor"] = "gray";
-          }
+          // if (TaskModel.isInvolved(this.id)) {
+              newEventObj["backgroundColor"] = "white"; //gray
+              newEventObj["borderColor"] = "white";
+          // }
         }
         events.push(newEventObj);
         // Else task is completed, display as completed
@@ -203,9 +200,9 @@ angular.module('myapp').controller("homeViewController",
           type: "Bill", 
           title: this.title, 
           start: this.dateDue, 
-          backgroundColor: "white", 
+          backgroundColor: "#d6e9c6", 
           textColor: "black", 
-          borderColor: "white",
+          borderColor: "#d6e9c6",
           desc: this.description, 
           members: UserModel.users[this.creator].username, 
           group: GroupModel.groups[this.group].name, 
@@ -220,25 +217,22 @@ angular.module('myapp').controller("homeViewController",
 
           //If I have to pay bill, display with box
           if (this.creator != UserModel.me) {
-              newEventObj["backgroundColor"] = "#d6e9c6"; //yellow
-              newEventObj["borderColor"] = "#d6e9c6";
-          }
-          // Otherwise, I had created the bill
-          else {
-            newEventObj["textColor"] = "green";
+              newEventObj["backgroundColor"] = "#7ab847"; //green
+              newEventObj["borderColor"] = "#7ab847";
           }
         }
         // Else bill is paid, display bill as completed
         else {
-          //If it was one I had to pay
-          if (this.creator != UserModel.me) {
-              newEventObj["backgroundColor"] = "#F0F0F0"; //yellow
-              newEventObj["borderColor"] = "#F0F0F0";
-          }
-          // Otherwise, I had created the bill
-          else {
-            newEventObj["textColor"] = "gray";
-          }
+          //If it is a bill I have to pay
+          // if (this.creator != UserModel.me) {
+          //     newEventObj["backgroundColor"] = "#4CC417"; //gray
+          //     newEventObj["borderColor"] = "#4CC417";
+          // }
+          // // Otherwise, I had created the bill
+          // else {
+            newEventObj["backgroundColor"] = "white"; //gray
+            newEventObj["borderColor"] = "white";
+          // }
         }
         events.push(newEventObj);
 
@@ -362,6 +356,11 @@ angular.module('myapp').controller("homeViewController",
 
     }
     });  
+  };
+
+  // Opens up legend modal for home
+  $scope.openLegendModal = function(e){
+    $('#legendModal').modal({show:true})
   };
 
   // Opens up help modal for home
