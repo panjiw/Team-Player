@@ -84,23 +84,6 @@ angular.module('myapp').controller("homeViewController",
     dataReady();
   });
 
-  // GroupModel.getGroups(function(groups, asynch, error) {
-  //   if (error){
-  //     console.log("fetch group error:");
-  //     console.log(error);
-  //   } else {
-  //     function groupsToApply() {
-  //       $scope.groupsList = groups;
-  //     }
-  //     if(asynch) {
-  //       console.log("Asynch groups got:", groups);
-  //       $scope.$apply(groupsToApply);
-  //     } else {
-  //       groupsToApply();
-  //     }
-  //   }
-  // });
-
   // Opens up add task modal
   $('#addTaskBut').click(function(){
     $('#taskModal').modal({show:true})
@@ -214,166 +197,144 @@ angular.module('myapp').controller("homeViewController",
       }
     });
 
+    var displayEvents = function(date) {
+      var thisDateTasks = [];
+      var thisDateBills = {};
+
+      // Iterates through all of users tasks
+      $.each($scope.myTasks, function() {
+        if (this.dateDue != null) {
+          if ((this.dateDue.getMonth() == date.getMonth()) && 
+            (this.dateDue.getDate() == date.getDate()) &&
+            (this.dateDue.getFullYear() == date.getFullYear())) {
+              thisDateTasks.push(this);
+          }
+        }
+      });
+
+      thisDateBills = BillModel.getBillsOnDay(date);
+
+      console.log("thisDateBills",thisDateBills);
+
+     //create panels in a string
+     var string = "";
+      $.each(thisDateTasks, function() {
+         var taskPanel = "";
+         var completeBtn = "";
+
+          //task not done
+          if (this.done == null) {
+            taskPanel = "<div class='panel panel-warning'>" + 
+                    "<div class='panel-heading'>" + 
+                      "<div class='task-panel'>";
+            //a task I'm responsible for
+            if (TaskModel.isInvolved(this.id)) {
+              completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
+            } 
+            //a task I'm not responsible for
+            else {
+              completeBtn = "Not Your Task";
+            }
+          } 
+          // task done
+          else {
+            taskPanel = "<div class='panel panel-gray'>" + 
+                    "<div class='panel-heading panel-gray-header'>" +
+                      "<div class='task-panel'>";
+          }
+
+        string += taskPanel + 
+                        "<h4 class='panel-descr'>" + this.title + "</h4>" + 
+                        "<h4 class='panel-date'>" + 
+                          completeBtn +
+                        "</h4>" +
+                      "</div>" + 
+                    "</div>" + 
+                     "<div class='panel-body panel-info'>" + 
+                       "<div class='panel-groupname'>" + this.groupName + "</div>" + 
+                     "</div>" + 
+                  "</div>";
+      })
+
+      $.each(thisDateBills, function() {
+        //created by you...need to say owed to who?
+          //paid: pink (no words)
+          //unpaid: gray (no words)
+        //not created by you...
+          //paid: gray (say paid)
+          //unpaid: green (pay button)
+
+        var billColor = "";
+        var paidTag = "";
+
+        //You created the bill
+        if (this.bill.creator == UserModel.me) {
+          //the bill has been paid, gray
+          if (this.owe.paid){
+            billColor = "<div class='panel panel-gray'>" + 
+                    "<div class='panel-heading panel-gray-header'>" +
+                      "<div class='task-panel'>";
+            paidTag = "<div>" + "paid" + "</div>";
+          } 
+          //the bill has not been paid, pink
+          else {
+            billColor = "<div class='panel panel-danger'>" + 
+                    "<div class='panel-heading'>" + 
+                      "<div class='task-panel'>";
+          }
+        } 
+        //you need to pay the bill
+        else {
+          //the bill has been paid, gray with Paid note
+          if (this.owe.paid){
+            billColor = "<div class='panel panel-gray'>" + 
+                    "<div class='panel-heading panel-gray-header'>" +
+                      "<div class='task-panel'>";
+            paidTag = "<div>" + "paid by you" + "</div>";
+          } 
+          //the bill has not been paid, green with pay button
+          else {
+            billColor = "<div class='panel panel-success'>" + 
+                    "<div class='panel-heading'>" + 
+                      "<div class='task-panel'>";
+            paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
+                    "pay" + "</button>";
+          }
+        }
+
+        string += billColor + 
+                        "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
+                        "<h4 class='panel-date'>" + paidTag +
+                         "</h4>" +
+                      "</div>" + 
+                    "</div>" + 
+                     "<div class='panel-body panel-info'>" + 
+                       "<div class='panel-groupname'>" +
+                       "Created By: " + this.ownerUsername +
+                       "</div>" + 
+                       "<div class='panel-groupmembers'>" +
+                          "$" + this.owe.due +
+                       "</div>" +
+                     "</div>" + 
+                  "</div>";
+      })
+
+      //display modal
+      $('#dateModal').modal({show:true})
+      $("#dateModal-header").html("Tasks and Bills for: " + date.toLocaleDateString());
+      $('#dateModal-content').html(string);
+    };
+
     // Adds given task/bill information to calendar
     $('#calendar-display').fullCalendar({
       // editable:true,
       events: events,
-      // eventClick: function(event) { // Function for when calendar event is clicked
-      //   $('#calendarModal').modal({show:true})
-      //   $("#calendarModal-header").html(event.title);
-      //   if (event.type == "Task") {
-      //     $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
-      //             + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
-      //             + "<strong>Members:</strong> " + event.members);
-      //     $scope.currentEventType = "task";
-      //     $scope.currentEvent = event.eventid;
-      //   }
-      //   else {
-      //     $("#calendarModal-content").html("<strong>Description:</strong> " + event.desc + "<br/><br/>" 
-      //               + "<strong>Group:</strong> " + event.group + "<br/><br/>" 
-      //               + "<strong>Creator:</strong> " + event.members);
-      //     $scope.currentEventType = "bill";
-      //     $scope.currentEvent = event.eventid;
-      //   }
-      //   if (event.backgroundColor == "#F0F0F0") {
-      //     $("#calendarModal-buttons").hide();
-      //   }
-      //   else {
-      //     $("#calendarModal-buttons").show();
-      //   }
-      // },
       dayClick: function(date, allDay, jsEvent, view) {
-
-        var thisDateTasks = [];
-        var thisDateBills = {};
-
-        // Iterates through all of users tasks
-        $.each($scope.myTasks, function() {
-          if (this.dateDue != null) {
-            if ((this.dateDue.getMonth() == date.getMonth()) && 
-              (this.dateDue.getDate() == date.getDate()) &&
-              (this.dateDue.getFullYear() == date.getFullYear())) {
-                thisDateTasks.push(this);
-            }
-          }
-        });
-
-        thisDateBills = BillModel.getBillsOnDay(date);
-
-        console.log("thisDateBills",thisDateBills);
-
-       //create panels in a string
-       var string = "";
-        $.each(thisDateTasks, function() {
-           var taskPanel = "";
-           var completeBtn = "";
-
-            //task not done
-            if (this.done == null) {
-              taskPanel = "<div class='panel panel-warning'>" + 
-                      "<div class='panel-heading'>" + 
-                        "<div class='task-panel'>";
-              //a task I'm responsible for
-              if (TaskModel.isInvolved(this.id)) {
-                completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
-              } 
-              //a task I'm not responsible for
-              else {
-                completeBtn = "Not Your Task";
-              }
-            } 
-            // task done
-            else {
-              taskPanel = "<div class='panel panel-gray'>" + 
-                      "<div class='panel-heading panel-gray-header'>" +
-                        "<div class='task-panel'>";
-            }
-
-          string += taskPanel + 
-                          "<h4 class='panel-descr'>" + this.title + "</h4>" + 
-                          "<h4 class='panel-date'>" + 
-                            completeBtn +
-                          "</h4>" +
-                        "</div>" + 
-                      "</div>" + 
-                       "<div class='panel-body panel-info'>" + 
-                         "<div class='panel-groupname'>" + this.groupName + "</div>" + 
-                       "</div>" + 
-                    "</div>";
-        })
-
-        $.each(thisDateBills, function() {
-          //created by you...need to say owed to who?
-            //paid: pink (no words)
-            //unpaid: gray (no words)
-          //not created by you...
-            //paid: gray (say paid)
-            //unpaid: green (pay button)
-
-          var billColor = "";
-          var paidTag = "";
-
-          //You created the bill
-          if (this.bill.creator == UserModel.me) {
-            //the bill has been paid, gray
-            if (this.owe.paid){
-              billColor = "<div class='panel panel-gray'>" + 
-                      "<div class='panel-heading panel-gray-header'>" +
-                        "<div class='task-panel'>";
-              paidTag = "<div>" + "paid" + "</div>";
-            } 
-            //the bill has not been paid, pink
-            else {
-              billColor = "<div class='panel panel-danger'>" + 
-                      "<div class='panel-heading'>" + 
-                        "<div class='task-panel'>";
-            }
-          } 
-          //you need to pay the bill
-          else {
-            //the bill has been paid, gray with Paid note
-            if (this.owe.paid){
-              billColor = "<div class='panel panel-gray'>" + 
-                      "<div class='panel-heading panel-gray-header'>" +
-                        "<div class='task-panel'>";
-              paidTag = "<div>" + "paid by you" + "</div>";
-            } 
-            //the bill has not been paid, green with pay button
-            else {
-              billColor = "<div class='panel panel-success'>" + 
-                      "<div class='panel-heading'>" + 
-                        "<div class='task-panel'>";
-              paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
-                      "pay" + "</button>";
-            }
-          }
-
-          string += billColor + 
-                          "<h4 class='panel-descr'>" + this.bill.title + "</h4>" + 
-                          "<h4 class='panel-date'>" + paidTag +
-                           "</h4>" +
-                        "</div>" + 
-                      "</div>" + 
-                       "<div class='panel-body panel-info'>" + 
-                         "<div class='panel-groupname'>" +
-                         "Created By: " + this.ownerUsername +
-                         "</div>" + 
-                         "<div class='panel-groupmembers'>" +
-                            "$" + this.owe.due +
-                         "</div>" +
-                       "</div>" + 
-                    "</div>";
-        })
-
-        //display modal
-        $('#dateModal').modal({show:true})
-        $("#dateModal-header").html("Tasks and Bills for: " + date.toLocaleDateString());
-        $('#dateModal-content').html(string);
-
-        // change the day's background color just for fun
-        $(this).css('background-color', 'pink');
-
-    }
+        displayEvents(date);
+      },
+      eventClick: function(event, jsEvent, view) {
+        displayEvents(event.start);
+      }
     });  
   };
 

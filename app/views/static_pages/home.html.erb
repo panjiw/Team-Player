@@ -17,34 +17,6 @@ Displays pages for after successful login:
               </div>
             </div>
             <div class="col-md-1">
-              <button class="btn btn-default" ng-click="openLegendModal($event)">
-                Legend
-              </button>
-              <div id="legendModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h3>Calendar Legend</h3>
-                    </div>
-                    <div class="modal-body help-body">
-                      <div id="legendModal-content">
-                        <div class="legend" style="position:center">Legend:
-                          <div class="btn btn-xs btn-myTask">Your Incomplete Task</div>
-                          <div class="btn btn-xs btn-yourTask">Another's Incomplete Task</div>
-                          <div class="btn btn-xs btn-myBill">A Bill You Owe</div>
-                          <div class="btn btn-xs btn-yourBill">A Bill Owed To You</div><br><br>
-                          <div class="btn btn-xs btn-myOverdue">Your Overdue</div>
-                          <div class="btn btn-xs btn-yourOverdue">Another's Overdue</div>
-                          <div class="btn btn-xs btn-completed">Completed Tasks/Bills</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> 
-                </div>
-              </div>
-            </div>
-            <div class="col-md-1">
               <button class="btn btn-default" ng-click="openHomeHelpModal($event)">
                 <span class="glyphicon glyphicon-question-sign"></span>
               </button>
@@ -187,10 +159,29 @@ Displays pages for after successful login:
         <div class="col-md-9">
           <div class="home-calendar" style="position:relative; right: 100px">
             <div id="calendar-display"></div>
-          </div>
+            <br>
+            <fieldset>
+              <legend>Legend</legend>
+              <div style="float: left; margin-right: 20px">
+                <div class="btn btn-xs btn-myTask">Your Incomplete Task</div><br><br>
+                <div class="btn btn-xs btn-yourTask">Another's Incomplete Task</div>
+              </div>
+              <div style="float: left; margin-right: 20px">
+                <div class="btn btn-xs btn-myBill">A Bill You Owe</div><br><br>
+                <div class="btn btn-xs btn-yourBill">A Bill Owed To You</div>
+              </div>
+              <div style="float: left; margin-right: 20px">
+                <div class="btn btn-xs btn-myOverdue">Your Overdue</div><br><br>
+                <div class="btn btn-xs btn-yourOverdue">Another's Overdue</div>
+              </div>
+              <div style="float: left; margin-right: 20px"> 
+                <div class="btn btn-xs btn-completed">Completed Tasks/Bills</div>
+              </div>
+            </fieldset>
+            </div>
         </div>
-      </div>
     </div>
+  </div>
 </div>
 
 
