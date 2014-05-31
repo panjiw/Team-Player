@@ -13,7 +13,7 @@ angular.module('myapp').controller("homeViewController",
   $scope.todos = [];
   $scope.todaysTasks = [];
   $scope.currentEventType = "";
-  $scope.currentEvent = "";
+  $scope.currentEvent = -1;
   $scope.myTasks = {};
   $scope.myBills = [];
 
@@ -25,7 +25,6 @@ angular.module('myapp').controller("homeViewController",
       $scope.$apply(function(){
         $scope.currentUser = UserModel.get(UserModel.me);
       })
-      console.log("fetch user success!");
     }
   });
 
@@ -34,10 +33,8 @@ angular.module('myapp').controller("homeViewController",
     TaskModel.refresh(
       function(error){
       if(error){
-        //TODO
+        // do nothing
       } else{
-        //TODO
-        console.log("<<<< home view: task & task gen from model!!>>>");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.tasks;
           // initialize me to a variable for filter
@@ -77,7 +74,6 @@ angular.module('myapp').controller("homeViewController",
 
   // Re-draw calendar when mytasks and my bills are updated
   $scope.$watchCollection('[myTasks,myBills]', function(newVal, oldVal){
-    console.log('myTasks in home changed', $scope.myTasks);
     $('#calendar-display').empty();
     $scope.todos = [];
     $scope.todaysTasks = [];
@@ -110,6 +106,7 @@ angular.module('myapp').controller("homeViewController",
   var dataReady = function() {
     
     var events = [];
+    $scope.todos = [];
     
     // Iterates through all of users tasks
     $.each($scope.myTasks, function() {
@@ -213,8 +210,6 @@ angular.module('myapp').controller("homeViewController",
       });
 
       thisDateBills = BillModel.getBillsOnDay(date);
-
-      console.log("thisDateBills",thisDateBills);
 
      //create panels in a string
      var string = "";
@@ -380,6 +375,7 @@ angular.module('myapp').controller("homeViewController",
         } else {
           $scope.$apply(function() {
             $scope.myTasks = TaskModel.tasks;
+            dataReady();
             toastr.success("Task '" + oldTaskTitle + "' completed!");
           });
         }
@@ -399,6 +395,7 @@ angular.module('myapp').controller("homeViewController",
         } else {
           $scope.$apply(function() {
             $scope.billSummary = BillModel.summary;
+            dataReady();
             toastr.success("Bill '" + billTitle + "' paid!");
           });
         }
