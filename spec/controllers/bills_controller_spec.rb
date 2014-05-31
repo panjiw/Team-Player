@@ -1264,7 +1264,7 @@ describe BillsController do
 		describe 'the user finishes a single task' do
 
 			before(:each) do
-				post 'mark_finished', :bill => {:id => "2"}
+				post 'mark_finished', :bill => {:id => "2"}, :bill_actor => {:id => "2"}
 			end
 
 			it 'should return a 200 status' do
@@ -1276,11 +1276,221 @@ describe BillsController do
 		describe 'the user is not assigned to the task' do
 
 			before(:each) do
-				post 'mark_finished', :bill => {:id => "1"}
+				post 'mark_finished', :bill => {:id => "1"}, :bill_actor => {:id => "2"}
 			end
 
 			it 'should return a 400 status' do
 				(response.status == 400).should be_true
+			end
+
+		end
+
+		# someone else marks finished i guess
+
+	end
+
+
+	describe 'GET_IN_RANGE test' do
+
+		before(:each) do
+			@controller = UsersController.new
+			post 'create', :user => {:username => "one", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
+	        	:password => "player", :password_confirmation => "player"}
+			post 'create', :user => {:username => "two", :firstname => "New", :lastname => "User", :email => "two@player.com",
+	        	:password => "player", :password_confirmation => "player"}
+
+	        @controller = SessionsController.new
+	        post 'create', :user => {:username => "one", :password => "player"}
+
+			
+			@controller = SessionsController.new
+			delete 'destroy'
+			post 'create', :user => {:username => "two", :password => "player"}
+
+			@controller = BillsController.new
+		end
+
+		context 'user has no bills' do
+
+			before(:each) do
+     			get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return an empty array' do
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		context 'user has one bill above the range' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2021-07-15"}
+     			get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return an empty array' do
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		context 'user has one bill above the range by one' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2020-07-16"}
+     			get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return an empty array' do
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		context 'user has one bill below the range' do
+			
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2010-07-15"}
+     			get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return an empty array' do
+				(response.body.include? "{}").should be_true
+			end
+		
+		end
+
+		context 'user has one bill below the range by one' do
+			
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2020-07-01"}
+     			get 'get_in_range', :date => {:start => "2020-07-02", :end => "2020-07-15"}
+			end
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return an empty array' do
+				(response.body.include? "{}").should be_true
+			end
+		
+		end
+
+		context 'user has one bill in the middle of the range' do
+			
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2015-07-01"}
+     			get 'get_in_range', :date => {:start => "2010-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return bill details' do
+				billinfo = "\"details\":{\"id\":1,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
+			end
+
+		end
+
+		context 'user has one bill on the lower point of the range' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2010-07-01"}
+     			get 'get_in_range', :date => {:start => "2010-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return bill details' do
+				billinfo = "\"details\":{\"id\":1,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2010-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
+			end
+
+		end
+
+		context 'user has one bill on the upper point of the range' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2020-07-15"}
+     			get 'get_in_range', :date => {:start => "2010-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return bill details' do
+				billinfo = "\"details\":{\"id\":1,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2020-07-15\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
+			end
+
+		end
+
+		context 'user has one bill in the range one bill outside the range' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2015-07-01"}
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2025-07-01"}
+     			get 'get_in_range', :date => {:start => "2010-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return bill details' do
+				billinfo = "\"details\":{\"id\":1,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
+			end
+
+			it 'should not return other bill details' do
+				billinfo = "\"id\":2,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2025-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_false
+			end
+
+		end
+
+		context 'user has two bills in range' do
+
+			before(:each) do
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2015-07-01"}
+				post 'new', :bill => {:group_id => 2, :title => "title", :total_due => 30, :members => {"2" => 30}, :due_date => "2016-07-01"}
+     			get 'get_in_range', :date => {:start => "2010-07-01", :end => "2020-07-15"}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should return bill details' do
+				billinfo = "\"details\":{\"id\":1,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2015-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
+			end
+
+			it 'should return other bill details' do
+				billinfo = "\"id\":2,\"group_id\":2,\"user_id\":2,\"title\":\"title\",\"description\":null,\"due_date\":\"2016-07-01\",\"total_due\":30"
+				(response.body.include? billinfo).should be_true
 			end
 
 		end
