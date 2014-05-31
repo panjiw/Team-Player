@@ -358,6 +358,29 @@ describe GroupsController do
 
 		end
 
+		# leave group removes bill entirely
+		context 'deleting bill information when leaving the group' do
+
+			before(:each) do
+				@controller = BillsController.new
+				post 'new', :bill => {:group_id => 4, :title => "testing title", :total_due => 30, :members => {"1" => 30}, 
+					:description => "desc", :due_date => "2014-05-17"}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = BillsController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
 		# leave group removes bill information
 		context 'deleting bill information when leaving the group' do
 
@@ -375,6 +398,51 @@ describe GroupsController do
 
 			it 'should delete the bill for the user' do
 				@controller = BillsController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+		# leave group removes task information
+		context 'deleting task information when leaving the group' do
+
+			before(:each) do
+				@controller = TasksController.new
+          		post 'new', :task => {:group_id => "4", :title => "title", :finished => false, :members => [1,2]}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = TasksController.new
+				get 'get_all'
+				(response.body.include? "{}").should be_true
+			end
+
+		end
+
+
+		# leave group removes task entirely
+		context 'deleting task information when leaving the group' do
+
+			before(:each) do
+				@controller = TasksController.new
+          		post 'new', :task => {:group_id => "4", :title => "title", :finished => false, :members => [1]}
+				@controller = GroupsController.new
+				post 'leavegroup', :leave => {:id => 4}
+			end
+
+			it 'should return a 200 status' do
+				(response.status == 200).should be_true
+			end
+
+			it 'should delete the bill for the user' do
+				@controller = TasksController.new
 				get 'get_all'
 				(response.body.include? "{}").should be_true
 			end

@@ -514,8 +514,6 @@ describe UsersController do
     # tests for finduseremail 
     describe "finduseremail" do
         
-        #TODO: user is not signed in
-
         before(:each) do
             @controller = UsersController.new
             post 'create', :user => {:username => "teamplayer", :firstname => "Team", :lastname => "Player", :email => "team@player.com",
