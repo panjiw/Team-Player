@@ -379,6 +379,7 @@
               <div class="col-md-4">
                 <h4>Bills paid to you</h4>
                 <div class="bill-scroll-skinny">
+                  <div ng-repeat="entry in combinedBills">
                   <div ng-repeat="OU in entry.oweYouHistory">
                     <label for="{{OU.id}}">
                       <div style="">
@@ -392,6 +393,7 @@
                       </div>
                     </label>
                   </div>
+                </div>
                 </div>
               </div> 
             </div>

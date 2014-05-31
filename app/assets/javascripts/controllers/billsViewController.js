@@ -128,6 +128,8 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             }
             $scope.combinedBills[index].oweYouHistory = this.billsArray;
           });
+          var b = $scope.combinedBills;
+          var a = hi;
         });
       }
     });
