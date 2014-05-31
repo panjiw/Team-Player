@@ -229,7 +229,7 @@ angular.module('myapp').controller("homeViewController",
                       "<div class='task-panel'>";
             //a task I'm responsible for
             if (TaskModel.isInvolved(this.id)) {
-              completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
+              // completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
             } 
             //a task I'm not responsible for
             else {
@@ -297,8 +297,8 @@ angular.module('myapp').controller("homeViewController",
             billColor = "<div class='panel panel-success'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
-            paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
-                    "pay" + "</button>";
+            // paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
+            //         "pay" + "</button>";
           }
         }
 
