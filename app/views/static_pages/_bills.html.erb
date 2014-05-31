@@ -281,6 +281,7 @@
         <div class="tab-pane" id="billsSummary">
           <h3>Bill Summary</h3>
             <div ng-repeat="entry in combinedBills">
+              <div ng-hide="entry.oweYou == '0' && entry.youOwe == '0'">
                 <div ng-click="openPop($event, entry.username, 4)" class="tasks-panelbutton bill-panelbutton" >
                     <div class="panel panel-success">
                       <div class="panel-heading">
@@ -336,6 +337,7 @@
                   </div>
                 </div>
             </div>
+          </div>
         </div>
         <div class="tab-pane" id="billsHistory">
           <h3>Bill History</h3>

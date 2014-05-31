@@ -78,7 +78,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
   };
 
-  $scope.activeBillTab='bill_selected_you_owe';
+  $scope.activeBillTab='billSummary';
   
   initNewBillData();
   $scope.groupsList = {};
