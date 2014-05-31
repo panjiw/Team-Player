@@ -37,7 +37,7 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
 
   // get Tasks from server to Task model.
   TaskModel.refresh = function(callback) {
-    $.get("/get_task")
+    $.get("/get_tasks")
     .success(function(data, status) {
       // make sure to clear old tasks in case any have been deleted
       TaskModel.tasks = {};
