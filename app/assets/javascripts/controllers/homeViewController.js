@@ -107,6 +107,7 @@ angular.module('myapp').controller("homeViewController",
     
     var events = [];
     $scope.todos = [];
+    $scope.todaysTasks = [];
     
     // Iterates through all of users tasks
     $.each($scope.myTasks, function() {
@@ -131,8 +132,8 @@ angular.module('myapp').controller("homeViewController",
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-            newEventObj["backgroundColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#ffef00"; //yellow
-            newEventObj["borderColor"] = this.dateDue.valueOf() < new Date().valueOf() ? "#ff8282" : "#ffef00";
+            newEventObj["backgroundColor"] = this.dateDue.valueOf() >= new Date().valueOf() ? "#ff8282" : "#ffef00"; //yellow
+            newEventObj["borderColor"] = this.dateDue.valueOf() >= new Date().valueOf() ? "#ff8282" : "#ffef00";
           }
         }
         // finished 
@@ -145,7 +146,9 @@ angular.module('myapp').controller("homeViewController",
         events.push(newEventObj);
         
         // If task is not finished and is due today, put in todays tasks
-        if (this.dateDue == $.datepicker.formatDate('yy-mm-dd', new Date()) && this.done == null) {
+        if (this.dateDue.getDate() == new Date().getDate() &&
+            this.dateDue.getMonth() == new Date().getMonth() &&
+            this.dateDue.getFullYear() == new Date().getFullYear() && this.done == null) {
           $scope.todaysTasks.push(this);
         }
       }
