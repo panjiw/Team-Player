@@ -52,9 +52,9 @@
                         </div>
                     </div>
                     <div style="display:none" id="groupHelp3">
-                      <h4>Editing A Group</h4>
+                      <h4>Adding a Member to an Existing Group (cont)</h4>
                         <div class="help-info">
-                          You must be the creator of the group to be able to edit it. Select the group and click the edit button next to the group's name. 
+                          You will see this member under an invited list until they have confirmed their invitation.
                         </div>
                         <hr>
                         <div class="help-image"><%= image_tag "groups-page3.png" %></div>
@@ -69,10 +69,10 @@
                           </div>
                         </div>
                     </div>
-                    <div style="display:none"  id="groupHelp4">
-                      <h4>Leaving A Group</h4>
+                    <div style="display:none" id="groupHelp4">
+                      <h4>Being Added to a Group</h4>
                         <div class="help-info">
-                          Simply click "Leave Group" to disconnect from group. All tasks and bills related to this group will be gone. 
+                          If you've been invited to a group, you will see this group in an Invited list undr your Current Groups. You can choose to Accept or Ignore invitations.
                         </div>
                         <hr>
                         <div class="help-image"><%= image_tag "groups-page4.png" %></div>
@@ -80,6 +80,42 @@
                         <div class="backNext">
                           <div class="col-md-2">
                             <button ng-click="groupBack(4)" class="btn btn-default">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button ng-click="groupNext(4)" class="btn btn-default">Next</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display:none" id="groupHelp5">
+                      <h4>Editing A Group</h4>
+                        <div class="help-info">
+                          You must be the creator of the group to be able to edit it. Select the group and click the edit button next to the group's name. 
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "groups-page5.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="groupBack(5)" class="btn btn-default">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button ng-click="groupNext(5)" class="btn btn-default">Next</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display:none"  id="groupHelp6">
+                      <h4>Leaving A Group</h4>
+                        <div class="help-info">
+                          Simply click "Leave Group" to disconnect from group. All tasks and bills related to this group will be gone. 
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "groups-page6.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="groupBack(6)" class="btn btn-default">Back</button>
                           </div>
                           <div class="col-md-8"></div>
                           <div class="col-md-2">
