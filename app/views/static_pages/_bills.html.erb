@@ -3,6 +3,7 @@
     <div class= "bills-header">
       <div class="col-md-11">
         <h1>My Bills</h1>
+        <h4>Go to Bill History and back to refresh. Refresh page after paying</h4> <!-- Remove when problems fixed -->
       </div>
       <div class="col-md-1">
         <button class="btn btn-default" ng-click="openBillHelpModal($event)">
@@ -212,7 +213,7 @@
         <a href="#billsDebt" data-toggle="tab" ng-click="closePop()">Bills Owed To You</a>
       </li> -->
       <li class="active">
-        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()">Bill Summary</a>
+        <a href="#billsSummary" data-toggle="tab" ng-click="closePop()" active="active">Bill Summary</a>
       </li>
       <li>
         <a href="#billsHistory" data-toggle="tab" ng-click="closePop(); openHistory()">Bill History</a>
