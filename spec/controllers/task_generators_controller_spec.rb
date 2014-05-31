@@ -850,8 +850,9 @@ describe TaskGeneratorsController do
         (response.status == 200).should be_true
       end
 
-      it 'should return an empty array' do
-        (response.body.include? "{}").should be_false
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
       end
     
     end
@@ -869,10 +870,11 @@ describe TaskGeneratorsController do
         (response.status == 200).should be_true
       end
 
-      it 'should return an empty array' do
-        (response.body.include? "{}").should be_false
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
       end
-
+    
     end
 
     context 'the user has one task generator on the top edge of the range' do
@@ -888,8 +890,9 @@ describe TaskGeneratorsController do
         (response.status == 200).should be_true
       end
 
-      it 'should return an empty array' do
-        (response.body.include? "{}").should be_false
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
       end
 
     end
@@ -900,7 +903,7 @@ describe TaskGeneratorsController do
         @controller = TaskGeneratorsController.new
         post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2020-07-10", :members => [1], 
           :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
-        post 'new', :task => {:group_id => 1, :title => "title", :total_due => 20, :due_date => "2021-07-10", :members => [1], 
+        post 'new', :task => {:group_id => 1, :title => "title two", :total_due => 20, :due_date => "2021-07-10", :members => [1], 
           :repeat_days => ["true","false","false","false","false","false","false"], :cycle => "false"}
         get 'get_in_range', :date => {:start => "2020-07-01", :end => "2020-07-15"}
       end
@@ -909,8 +912,14 @@ describe TaskGeneratorsController do
         (response.status == 200).should be_true
       end
 
-      it 'should return an empty array' do
-        (response.body.include? "{}").should be_false
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
+      it 'should not return an the second task info' do
+        taskinfo = "\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"title two\""
+        (response.body.include? taskinfo).should be_false
       end
 
     end
@@ -930,10 +939,16 @@ describe TaskGeneratorsController do
         (response.status == 200).should be_true
       end
 
-      it 'should return an empty array' do
-        (response.body.include? "{}").should be_false
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":1,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
       end
-    
+
+      it 'should return an the correct task info' do
+        taskinfo = "\"id\":2,\"group_id\":1,\"user_id\":1,\"title\":\"title\""
+        (response.body.include? taskinfo).should be_true
+      end
+
     end
 
 
