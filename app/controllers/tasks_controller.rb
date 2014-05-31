@@ -93,8 +93,8 @@ class TasksController < ApplicationController
     render :json => tasks.to_json, :status => 200
   end
 
-  # Returns all the tasks of the signed in user within the
-  # given (through get) range: date[start] <= task[:created_at] <= date[end]
+  # Returns all the tasks of the group of the signed in user within the
+  # given (through post) range: date[start] <= task[:due_date] <= date[end]
   # {number starting from 0:{"details":{
   # "id":task id,
   # "group_id":group id of the task,
@@ -107,7 +107,9 @@ class TasksController < ApplicationController
   # "created_at":date and time created,
   # "updated_at":date and time updated},
   # "members":{user_id:order, ..., user_id:order}}, ...}
-  def get_task_in_range
+  # tasks that are only potentially in the future (based on generator)
+  # have an ID of null
+  def get_in_range
     start_date = Date.parse(params[:date][:start])
     end_date = Date.parse(params[:date][:end])
     tasks = {}

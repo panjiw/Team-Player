@@ -273,4 +273,27 @@ class TaskGeneratorsController < ApplicationController
       render :json => {:status => "success"}, :status => 200
     end
   end
+
+  # Returns all the task generators of all the groups of the signed in user within the
+  # given (through post) range: date[start] <= last created task[:due_date] <= date[end]
+  # Same format as get_all
+  def get_in_range
+    start_date = Date.parse(params[:date][:start])
+    end_date = Date.parse(params[:date][:end])
+    task_generators = {}
+    count = 0
+    view_context.current_user.groups.each do |g|
+      g.task_generators.where(due_date: start_date..end_date).each do |t|
+        task_generator = {}
+        task_generator[:details] = t
+        task_generator[:members] = {}
+        t.task_generator_actors.each do |a|
+          task_generator[:members][a[:user_id]] = a[:order]
+        end
+        task_generators[count] = task_generator
+        count += 1
+      end
+    end
+    render :json => task_generators.to_json, :status => 200
+  end
 end

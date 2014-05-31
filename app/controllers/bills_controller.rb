@@ -225,4 +225,26 @@ class BillsController < ApplicationController
       render :json => {:status => "success"}, :status => 200
     end
   end
+
+  # Returns all the bills of the signed in user within the
+  # given (through post) range: date[start] <= bill[:due_date] <= date[end]
+  # Same format as get_all
+  def get_in_range
+    start_date = Date.parse(params[:date][:start])
+    end_date = Date.parse(params[:date][:end])
+    bills = {}
+    count = 0
+    view_context.current_user.bills.where(due_date: start_date..end_date).each do |b|
+      bill = {}
+      bill[:details] = b
+      bill[:due] = {}
+      b.bill_actors.each do |a|
+        # don't know why just giving a doesn't work
+        bill[:due][a[:user_id]] = {:due => a[:due], :paid => a[:paid], :paid_date => a[:paid_date]}
+      end
+      bills[count] = bill
+      count += 1
+    end
+    render :json => bills.to_json, :status => 200
+  end
 end
