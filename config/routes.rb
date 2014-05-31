@@ -43,7 +43,7 @@ Rails.application.routes.draw do
 
   match '/create_task', to: 'tasks#new', via: 'post'
   match '/get_task', to: 'tasks#get_all', via: 'get'
-  match '/get_task_in_range',   to: 'tasks#get_task_in_range', via: 'get' 
+  match '/get_task_in_range',   to: 'tasks#get_task_in_range', via: 'post'
   match '/finish_task', to: 'tasks#mark_finished', via: 'post'
   match '/edit_task', to: 'tasks#edit', via: 'post'
   match '/delete_task', to: 'tasks#delete', via: 'post'

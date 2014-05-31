@@ -470,10 +470,10 @@ angular.module('myapp').controller("tasksViewController", ["$scope", "TaskModel"
 
 /********* for testing!!!!! ****/
   $scope.testing = function(){
-    $.post("/url",
+    $.post("/get_task_in_range",
     {
-      "date[start]": new Date("2014-05-02"),
-      "date[end]": new Date("2014-09-10")
+      "date[start]": "2014-05-24",
+      "date[end]": "2014-06-28"
     })
     .success(function(data, status) {
       

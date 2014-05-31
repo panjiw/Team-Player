@@ -89,4 +89,75 @@ module TaskGeneratorsHelper
     end
     next_task
   end
+
+  def future_task(task_generator, old_task, old_task_actors)
+    next_task = Task.new(group_id: task_generator[:group_id],
+                         user_id: task_generator[:user_id],
+                         title: task_generator[:title],
+                         description: task_generator[:description],
+                         finished: false)
+    # Repeat
+    if task_generator[:repeat_days]
+      if old_task
+        today = old_task[:due_date]
+        days = (today.cwday + 1) % 8
+        if days == 0
+          days = 1
+        end
+        while days != today.cwday
+          if task_generator[:repeat_days][days]
+            break
+          end
+          days = (days + 1) % 8
+          if days == 0
+            days = 1
+          end
+        end
+        if days <= today.cwday
+          days += 7
+        end
+        days = days - today.cwday
+        next_due_date = today + days
+      else
+        next_due_date = task_generator[:due_date]
+      end
+      next_task[:due_date] = next_due_date
+    end
+
+    next_task_actors = []
+    # Cycle
+    if task_generator.cycle && old_task
+      # get the old task's actor
+      current_actor = old_task_actors[0]
+      # get info about the actors for the next task
+      actors = task_generator.task_generator_actors
+      # get that user's order in the generator
+      current_actor = actors.find_by_user_id(current_actor[:user_id])
+      current_order = current_actor[:order]
+      # total number of actors
+      total_actors = actors.count
+      # the next actor's order in the generator
+      orders = (current_order + 1) % total_actors
+      # in task it will be listed as 0
+      next_order = 0
+      while next_order < total_actors
+        next_task_actor = TaskActor.new(task_id: next_task[:id],
+                                        user_id: actors.find_by_order(orders)[:user_id],
+                                        order: next_order)
+        next_task_actors << next_task_actor
+        orders = (orders + 1) % total_actors
+        next_order += 1
+      end
+    else
+      # no cycle or first one
+      task_generator_holder = TaskGenerator.find(task_generator[:id])
+      task_generator_holder.task_generator_actors.each do |a|
+        next_task_actor = TaskActor.new(task_id: next_task[:id],
+                                        user_id: a[:user_id],
+                                        order: a[:order])
+        next_task_actors << next_task_actor
+      end
+    end
+    {task: next_task, actors: next_task_actors}
+  end
 end
