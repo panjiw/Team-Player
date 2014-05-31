@@ -100,7 +100,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           $scope.combinedBills = {};
           $.each($scope.billSummary.oweYou, function(index) {
             if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, 
+              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
                 oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].oweYou = this.total;
@@ -108,7 +108,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           });
           $.each($scope.billSummary.youOwe, function(index) {
             if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, 
+              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
                 oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].youOwe = this.total;
@@ -116,14 +116,14 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
           });
           $.each($scope.billSummary.youOweHistory, function(index) {
             if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, 
+              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
                 oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].youOweHistory = this.billsArray;
           });
           $.each($scope.billSummary.oweYouHistory, function(index) {
             if (!$scope.combinedBills[index]) {
-              $scope.combinedBills[index] = {username: this.person_username, 
+              $scope.combinedBills[index] = {username: this.person_username, person_id: this.person_id,
                 oweYou: 0, youOwe: 0, oweYouBills: {}, youOweBills: {}, oweYouHistory: {}, youOweHistory: {}};
             }
             $scope.combinedBills[index].oweYouHistory = this.billsArray;
@@ -488,14 +488,16 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   // Removes any checked bills and subtracts from total owed
   // If all bills are paid, removes the whole bill
   $scope.pay = function (p) {
-    $('#' + p + 1 + " input:checkbox").each(function () {
-      var str = $(this).val();
-      var billID = parseInt(str.substr(str.indexOf(' ')+1));
+    var a = $('#' + p + 4 + " input:checkbox");
+    $('#' + p + 4 + " input:checkbox").each(function () {
+      var str = $(this).val().split(" ");
+      var billID = parseInt(str[1]);
+      var personID = parseInt(str[2])
       // var id = str.substr(str.indexOf(' ')+1);
       if (this.checked) {
 
         // otherwise, set it to finished
-        BillModel.setPaid(billID, function(error) {
+        BillModel.setPaid(billID, personID, function(error) {
           var billTitle = BillModel.bills[billID].title;
           if(error) {
             toastr.warning("billID could not be set paid");

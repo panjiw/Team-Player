@@ -32,10 +32,11 @@ var Bill = function(id,  groupID, title, description, creatorID, dateCreated, da
 // A "summary entry" is one person's total bill to you, or you two them.
 // The main field is the billsArray, which is the list of bills
 // that make up the bill for the person.
-var SummaryEntry = function(username) {
+var SummaryEntry = function(username, id) {
   this.person_username = username;
   this.total = 0;
   this.billsArray = [];
+  this.person_id = id;
     
   this.addBill = function(bill, amountForEntry) {
     this.billsArray.push(bill);
@@ -110,7 +111,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
             if (!BillModel.bills[i].membersAmountMap[j].paid){
               // if the person is not in summary, add an entry
               if(!BillModel.summary.oweYou[j]){
-                BillModel.summary.oweYou[j] = new SummaryEntry(UserModel.users[j].username);
+                BillModel.summary.oweYou[j] = new SummaryEntry(UserModel.users[j].username, UserModel.users[j].id);
               } 
 
               // add the bill in
@@ -118,7 +119,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
             }
             else {
               if(!BillModel.summary.oweYouHistory[j]){
-                BillModel.summary.oweYouHistory[j] = new SummaryEntry(UserModel.users[j].username);
+                BillModel.summary.oweYouHistory[j] = new SummaryEntry(UserModel.users[j].username, UserModel.users[j].id);
               } 
 
               // add the bill in
@@ -136,7 +137,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
 
           // if this person is not in summary that i owe him, add an entry
           if(!BillModel.summary.youOwe[bill_creator_id]){
-            BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username);
+            BillModel.summary.youOwe[bill_creator_id] = new SummaryEntry(bill_creator_username, UserModel.me);
           }
 
           BillModel.summary.youOwe[bill_creator_id].addBill
@@ -148,7 +149,7 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
 
           // if this person is not in summary that i owe him, add an entry
           if(!BillModel.summary.youOweHistory[bill_creator_id]){
-            BillModel.summary.youOweHistory[bill_creator_id] = new SummaryEntry(bill_creator_username);
+            BillModel.summary.youOweHistory[bill_creator_id] = new SummaryEntry(bill_creator_username, UserModel.me);
           }
 
           BillModel.summary.youOweHistory[bill_creator_id].addBill
@@ -247,14 +248,15 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
 
   // "Pay" this bill to inform the person you owe
   // that you paid the bill. Then, get store the updated bill
-  BillModel.setPaid = function(billID, callback) {
+  BillModel.setPaid = function(billID, personID, callback) {
     if(!billID) {
       callback({1:"no bill id provided"});
     }
 
     $.post("/finish_bill",
     {
-      "bill[id]": billID
+      "bill[id]": billID,
+      "bill_actor[id]": personID
     })
     .success(function(data, status) {
       BillModel.updateBill(data);

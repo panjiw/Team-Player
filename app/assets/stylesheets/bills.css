@@ -56,6 +56,12 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
   overflow-y: auto;
 }
 
+.bill-scroll-skinny {
+  height: 400px;
+  line-height: 3em;
+  overflow-y: auto;
+}
+
 .bill {
   color: #3c763d;
   background-color: #dff0d8;

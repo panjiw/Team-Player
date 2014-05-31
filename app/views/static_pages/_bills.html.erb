@@ -303,7 +303,7 @@
                       <label for="{{UO.id}}">
                         <div style="">
                           <div class="bills-selected-owe" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
-                            <input class="bills-checkbox" id="UO" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{UO.amountForEntry[entry.username]}} {{UO.id}}">
+                            <input class="bills-checkbox" id="UO" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{UO.amountForEntry[entry.username]}} {{UO.id}} {{currentUser.id}}">
                             <h4 class="bill-member">{{UO.title}}</h4>
                             <h4 class="bill-amount">{{UO.amountForEntry[entry.username] | currency}} </h4>
                           </div>
@@ -318,7 +318,7 @@
                       <label for="{{OU.id}}">
                         <div style="">
                           <div class="bills-selected-debt" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{OU.dateDue | date:'shortDate'}}" data-content="<p>{{OU.description}}</p>" data-placement="right">
-                            <input class="bills-checkbox" id="OU" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{OU.amountForEntry[entry.username]}} {{OU.id}}">
+                            <input class="bills-checkbox" id="OU" type="checkbox" ng-click="updateTotalComb(entry.username)" value="{{OU.amountForEntry[entry.username]}} {{OU.id}} {{entry.person_id}}">
                             <button type="button" ng-click="showEditBill($event,OU.id)" class="btn btn-default btn-xs bills-editBtn">
                               <span class="glyphicon glyphicon-pencil"></span>
                             </button>
@@ -330,7 +330,7 @@
                     </div>
                   </div>
                   <div class="bill-buttons">
-                    <button type="button" class="btn btn-success" ng-click="pay(bill.person)">Paid</button>
+                    <button type="button" class="btn btn-success" ng-click="pay(entry.username)">Paid</button>
                     <h4 class="bill-pop-total-comb">Net Total: $0</h4>
                   </div>
                 </div>
@@ -338,7 +338,6 @@
         </div>
         <div class="tab-pane" id="billsHistory">
           <h3>Bill History</h3>
-            <div class="bill-scroll">
 <!--               <div ng-repeat="entry in billSummary.oweYou">
                 <div class="bill-all">
                   <div class="bill" ng-click="openPop($event, entry.person_username, 2)" >
@@ -360,9 +359,9 @@
                     </div>
                   </div>
                 </div> -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <h4>Bills you have paid</h4>
-                <div class="bill-scroll">
+                <div class="bill-scroll-skinny">
                   <div ng-repeat="entry in combinedBills">
                     <div ng-repeat="UO in entry.youOweHistory">
                       <label for="{{UO.id}}">
@@ -377,9 +376,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <h4>Bills paid to you</h4>
-                <div class="bill-scroll">
+                <div class="bill-scroll-skinny">
                   <div ng-repeat="OU in entry.oweYouHistory">
                     <label for="{{OU.id}}">
                       <div style="">
@@ -394,10 +393,8 @@
                     </label>
                   </div>
                 </div>
-              </div>
               </div> 
             </div>
-        </div>
       </div>
     </div> <!-- End Bills Display -->
 </div>
