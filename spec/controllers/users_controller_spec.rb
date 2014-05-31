@@ -25,7 +25,9 @@ describe UsersController do
                 (response.status == 200).should be_true
             end
 
-            #TODO: check if return values are correct
+            it 'should return a token' do
+                (response.body.include? "token").should be_true
+            end
 
         end
 
@@ -206,31 +208,7 @@ describe UsersController do
         
         end
 
-        #TODO
-
-        # context 'password confirmation is nil' do
-
-        #     before(:each) do
-        #         post 'create', :user => {:username => "tp", :firstname => "Team", :lastname => "Player", :email => "new@player.com",
-        #                          :password => "player", :password_confirmation => nil}
-        #     end
-
-        #     it 'should return the correct error message' do
-        #         errormessage = "\"Password confirmation can't be blank\""
-        #         puts response.body
-        #         (response.body.include? errormessage).should be_true
-        #     end
-
-        #     it 'should return a 400 status' do
-        #         (response.status == 400).should be_true
-        #     end 
-        
-        # end
-
     end
-
-
-    # TODO: ERROR MESSAGES
 
     # tests for viewgroup
     describe 'viewgroup' do
@@ -317,8 +295,6 @@ describe UsersController do
         
             @controller = GroupsController.new
             post 'acceptgroup', :accept => {:id => "11"}
-
-
 
             @controller = SessionsController.new
             delete 'destroy'
@@ -422,8 +398,8 @@ describe UsersController do
                 end
 
                 it 'should return 200' do
-                        (response.status == 200).should be_true
-                        end
+                    (response.status == 200).should be_true
+                end
 
                 # test for group info
                 it 'should return twos groups user info' do
@@ -572,13 +548,10 @@ describe UsersController do
                 post 'finduseremail', :find => {:email => "no@no.com"}
             end
 
-            it 'shoudl return the correct error message' do
-                 # currently no error message?
-            end
-               
             it 'should return a 400 status' do
                 (response.status == 400).should be_true
             end
+
         end
 
         context 'user is not signed in' do
@@ -633,32 +606,84 @@ describe UsersController do
 
             end 
 
-            it 'should not change the password because old password doesnt match' do
-                post 'edit_password', :edit => {:password => "notthispassword", :new_password => "newpass", :new_password_confirmation => "newpass"}
+            context 'should not change the password because old password doesnt match' do
+                
+                before(:each) do
+                    post 'edit_password', :edit => {:password => "notthispassword", :new_password => "newpass", :new_password_confirmation => "newpass"}
+                end
 
-                # TODO: check response (may need to reformat)
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
 
-                (response.status == 400).should be_true
+                it 'should return the correct error message' do
+                    errormessage = "incorrect password"
+                    (response.body.include? errormessage).should be_true
+                end
+
             end
 
-            it 'should not change the password because new passwords dont match' do
-                post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "hahahnope"}
-                (response.status == 400).should be_true
+            context 'should not change the password because new passwords dont match' do
+                 
+                before(:each) do
+                    post 'edit_password', :edit => {:password => "player", :new_password => "newpass", :new_password_confirmation => "hahahnope"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
+                it 'should return the correct error message' do
+                    errormessage = "Password confirmation doesn't match Password"
+                    (response.body.include? errormessage).should be_true
+                end
+
             end
 
-            it 'should not change the password because new password is too short' do
-                post 'edit_password', :edit => {:password => "player", :new_password => "new", :new_password_confirmation => "new"}
-                (response.status == 400).should be_true
+            context 'should not change the password because new password is too short' do
+                
+                before(:each) do
+                    post 'edit_password', :edit => {:password => "player", :new_password => "new", :new_password_confirmation => "new"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
+                it 'should return the correct error message' do
+                    errormessage = "Password is too short (minimum is 6 characters)"
+                    (response.body.include? errormessage).should be_true
+                end
+
             end
 
-            it 'should not change the password because new password is nil' do
-                post 'edit_password', :edit => {:password => "player", :new_password => nil, :new_password_confirmation => "newpass"}
-                (response.status == 400).should be_true
+            context 'should not change the password because new password is nil' do
+                
+                before(:each) do
+                    post 'edit_password', :edit => {:password => "player", :new_password => nil, :new_password_confirmation => "newpass"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
+                it 'should return the correct error message' do
+                    errormessage = "Password can't be blank"
+                    (response.body.include? errormessage).should be_true
+                end
+
             end
 
-             it 'should not change the password because passed a nil value in password' do
-                post 'edit_password', :edit => {:password => nil, :new_password => "new", :new_password_confirmation => "new"}
-                (response.status == 400).should be_true
+             context 'should not change the password because passed a nil value in password' do
+                
+                before(:each) do
+                    post 'edit_password', :edit => {:password => nil, :new_password => "new", :new_password_confirmation => "new"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
             end
 
         context 'change username' do
@@ -682,19 +707,51 @@ describe UsersController do
 
             end
 
-            it 'should not change the username because password doesnt match' do
-                post 'edit_username', :edit => {:password => "hahahahah", :username => "newname"}
-                (response.status == 400).should be_true
+            context 'should not change the username because password doesnt match' do
+                
+                before(:each) do
+                     post 'edit_username', :edit => {:password => "hahahahah", :username => "newname"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
+                it 'should return the correct error message' do
+                    errormessage = "incorrect password"
+                    (response.body.include? errormessage).should be_true
+                end
+
             end
 
-            it 'should not change the username because username already exists' do
-                post 'edit_username', :edit => {:password => "player", :username => "taken"}
-                (response.status == 400).should be_true
+            context 'should not change the username because username already exists' do
+                
+                before(:each) do
+                    post 'edit_username', :edit => {:password => "player", :username => "taken"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
             end
 
-            it 'should not change the username because password is nil' do
-                post 'edit_username', :edit => {:password => nil, :username => "newname"}
-                (response.status == 400).should be_true
+            context 'should not change the username because password is nil' do
+            
+                before(:each) do
+                    post 'edit_username', :edit => {:password => nil, :username => "newname"}
+                end
+
+                it 'should return a 400 status' do
+                    (response.status == 400).should be_true
+                end
+
+                it 'should return the correct error message' do
+                    errormessage = "incorrect password"
+                    (response.body.include? errormessage).should be_true
+                end
+
+
             end
 
             it 'should not change the username because username is nil' do
@@ -810,26 +867,10 @@ describe UsersController do
             post 'create', :user => {:username => "two", :password => "player"}
             @controller = GroupsController.new
             post 'create', :group => {:name => "group one", :description => "desc"}
-            post 'create', :group => {:name => "group two", :description => "desc", :add => {:members => [3]}}
+            post 'create', :group => {:name => "group two", :description => "desc"}
+            post 'invitetogroup', :invite => {:gid => 4, :email => "three@player.com"}
             @controller = UsersController.new
         end
-
-        # # not logged in
-        # context 'the user is not logged in' do
-
-        #     before(:each) do
-        #         @controller = SessionsController.new
-        #         delete 'destroy'
-        #         @controller = UsersController.new
-        #         get 'viewpendinggroups'
-        #     end
-
-        #     it 'should return a 302 status' do
-        #         (response.status == 302).should be_true
-        #     end
-
-        # end
-
 
         # not in any pending groups
         context 'the user is not in any pending groups or groups' do
@@ -879,16 +920,55 @@ describe UsersController do
                 get 'viewpendinggroups'
             end
 
-            it 'should return the correct information' do
-                (response.body.include? "[]").should be_true
+            it 'should return a 200 status' do
+                (response.status == 200).should be_true
+            end
+
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":4,\"name\":\"group one\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
+
+            it 'should have the correct member information' do
+                userinfo = "\"users\":[{\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
+                (response.body.include? userinfo).should be_true
+            end
+
+        end
+
+        context 'the user is in two pending groups' do
+
+            before(:each) do
+                @controller = GroupsController.new
+                post 'invitetogroup', :invite => {:gid => 5, :email => "three@player.com"}
+                @controller = SessionsController.new
+                delete 'destroy'
+                post 'create', :user => {:username => "three", :password => "player"}
+                @controller = UsersController.new
+                get 'viewpendinggroups'
             end
 
             it 'should return a 200 status' do
                 (response.status == 200).should be_true
             end
 
-        end
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":4,\"name\":\"group one\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
 
+            it 'should have the correct group information' do
+                groupinfo = "{\"id\":5,\"name\":\"group two\",\"description\":\"desc\",\"creator\":2"
+                (response.body.include? groupinfo).should be_true
+            end
+
+
+            it 'should have the correct member information' do
+                userinfo = "\"users\":[{\"id\":2,\"username\":\"two\",\"firstname\":\"Team\",\"lastname\":\"Player\",\"email\":\"two@player.com\""
+                (response.body.include? userinfo).should be_true
+            end
+
+        end
 
     end
 

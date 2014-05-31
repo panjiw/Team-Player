@@ -35,10 +35,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="development.html" class="navbar-brand">TeamPlayer</a>
+    <a href="/" class="navbar-brand">TeamPlayer</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
+        <li>
+          <a href="development.html">Home</a>
+        </li>
         <li>
           <a href="info.html">Design Information</a>
         </li>
@@ -101,16 +104,16 @@
 
                 Cons:<br>
                 <ul>
-                  <li> We have two frameworks to learn rather than just one. Since all team members but me (Karthik) are only dealing with frontend *or* backend, they probably would only need to worry about learning one. I would need to learn both because I am connecting the two.</li>
-                  <li> We probably increase the amount of code we have to write, because we now have two sets of models—the databases Events, Users, and Groups, and the parallel AngularJS models. We also have two sets of controllers for Events, Users, and Groups. This will not have a lot of redundant code, because they have very different responsibilities, but it will make the system larger than it would have been otherwise. </li>
+                  <li> We have two frameworks to learn rather than just one. Since all team members are only dealing with frontend *or* backend, they probably would only need to worry about learning one. However, Fung and Karthik are the bridge between the frontend and backend, so they would need to coordinate with both the UI team, and the backend team.</li>
+                  <li> We probably increase the amount of code we have to write, because we now have two sets of models—the databases Events, Users, and Groups, and the parallel AngularJS models. We also have two sets of controllers for Events, Users, and Groups. There will not be a lot of redundant code, because they have very different responsibilities, but it will make the system larger than it would have been otherwise. </li>
                 </ul>
                 <br>
 
               </li>
 
               	 
-                <li><b>To Do's vs Tasks</b>
-                <p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement these, and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. 
+                <li><b>"Dateless To Do's" vs Tasks</b>
+                <p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement "dateless todos", and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. When we asked our customers, they agreed.
                 </p>
                 Pros:<br>
                 <ul>
@@ -120,7 +123,7 @@
 
                 Cons:<br>
                 <ul>
-                  <li>It adds a new option to tasks that can be confusing, and we weren’t sure how to fit into the UI both in creating tasks and in the home page.</li>
+                  <li>It adds a new option to tasks that can be confusing, and we weren’t sure how to fit into the UI both in creating tasks and in the home page. In usability tests, some found it intuitive, others were confused at first.</li>
 
                 </ul>
 
@@ -130,6 +133,12 @@
 
               <li><b>Self Groups</b>
                 <p>TeamPlayer revolves around groups, and when a user first signs in, they need to be a part of a group before they can do anything. We realized this flaw during our first customer prototyping test, when the user wanted to add a task, but didn’t have a group to choose. So, every new user already belong to a group with just themselves. This way, they can do things before they have created other groups, or added other users.</p>
+              </li>
+
+              <li><b>Group Confirmation</b>
+                <p>
+                  Originally, a user could add members to groups if they knew the members' email addresses. However, after feedback from the instructors, customers, and usability tests, we decided to make people "accept" a group. When somebody creates a group, they can "invite" people, but those invited will only be part of the group once they have "accepted" it. 
+                </p>
               </li>
 
               <li><b>Bill Un-cycling</b>
@@ -148,8 +157,11 @@
                 <p>Originally, we saw tasks and bills as very similar classes, and therefore made them extend from and Event class. However, with further implementation and better specifications, we realized how different both are, and decided to make them their own individual classes that do not extend from any higher class.</p>
               </li>
 
-
-
+              <li><b>Bill Payment Confirmation</b>
+                <p>
+                  Originally, the person who owed money, just marked a bill as "paid". We assumed that users would use the system honestly, otherwise it was not our problem. However, after feedback from the instructors, we thought about ways that we could "confirm" that a bill was paid without being too much of a burden for the users. We finally decided that a bill "history" would be enough--if you mark a bill as paid, then the creator can check the history, and say you have not paid. On a related note, we also allow the creator of a bill to confirm that a user has paid a bill.
+                </p>
+              </li>
 
               </ul>
 
@@ -158,7 +170,7 @@
                 1. <i>Keeping up with our schedule and finish all our core features in time</i>
                 <p><ul>This risk has a medium likelihood of occurring. Scheduling and timing is going to be an issue in any project but I feel like we have split our project up well and done a good job providing ourselves with a reasonable schedule. So if we stick to that we can greatly reduce the risk. The impact would be very high if it occurred, as falling behind schedule pushes everything else back, which can have a landslide effect and cause us to either have to cut features or not finish in time. We based our schedule on past experiences creating a web page and how complex we think each part will be. It will be easier to estimate after we have some actual code finished. Then we can adjust our schedule if needed to better estimate our time, which will help reduce the risk of falling behind schedule.</ul></p>
 
-                2. <i>Keeping backend synched with frontend</i>
+                2. <i>Keeping the backend in sync with the frontend</i>
                 <p><ul>The risk of here is not being able to synch the backend and frontend. That can either happen if we are not working on the same parts at the same time, or if the code is written in a way that we can’t connect the two. The risk of this happening is low because while we don’t always meet as a whole group, but at the same time we have a schedule we are all following so we should all be on the same page. And Karthik meets with both to make sure that everything is connected and going according to plan. If it does happen though, the impact will be quite high as we may have to go back and redo our code to integrate the parts because our app won’t work if the two parts don’t connect right. So to reduce the risk, we are making sure we have good team communication through weekly team meetings, talking through facebook and email, and Karthik checking both sides.</ul></p>
 
 
@@ -174,16 +186,10 @@
                 <br>
                 <p>Our risks are pretty similar to the risks we had from the SRS, except now we have some more specific risks because we know more about our app. Timing and integration between frontend and backend are always going to be risks that can have a huge impact on the project throughout the whole entire process. But now that we have spent more time working on the UI and making design decisions according to feedback from customers, we better understand what will be difficult and is a high risk for the project. We know that the events cycling will be difficult, but necessary, and also understand that creating a simple, usable UI that is pleasing to users is difficult.</p>
 
-
-
-
-
-
                 <hr>
-              
 
                 <h2 id="dataStorage">Data Storage</h2>
-                <p>In our system, all the data is provided by users. Data that the system stores include each user’s account information, and information of tasks, bills, and group created by users. The database will store the user’s first name, last name, username, password, and a user ID. For tasks and bills, the database will store the users involved, the user who created the task, if it’s cycled, which dates it’s repeated on, the date due, the date created, a title, a description, and if the event has been completed. Bills will additionally store the total of the bill and the costs for each individual involved. The database will store group’s users, group ID, date created, description and title.</p>
+                <p>In our system, all the data is provided by users. Data that the system stores include each user’s account information, and information of tasks, bills, and group created by users. The database will store the user’s first name, last name, username, password, and a user ID. For tasks and bills, the database will store the users involved, the user who created the task, the group it belongs to, whether it is cycled, which dates it’s repeated on, the date due, the date created, a title, a description, and whether the event has been completed. Bills will additionally store the total of the bill and the costs for each individual involved. The database will store group’s users, group ID, date created, description and title.</p>
 
                 <p>The <a href="/documentation/LivingDocuments/SDS-DataStorage.htm">SQL schema</a> of the data is provided.</p>
 
@@ -228,7 +234,7 @@
                   <li><h4>System Test Strategy</h4>
                     <ul>
                       <li>The system test will test the integration of composite classes and the connection between the backend and frontend. While unit tests on each end used dummy JSON values, now we will actually allow the frontend and backend to communicate over the wire. These tests will mainly check that this communication works correctly. </li>
-                      <li>We will mainly do systems testing on the frontend. We can use similar (or even the same) tests from the unit tests, and now ensure that sending/receiving data on the frontend and backend work correctly.</li>
+                      <li>We will mainly do systems testing on the backend by sending fake Ajax requests in the rspec tests. </li>
                       <li>We will do system tests after every major component (e.g. viewing and creating events) is done both on the frontend and backend. Again, we are not going to use automation testing. </li>
                     </ul>
                   </li>
@@ -278,24 +284,6 @@
 
 
         <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
-
-
-
-
-        
-        <!-- JavaScript jQuery code from Bootply.com editor -->
-        
-        <script type='text/javascript'>
-        
-        $(document).ready(function() {
-        
-            
-
-        
-        });
-        
-        </script>
         
     </body>
 </html>

@@ -149,13 +149,13 @@
             <div class="col-md-6">
               <h5>Group:</h5>
                 <span class="nullable">
-                  <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList | orderGroups">
+                  <select ng-model="newTaskGroup" ng-options="grp.name for (id, grp) in groupsList | accepted | orderGroups">
                     <option value="">-- choose group --</option>
                   </select>
                 </span>
               <h5>Members:</h5>
               <div class="task_modal_members" ng-show="currentMembers.length > 1">
-                <button class="btn" ng-click="selectAll(currentMembers)">select all</button>
+                <button class="btn btn-xs" ng-click="selectAll(currentMembers)">select all</button>
               </div>
                 <div class="task_modal_members">
                   <ul ui-sortable ng-model="currentMembers">
@@ -312,7 +312,7 @@
                   <div id="task{{task.id}}1" class="tasks-pop">
                     <div class="selected-info">
                       <span><strong>Task:</strong> {{task.title}}</span><br>
-                      <span style="white-space:pre; word-wrap:break-word" ><strong>Description:</strong> {{task.description}}</span><br/>
+                      <span class="wrapword"><strong>Description:</strong> {{task.description}}</span><br/>
                       <span><strong>Due Date:</strong> {{task.dateDue | date:'shortDate'}}</span><br>
                       <span><strong>Group:</strong> {{task.groupName}}</span><br>
                       <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br><br>

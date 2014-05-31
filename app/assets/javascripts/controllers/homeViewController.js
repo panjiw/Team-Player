@@ -40,6 +40,8 @@ angular.module('myapp').controller("homeViewController",
         console.log("<<<< home view: task & task gen from model!!>>>");
         $scope.$apply(function(){
           $scope.myTasks = TaskModel.tasks;
+          // initialize me to a variable for filter
+          $scope.myID = UserModel.me;
         });
       }
     });
