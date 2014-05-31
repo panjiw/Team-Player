@@ -321,6 +321,7 @@ angular.module('myapp').controller("homeViewController",
     };
 
     // Adds given task/bill information to calendar
+    $("#calendar-display").html("");
     $('#calendar-display').fullCalendar({
       // editable:true,
       events: events,
