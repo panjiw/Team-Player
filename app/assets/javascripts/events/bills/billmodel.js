@@ -78,7 +78,10 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
           (BillModel.bills[i].dateDue.getFullYear() == date.getFullYear())) {
         // if I am not the owner of the bill; so the calendar day popup only display 
         // bills that I owe someone else
-        if (BillModel.bills[i].creator != UserModel.me){
+        // if (BillModel.bills[i].creator != UserModel.me){
+
+          // I am the owner of the bill or not, does not matter.
+          { 
           var amtMap = BillModel.bills[i].membersAmountMap;
           thisDayBill[i] = {
             bill: BillModel.bills[i], // bill object
