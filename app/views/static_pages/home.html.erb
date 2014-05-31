@@ -32,9 +32,7 @@ Displays pages for after successful login:
                         <div id="homeHelp1">
                           <h4>Using The Calendar</h4>
                             <div class="help-info">
-                              All of your tasks/bills as well as those of your groups' appear on the calendar.<br>
-                              Tasks appear in yellow, bills appear in green, and completed tasks/bills appear gray.<br>
-                              Select one to view more info or edit.
+                              All of your tasks/bills as well as those of your groups' appear on the calendar.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "home-page1.png" %></div>
@@ -47,10 +45,10 @@ Displays pages for after successful login:
                             </div>
                         </div>
                         <div style="display:none" id="homeHelp2">
-                          <h4>Using The To Do List</h4>
+                          <h4>Using The Calendar (cont.)</h4>
                             <div class="help-info">
-                              Dateless tasks appear under this list for you to keep track of things you need to do,
-                              but have no deadline for. Click it to edit or complete.
+                              Colors on the calendar are differentiated based on resposibility and completion.<br><br>
+                              View the Legend at the bottom of the calendar for reference.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "home-page2.png" %></div>
@@ -58,6 +56,44 @@ Displays pages for after successful login:
                             <div class="backNext">
                               <div class="col-md-2">
                                 <button ng-click="homeBack(2)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="homeNext(2)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="homeHelp3">
+                          <h4>Using The Calendar (cont.)</h4>
+                            <div class="help-info">
+                              Clicking on a day allows you to see all events for that day.<br>
+                              Completed events are <i>gray</i>, your bills are <i>green</i>, pending bills are <i>pink</i> and tasks are <i>yellow</i>.
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "home-page3.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="homeBack(3)" class="btn btn-default">Back</button>
+                              </div>
+                              <div class="col-md-8"></div>
+                              <div class="col-md-2">
+                                <button ng-click="homeNext(3)" class="btn btn-default">Next</button>
+                              </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="homeHelp4">
+                          <h4>Using The To Do List</h4>
+                            <div class="help-info">
+                              Dateless tasks appear under this list for you to keep track of things you need to do,
+                              but have no deadline for. Click it to complete a task.
+                            </div>
+                            <hr>
+                            <div class="help-image"><%= image_tag "home-page4.png" %></div>
+                            <hr>
+                            <div class="backNext">
+                              <div class="col-md-2">
+                                <button ng-click="homeBack(4)" class="btn btn-default">Back</button>
                               </div>
                               <div class="col-md-8"></div>
                               <div class="col-md-2">
