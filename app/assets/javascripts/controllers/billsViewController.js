@@ -542,7 +542,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       }
       var list = $(".bill-members-check" + n + ":checked");
       var value = total / list.size();
-      value = Math.round(value * 100) / 100;
+      value = parseFloat(value.toFixed(2));
       if (n == 1) {
         $.each($scope.currentMembers, function() {
           if (this.chked) {

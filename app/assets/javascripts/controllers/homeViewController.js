@@ -111,6 +111,7 @@ angular.module('myapp').controller("homeViewController",
     
     // Iterates through all of users tasks
     $.each($scope.myTasks, function() {
+
       
       // If the task has a due date, put in calendar
       if (this.dateDue != null) {
@@ -127,13 +128,53 @@ angular.module('myapp').controller("homeViewController",
           eventid: this.id
         };
 
+        var dateLessThan = "";
+
+        // due Year > this Year, not less than
+        if (this.dateDue.getFullYear() > new Date().getFullYear()) {
+          dateLessThan = false;
+        } else {
+        // due Year <= this Year
+          // due Year < this Year, guaranteed less than
+          if (this.dateDue.getFullYear() < new Date().getFullYear()) {
+              dateLessThan = true;
+          } else {
+          //due Year = this Year, maybe less than
+            // due Month > this Month, not less than
+            if (this.dateDue.getMonth() > new Date().getMonth()) {
+              dateLessThan = false;
+            } else {
+            // due Month <= this Month, maybe less than
+              // due Month < this Month, guaranteed less than
+              if (this.dateDue.getMonth() < new Date().getMonth()) {
+                dateLessThan = true;
+              } else {
+              // due Month = this Month, maybe less than
+                // due Day >= this day, not less than
+                if (this.dateDue.getDate() >= new Date().getDate()) {
+                  dateLessThan = false;
+                } else {
+                // due Day < this day, less than
+                  dateLessThan = true;
+                }
+              }
+            }
+          }
+        }
+
+
+        ((this.dateDue.getMonth() <= new Date().getMonth()) && 
+            (this.dateDue.getDate() < new Date().getDate()) &&
+            (this.dateDue.getFullYear() <= new Date().getFullYear()));
+
+
         // If task is not finished yet, display normally
         if (this.done == null) {
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-            newEventObj["backgroundColor"] = this.dateDue.valueOf() >= new Date().valueOf() ? "#ff8282" : "#ffef00"; //yellow
-            newEventObj["borderColor"] = this.dateDue.valueOf() >= new Date().valueOf() ? "#ff8282" : "#ffef00";
+            newEventObj["backgroundColor"] = (dateLessThan) ? "#ff8282" : "#ffef00"; //yellow
+            newEventObj["borderColor"] = (dateLessThan) ? "#ff8282" : "#ffef00";
           }
         }
         // finished 
