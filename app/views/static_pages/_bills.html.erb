@@ -336,37 +336,25 @@
         </div>
         <div class="tab-pane" id="billsHistory">
           <h3>Bill History</h3>
-<!--               <div ng-repeat="entry in billSummary.oweYou">
-                <div class="bill-all">
-                  <div class="bill" ng-click="openPop($event, entry.person_username, 2)" >
-                    <h4 class="bill-member bill-member-long">{{entry.person_username}}</h4>
-                    <h4 class="bill-amount">${{entry.total}}</h4>
-                  </div>
-                  <div id="{{entry.person_username}}2" class="bill-pop">
-                    <div class="bills-to-pay-you">
-                      <div ng-repeat="b in entry.billsArray">
-                        <div class="bills-selected" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{b.dateDue | date:'shortDate'}}" data-content="<p>{{b.description}}</p>" data-placement="right">
-                          <h4 class="bill-member">
-                            <button type="button" ng-click="showEditBill($event,b.id)" class="btn btn-default btn-xs">
-                              <span class="glyphicon glyphicon-pencil"></span>
-                            </button> {{b.title}}
-                          </h4>
-                          <h4 class="bill-amount">${{b.amountForEntry[entry.person_username]}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <h4>Bills you have paid</h4>
                 <div class="bill-scroll-skinny">
                   <div ng-repeat="entry in combinedBills">
                     <div ng-repeat="UO in entry.youOweHistory">
                       <label for="{{UO.id}}">
                         <div style="">
-                          <div class="bills-selected-owe" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
-                            <h4 class="bill-member">{{UO.title}}</h4>
-                            <h4 class="bill-amount">{{UO.amountForEntry[entry.username] | currency}} </h4>
+                          <div class="bill-history" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{UO.dateDue | date:'shortDate'}}" data-content="<p>{{UO.description}}</p>" data-placement="right">
+                              <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                  <div class="bill-panel">
+                                    <h4 class="panel-descr">{{UO.title}}</h4>
+                                    <h4 class="panel-date">{{UO.amountForEntry[entry.username] | currency}} </h4>
+                                  </div>
+                                </div>
+                                <div class="panel-body panel-info">
+                                  <h5 class="panel-groupname">Paid to: {{entry.username}}</h5>
+                                </div>
+                              </div>
                           </div>
                         </div>
                       </label>
@@ -374,19 +362,30 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
                 <h4>Bills paid to you</h4>
                 <div class="bill-scroll-skinny">
                   <div ng-repeat="entry in combinedBills">
                   <div ng-repeat="OU in entry.oweYouHistory">
                     <label for="{{OU.id}}">
                       <div style="">
-                        <div class="bills-selected-debt" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{OU.dateDue | date:'shortDate'}}" data-content="<p>{{OU.description}}</p>" data-placement="right">
-                          <button type="button" ng-click="showEditBill($event,OU.id)" class="btn btn-default btn-xs bills-editBtn">
+                        <div class="bill-history" data-html="true" data-trigger="hover" data-toggle="popover" data-title="Due: {{OU.dateDue | date:'shortDate'}}" data-content="<p>{{OU.description}}</p>" data-placement="right">
+<!--                           <button type="button" ng-click="showEditBill($event,OU.id)" class="btn btn-default btn-xs bills-editBtn">
                             <span class="glyphicon glyphicon-pencil"></span>
-                          </button>
-                          <h4 class="bill-member">{{OU.title}}</h4>
-                          <h4 class="bill-amount">-{{OU.amountForEntry[entry.username] | currency}} </h4>
+                          </button> -->
+
+                            <div class="panel panel-success">
+                              <div class="panel-heading">
+                                <div class="bill-panel">
+                                  <h4 class="panel-descr">{{OU.title}}</h4>
+                                  <h4 class="panel-date">{{OU.amountForEntry[entry.username] | currency}} </h4>
+                                </div>
+                              </div>
+                              <div class="panel-body panel-info">
+                                <h5 class="panel-groupname">Paid by: {{entry.username}}</h5>
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </label>

@@ -277,3 +277,7 @@ div.bill-body.bill_selected_owe_you div.owe-you-tab{
 .bill-panelbutton:hover .panel-body {
   background-color: #eeecec;
 }
+
+.bill-history{
+  width: 400px;
+}
