@@ -98,7 +98,7 @@
               <h5>* Name:</h5><input type="text" ng-model="newBillTitle" maxlength="20" />
               <h5>Description:</h5>
               <textarea cols="30" rows="4" ng-model="newBillDescription"></textarea>
-              <h5>* Total Cost:</h5><input ng-model="newBillTotal" ng-pattern="/^\d*(\.\d\d)?$/" ng-change="splitEvenly(false, 1, false)" 
+              <h5>* Total Cost:</h5><input ng-model="newBillTotal" ng-pattern="/^\d*(\.\d\d?)?$/" ng-change="splitEvenly(false, 1, false)" 
                                       type="number" placeholder="0.00" min="0.01" step="0.01" />
               <h5>Due Date:</h5><input type="text" id="bill_datepicker"/>
             </div>
@@ -116,7 +116,7 @@
                 <div ng-repeat="mem in currentMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = '0.00'; splitEvenly(mem, 1, false)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
-                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d?)?$/" class="bill-total"
                   type="text" placeholder="0.00" style="float:right;"/>
                   <div style="clear: both;"></div>
                 </div>
@@ -156,7 +156,7 @@
               <h5>* Name:</h5><input type="text" ng-model="editBillTitle" maxlength="20" />
               <h5>Description:</h5>
               <textarea cols="30" rows="4" ng-model="editBillDescription"></textarea>
-              <h5>* Total Cost:</h5><input ng-model="editBillTotal" ng-pattern="/^\d*(\.\d\d)?$/" ng-change="splitEvenly(false, 2, false)" type="number" placeholder="0.00" min="0.01" step="0.01" />
+              <h5>* Total Cost:</h5><input ng-model="editBillTotal" ng-pattern="/^\d*(\.\d\d?)?$/" ng-change="splitEvenly(false, 2, false)" type="number" placeholder="0.00" min="0.01" step="0.01" />
               <h5>Due Date:</h5><input type="text" id="bill_edit_datepicker"/>
             </div>
             <div class="col-md-5">
@@ -174,7 +174,7 @@
                 <div ng-repeat="mem in currentEditMembers | orderUsers" style="height:2.2em;">
                   <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0.00; splitEvenly(mem, 2, false)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
-                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d)?$/" class="bill-total"
+                  <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d?)?$/" class="bill-total"
                   type="text" placeholder="0.00" style="float:right;"/>
                   <div style="clear: both;"></div>
                 </div>
