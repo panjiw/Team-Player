@@ -67,7 +67,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         for (var index in $scope.currentEditMembers){
           if($scope.currentEditMembers[index].id == id){
             $scope.currentEditMembers[index].chked = true;
-            $scope.currentEditMembers[index].amount = bill.membersAmountMap[id].due;
+            $scope.currentEditMembers[index].amount = bill.membersAmountMap[id].due.toFixed(2);
           }
         }
       }
@@ -532,7 +532,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
   }
   
   // Function called to split bills evenly
-  $scope.splitEvenly = function(mem, n) {
+  $scope.splitEvenly = function(mem, n, selectAll) {
     if ($("#bill-split-evenly-checkbox" + n).is(":checked")) {
       if (n == 1) {
         var total = $scope.newBillTotal;
@@ -540,19 +540,24 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
       else {
         var total = $scope.editBillTotal;
       }
-      var list = $(".bill-members-check" + n + ":checked");
+      if (selectAll) {
+        var list = $(".bill-members-check" + n);
+      }
+      else {
+        var list = $(".bill-members-check" + n + ":checked");
+      }
       var value = total / list.size();
-      value = parseFloat(value.toFixed(2));
+      value = value.toFixed(2);
       if (n == 1) {
         $.each($scope.currentMembers, function() {
-          if (this.chked) {
+          if (this.chked || selectAll) {
             this.amount = value;
           }
         });
       }
       else {
         $.each($scope.currentEditMembers, function() {
-          if (this.chked) {
+          if (this.chked || selectAll) {
             this.amount = value;
           }
         });
