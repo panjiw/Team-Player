@@ -135,8 +135,9 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       if(tempCombinedBills[i].oweYou == 0 && tempCombinedBills[i].youOwe == 0)
         delete tempCombinedBills[i];
     }
-    BillModel.combinedSummary = tempCombinedBills;
     */
+    BillModel.combinedSummary = tempCombinedBills;
+    
   }
 
   // make a "summary" for the user based on all the bills
