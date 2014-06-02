@@ -172,6 +172,14 @@ class BillsController < ApplicationController
       bill[:members].each do |m|
         total_count = total_count + m[1].to_f
       end
+      
+      @bill.bill_actors.each do |a|
+        if a.paid && a.user_id != current_user.id
+          render :json => {:errors => "You cannot edit a partially paid bill"}, :status => 400
+          return
+        end
+      end
+
       if total_count != @bill[:total_due]
         render :json => {:errors => "Total due is not divided correctly"}, :status => 400
       else
