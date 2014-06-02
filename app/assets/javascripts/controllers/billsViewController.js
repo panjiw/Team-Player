@@ -96,6 +96,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           // buildBills();
           $scope.combinedBills = BillModel.combinedSummary;
+          var a = $scope.combinedBills;
+          var b = BillModel.summary;
+          var c;
         });
       }
     });
