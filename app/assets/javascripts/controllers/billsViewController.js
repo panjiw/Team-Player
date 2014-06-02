@@ -96,6 +96,9 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
         $scope.$apply(function(){
           // buildBills();
           $scope.combinedBills = BillModel.combinedSummary;
+          var a = $scope.combinedBills;
+          var b = BillModel.summary;
+          var c;
         });
       }
     });
@@ -136,70 +139,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     console.log("comparing ",user, " and ",UserModel.me);
     return user.id != UserModel.me;
   }
-  
-  // function buildBills(){
-  //   buildBillsList();
-  //   buildBillsMap();
-  // // }
-
-  // $scope.$watch('billsYouOweMap', function(newVal, oldVal){
-  //   console.log('billsYouOweMap changed');
-  // },true);
-
-  // $scope.$watch('billsYouOwe', function(newVal, oldVal){
-  //   console.log('billsYouOwe changed');
-  // },true);
-
-  // $scope.$watch('billsOweYouMap', function(newVal, oldVal){
-  //   console.log('billsOweYouMap changed');
-  // },true);
-
-  // $scope.$watch('billsOweYou', function(newVal, oldVal){
-  //   console.log('billsOweYou changed');
-  // },true);
-
-  //{person:'Member1', amount: 12, why: 'Bought Lunch'}
-
-  // function buildBillsList(){
-  //   $scope.billsYouOwe = [];
-  //   $scope.billsOweYou = [];
-  //   $scope.billsOweYouMap =[];
-  //   $scope.billsYouOweMap =[];
-
-  //   var bills = BillModel.bills;
-  //   for(var i in bills){
-  //     if(bills[i].creator == UserModel.me){
-  //       for(var j in bills[i].membersAmountMap){
-  //         if (j != UserModel.me){
-  //           $scope.billsOweYou.push({
-  //             person: UserModel.users[j].firstname, 
-  //             amount: bills[i].membersAmountMap[j].due, 
-  //             why: bills[i].title,
-  //             id: bills[i].id,
-  //             desc: bills[i].description,
-  //             due: bills[i].dateDue
-  //           });
-  //         }
-  //       }
-        
-  //     } else {
-  //       for(var j in bills[i].membersAmountMap){
-  //         console.log("creater is not me, bills[i]: ",bills[i]);
-  //         if (j == UserModel.me){
-  //           $scope.billsYouOwe.push({
-  //             person: UserModel.users[bills[i].creator].firstname, 
-  //             amount: bills[i].membersAmountMap[j].due, 
-  //             why: bills[i].title,
-  //             id: bills[i].id,
-  //             desc: bills[i].description,
-  //             due: bills[i].dateDue
-  //           });
-  //         }
-  //       }
-
-  //     }
-  //   }
-  // }
 
   // Creates map from user id to the amount they owe
   var buildAmountMap = function(members){
@@ -313,74 +252,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
 
     });
   };
-    
-  // Fills in billsYouOweMap from billsYouOwe
-  // function buildBillsMapYouOwe() {
-  //   $.each($scope.billsYouOwe, function(bill) {
-  //     var found = false;
-  //     var bill = this;
-  //     $.each($scope.billsYouOweMap, function(member) {
-  //       if (this.person == bill.person) {
-  //         this.amount += bill.amount;
-  //         if (bill.due != null) {
-  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
-  //         }
-  //         else {
-  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
-  //         }
-  //         found = true;
-  //         return false;
-  //       }
-  //     });
-  //     if (!found) {
-  //       if (bill.due != null) {
-  //         $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-  //           why: bill.why, desc: bill.desc, due: bill.due}]});
-  //       }
-  //       else {
-  //         $scope.billsYouOweMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-  //           why: bill.why, desc: bill.desc, due: "No Date"}]});  
-  //       }
-  //     }
-  //   });
-  // }
-    
-  // Fills in billsOweYouMap from billsOweYou
-  // function buildBillsMapOweYou() {
-  //   console.log("building bills map");
-  //   $.each($scope.billsOweYou, function(bill) {
-  //     var found = false;
-  //     var bill = this;
-  //     $.each($scope.billsOweYouMap, function(member) {
-  //       if (this.person == bill.person) {
-  //         this.amount += bill.amount;
-  //         if (bill.due != null) {
-  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: bill.due});
-  //         }
-  //         else {
-  //           this.bills.push({id: bill.id, amt: bill.amount, why: bill.why, desc: bill.desc, due: "No Date"});
-  //         }
-  //         found = true;
-  //         return false;
-  //       }
-  //     });
-  //     if (!found) {
-  //       if (bill.due != null) {
-  //         $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-  //           why: bill.why, desc: bill.desc, due: bill.due}]});
-  //       }
-  //       else {
-  //         $scope.billsOweYouMap.push({person: bill.person, amount: bill.amount, bills: [{id: bill.id, amt: bill.amount, 
-  //           why: bill.why, desc: bill.desc, due: "No Date"}]});  
-  //       }
-  //     }
-  //   });
-  // }
-
-  // function buildBillsMap(){
-  //   buildBillsMapOweYou();
-  //   buildBillsMapYouOwe();
-  // }
 
   // select all members in the array when clicked. If all members are selected, unselect them.
   $scope.selectAll = selectAllInArray; // selectAllInArray is a function in main.js
@@ -475,33 +346,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
             });
           }
         });
-
-
-
-        // $.each($scope.billsYouOweMap, function(member) {
-        //   if (this.person == p) {
-        //     this.amount -= value;
-        //     var list = this.bills
-        //     $.each(list, function(i, bill) {
-        //       if (this.id == id) {
-        //         list.splice(i, 1);
-        //         if (list.length == 0) {
-        //           $.each($scope.billsYouOweMap, function(i, person) {
-        //             if (person.person == p) {
-        //               $scope.billsYouOweMap.splice(i, 1);
-        //               return false;
-        //             }
-        //           });
-        //         }
-        //         return false;
-        //       }
-        //     });
-        //     $('#' + p + 1 + " .bill-pop-total").html('Total: $0');
-        //     return false;
-        //   }
-        // });
-
-
       }
     });
     $('.bill-pop').hide();

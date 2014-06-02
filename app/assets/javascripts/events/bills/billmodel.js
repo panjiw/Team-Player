@@ -130,11 +130,14 @@ angular.module("myapp").factory('BillModel', ['UserModel', function(UserModel) {
       tempCombinedBills[index].oweYouHistory = this.billsArray;
     });
 
+    /*
     for (var i in tempCombinedBills){
       if(tempCombinedBills[i].oweYou == 0 && tempCombinedBills[i].youOwe == 0)
         delete tempCombinedBills[i];
     }
+    */
     BillModel.combinedSummary = tempCombinedBills;
+    
   }
 
   // make a "summary" for the user based on all the bills

@@ -106,6 +106,20 @@ myApp.filter('onlyMyTasks', function(){
  };
 });
 
+myApp.filter('noZeroBill', function() {
+  return function(combinedBills) {
+    var result = {};
+    for (var id in combinedBills){
+
+      // if the bill is not zero, return back in result
+      if (combinedBills[id].oweYou != 0 || combinedBills[id].youOwe != 0){
+        result[id] = combinedBills[id];
+      }
+    }
+    return result;
+  };
+});
+
 myApp.filter('accepted', function() {
   return function(input) {
     var result = [];
