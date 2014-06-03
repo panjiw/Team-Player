@@ -85,7 +85,7 @@
           </div> 
           <div class="col-md-9">
                 <h2>Contribute To Our Product</h2>
-                “Team Player” is an open source product, so all of our source code and releases are facilitated through Github. We provide source code for the <a href="https://github.com/panjiw/Team-Player/releases">latest stable released version</a>.
+                TeamPlayer is an open source product, so all of our source code and releases are facilitated through Github. We provide source code for the <a href="https://github.com/panjiw/Team-Player/releases">latest stable released version</a>.
                 <br><br>
                 Prior releases can be found on the same page. The latest version of our repository that we’re using for development can be found on our <a href="https://github.com/panjiw/Team-Player.git">github page</a>.
 </a>
@@ -100,7 +100,7 @@
                 If you are unfamilar with Ruby on Rails, here is a <a href="#fileStruct">quick guide to the file structure.</a>
                 </p>
                 <p>
-                <ol><li>git clone our repo, and run our make script<br>
+                <ol><li>Git clone our repo, and run our make script<br>
                 <code>git clone https://github.com/panjiw/Team-Player <br> cd Team-Player <br> make install</code></li>
                 <br>
                 <li>Once the installation is finish you are ready to launch your rails server<br>
@@ -117,10 +117,10 @@
 
                 <hr>
 
-                <h2 id="testInstr">Test Instruction</h2>
+                <h2 id="testInstr">Test Instructions</h2>
                 <p>
                 The tests provided for the software are in the spec folder. At the moment, these tests cover our backend implementation, and utilize RSpec. 
-                After you have downloaded our application, to run the test suite provided, go to the root directory of the project, run the command:
+                After you have downloaded our application, to run the test suite provided, go to the root directory of the project, and run the command:
                 <code>bundle exec rspec spec/</code><br><br>
                 This will run all the tests and output the results. For more information about RSpec, go to: <a href="http://rubydoc.info/gems/rspec-rails/frames">http://rubydoc.info/gems/rspec-rails/frames</a>
 
@@ -131,7 +131,7 @@
                 Then, navigate to <a href="http://localhost:3000/specs">http://localhost:3000/specs</a>
 
                 <br><br>
-                You can see the code coverage statisitics on the root/coverage/index.html, just open it with browser.
+                You can see the code coverage statisitics on the root/coverage/index.html, by opening it in your browser.
                 </p>
               
                 <hr>
@@ -143,8 +143,8 @@
                 <p></p>
                 We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins windows installations</a>.
                 <ol>
-                  <li>Set up a new project workspace with the home directory as the project directory. We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
-                  <li>Set the product to deploy daily through. We are currently using a local host, which is subjected to change.</li>
+                  <li>Set up a new project workspace with the home directory as the project directory.<br>We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
+                  <li>Set the product to deploy daily. We are currently using a local host.</li>
                   <li>We set up email notifications when the build fails.</li>
                   <li> In order to rub our test suite, we built the product with a windows batch command with the test automation command <code>bundle exec rspec spec/</code> </li>
                   <li>For front-end tests, we will use another windows batch command of <code>rake jasmine</code> </li>
@@ -163,7 +163,7 @@
                 Releases will be facilitated through <a href="https://help.github.com/articles/creating-releases">GitHub’s release system</a>.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
                 Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
                 <p><ol>
-                <li>Be sure to have the <a href="https://toolbelt.heroku.com">heroku toolbelt installed</a> and set up with your account. Follow the directions on the page after you've downloaded it.</li>
+                <li>Be sure to have the <a href="https://toolbelt.heroku.com">heroku toolbelt installed</a> and set up with your account.<br>Follow the directions on the page after you've downloaded it.</li>
                 <li>For the first deployment, the developer should run <br><code>heroku create</code></li>
                 <li>Then, when a new release is completed and ready to be copied to the website and viewed and run through our test suite, a developer can deploy their repository with <br><code>git push heroku master</code></li>
                 <li>Be sure to update the requirements, design, user's, and developer's documents on the github after every release.</li></ol></p>
@@ -208,6 +208,7 @@
 
 
        <h2 id="designPattern">Design Patterns</h2>
+            <br>
             <p>
               <h4>Front End Design Pattern: Model-View-Controller</h4>
               We use MVC because it makes designing and coding easier because we are able to split up our project based on the pages or views we are working on. We can then further split it based on the functionality. This is helpful because our product will automatically update based on user input, which naturally implies a MVC design. So, data can be read by the controllers, updated by the models, and displayed on the views.
@@ -243,6 +244,7 @@
                 <li>mainViewController</li>
                 <li>tasksViewController</li>
               </ul>
+              <br>
               <h4>Back End Design Pattern: Factory</h4>
               We use the factory pattern because it allows us to create objects of a same type, given restrictions. The taskGenerator object is a "factory" of tasks that handles the problem of creating new tasks. The front end uses the factory to make a post request to the taskGenerator so it can get the next task from the factory. The factory then provides a task object based on some repeat/cycle logic as well as initialization  parameters stored in the database. For now, we only have part of the repeat/cycle implemented, so the factory abstracts out the "special" classes of tasks from the front end, to allow the front end to display the tasks regardless of what kind they are.
               <br><br>

@@ -78,6 +78,7 @@
                   <li><a href="#diagrams">Class and Sequence Diagrams</a></li>
                   <li><a href="#testPlans">Test Strategy</a></li>
                   <li><a href="#codingStyle">Coding Style Guidelines</a></li>
+                  <li><a href="#extensibility">Extensibility</a></li>
               	</ul>
   				</div>
 
@@ -89,13 +90,15 @@
 
                 <h2 id="designChoices">Design Choices</h2>
 
+                <p>Our original design choices regarded languages and features:</p>
+
                 <ul>
                   <li><b>Ruby on Rails</b>
               	<p>We had to decide between using the full power of Rails—frontend to backend, or, a mix of Rails (backend) and AngularJS on the frontend. We eventually decided on the mixed method because AngularJS has many features that simplify our UI implementation. Here are the main pros and cons of our chosen method:
                 </p>
                 Pros:<br>
 	              <ul>
-                 <li> We can better split up the frontend/backend groups, so each can work independently without worrying about the implementation of the other group. This would have been possible in Rails, but we decided it would be easier this way.
+                 <li>Allows easy splitting up of front and back end, so each can work independently without worrying about the implementation of the other.
                  </li>
                  <li>AngularJS allows us to have a MVC on the client side—so as the model updates, the view will instantly be updated.</li>
                  <li>We still could have used Angular even with using all of Rails, but it would limit the functionality that we could have used from Angular.</li>
@@ -104,7 +107,7 @@
 
                 Cons:<br>
                 <ul>
-                  <li> We have two frameworks to learn rather than just one. Since all team members are only dealing with frontend *or* backend, they probably would only need to worry about learning one. However, Fung and Karthik are the bridge between the frontend and backend, so they would need to coordinate with both the UI team, and the backend team.</li>
+                  <li>We have two frameworks to learn rather than just one. Since all team members are only dealing with frontend *or* backend, they probably would only need to worry about learning one. However, Fung and Karthik are the bridge between the frontend and backend, so they would need to coordinate with both the UI team, and the backend team.</li>
                   <li> We probably increase the amount of code we have to write, because we now have two sets of models—the databases Events, Users, and Groups, and the parallel AngularJS models. We also have two sets of controllers for Events, Users, and Groups. There will not be a lot of redundant code, because they have very different responsibilities, but it will make the system larger than it would have been otherwise. </li>
                 </ul>
                 <br>
@@ -113,26 +116,27 @@
 
               	 
                 <li><b>"Dateless To Do's" vs Tasks</b>
-                <p>Another design decision where we considered an alternative was with our todo’s vs tasks. We spent a long time trying to figure out how we were going to implement "dateless todos", and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk. We decided that these really didn’t need a date, and would be useful to create a new type of task for these. When we asked our customers, they agreed.
+                <p>We had spent a long time trying to figure out how we were going to implement "dateless todos", and were seriously considering not implementing them as an option. It came down to whether or not we believed it was a serious need for people when creating a task and if we thought people would actually use it. We brainstormed tasks that we might put on our app, like taking out the trash or buying milk and decided that these really didn’t need a date. It would be useful to create a new type of task for these and when we asked our customers, they agreed.
                 </p>
                 Pros:<br>
                 <ul>
-                 <li> They would be much simpler for the user, you just check it off when you finish and then it becomes someone else’s turn. We could see this being useful so that people don’t have to worry about dates, and just handle the task when needed. 
+                 <li>To Do's are much simpler for the user to you just check it off when they finish, without worrying about dates, like how people already use to do lists.
                  </li>
                 </ul>
 
                 Cons:<br>
                 <ul>
                   <li>It adds a new option to tasks that can be confusing, and we weren’t sure how to fit into the UI both in creating tasks and in the home page. In usability tests, some found it intuitive, others were confused at first.</li>
-
                 </ul>
 
               </li>
 
               <br>
 
+              <p>While implementing TeamPlayer, many other design choices were made and are listed here:</p>
+
               <li><b>Self Groups</b>
-                <p>TeamPlayer revolves around groups, and when a user first signs in, they need to be a part of a group before they can do anything. We realized this flaw during our first customer prototyping test, when the user wanted to add a task, but didn’t have a group to choose. So, every new user already belong to a group with just themselves. This way, they can do things before they have created other groups, or added other users.</p>
+                <p>TeamPlayer revolves around groups, and when a user first signs in, they need to be a part of a group before they can do anything. We realized this flaw during our first customer prototyping test, when the user wanted to add a task, but didn’t have a group to choose. So, we made sure that every new user already belongs to a group with just themselves. This way, they can do things before they have created other groups, or added other users.</p>
               </li>
 
               <li><b>Group Confirmation</b>
@@ -154,7 +158,7 @@
               </li>
 
               <li><b>Un-inheritance of Tasks and Bills</b>
-                <p>Originally, we saw tasks and bills as very similar classes, and therefore made them extend from and Event class. However, with further implementation and better specifications, we realized how different both are, and decided to make them their own individual classes that do not extend from any higher class.</p>
+                <p>Originally, we saw tasks and bills as very similar classes, and therefore made them extend from an Event class. However, with further implementation and better specifications, we realized how different both are, and decided to make them their own individual classes that do not extend from any higher class.</p>
               </li>
 
               <li><b>Bill Payment Confirmation</b>
@@ -181,7 +185,7 @@
                 <p><ul>The risk is that we may not balance between the two well. For instance, if we always work together as a group, where all seven of us are sitting together, we might not get as much done because we will end up all working on the same part of our product. On the other hand, if we always work individually and just merge everyone’s work, we might not be able to understand each other’s work and merging becomes difficult. If we don’t understand other’s work, it is impossible to understand the product as a whole. It also increase the difficulty of debugging other’s code. The likelihood of this occurring is low, as we have separated into smaller groups to do group work, and also assign task for everyone to work on individually. On the other hand, we also have regular group meeting for everyone to communicate with the whole group. In other words, we have been using an approach that deals with this problem. The impact of this risk is medium, especially later in the development process since as the project grow, it is harder to understand what other did in the past. To detect this, we will have weekly meetings where everyone will talk briefly about what they think others have done. If someone is clearly not understanding the group progress, we need to get everyone up to date by showing each other what we have done. Also, we need to adjust our meetings to make communication more clear and efficient. </ul></p>
 
 
-                5. <i>Create variety of options for events to be simple but fit all needs of user</i>
+                5. <i>Create a variety of options for events to be simple but fit all needs of user</i>
                 <p><ul>This is a pretty big risk for us because we are trying to add enough features to meet the needs of our users, such as tasks or bills that may not always have a date. Or repeating/cycle tasks like taking out the trash or getting milk which may not always have a set date. But depending on how we implement these features, it can be extremely cluttered and difficult for the user to use. The create event feature would be extremely complex with too many options and unfriendly to users. So the impact is high because this is one of our most important features that differentiates our app from other similar ones. So we need to add these features in a way that is easy to use and understandable to the user, but also helpful. To reduce the risk here we need to do a lot of user testing through customer meetings and hallway usability tests specifically for this portion of our app.</ul></p> 
                 <br>
                 <p>Our risks are pretty similar to the risks we had from the SRS, except now we have some more specific risks because we know more about our app. Timing and integration between frontend and backend are always going to be risks that can have a huge impact on the project throughout the whole entire process. But now that we have spent more time working on the UI and making design decisions according to feedback from customers, we better understand what will be difficult and is a high risk for the project. We know that the events cycling will be difficult, but necessary, and also understand that creating a simple, usable UI that is pleasing to users is difficult.</p>
@@ -189,11 +193,37 @@
                 <hr>
 
                 <h2 id="dataStorage">Data Storage</h2>
-                <p>In our system, all the data is provided by users. Data that the system stores include each user’s account information, and information of tasks, bills, and group created by users. The database will store the user’s first name, last name, username, password, and a user ID. For tasks and bills, the database will store the users involved, the user who created the task, the group it belongs to, whether it is cycled, which dates it’s repeated on, the date due, the date created, a title, a description, and whether the event has been completed. Bills will additionally store the total of the bill and the costs for each individual involved. The database will store group’s users, group ID, date created, description and title.</p>
+                <p>All data in our system is provided by users.</p>
+                The system stores:
+                <ul>
+                  <li>each user's account information</li>
+                  <li>information of tasks, bills, and groups created</li>
+                </ul>
+                The database stores:
+                <ul>
+                  <li>user's first name, last name, username, password, user ID</li>
+                  <li>tasks and bills information</li>
+                  <ul>
+                    <li>users involved</li>
+                    <li>user who created the task/bill</li>
+                    <li>group it belongs to</li>
+                    <li>whether it is cycled</li>
+                    <li>which dates it's repeated on</li>
+                    <li>due and creation date</li>
+                    <li>title and description</li>
+                    <li>whether or not it has been completed</li>
+                    <li>(bills only) total cost of bill and cost for each individual involved</li>
+                  </ul>
+                  <li>group information</li>
+                  <ul>
+                    <li>group's users</li>
+                    <li>group ID</li>
+                    <li>date created</li>
+                    <li>title and description</li>
+                  </ul>
+                </ul>
 
-                <p>The <a href="/documentation/LivingDocuments/SDS-DataStorage.htm">SQL schema</a> of the data is provided.</p>
-
-                <p>The user, bill, task, and group information is sent from the website to the database by a JSON query. After validating the information, such as whether the username has been taken, whether the sub prices add up, it is stored in a SQL database. When this information is queried by a user on the front end, it is stored in a model (user model, group model, bill model, or task model). These models store the same information as the backend models but can be easily accessed by the UI and user.</p>
+                <p>The user, bill, task, and group information is sent from the website to the database by a JSON query. After validating the information, such as whether the username has been taken, whether the sub prices add up, it is stored in a SQL database, seen in our <a href="/documentation/LivingDocuments/SDS-DataStorage.htm">SQL schema</a>. When this information is queried by a user on the front end, it is stored in a model (user model, group model, bill model, or task model). These models store the same information as the backend models but can be easily accessed by the UI and user.</p>
 
               	
                 <hr>
@@ -224,8 +254,8 @@
                   <li><h4>Unit Test Strategy</h4>
                     <ul>
                       <li>The unit tests will test most (not all as small private functions may be tested as part of other functions) functions in a black box and glass box way.</li>
-                      <li>Ruby on Rails provides an integrated unit testing system so making tests will not be very complicated, the tests will be written by the developer of the function. We will not write major functions without testing them thoroughly. Here is a good reference tutorial and style guide to follow: http://guides.rubyonrails.org/testing.html for the specifics of how we would unit test controllers in Ruby.</li>
-                      <li>AngularJS (frontend) also provides a unit testing system. It is a little more complicated because it deals with simulating certain events, but we plan to follow a similar strategy. The major controller functions and model functions will be tested in parallel with developing them. Here is a good reference tutorial we will use: https://docs.angularjs.org/guide/unit-testing for the specifics on how testing works in Angular.</li>
+                      <li>Ruby on Rails provides an <a href="http://guides.rubyonrails.org/testing.html">integrated unit testing system</a> so making tests will not be very complicated, the tests will be written by the developer of the function. We will not write major functions without testing them thoroughly.</li>
+                      <li>AngularJS (frontend) also provides a <a href="https://docs.angularjs.org/guide/unit-testing">unit testing system</a>. It is a little more complicated because it deals with simulating certain events, but we plan to follow a similar strategy. The major controller functions and model functions will be tested in parallel with developing them. </li>
                       <li>We plan to create test usually while developing a class so testing should be done once a function is done. We will require that before pushing code to the master branch, all of their test code must pass and seen by at least one team member. No automation system seems necessary at the moment--we can just run the tests before pushing. </li>
                       <li>In general, we may not have the backend implemented at the same time as the frontend (and vice versa), so we will likely hardcode dummy JSON objects on both ends to use for testing, and actually connect them during system testing. </li>
                       <li>Since most frontend code directly calls backend code, we do not test those functions. We focus our testing code on the functions such as ordering users, tasks, bills, groups for the UI, or splitting bills evenly that are solely frontend logic.
@@ -273,6 +303,11 @@
 
 
                 </ul>
+
+
+              <hr>
+              <h2 id="extensibility">Extensibility Exercise</h2>
+
       		</div> 
   	</div>
 </div>
