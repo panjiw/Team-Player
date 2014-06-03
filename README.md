@@ -19,11 +19,11 @@
 
 <h3>Current Release</h3>
 <hr>
-The current release is the feature-complete release. You can also view documentation and information from all <a href="http://localhost:3000/srssds.html">other releases</a>.
+The current release is the feature-complete release. You can also view documentation and information from all <a href="https://team-player.herokuapp.com/srssds.html">other releases</a>.
 
 <h3>Working Features</h3>
 <hr>
-<a href="http://localhost:3000/usersdoc.html#features">Working Features</a> for our current release can be found on our developer's site.
+<a href="https://team-player.herokuapp.com/usersdoc.html#features">Working Features</a> for our current release can be found on our developer's site.
 
 
 <h3>User Documentation</h3>
