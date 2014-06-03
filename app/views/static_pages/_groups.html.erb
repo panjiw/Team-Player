@@ -217,7 +217,7 @@
         <div class="group-description" ng-hide="member_selected == -1">
           <h4>Username: {{currentMembers[member_selected].username || currentPending[member_selected].username}}</h4>
           <h4>Full Name: {{(currentMembers[member_selected].firstname || currentPending[member_selected].firstname) + " " + 
-                           (currentMembers[member_selected].lastname || currentPending[member_selected].firstname)}}</h4>
+                           (currentMembers[member_selected].lastname || currentPending[member_selected].lastname)}}</h4>
         </div>
         <div ng-show="!groupsList[group_selected].accepted">
           <button type="button" ng-click="acceptGroup(group_selected)" class="btn btn-default" style="background-color: green; color: white">Accept</button>
