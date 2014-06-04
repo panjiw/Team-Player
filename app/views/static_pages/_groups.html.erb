@@ -220,8 +220,9 @@
                            (currentMembers[member_selected].lastname || currentPending[member_selected].lastname)}}</h4>
         </div>
         <div ng-show="!groupsList[group_selected].accepted">
-          <button type="button" ng-click="acceptGroup(group_selected)" class="btn btn-default" style="background-color: #7ab847; color: white">Accept</button>
-          <button type="button" ng-click="ignoreGroup(group_selected)" class="btn btn-default" style="background-color: #d9534f; color: white">Ignore</button>
+          <button type="button" ng-click="ignoreGroup(group_selected)" class="btn btn-default" style="background-color: ; color: ">Ignore</button>
+          <button type="button" ng-click="acceptGroup(group_selected)" class="btn btn-success">Accept</button>
+          
         </div>
       </div>
     </div>

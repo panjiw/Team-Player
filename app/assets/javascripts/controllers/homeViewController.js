@@ -173,8 +173,8 @@ angular.module('myapp').controller("homeViewController",
 
           //If task is mine, display with box
           if (TaskModel.isInvolved(this.id)) {
-            newEventObj["backgroundColor"] = (dateLessThan) ? "#ff8282" : "#ffef00"; //yellow
-            newEventObj["borderColor"] = (dateLessThan) ? "#ff8282" : "#ffef00";
+            newEventObj["backgroundColor"] = (dateLessThan) ? "#ff8282" : "#fbff3b"; //yellow
+            newEventObj["borderColor"] = (dateLessThan) ? "#ff8282" : "#fbff3b";
           }
         }
         // finished 
@@ -272,7 +272,10 @@ angular.module('myapp').controller("homeViewController",
             } 
             //a task I'm not responsible for
             else {
-              completeBtn = "Not Your Task";
+              taskPanel = "<div class='panel panel-danger'>" + 
+                    "<div class='panel-heading'>" + 
+                      "<div class='task-panel'>";
+              // completeBtn = "Not Your Task";
             }
           } 
           // task done
@@ -317,7 +320,7 @@ angular.module('myapp').controller("homeViewController",
           } 
           //the bill has not been paid, pink
           else {
-            billColor = "<div class='panel panel-danger'>" + 
+            billColor = "<div class='panel panel-success'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
           }
@@ -333,7 +336,7 @@ angular.module('myapp').controller("homeViewController",
           } 
           //the bill has not been paid, green with pay button
           else {
-            billColor = "<div class='panel panel-success'>" + 
+            billColor = "<div class='panel panel-danger'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
             // paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +

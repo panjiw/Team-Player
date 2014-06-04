@@ -57,9 +57,7 @@
                     <div style="display:none" id="billHelp3">
                       <h4>Inside the "Bills Summary" Tab</h4>
                         <div class="help-info">
-                          Click on a panel to see a list of bills you have not paid to that person. Select checkmarks
-                          to calculate combinations of bills and totals you would owe them. Click "Paid" after
-                          you have paid them that amount.
+                          Click on a panel to see a list of bills between you and that person.<br>You can <b>select</b> bills you've paid to them, or <b>confirm</b> bills they have paid you. <br><br>Immediate updates of the net total will appear for your convenience.
                         </div>
                         <hr>
                         <div class="help-image"><%= image_tag "bills-page3.png" %></div>
@@ -67,6 +65,24 @@
                         <div class="backNext">
                           <div class="col-md-2">
                             <button ng-click="billBack(3)" class="btn btn-default">Back</button>
+                          </div>
+                          <div class="col-md-8"></div>
+                          <div class="col-md-2">
+                            <button ng-click="billNext(3)" class="btn btn-default">Next</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display:none" id="billHelp4">
+                      <h4>Inside the "Bill History" Tab</h4>
+                        <div class="help-info">
+                          Click on a panel to see a history of bills you've paid to other members, and bills paid to you.
+                        </div>
+                        <hr>
+                        <div class="help-image"><%= image_tag "bills-page4.png" %></div>
+                        <hr>
+                        <div class="backNext">
+                          <div class="col-md-2">
+                            <button ng-click="billBack(4)" class="btn btn-default">Back</button>
                           </div>
                           <div class="col-md-8"></div>
                           <div class="col-md-2">
