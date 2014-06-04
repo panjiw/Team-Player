@@ -284,18 +284,6 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $(".bills-selected-owe").popover();
     $(".bills-selected-debt").popover();
   }
-  
-  // Function when checkbox is clicked. Updates displayed total
-  $scope.updateTotal = function(p) {
-    var total = 0;
-      $('#' + p + 1 + " input:checkbox").each(function () {
-        var str = $(this).val();
-        str = str.substr(0, str.indexOf(' '));
-        
-        total += (this.checked ? parseFloat(str) : 0);
-      });
-    $('#' + p + 1 + " .bill-pop-total").html('Total: $' + total.toFixed(2));
-  }
 
   // Function when bill summary checkboxes are clicked. Updates displayed total
   $scope.updateTotalComb = function(p) {
