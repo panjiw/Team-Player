@@ -65,10 +65,10 @@ Displays pages for after successful login:
                             </div>
                         </div>
                         <div style="display:none" id="homeHelp3">
-                          <h4>Using The Calendar (cont.)</h4>
+                          <h4>Clicking on the Calendar</h4>
                             <div class="help-info">
                               Clicking on a day allows you to see all events for that day.<br>
-                              Completed events are <i>gray</i>, your bills are <i>green</i>, pending bills are <i>pink</i> and tasks are <i>yellow</i>.
+                              Completed events are <font color="gray"><b><i>gray</i></b></font>, bills you have to pay for are <font color="#7ab847"><b><i>green</i></b></font>, tasks you need to complete are <font color="yellow"><b><i>yellow</i></b></font>, and bills others owe you as well as uncompleted tasks by other group members are <font color="#ff8282"><b><i>pink</i></b></font>.
                             </div>
                             <hr>
                             <div class="help-image"><%= image_tag "home-page3.png" %></div>
@@ -132,8 +132,8 @@ Displays pages for after successful login:
                     <div class="modal-body help-body">
                       <div id="calendarModal-content"></div>
                         <div id="calendarModal-buttons">
-                          <div class="col-md-8"></div>
-                          <div class="col-md-4" id="calendar-modal-buttons">
+                          <div class="col-md-9"></div>
+                          <div class="col-md-3" id="calendar-modal-buttons">
                             <!-- <button class="btn edit-btn">Edit</button> -->
                             <button class="btn btn-success" ng-click="finishEvent()" data-dismiss="modal">Completed</button>
                           </div>

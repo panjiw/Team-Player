@@ -138,8 +138,8 @@ div.tabs.selected_groups button.selected_groups{
 }
 
 .btn-myTask {
-  background-color: #ffef00;
-  border-color: #ffef00;
+  background-color: #fbff3b;
+  border-color: #fbff3b;
   color: black;
 }
 
@@ -177,4 +177,22 @@ div.tabs.selected_groups button.selected_groups{
   background-color: white;
   border-color: black;
   color: black;
+}
+
+.panel-warning > .panel-heading {
+  color: #8a6d3b;
+  background-color: #ffffb3;
+  border-color: #ffffb3;
+}
+
+.panel-danger > .panel-heading {
+  color: #a94442;
+  background-color: #ffcfcf;
+  border-color: #ffcfcf;
+}
+
+.panel-success > .panel-heading {
+  color: #3c763d;
+  background-color: #d6e9c6;
+  border-color: #d6e9c6;
 }

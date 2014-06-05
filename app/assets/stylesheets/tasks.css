@@ -107,8 +107,8 @@ textarea {
   right: 80px;
   top: 250px;
   padding: 10px;
-  background-color: #fcf8e3;
-  border: 5px solid #faebcc;
+  background-color: #ffffcd;
+  border: 2px solid #ffffb3;
   border-radius: 5px;
   display: none;
 }
@@ -121,7 +121,7 @@ textarea {
   top: 250px;
   padding: 10px;
   background-color: #F0F0F0;
-  border: 5px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 5px;
   display: none;
 }

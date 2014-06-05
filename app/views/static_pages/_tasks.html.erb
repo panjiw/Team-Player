@@ -21,7 +21,7 @@
                       <h4>Navigating Through Task Tabs</h4>
                       <div class="help-info">
                         Click on the "My Tasks" tab to see all of your unfinished tasks.<br>
-                        Click on the "Task History" tab to see a history of your finished tasks.
+                        Click on the "Completed Tasks" tab to see a history of your finished tasks.
                       </div>
                       <hr>
                       <div class="help-image"><%= image_tag "tasks-page1.png" %></div>
@@ -57,12 +57,12 @@
                       <h4>Due Dates, Cycling, and Repeating</h4>
                         <div class="help-info">
                           <i>Due Dates</i> set deadlines for tasks.<br>
-                          <i>Cyclic Tasks</i> mean that tasks can be rotated between checkmarked members - given to the next when one has finished. <br>
+                          <i>Cyclic Tasks</i> mean that tasks can be rotated between checkmarked members - given to the next when one has finished. Unfinished tasks get pushed to the next day.<br>
                           <i>Repeat Weekly</i> will automatically create bills each week due on your selected date.<br><br>
                           All cycling tasks must also repeat!
                         </div>
                         <hr>
-                        <div class="help-image"><br><%= image_tag "tasks-page3.png" %></div>
+                        <div class="help-image"><br><%= image_tag "tasks-page2.png" %></div>
                         <hr>
                         <div class="backNext">
                           <div class="col-md-2">
@@ -317,7 +317,7 @@
                       <span><strong>Participating Members:</strong> <span ng-repeat="mem in task.members">{{mem | userNameInTask:task.id:isSpecial(task.id)}}&nbsp;</span></span><br><br>
                       <button ng-click="stopRepeat(task.id)" ng-show="isSpecial(task.id)" class="btn btn-default" style="float:left">Stop Repeat or Cycle</button>
                       <div class="selected-buttons">
-                          <button class="btn edit-btn" ng-click="openEditModal($event, task.id)">Edit</button>
+                          <button class="btn btn-default" ng-click="openEditModal($event, task.id)">Edit</button>
                           <button ng-click="finish(task.id)" class="btn btn-success">Completed</button>
                       </div>
                     </div>
