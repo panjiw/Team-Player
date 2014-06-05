@@ -325,5 +325,32 @@ angular.module("myapp").factory('TaskModel', ['GroupModel','UserModel', function
     return false;
   };
 
+  TaskModel.isSpecial = function(taskID){
+    if(TaskModel.generators[taskID] && !TaskModel.generators[taskID].details.finished)
+      return true;
+    else return false;
+  };
+
+  // check to see if it is a specific user's in a task. if no userID given, check 'me'.
+  TaskModel.isMyTurn = function(taskID, userID){
+    // if not special, there is no turn
+    if (!TaskModel.isSpecial(taskID)) return false;
+
+    // if no userID specified, check 'me' instead
+    if(!userID){
+      userID = UserModel.me;
+    }
+
+
+    // if it is the current user's turn, (his rank of this task is 0)
+    if(UserModel.users[userID].rank[taskID] == 0){
+      return true;
+    }
+
+    return false;
+  };
+
+
+
   return TaskModel;
 }]);
