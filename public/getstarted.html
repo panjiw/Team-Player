@@ -157,8 +157,9 @@
                 <p></p>
                 We deployed our daily builds and tests through <a href="http://jenkins-ci.org/">Jenkins windows installations</a>.
                 <ol>
-                  <li>Set up a new project workspace with the home directory as the project directory.<br>We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+as+a+Windows+service">windows installation guide for Jenkins</a> to do this.</li>
-                  <li>Set the product to deploy daily. We are currently using a local host.</li>
+				  <li>Set up a new project workspace with the home directory as the project directory.<br>We followed the <a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins"> installation guide for Jenkins</a> to do this.</li>
+                  <li>Set up an automated build to run the test suit. <br>We followed the build guides from <a href="https://wiki.jenkins-ci.org/display/JENKINS/Use+Jenkins">the Jenkins Wiki</a></li>                 
+				 <li>Set the product to deploy daily. We are currently using a local host.</li>
                   <li>We set up email notifications when the build fails.</li>
                   <li> In order to rub our test suite, we built the product with a windows batch command with the test automation command <code>bundle exec rspec spec/</code> </li>
                   <li>For front-end tests, we will use another windows batch command of <code>rake jasmine</code> </li>
