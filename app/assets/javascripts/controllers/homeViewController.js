@@ -267,8 +267,7 @@ angular.module('myapp').controller("homeViewController",
      var string = "";
       $.each(thisDateTasks, function() {
          var taskPanel = "";
-         var completeBtn = "";
-         var people = ": ";
+         var people = "";
 
          var first = true;
         for (var userID in this.members){
@@ -312,12 +311,12 @@ angular.module('myapp').controller("homeViewController",
         string += taskPanel + 
                         "<h4 class='panel-descr'>" + this.title + "</h4>" + 
                         "<h4 class='panel-date'>" + 
-                          completeBtn +
+                          people +
                         "</h4>" +
                       "</div>" + 
                     "</div>" + 
                      "<div class='panel-body panel-info'>" + 
-                       "<div class='panel-groupname'>" + this.groupName + people + "</div>" + 
+                       "<div class='panel-groupname'>" + this.groupName + "</div>" + 
                      "</div>" + 
                   "</div>";
       })
