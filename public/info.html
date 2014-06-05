@@ -307,6 +307,59 @@
 
               <hr>
               <h2 id="extensibility">Extensibility Exercise</h2>
+              <p>
+                <b>Notes:</b> 
+                  <ul>
+                    <li>Tasks and bill creation confirmation are essentially the same in both the Ruby and JavaScript code. So, we only provide directions for tasks, and bills should be relatively straightforward after doing tasks.</li>
+                    <li>We already implemented group confirmation as a part of the last release.</li>
+                    <li>These instructions assume you have a decent understanding of Ruby on Rails and AngularJS. If not, we suggest taking tutorials on both Rails and Angular first.</li>
+                  </ul>
+                  <br>
+
+                <b>On the backend we use RoR rake migration to add a field call ‘accepted’ to our task_actors model:</b>
+                <ul>
+                  <li>Make a new field called “accepted” in task_actors, and initialize it to true for the task creator, and NULL for everybody else</li>
+                  <li>Make a new Ruby controller function to handle accepting or rejecting new tasks. The controller should take two parameters: (e.g.: “task[id]” and “task[accepted], accessed at params[:task][:id] and params[:task][:accepted]). After error checking, if accepted is true, the user is accepting the task, otherwise they are rejecting it.</li>
+                    <ul>
+                      <li>If somebody accepts a task, it should set the “accepted” field to true in their task_actor class</li>
+                      <li>Once all actors have accepted the task becomes official</li>
+                      <li>If any actor rejects the task, the entire task is deleted</li>
+                    </ul>
+                  <li>Add a route to app/config/routes.rb that maps a “post” request of accepting or rejecting a task to your new controller function</li>
+                  <li>In all backend methods that return tasks (get all, edit, etc), make sure that this new “accepted” field is passed down to the frontend, so that it knows whether the current user has accepted this task</li>
+                </ul><br>
+                <b>On the frontend, start with the TaskModel:</b>
+                <ul>
+                  <li> TaskModel(app/assets/javascripts/events/tasks/taskmodel.js</li>
+                    <ul>
+                      <li>Add a field “accepted” to the Task object. Then, in TaskModel.updateTask, save the new field from the backend into the task. It will now be accessible in the HTML.</li>
+                      <li>Create a function to accept and a function to ignore a task. Take in an id and callback function. The model doesn’t need to do much except pass the information to the backend by POSTing at the URL you specified in routes.rb. See the other model functions for examples.</li>
+                    </ul>
+                  <li>Controller (app/assets/javascripts/controllers/taskViewController):</li>
+                    <ul>
+                      <li>Create a function to accept and another to reject a task, and have both take in just the id of the task. We will call these later from the HTML</li>
+                      <li>These should directly call the appropriate TaskModel functions. The callback function should just reset the $scope variable for all tasks within a $scope.$apply. Look at other controller functions for examples.</li>
+                    </ul>
+                  <li>Controller (app/assets/javascripts/controllers/homeViewController):</li>
+                    <ul>
+                      <li>You likely do not want to have unofficial tasks appear on your calendar. In the dataReady() function, do not add a task into the calendar if it has not been accepted by all members </li>
+                    </ul>
+                  <li>HTML (app/views/static_pages/_tasks.html.erb): It is up to you how to display the pending tasks. We suggest making a new tab within the tasks page for “pending”and tasks.</li>
+                    <ul>
+                      <li>You can filter which tasks are shown by adding a filter in app/assets/javascripts/main.js. Make a new filter to show only “official” tasks (i.e. those that have already been accepted by everyone), and another to show only tasks that are not official</li>
+                      <li>Then, in the “ng-repeat” blocks in the HTML that show all tasks, just use appropriate filter--in the active tasks page, show only official tasks, and in the new pending tasks page, show only the unofficial tasks. The syntax for using a filter is “ng-repeat=’obj in list_or_object | filter’”.<li>
+                      <li>It is up to you to decide how to allow someone to confirm a task. We suggest just having two buttons next to each task to confirm or reject</li>
+                        <ul>
+                          <li>Use ng-click=”your_function(task.id)” on each button, where your_function corresponds to the functions $scope.your_function in the controllers for either accepting or rejecting tasks. </li>
+                        </ul>
+                      <li>If you have already accepted a task (but others have not), the buttons should probably be grayed out, unclickable, hidden, etc., in some way. You can use the accepted array in the task object to do something like “ng-show=’task.accepted.indexOf(currentUser.id) != -1’”. </li>
+                  </ul>
+                  <br>
+                  That’s it! Once you attach all of the pieces, the view should update automatically! When you accept a task, the buttons should gray out, and if you ignore it, it should be deleted.
+
+
+
+              </p>
 
       		</div> 
   	</div>

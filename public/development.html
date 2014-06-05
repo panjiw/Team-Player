@@ -260,7 +260,102 @@
                 <hr>
 
                 <h2 id="postmortem">Requirements and Schedule Postmortem</h2>
-                <img src="images/timeline.png"/>
+                  <p>Even though we created a rigid schedule for the creation of TeamPlayer, we did have many changes to our product, and surprising estimations to how long feature implementation would take. Here is <a href="documentation/OriginalDocuments/workTimeline.htm">how our developers actually spent their time</a>.</p>
+                  <br>
+                  <p>Based on the schedule above, these are the estimates for the amount of time it took to implement the following features:<br>
+                    <ul>
+                      <li><b>Successful Login and Logout (5 days)</b></li>
+                        <ul>It took about 4 days for one developer to create user models and login/session systems, as well as handling AJAX requests. At the same time, another developer created login and home pages.</ul>
+                      <li><b>Group Creation, Member Addition and Confirmation (9 days)</b></li>
+                        <ul>It took a developer 3 days to create group models and controllers, while a second developer took about a 1 day to create a group display, and a third developer took about 3 days to integrate the front end and back end. Later on, we added the group confirmation feature which took another 3 days to do.</ul>
+                      <li><b>Adding, Editing and Completing Tasks (5 days)</b></li>
+                        <ul>It took a developer about 2 days to design and implement the task system and controllers. Another developer took about a day to create the tasks views, and a third one to integrate the front end and back end. </ul>
+                      <li><b>Adding and Paying Bills (6 days)</b></li>
+                        <ul>It took a developer about 2 days to design and implement the bills system and controllers. </ul>
+                      <li><b>Calendar and To Do List Display (3 days)</b><li>
+                        <ul>It took a developer about a day to get the calendar to display on the homepage, then about two days to get calendar interactions as well as the correct task and bill displays working.</ul>
+                      <li><b>User Friendly Tutorials (2 days)</b></li>
+                        <ul>It took about a day to create tutorials for views, and another to maintain and keep them consistent. </ul>
+                    </ul>
+
+                    If we were to implement additional features, they would take the following amount of time:<br>
+                    <ul>
+                      <li><b>Email notifications (3 days)</b></li>
+                        <ul></ul>
+                      <li><b>Snooze/Move events (2 days)</b></li>
+                        <ul></ul>
+                    </ul>
+                  </p>
+                  <br>
+                  <h3>Feature Cuts</h3>
+                  <p>
+                    We completed the major features and functionality listed in the SRS. We can view, create, and edit tasks, bills, and groups. We also have a home view with a calendar that shows when tasks and bills are due. Here are the smaller features we cut or added:<br><br>
+
+                    <b>Functionality cut from original SRS</b>:
+                    <ul>
+                      <li>The concept of filtering views by groups is entirely gone because we did not find it to be useful or necessary after talking to customers and during usability testing <i>(saved: probably only a couple of hours)</i></li>
+                      <li>Bills can no longer cycle or repeat because it seemed less useful than that cycling/repeating tasks--again feedback from customers <i>(saved: 10+ hours)</i></li>
+                      <li>Email invites if a member you are inviting is not a registered user <i>(saved: 4-5 hours)</i></li>
+                    </ul>
+                  
+                    <b>Added features (now in updated SRS)</b>:
+                    <ul>
+                      <li>Group confirmation--when you invite somebody to a group, they are not in the group until they accept the invite.</li>
+                      <li>We changed the bills tab to show a bill summary by member (i.e. what do they owe you, what do you owe them, and what is the net total), rather than showing every bill separately. We also removed filtering bills by group.</li>
+                      <li>The ability to edit groups, tasks, and bills. This is something we talked about, but was not officially in the SRS. This is also an alternative to snoozing/moving tasks.</li>
+                      <li>Using different colors for tasks, bills, and overdue events, as well as lighter colors for ones that are not yours on the calendar as an alternative to filtering by group. </li>
+                      <li>The concept of a “self group”--when you login to the app for the first time, it makes sense to already be part of a group just for you.</li>
+                      <li>A history of bills and tasks on the respective tabs (the original only had a history on the calendar).</li>
+                    </ul>
+                    <br>
+
+                  <h3>Task Assignments</h3>
+                  <p>As explained in our SRS, our original roles were: 
+                    <ul>
+                      <li>Project Manager: Karthik</li>
+                      <li>Front End Developers: Linsen, Fung, Tiffany</li>
+                      <li>Back End Developers: Micaela, Panji, Keith</li>
+                    </ul>
+
+                    Over the course of development, the roles stayed relatively the same with a little bit of adjustment. Panji and Keith were able to pick up Ruby on Rails really quickly, and quickly jumped on database design as well as backend designs of groups, tasks, and bills. Micaela also learned Ruby on Rails and ended up as the tester of these objects. Since there were three front end people, and front end design wasn’t always needed, Fung picked up Angular JS and joined Karthik in integration of the front end and back end. Linsen had already known HTML and CSS and assisted Tiffany on the front end. Karthik’s role changed whenever things needed attention, switching between back end design, front end debugging, and integration. 
+                  </p>
+
+                  <p>Below, our developers explain what they spent the most time on:
+                    <ul>
+                      <li>Karthik Palaniappan(Project Manager)</li>
+                        <ul>In the beginning of the project, obviously most of our time was spent in flushing out the details of our app--first the features and UIs (i.e. SRS) and then the actual design and architecture with respect to our frameworks (SDS). I was involved in both the backend and frontend at this point. However, once we started coding, I focused almost exclusively on the frontend code. I definitely spent a lot of time learning Angular--it is a decent framework once you get the hang of it, but it still is confusing and has awful documentation. From there, the majority of my time was spent on the frontend logic for groups (adding, editing, leaving, inviting, etc), and helping Fung with tasks and bills (and finding/fixing bugs). Other than that, I usually helped Tiffany out with the documents due each Friday.</ul>
+                      <li>Linsen Wu (Front End Developer)</li>
+                        <ul>In the beginning I spent a lot of time figuring out bootstrap and then using that to build the layout of the website. Then, when we had our layout finished I spent a lot of my time figuring out how angular worked, and then using that to take data that the backend group had supplied and display it on our pages. Most of my time was spent on the Bills page and home page. I worked on getting the right bills to show up, mapping bills to members, getting bills to pay, and adding bills. I also worked on getting the todos and calendar display working on the home page. At the end of the project I spent more time learning how the backend worked and how data was being stored so I could get the right data and store data how I needed it in order to display correctly.</ul>
+                      <li>Tsz Fung Cheung (Front End Developer)</li>
+                        <ul> In the beginning I spent lots of time experimenting  with Javascript and AngularJS. The first few weeks I spent most of my time on trying to connect Javascript with the back end, while working on login, log out, and group creation. During that time debugging was really time consuming as I did not understand how does date binding work with AngularJS; we used some “temporary hack” to make things work but we end up spending time clean them up later. Near the end of the quarter I spent most of my time on tasks and bills functionality including creation, edition, paying bills, and completing tasks. The time consuming part was to coordinate with Panji and make sure tasks and bills works on both front and back end. We had to test the code together. After those were done, I spent most of my time fixing bugs.</ul>
+                      <li>Tiffany Lin</li>
+                        <ul> Throughout the project, most of my time has been spent documenting - creating some documents, making sure that our documents were up to date, transferring them from google docs to our developer’s website. At the beginning, I spent some time creating user interfaces using Powerpoint to make sure that we could all visualize how our project would work through pictures instead of words. This was helpful because by seeing a consistent view, we could visualize what would and wouldn’t work well. Later on, I spent a lot of time learning HTML and CSS to make sure that our displays were correct. Since this was my first time using HTML, CSS, and javascript, it took me a lot of time to implement features and fix bugs. Toward the end of the project, I was able to use these skills to get the home page calendar to be interactive with our users, even though it took about a week. </ul>
+                      <li>Micaela Tolliver</li>
+                        <ul>The majority of my time was spent testing, either from learning the testing framework for ruby on rails and reworking some initial tests that didn’t use the framework correctly. From then on, testing the backend controllers took up the majority of my time. While writing test cases, the majority of my time was spent formatting checks for return statements, since our implementation returned strings and I needed to parse to make sure the correct information was returned. </ul>
+                      <li>Panji Wisesa</li>
+                        <ul>At first, getting familiarized with  Ruby on Rails and applying that small bits of knowledge straight into the project took up most of my time. After that learning period, most of my time was occupied with implementing the task and bill models and controllers, then coordinating with Fung to make sure that the code I wrote in the back connects correctly with the code in the front end.</ul>
+                      <li>Keith Yeung</li>
+                        <ul>Most of my workload was building initial backend models to support a feature, then readjusting some fields and controllers, based on frontend and usability designs decisions. The initial coding didn’t take too long, so majority of my time is in meetings to discuss designs decisions and thinking about how it can be implemented. Fixing bugs, adding ‘if’ checks on methods after test or misuses were raised took some time also.</ul>
+                    </ul>
+                  </p>
+                  <br>
+                  <p>
+                    <h4>Expectation Differences</h4>
+                    This differs from our expectations because we did not realize how hard it would be to learn Angular and Rails. Both are fairly big and heavy frameworks that have a non-trivial learning curve. We expected to spend most of our time coding, but we did not expect debugging and fixing bugs on the frontend would take so long. We had a full MVC on the frontend, but unfortunately, we did not plan out “who would be working what” very well, so we occasionally ended up touching code we did not understand. Touching other people’s code often led to more bugs.<br><br>
+
+                    <h4>Features Spent Too Much Time On</h4>
+                    We ended up spending too much time on team meetings and discussions, which is a pro and a con. We initially agreed that being able to set aside time to be able to discuss problems face to face and as a group would be a good idea, because decisions would be made more quickly, and everybody would be able to contribute. This was actually really helpful when it came to designing both the frontend and backend, as well as changing things based on usability tests with our customers. However, there were times when it would have been okay if some members did not show up to meeting and instead kept working on their own tasks. We also spent a lot of time debugging and fixing the bills view on the frontend. We wanted to have different views based on the same data, so the backend just sent a list of bills. From there, we had a lot of work on the frontend parsing it into different forms, and integrating those forms with Angular. At the same time, we also had multiple people working on bills, so this is the main place where we ran into “touching somebody else’s code” and breaking it. <br><br>
+
+                    <h4>Features Spent Too Little Time On</h4>
+                    We spent too little time on frontend-testing and automating installing/deployment. The backend test suite was *solid*, but frontend testing is a little more difficult, especially with both Rails and AngularJS. We ended up prioritizing the important frontend logic functions--like ordering users in alphabetical order for the view. However, there is no good way to test Ajax requests (i.e. most of the other functions) from Angular models. Anuglar does have its own integration testing framework, but it is nearly impossible to use with Rails because of the order that certain things are loaded. We initially had our developer docs inside of Google docs, meaning to create a new version, you would have to download the docs then upload them. We also did not have a way to automatically download all of the packages for our Rails app (there are a lot), or to deploy to Heroku. Life was much simpler both for us and other developers after creating automatic install and deployment scripts, as well as moving our document to HTML.
+                  </p>
+
+
+
+
+
+
+
 
           </div> 
         </div>
