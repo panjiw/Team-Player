@@ -172,14 +172,14 @@ angular.module('myapp').controller("homeViewController",
         if (this.done == null) {
 
           //If task is mine, display with box
-          if (TaskModel.isInvolved(this.id)) {
+          if (TaskModel.isInvolved(this.id) && (TaskModel.isSpecial(this.id) == TaskModel.isMyTurn(this.id))) {
             newEventObj["backgroundColor"] = (dateLessThan) ? "#ff8282" : "#fbff3b"; //yellow
             newEventObj["borderColor"] = (dateLessThan) ? "#ff8282" : "#fbff3b";
           }
         }
         // finished 
         else {
-          // if (TaskModel.isInvolved(this.id)) {
+          // if (TaskModel.isInvolved(this.id) && (TaskModel.isSpecial(this.id) == TaskModel.isMyTurn(this.id))) {
               newEventObj["backgroundColor"] = "white"; //gray
               newEventObj["borderColor"] = "white";
           // }
@@ -260,14 +260,30 @@ angular.module('myapp').controller("homeViewController",
       $.each(thisDateTasks, function() {
          var taskPanel = "";
          var completeBtn = "";
+         var people = ": ";
+
+         var first = true;
+        for (var userID in this.members){
+          if(first){
+            first = false;
+          } else {
+            people += ", ";
+          }
+
+          if(TaskModel.isMyTurn(this.id,userID)){
+            people += "[" + this.members[userID].username + "]";
+          } else {
+            people += this.members[userID].username;
+          }
+        }
 
           //task not done
           if (this.done == null) {
             taskPanel = "<div class='panel panel-warning'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
-            //a task I'm responsible for
-            if (TaskModel.isInvolved(this.id)) {
+            //a task I'm responsible for , or it is my turn
+            if (TaskModel.isInvolved(this.id) && (TaskModel.isSpecial(this.id) == TaskModel.isMyTurn(this.id))) {
               // completeBtn = "<button class='btn btn-success btn-xs'>Completed</button>";
             } 
             //a task I'm not responsible for
@@ -293,7 +309,7 @@ angular.module('myapp').controller("homeViewController",
                       "</div>" + 
                     "</div>" + 
                      "<div class='panel-body panel-info'>" + 
-                       "<div class='panel-groupname'>" + this.groupName + "</div>" + 
+                       "<div class='panel-groupname'>" + this.groupName + people + "</div>" + 
                      "</div>" + 
                   "</div>";
       })
