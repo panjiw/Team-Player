@@ -19,7 +19,7 @@
 
 <h3>Current Release</h3>
 <hr>
-The current release is the feature-complete release. You can also view documentation and information from all <a href="https://team-player.herokuapp.com/srssds.html">other releases</a>.
+We have just released our final release. You can also view documentation and information from all <a href="https://team-player.herokuapp.com/srssds.html">other releases</a>.
 
 <h3>Working Features</h3>
 <hr>
