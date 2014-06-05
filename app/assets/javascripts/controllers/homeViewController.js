@@ -65,7 +65,15 @@ angular.module('myapp').controller("homeViewController",
   GroupModel.getGroups(function(groups, asynch, error) {
     if (error){
     } else {
-      //$scope.groupsList = groups;
+      function grabGroups() {
+        $scope.groupsList = groups;
+        $scope.groupsListLength = Object.keys($scope.groupsList).length;
+      }
+      if(asynch) {
+        $scope.$apply(grabGroups)
+      } else {
+        grabGroups();
+      }
       getTaskFromModel();
       getBillFromModel();
       
