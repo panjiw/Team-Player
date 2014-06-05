@@ -362,7 +362,7 @@ angular.module('myapp').controller("billsViewController", ["$scope", "BillModel"
     $('#'+'billHelp'+pageNum).hide();
     $('#'+'billHelp'+(parseInt(pageNum)-1)).show();
   }
-  
+
   // Function called to split bills evenly
   $scope.splitEvenly = function(mem, n, selectAll) {
     if ($("#bill-split-evenly-checkbox" + n).is(":checked")) {
