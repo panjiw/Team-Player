@@ -133,7 +133,7 @@
                   <input class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = '0.00'; splitEvenly(mem, 1, false)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
                   <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d?)?$/" class="bill-total"
-                  type="text" placeholder="0.00" style="float:right;"/>
+                  type="text" size="7" placeholder="0.00" style="float:right;"/>
                 </div>
                 <div ng-repeat="mem in currentPending | orderUsers" style="height:2.2em;">
                   <input disabled="disabled" class="bill-members-check1" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = '0.00'; splitEvenly(mem, 1, false)" style="float:left;" />
@@ -189,7 +189,7 @@
                   <input class="bill-members-check2" type="checkbox" ng-model="mem.chked" ng-click="mem.amount = 0.00; splitEvenly(mem, 2, false)" style="float:left;" />
                   <span style="float:left;">{{mem.username}}</span>
                   <input ng-show="mem.chked==true" ng-model="mem.amount" ng-pattern="/^\d*(\.\d\d?)?$/" class="bill-total"
-                  type="text" placeholder="0.00" style="float:right;"/>
+                  type="text" size="7" placeholder="0.00" style="float:right;"/>
                   <div style="clear: both;"></div>
                 </div>
                 <div ng-repeat="mem in currentEditPending | orderUsers" style="height:2.2em;">
