@@ -28,9 +28,9 @@ Displays header after successful login  -->
     <% end %>
     <div class="collapse navbar-collapse options">
       <ul class="navbar-nav">
-        <li><a ng-click="activeTab='selected_about'; closePop()">About</a></li> <!--Add link to about--> 
-        <li><a ng-click="activeTab='selected_contact'; closePop()">Contact</a></li> <!--Add link to contact-->
-        <li><a ng-click="activeTab='selected_help'; closePop()">Help</a></li>
+        <li><a ng-click="activeTab='selected_about'; closePop()">About</a></li> 
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/usersdoc.html">Help</a></li>
         <% if signed_in? %>
           <li><a ng-click="activeTab='selected_settings'; closePop()">Settings</a></li>
         <% end %>
