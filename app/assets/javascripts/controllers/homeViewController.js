@@ -343,7 +343,7 @@ angular.module('myapp').controller("homeViewController",
           } 
           //the bill has not been paid, pink
           else {
-            billColor = "<div class='panel panel-success'>" + 
+            billColor = "<div class='panel panel-danger'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
           }
@@ -359,7 +359,7 @@ angular.module('myapp').controller("homeViewController",
           } 
           //the bill has not been paid, green with pay button
           else {
-            billColor = "<div class='panel panel-danger'>" + 
+            billColor = "<div class='panel panel-success'>" + 
                     "<div class='panel-heading'>" + 
                       "<div class='task-panel'>";
             // paidTag = "<button class='btn btn-success btn-xs' ng-click='finishEvent()' data-dismiss='modal'>" +
