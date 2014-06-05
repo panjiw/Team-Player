@@ -117,6 +117,20 @@
 
                 <hr>
 
+                <h2 id="tarball">Source Package</h2>
+                <p>
+                  The simplest way to create an source package is to use GitHub. Navigate to the branch you want (usually the <a href="https://github.com/panjiw/Team-Player/tree/release">release branch</a>), and click on Download ZIP
+                </p>
+                <p>
+                  If you are using the UNIX command line, we recommend using <code><a href="http://git-scm.com/docs/git-archive">git-archive</a></code> to create a tarball. To create a tarball with the release branch, run this command:
+                  <p><code>
+                    git pull
+                    git archive --format=tar --depth=1 HEAD | gzip > ~/path/to/destination/TeamPlayerRelease.tar.gz
+                  </code></p>
+                </p>
+
+                <hr>
+
                 <h2 id="testInstr">Test Instructions</h2>
                 <p>
                 The tests provided for the software are in the spec folder. At the moment, these tests cover our backend implementation, and utilize RSpec. 
@@ -160,7 +174,7 @@
 
                 <h2 id="versionRelease">New Version Releases</h2>
             
-                Releases will be facilitated through <a href="https://help.github.com/articles/creating-releases">GitHub’s release system</a> Tag the repo with the new version number (e.g. 0.2), then push it to the release branch.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
+                New releases will be facilitated through <a href="https://help.github.com/articles/creating-releases">GitHub’s release system.</a> Tag the repo with the new version number (e.g. 0.2), then push it to the release branch.<br><br> Updates and fixes, as well as branch information and version numbers will be documented with each release.<br><br>
                 Releases for our software can be found and downloaded from: <a href="https://github.com/panjiw/Team-Player/releases">https://github.com/panjiw/Team-Player/releases</a>.<br><br> New releases will be deployed through Heroku web services. 
                 <p><ol>
                 <li>Be sure to have the <a href="https://toolbelt.heroku.com">heroku toolbelt installed</a> and set up with your account.<br>Follow the directions on the page after you've downloaded it.</li>
