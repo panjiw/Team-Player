@@ -119,13 +119,13 @@
 
                 <h2 id="tarball">Source Package</h2>
                 <p>
-                  The simplest way to create an source package is to use GitHub. Navigate to the branch you want (usually the <a href="https://github.com/panjiw/Team-Player/tree/release">release branch</a>), and click on Download ZIP
+                  The simplest way to create an source package is to use GitHub. Navigate to the branch you want (usually the <a href="https://github.com/panjiw/Team-Player/tree/release">release branch</a>), and click on <em>Download ZIP</em>
                 </p>
                 <p>
                   If you are using the UNIX command line, we recommend using <code><a href="http://git-scm.com/docs/git-archive">git-archive</a></code> to create a tarball. To create a tarball with the release branch, run this command:
                   <p><code>
-                    git pull
-                    git archive --format=tar --depth=1 HEAD | gzip > ~/path/to/destination/TeamPlayerRelease.tar.gz
+                    git checkout release
+                    git archive --format=tar HEAD | gzip > ~/path/to/destination/TeamPlayerRelease.tar.gz
                   </code></p>
                 </p>
 
