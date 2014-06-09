@@ -59,6 +59,19 @@ class UsersController < ApplicationController
       userinfo = {:username => params[:edit][:username], :firstname => @user.firstname, :lastname => @user.lastname, :email => @user.email,
                              :password => params[:edit][:password], :password_confirmation => params[:edit][:password]}
       if @user.update_attributes(userinfo)
+      
+        group = Group.find_by(:creator => @user.id, :self => true)
+
+        name = 'Me (' + params[:edit][:username] + ')'
+
+        gpinfo = {:name => name, 
+                :description => 'Assign task/bills to the Me group, if those task/bills are for yourself', 
+                :creator => group.creator, 
+                :self => group.self}
+
+        group.update_attributes(gpinfo)
+
+
         render :json => {}, :status => 200
       else
         render :json => @user.errors.full_messages, :status => 400
