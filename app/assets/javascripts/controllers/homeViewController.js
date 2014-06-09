@@ -232,8 +232,53 @@ angular.module('myapp').controller("homeViewController",
           eventid: this.id
         };
 
+        // Bill is owed to me
+        if (this.creator == UserModel.me) {
+          // Check if the bill is all paid for
+          newEventObj["backgroundColor"] = "white";
+          newEventObj["borderColor"] = "white";
+          $.each (this.membersAmountMap, function(index) {
+            if (index != UserModel.me) {
+              if (!this.paid) {
+                newEventObj["backgroundColor"] = "#d6e9c6";
+                newEventObj["borderColor"] = "#d6e9c6";
+              }
+            }
+          });
+          // If the bill is not yet paid for
+          if (newEventObj["backgroundColor"] != "white") {
+            if (((this.dateDue.getMonth() <= new Date().getMonth()) && 
+              (this.dateDue.getDate() < new Date().getDate()) &&
+              (this.dateDue.getFullYear() <= new Date().getFullYear()))) {
+                newEventObj["backgroundColor"] = "#FFCFCF";
+                newEventObj["borderColor"] = "#FFCFCF";
+              }
+          }
+        }
+        // I owe the bill to someone else
+        else {
+          // I have not paid it yet
+          if (!this.membersAmountMap[UserModel.me].paid) {
+            if (((this.dateDue.getMonth() <= new Date().getMonth()) && 
+              (this.dateDue.getDate() < new Date().getDate()) &&
+              (this.dateDue.getFullYear() <= new Date().getFullYear()))) {
+                newEventObj["backgroundColor"] = "#FFCFCF";
+                newEventObj["borderColor"] = "#FFCFCF";
+              }
+              else {
+                newEventObj["backgroundColor"] = "#7ab847";
+                newEventObj["borderColor"] = "#7ab847";
+              }
+          }
+          else {
+            newEventObj["backgroundColor"] = "white";
+            newEventObj["borderColor"] = "white";
+          }
+          
+        }
+
         // If bill is not paid, display on calendar normally
-        if (!this.membersAmountMap[UserModel.me].paid) {
+        /*if (!this.membersAmountMap[UserModel.me].paid) {
 
           //If I have to pay bill, display with box
           if (this.creator != UserModel.me) {
@@ -245,7 +290,7 @@ angular.module('myapp').controller("homeViewController",
         else {
             newEventObj["backgroundColor"] = "white";
             newEventObj["borderColor"] = "white";
-        }
+        }*/
         events.push(newEventObj);
       }
     });
