@@ -205,7 +205,9 @@ angular.module('myapp').controller("homeViewController",
       // If dateless, put in todos
       else {
         if (this.done == null) {
-          $scope.todos.push(this);
+          if (this.members[UserModel.me].rank[this.id] == 0) {
+            $scope.todos.push(this);
+          }
         }
       }
     })
